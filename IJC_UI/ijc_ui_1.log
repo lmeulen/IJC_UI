@@ -1,0 +1,110 @@
+2016-10-05 20:57:57 INFO nl.detoren.ijc.IJC_Wedstrijden main Opstarten applicatie
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.IJCController getInstance message to log
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.IJCController leesStatusBestand Lees status
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.IJCController leesStatus Lees status uit bestand status.json
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.IJCController leesStatusBestand Statusbestand ingelezen
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.IJCController maakGroepsindeling Maak groepsindeling
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Maken groepsindeling voor alle groepen
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Groepsindeling voor periode 1, ronde 6
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Indeling voor groep Keizergroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Indeling voor groep Koningsgroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Indeling voor groep Damegroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Indeling voor groep Torengroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Indeling voor groep Lopergroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Indeling voor groep Paardengroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Indeling voor groep Pionnengroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Er wordt doorgeschoven, schuif door
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler doorschuiven Aantal door te schuiven spelers 4
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling Hernummeren van spelers
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.IJCController maakWedstrijden Maak wedstrijden voor alle groepen
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Maken wedstrijden voor periode 1 ronde 6
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Maken wedstrijden voor groep Keizergroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Bepalen wedstrijden voor groep Keizergroep periode 1 ronde 6
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Vaststellen aantal te spelen series
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Keizergroep, niet (periode 1 en ronde 1). # series = 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Aantal speelrondes 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Keizergroep met grootte 18
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Keizergroepin periode 1, ronde 6, serie 1-> minimaal verschil = 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Aantal wedstrijden 9
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Maken wedstrijden voor groep Koningsgroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Bepalen wedstrijden voor groep Koningsgroep periode 1 ronde 6
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Vaststellen aantal te spelen series
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Niet Keizergroep, niet (periode 1 en ronde 1). # series = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Aantal speelrondes 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Koningsgroep met grootte 18
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Koningsgroepin periode 1, ronde 6, serie 1-> minimaal verschil = 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Koningsgroep met grootte 18
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Koningsgroepin periode 1, ronde 6, serie 2-> minimaal verschil = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Aantal wedstrijden 18
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Maken wedstrijden voor groep Damegroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Bepalen wedstrijden voor groep Damegroep periode 1 ronde 6
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Vaststellen aantal te spelen series
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Niet Keizergroep, niet (periode 1 en ronde 1). # series = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Aantal speelrondes 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Damegroep met grootte 14
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Damegroepin periode 1, ronde 6, serie 1-> minimaal verschil = 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Damegroep met grootte 14
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Damegroepin periode 1, ronde 6, serie 2-> minimaal verschil = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Aantal wedstrijden 14
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Maken wedstrijden voor groep Torengroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Bepalen wedstrijden voor groep Torengroep periode 1 ronde 6
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Vaststellen aantal te spelen series
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Niet Keizergroep, niet (periode 1 en ronde 1). # series = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Aantal speelrondes 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Torengroep met grootte 10
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Torengroepin periode 1, ronde 6, serie 1-> minimaal verschil = 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Torengroep met grootte 10
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Torengroepin periode 1, ronde 6, serie 2-> minimaal verschil = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Aantal wedstrijden 10
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Maken wedstrijden voor groep Lopergroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Bepalen wedstrijden voor groep Lopergroep periode 1 ronde 6
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Vaststellen aantal te spelen series
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Niet Keizergroep, niet (periode 1 en ronde 1). # series = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Aantal speelrondes 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Lopergroep met grootte 12
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Lopergroepin periode 1, ronde 6, serie 1-> minimaal verschil = 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Lopergroep met grootte 12
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Lopergroepin periode 1, ronde 6, serie 2-> minimaal verschil = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Aantal wedstrijden 12
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Maken wedstrijden voor groep Paardengroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Bepalen wedstrijden voor groep Paardengroep periode 1 ronde 6
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Vaststellen aantal te spelen series
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Niet Keizergroep, niet (periode 1 en ronde 1). # series = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Aantal speelrondes 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Paardengroep met grootte 14
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Paardengroepin periode 1, ronde 6, serie 1-> minimaal verschil = 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Paardengroep met grootte 14
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Paardengroepin periode 1, ronde 6, serie 2-> minimaal verschil = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Aantal wedstrijden 14
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Maken wedstrijden voor groep Pionnengroep
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Bepalen wedstrijden voor groep Pionnengroep periode 1 ronde 6
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Vaststellen aantal te spelen series
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries Niet Keizergroep, niet (periode 1 en ronde 1). # series = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Aantal speelrondes 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Maken van een trio vanwege oneven aantal spelers
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep Spelers in trio TC Fk MA
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Pionnengroep met grootte 7
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Pionnengroepin periode 1, ronde 6, serie 1-> minimaal verschil = 1
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Periode 1 ronde 6 serie 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil groep Pionnengroep met grootte 7
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil Pionnengroepin periode 1, ronde 6, serie 2-> minimaal verschil = 2
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema Aantal wedstrijden 7
+2016-10-05 20:57:57 INFO nl.detoren.ijc.ui.control.IJCController printWedstrijden Print wedstrijden
+2016-10-05 20:57:57 INFO nl.detoren.ijc.IJC_Wedstrijden main Opstarten user interface
+2016-10-05 20:57:58 INFO nl.detoren.ijc.ui.view.Hoofdscherm initSizes Maak alle componenten van het juiste formaat
+2016-10-05 20:57:59 INFO nl.detoren.ijc.ui.control.IJCController exportToExcel Creeer Excel bestand met wedstrijden
+2016-10-05 20:57:59 INFO nl.detoren.ijc.io.OutputExcel updateExcel Wedstrijden wegschrijven naar Excel
+2016-10-05 20:58:01 INFO nl.detoren.ijc.io.OutputExcel updateExcel shiftrows 25,43,15
+2016-10-05 21:00:16 INFO nl.detoren.ijc.ui.control.IJCController saveState Sla status op in bestand status.json

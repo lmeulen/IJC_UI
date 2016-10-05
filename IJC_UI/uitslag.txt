@@ -1,0 +1,174 @@
+STAND na 3e ronde, 1e periode                KEIZERGROEP
+POS NAAM                           INI A ZW RATING  GESPEELD TEGEN  PNT
+-----------------------------------------------------------------------
+ 1. Elmar Roothaan                 (ER)# z1 (1692)   -- TH+## FW+   73 
+ 2. Mika Rutjens                   (MR)     (1555)   -- LE+Ar-TH+   71 
+ 3. Frank van Wijngaarden          (FW)# z2 (1454)   -- X3 TH=ER-   70 
+ 4. Malcolm Lok                    (ML)##z1 (1801)   -- BS+## --    69 
+ 5. Arthur Maters                  (Ar)##w2 (1649)   -- ## MR+--    69 
+ 6. Anna Martinez                  (AM)##w1 (1670)   -- X3 -- ##    68 
+ 7. Sara Martinez                  (SM)##   (1461)   -- X3 -- ##    68 
+ 8. Jeroen van Onzen               (JO)##z1 (2007)   -- ## -- --    65 
+ 9. Babak Zahmat                   (BZ)##   (1738)   -- ## -- --    65 
+10. Dick Vliek                     (DV)##z2 (1700)   -- ## -- --    65 
+11. Tom van 't Hoff                (TH)     (1507)   -- ER-FW=MR-   65 
+12. Bozorgi Souren                 (BS)##w1 (1499)   -- ML-## --    65 
+13. Peter Hamers                   (PH)##z1 (1415)   -- ## -- --    65 
+14. Lodewijk Entrop                (LE)##z1 (1383)   -- MR-## --    65 
+15. Lars Dam                       (Ld)##w1 ( 962)   -- ## -- --    65 
+
+Spelers uit de KONINGSGROEP die komende ronde meespelen.
+ 1. Ian Kock                       (IK)  z1 (1402)   IZ+MK+JM-Ju+   63 
+ 2. Ilan van der Zand              (IZ)     (1292)   IK-TT+Ju+JM=   62 
+ 3. Imre Woest                     (Im)##   (1130)   IZ-MK+Lu+##    61 
+ 4. Thijmen Terpstra               (TT)  w1 (1011)   LR+IZ-Ya+MH+   61 
+Nummer 3 en 4 schuiven alleen door als de groep daardoor even wordt
+
+
+STAND na 3e ronde , 1e periode               KONINGSGROEP
+POS NAAM                           INI A ZW RATING  GESPEELD TEGEN  PNT
+-----------------------------------------------------------------------
+ 1. Ian Kock                       (IK)  z1 (1402)   IZ+MK+JM-Ju+   63 
+ 2. Ilan van der Zand              (IZ)     (1292)   IK-TT+Ju+JM=   62 
+ 3. Imre Woest                     (Im)##   (1130)   IZ-MK+Lu+##    61 
+ 4. Thijmen Terpstra               (TT)  w1 (1011)   LR+IZ-Ya+MH+   61 
+ 5. Julian van Meegen              (JM)  z1 ( 823)   RC+JA+IK+IZ=   61 
+ 6. Lucas van der Weiden           (Lu)  z4 ( 798)   Ma-Im-MH+JA+   60 
+ 7. Mark Bakker                    (Ma)##   (1269)   ## Lu+LR+--    59 
+ 8. Lorens Konecny                 (LK)# z3 ( 854)   Ya-JP-JA+Ya+   59 
+ 9. Jian van de Pol                (JP)##w2 ( 832)   ## MH+LK+--    59 
+10. Julian van Dijk                (Ju)  w1 ( 803)   JA+RC+IZ-IK-   58 
+11. Mats Keurntjes                 (MK)##   ( 683)   Lu=Im-IK-##    58 
+12. Yaron Huberts                  (Ya)# w1 ( 815)   LK+MH-TT-LK-   57 
+13. Mahbod Hatamirad               (MH)  w2 ( 674)   JP-Ya+Lu-TT-   57 
+14. Pjotr Dam                      (PD)# z1 ( 647)   Lr-## LR-RC+   57 
+15. Jermo Aluy                     (JA)  z3 ( 643)   Ju-JM-LK-Lu-   55 
+16. Ruben Cabri                    (RC)  w1 ( 750)   JM-Ju-LR-PD-   53 
+17. Lars Rutjens                   (LR)  w2 ( 445)   TT-Ma-RC+PD+   39 
+
+Spelers uit de DAMEGROEP die komende ronde meespelen.
+ 1. Abel Hogenhout                 (AS)  z3 ( 643)   Si+RL+WW+SC-   53 
+ 2. Skipper Corbijn                (SC)# w1 ( 603)   RL+DD+JJ+AS+   53 
+ 3. Wouter Wieggers                (WW)  w1 ( 559)   DD+Si+AS-JJ+   53 
+ 4. Sietse Twijnstra               (Si)     ( 626)   AS-WW-Th+DH+   51 
+Nummer 3 en 4 schuiven alleen door als de groep daardoor even wordt
+
+
+STAND na 3e ronde , 1e periode               DAMEGROEP
+POS NAAM                           INI A ZW RATING  GESPEELD TEGEN  PNT
+-----------------------------------------------------------------------
+ 1. Abel Hogenhout                 (AS)  z3 ( 643)   Si+RL+WW+SC-   53 
+ 2. Skipper Corbijn                (SC)# w1 ( 603)   RL+DD+JJ+AS+   53 
+ 3. Wouter Wieggers                (WW)  w1 ( 559)   DD+Si+AS-JJ+   53 
+ 4. Sietse Twijnstra               (Si)     ( 626)   AS-WW-Th+DH+   51 
+ 5. Dominick van Dijk              (DD)     ( 553)   WW-SC-DH-Th+   49 
+ 6. Jesse Jansen                   (JJ)# z2 ( 523)   Th+## SC-WW-   49 
+ 7. Diede Hameleers                (DH)  w1 ( 522)   Fa+Th-DD+Si-   49 
+ 8. Thijs van Harten               (Th)  z2 ( 518)   SL+DH+Si-DD-   49 
+ 9. Fardad Nejad                   (Fa)# w1 ( 475)   DH-MC+RL+SL-   49 
+10. Ruben Loonen                   (RL)     ( 555)   SC-AS-Fa-Ro+   48 
+11. Wouter Hodzelmans              (WH)  z2 ( 493)   MC+SL-Sm+MC=   48 
+12. Sjoerd Loonen                  (SL)  w2 ( 466)   Th-WH+Ro-Fa+   48 
+13. Roef Corbijn                   (Ro)# w1 ( 463)   ## -- SL+RL-   47 
+14. Marijn Cabri                   (MC)     ( 441)   WH-Fa-Sm-WH=   44 
+15. Sam Michiels                   (Sm)# w2 ( 497)   ## -- MC+WH-   43 
+
+Spelers uit de TORENGROEP die komende ronde meespelen.
+ 1. Symen Goddijn                  (SG)     ( 428)   GT+Iv+Je+RW+   45 
+ 2. Raphael van Meegen             (Rm)  z1 ( 397)   Je-BW-RM+DW+   41 
+ 3. Guyon Terpstra                 (GT)     ( 393)   SG-Je+SH-Iv+   41 
+ 4. Iva Binnendijk                 (Iv)     ( 364)   BW+SG-SH+GT-   41 
+Nummer 3 en 4 schuiven alleen door als de groep daardoor even wordt
+
+
+STAND na 3e ronde , 1e periode               TORENGROEP
+POS NAAM                           INI A ZW RATING  GESPEELD TEGEN  PNT
+-----------------------------------------------------------------------
+ 1. Symen Goddijn                  (SG)     ( 428)   GT+Iv+Je+RW+   45 
+ 2. Raphael van Meegen             (Rm)  z1 ( 397)   Je-BW-RM+DW+   41 
+ 3. Guyon Terpstra                 (GT)     ( 393)   SG-Je+SH-Iv+   41 
+ 4. Iva Binnendijk                 (Iv)     ( 364)   BW+SG-SH+GT-   41 
+ 5. Jessey Bogaerts                (Je)  w1 ( 404)   Rm+GT-SG-RM-   39 
+ 6. Sil Hameleers                  (SH)     ( 399)   RM+DW-Iv-GT+   39 
+ 7. Demian Wellink                 (DW)     ( 377)   RM+SH+RW+Rm-   39 
+ 8. Boaz van Weele                 (BW)##w2 ( 372)   RM+Iv-Rm+##    39 
+ 9. Ruben van der Meulen           (RM)     ( 332)   SH-DW-Rm-Je+   37 
+10. Rick Wellink                   (RW)# w1 ( 317)   GT-## DW-SG-   35 
+
+Spelers uit de LOPERGROEP die komende ronde meespelen.
+ 1. Merijn Jansen                  (MJ)# z2 ( 343)   MS+## SK+Ja+   33 
+ 2. Sylvan Kenbeek                 (SK)  z1 ( 292)   Cr+Ja+MJ-VM+   32 
+ 3. Rinse van der Bent             (RB)  z2 ( 234)   IM+LL+MS+Cr=   32 
+ 4. Vera Maters                    (VM)# w1 ( 279)   KD-## Cr+SK-   31 
+Nummer 3 en 4 schuiven alleen door als de groep daardoor even wordt
+
+
+STAND na 3e ronde , 1e periode               LOPERGROEP
+POS NAAM                           INI A ZW RATING  GESPEELD TEGEN  PNT
+-----------------------------------------------------------------------
+ 1. Merijn Jansen                  (MJ)# z2 ( 343)   MS+## SK+Ja+   33 
+ 2. Sylvan Kenbeek                 (SK)  z1 ( 292)   Cr+Ja+MJ-VM+   32 
+ 3. Rinse van der Bent             (RB)  z2 ( 234)   IM+LL+MS+Cr=   32 
+ 4. Vera Maters                    (VM)# w1 ( 279)   KD-## Cr+SK-   31 
+ 5. Jasmijn Leisink                (Ja)  w1 ( 266)   FK+SK-AD+MJ-   31 
+ 6. Arnoud Dronkers                (AD)# z2 ( 227)   LL+IM+Ja-MS+   31 
+ 7. Bram Bleumink                  (Ba)# w1 ( 217)   SW-## MB+AS+   31 
+ 8. Crijn Schumacher               (Cr)     ( 279)   SK-FK+VM-RB=   30 
+ 9. Karsten Dam                    (KD)##w1 ( 256)   IM+VM+## --    29 
+10. Fabian Kenbeek                 (FK)  w1 ( 251)   Ja-Cr-IM-LL+   28 
+11. Mark Shrubsole                 (MS)#    ( 221)   MJ-## RB-AD-   27 
+12. Ilse van der Meulen            (IM)  w2 ( 196)   RB-AD-LL+FK+   27 
+
+Spelers uit de PAARDENGROEP die komende ronde meespelen.
+ 1. Raphael Grandia                (RG)     ( 239)   LH+Es+Mc+Es=   24 
+ 2. Floran Ahoud                   (Mc)  w1 ( 198)   AS+LH+RG-TV+   23 
+ 3. Elijah Sampson                 (Es)  w1 ( 288)   TB+RG-TV+RG=   22 
+ 4. Bram Bleumink                  (Ba)# w1 ( 209)   SW-## MB+AS+   21 
+Nummer 3 en 4 schuiven alleen door als de groep daardoor even wordt
+
+
+STAND na 3e ronde , 1e periode               PAARDENGROEP
+POS NAAM                           INI A ZW RATING  GESPEELD TEGEN  PNT
+-----------------------------------------------------------------------
+ 1. Raphael Grandia                (RG)     ( 239)   LH+Es+Mc+Es=   24 
+ 2. Floran Ahoud                   (Mc)  w1 ( 198)   AS+LH+RG-TV+   23 
+ 3. Elijah Sampson                 (Es)  w1 ( 288)   TB+RG-TV+RG=   22 
+ 4. Bram Bleumink                  (Ba)# w1 ( 209)   SW-## MB+AS+   21 
+ 5. Munzur Aglamaz                 (MA)# w1 ( 198)   Mc-## TB+MB+   21 
+ 6. Gurkan Kandemir                (GK)  z1 ( 195)   TV-Wh+Rw+Wh+   21 
+ 7. Sem Wisse                      (SW)##z1 ( 212)   Wh+Ba+## --    19 
+ 8. Ahmed Sahin                    (AS)#    ( 199)   Mc-TB+LH+Ba-   19 
+ 9. Lucas Heijboer                 (LH)  w1 ( 188)   RG-Mc-AS-TB+   19 
+10. Thijmen de Vries               (TV)     ( 157)   GK+Wh+Es-Mc-   19 
+11. Martijn van Beekum             (MB)#    ( 160)   Wh+## Ba-MA-   17 
+12. Thijs Bouman                   (TB)  z3 ( 152)   Es-AS-MA-LH-   17 
+13. Lyanne Leisink                 (LL)     ( 165)   AD-RB-IM-FK-   15 
+14. Ruben Wanninkhof               (Rw)  w2 ( 195)   -- -- Wh+GK-   13 
+
+Spelers uit de PIONNENGROEP die komende ronde meespelen.
+ 1. Elmar de Groot                 (EG)     ( 160)   Sk-Sl-Ml+IK+   13 
+ 2. Sander Koelmans                (Sk)##w1 ( 149)   DL+Ml+EG+##    13 
+ 3. Liam Denys                     (LD)     ( 155)   LG+TC+IK+Ml+   12 
+ 4. Pepijn van Dinther             (Pd)     ( 146)   LD+EG-SC+Ms+   11 
+Nummer 3 en 4 schuiven alleen door als de groep daardoor even wordt
+
+
+STAND na 3e ronde , 1e periode               PIONNENGROEP
+POS NAAM                           INI A ZW RATING  GESPEELD TEGEN  PNT
+-----------------------------------------------------------------------
+ 1. Elmar de Groot                 (EG)     ( 160)   Sk-Sl-Ml+IK+   13 
+ 2. Sander Koelmans                (Sk)##w1 ( 149)   DL+Ml+EG+##    13 
+ 3. Liam Denys                     (LD)     ( 155)   LG+TC+IK+Ml+   12 
+ 4. Pepijn van Dinther             (Pd)     ( 146)   LD+EG-SC+Ms+   11 
+ 5. Senne van het Loo              (Sl)##z3 ( 138)   Ml+IK+EG+##    11 
+ 6. Fabian Kenbeek                 (Fk)  w1 ( 190)   Ja-Cr-IM-LL+    8 
+ 7. Laszlo Grandia                 (LG)  z1 ( 100)   TC+LD-Ms+SC-    8 
+ 8. Sarya Cicekci                  (SC)# w1 ( 112)   ## -- Pd-LG+    7 
+ 9. Marijn Lindeman                (Ml)  w1 ( 100)   Sk-IK=EG-LD-    7 
+10. Ilayda Karabulut               (IK)# w2 ( 100)   Sl-Ml=LD-EG-    6 
+11. Tex Corbijn                    (TC)##w2 ( 100)   ## LG-LD---     5 
+12. Daniel Lesnoj                  (DL)##z1 ( 100)   Ml-Sk-## --     5 
+13. Wout van Harten                (Wh)  z1 ( 121)   TV-GK-Rw-GK-    3 
+14. Nudem Turan                    (Nm)#    ( 100)   -- ## -- --     3 
+15. Matthias van Asperen           (MA)#    ( 100)   -- -- -- --     3
+16. Metin Sahin                    (Ms)  w2 ( 100)   -- -- LG-Pd-    1 
