@@ -36,8 +36,7 @@ public class Groep {
     public static int KEIZERGROEP = 6;
 
     private static final String[] namen = {
-        "Pionnengroep", "Paardengroep", "Lopergroep",
-        "Torengroep", "Damegroep", "Koningsgroep", "Keizergroep"
+        "Pionnengroep", "Paardengroep", "Lopergroep","Torengroep", "Damegroep", "Koningsgroep", "Keizergroep"
     };
 
     private int niveau;
