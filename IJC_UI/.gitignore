@@ -3,4 +3,5 @@
 /status.json
 /Indeling*.xlsx
 /*.json
-/Uitslag1-4.txt
+/Uitslag*.txt
+/bin/

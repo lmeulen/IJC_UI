@@ -7,7 +7,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  * - TODO Het verwerken van uitslagen in de nieuwe rating van spelers gaat niet per wedstrijd maar per speler
@@ -76,9 +76,9 @@ public class Uitslagverwerker {
 		Speler nieuw = new Speler(speler);
 		// Standaardpunt
 		int puntenbij = 1;
-		System.out.println("      Aanwezigheidspunt :" + puntenbij);
+		logger.log(Level.INFO, "      Aanwezigheidspunt :" + puntenbij);
 		for (Wedstrijd w : spelerWedstrijden) {
-			System.out.println("    Wedstrijd :" + w.toString());
+			logger.log(Level.INFO, "    Wedstrijd :" + w.toString());
 			int resultaat = 0; // TOTO style -> 0 = onbekend
 			Speler tegenstander = w.getWit().gelijkAan(speler) ? w.getZwart() : w.getWit();
 			// RATING EN PUNTEN
@@ -88,48 +88,49 @@ public class Uitslagverwerker {
 			} else if (w.getUitslag() == Wedstrijd.GELIJKSPEL) {
 				puntenbij += 1;
 				resultaat = 3;
-				System.out.println("      Gelijkspel     : " + puntenbij);
+				logger.log(Level.INFO, "      Remise         : " + puntenbij);
 				int ratingoud = nieuw.getRating();
 				nieuw.setRating(nieuweRatingOSBO(nieuw.getRating(), tegenstander.getRating(), 3));
-				System.out.println("      Rating         : " + (nieuw.getRating() - ratingoud));
+				logger.log(Level.INFO, "      Rating         : " + (nieuw.getRating() - ratingoud));
 			} else if ((w.getUitslag() == Wedstrijd.WIT_WINT) && (w.getWit().gelijkAan(speler))) {
 				puntenbij += 2;
 				resultaat = 1;
-				System.out.println("      Winst met wit  : " + puntenbij);
+				logger.log(Level.INFO, "      Winst met wit  : " + puntenbij);
 				int ratingoud = nieuw.getRating();
 				nieuw.setRating(nieuweRatingOSBO(nieuw.getRating(), tegenstander.getRating(), 1));
-				System.out.println("      Rating         :" + (nieuw.getRating() - ratingoud));
+				logger.log(Level.INFO, "      Rating         :" + (nieuw.getRating() - ratingoud));
 			} else if ((w.getUitslag() == Wedstrijd.ZWART_WINT) && (w.getZwart().gelijkAan(speler))) {
 				puntenbij += 2;
 				resultaat = 1;
-				System.out.println("      Winst met zwart :" + puntenbij);
+				logger.log(Level.INFO, "      Winst met zwart :" + puntenbij);
 				int ratingoud = nieuw.getRating();
 				nieuw.setRating(nieuweRatingOSBO(nieuw.getRating(), tegenstander.getRating(), 1));
-				System.out.println("      Rating :" + (nieuw.getRating() - ratingoud));
+				logger.log(Level.INFO, "      Rating :" + (nieuw.getRating() - ratingoud));
 			} else {
 				// verlies
 				resultaat = 2;
-				System.out.println("      Verlies        :" + puntenbij);
+				logger.log(Level.INFO, "      Verlies        :" + puntenbij);
 				int ratingoud = nieuw.getRating();
 				nieuw.setRating(nieuweRatingOSBO(nieuw.getRating(), tegenstander.getRating(), 2));
-				System.out.println("      Rating         :" + (nieuw.getRating() - ratingoud));
+				logger.log(Level.INFO, "      Rating         :" + (nieuw.getRating() - ratingoud));
 			}
 			// WITVOORKEUR
 			if (w.getWit().gelijkAan(speler)) {
 				nieuw.setWitvoorkeur(nieuw.getWitvoorkeur()-1);
-				System.out.println("      Witvoorkeur -1 :" + nieuw.getWitvoorkeur());
+				logger.log(Level.INFO, "      Witvoorkeur -1 :" + nieuw.getWitvoorkeur());
 			} else {
 				nieuw.setWitvoorkeur(nieuw.getWitvoorkeur()+1);
-				System.out.println("      Witvoorkeur +1 :" + nieuw.getWitvoorkeur());
+				logger.log(Level.INFO, "      Witvoorkeur +1 :" + nieuw.getWitvoorkeur());
 			}
 			// TEGENSTANDERS
 			String res = resultaat == 1 ? "+" : (resultaat == 2 ? "-" : (resultaat == 3 ? "=" : "?"));
 			nieuw.addTegenstander(tegenstander.getInitialen()+res);			
-			System.out.println("      Tegenstanders  :" + nieuw.getTegenstandersString());
+			logger.log(Level.INFO, "      Tegenstanders  :" + nieuw.getTegenstandersString());
 		}
 		puntenbij = Math.min(puntenbij, 5); // niet meer dan 5 punten er bij
 		if (spelerWedstrijden.size() == 1) {
 			// bij 1 wedstrijd dubbele punten
+			logger.log(Level.INFO, "Enkele wedstrijd gepeeld dus verdubbelaar");
 			if (puntenbij == 3)	puntenbij = 5;
 			if (puntenbij == 2)	puntenbij = 3;
 		}
@@ -139,10 +140,10 @@ public class Uitslagverwerker {
 			if (!nieuw.isAfwezigheidspunt()) {
 				puntenbij += 2;
 				nieuw.setAfwezigheidspunt(true);
-				System.out.println("      Eerste keer afw : 2");
+				logger.log(Level.INFO, "      Eerste keer afw : 2 punte");
 			}
 		}
-		System.out.println("      Punten bij tot :" + puntenbij);
+		logger.log(Level.INFO, "      Punten bij tot :" + puntenbij);
 		nieuw.setPunten(nieuw.getPunten() + puntenbij);
 		if (nieuw.getRating() < 100) nieuw.setRating(100);
 		// Tegenstanders
