@@ -10,7 +10,9 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * FIXME Toevoegen externe wedstrijden
+ * - FIXME Toevoegen externe wedstrijden
+ * - TODO Export naast uitslag ook een long versie
+ * - TODO Verplaats export functies naar nieuwe klass in .io
  */
 package nl.detoren.ijc.ui.control;
 
@@ -321,12 +323,18 @@ public class IJCController {
     	status.resultaatVerwerkt.sorteerGroepen();
     	System.out.println(status.resultaatVerwerkt.toPrintableString());
     	logger.log(Level.INFO, "en sla uitslagen en status op");
-    	saveUitslag(status.groepen.getPeriode(), status.groepen.getRonde(), status.resultaatVerwerkt.toPrintableString());
+    	saveUitslag();
     	saveState(false);
     }
     
-    public void saveUitslag(int periode, int ronde, String uitslag) {
+    /**
+     * Sla de nieuwe stand op in een uitslag?-?.txt bestand
+     */
+    public void saveUitslag() {
 		try {
+			int periode = status.groepen.getPeriode();
+			int ronde = status.groepen.getRonde();
+			String uitslag = status.resultaatVerwerkt.toPrintableString();
 			String bestandsnaam = "Uitslag" + periode + "-" + ronde; 
 	    	logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 			FileWriter writer = new FileWriter(bestandsnaam + ".txt");

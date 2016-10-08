@@ -10,8 +10,12 @@
  * See: http://www.gnu.org/licenses/gpl-2.0.html
  *  
  * Problemen in deze code:
- * - TODO Vierde kolom met nieuwe groepstand na verwerken uitslagen 
+ * - MINOR Vierde kolom met nieuwe groepstand na verwerken uitslagen 
  * - TODO Te laat binnenkomende doorgeschoven speler kunnen toevoegen aan hogere groep
+ * - TODO Bij inschakelen automatisch, gelijk een automatische indeling doen
+ * - MINOR Als een uitslag ingevuld, aanwezigheid etc vastzetten
+ * - TODO Als er een uitslag is ingevuld, lukt het wisselen van groepstabblad soms niet meer
+ * 
  */
 package nl.detoren.ijc.ui.view;
 
@@ -48,8 +52,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -149,7 +155,7 @@ public class Hoofdscherm extends JFrame {
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
 
 		// Button voor automatisch doorvoeren wijzigingen ja/nee
-		automatischButton = new JButton("Automatisch");
+		automatischButton = new JButton("Auto");
 		automatischButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -157,16 +163,18 @@ public class Hoofdscherm extends JFrame {
 				controller.setAutomatisch(!controller.isAutomatisch());
 				if (controller.isAutomatisch()) {
 					automatischButton.setBackground(Color.GREEN);
+					controller.maakGroepsindeling();
 				} else {
 					automatischButton.setBackground(Color.RED);
 				}
+				hoofdPanel.repaint();
 			}
 		});
 		automatischButton.setBackground(controller.isAutomatisch() ? Color.green : Color.red);
 		buttonPane.add(automatischButton);
 
 		// Button voor bepalen wedstrijdgroepen
-		final JButton wgButton = new JButton("1. Maak wedstrijdgroep");
+		final JButton wgButton = new JButton("1a. Maak wedstrijdgroep");
 		wgButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -177,12 +185,9 @@ public class Hoofdscherm extends JFrame {
 			}
 		});
 		buttonPane.add(wgButton);
-		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
-		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
-		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 
 		// Button voor maken speelschema
-		final JButton ssButton = new JButton("2. Maak speelschema");
+		final JButton ssButton = new JButton("1b. Maak speelschema");
 		ssButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -195,7 +200,7 @@ public class Hoofdscherm extends JFrame {
 		buttonPane.add(ssButton);
 
 		// Button voor bewerken speelschema
-		final JButton bsButton = new JButton("2a. Bewerk speelschema");
+		final JButton bsButton = new JButton("1c. Bewerk speelschema");
 		bsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -218,11 +223,16 @@ public class Hoofdscherm extends JFrame {
 		});
 		buttonPane.add(bsButton);
 
-		final JButton exportButton = new JButton("Export");
+		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+
+		final JButton exportButton = new JButton("2. Export");
 		exportButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// ResultaatDialoog
+				updateAutomatisch(false);
 				controller.exportToExcel();
 				hoofdPanel.repaint();
 			}
@@ -233,7 +243,7 @@ public class Hoofdscherm extends JFrame {
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 
-		final JButton guButton = new JButton("3. Geef uitslagen");
+		final JButton guButton = new JButton("3a. Uitslagen");
 		guButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -256,6 +266,33 @@ public class Hoofdscherm extends JFrame {
 		});
 		buttonPane.add(guButton);
 
+		final JButton geButton = new JButton("3b. Extern");
+		geButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Implementeer selectie lijst externe spelers
+				// ResultaatDialoog
+				hoofdPanel.repaint();
+				updateAutomatisch(false);
+				ExternDialog ed = new ExternDialog(new JFrame(), "Externe spelers");
+				ed.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosed(WindowEvent e) {
+						System.out.println("closing...");
+						hoofdPanel.repaint();
+						// do something...
+					}
+
+				});
+				ed.setVisible(true);
+			}
+		});
+		buttonPane.add(geButton);
+
+		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+
 		final JButton usButton = new JButton("4. Update stand");
 		usButton.addActionListener(new ActionListener() {
 			@Override
@@ -272,7 +309,7 @@ public class Hoofdscherm extends JFrame {
 
 		rondeLabel = new JLabel();
 		updateRondeLabel();
-		// hoofdPanel.add(new JLabel("IJC De Toren"));
+		//hoofdPanel.add(new JLabel("IJC De Toren"));
 		hoofdPanel.add(buttonPane);
 		hoofdPanel.add(rondeLabel);
 	}
@@ -281,8 +318,9 @@ public class Hoofdscherm extends JFrame {
 	 * Update het label met ronde en periode informatie 
 	 */
 	public void updateRondeLabel() {
-		String rondeText = "<html>Ronde: " + controller.getGroepen().getRonde() + "<BR>";
-		rondeText += "Periode: " + controller.getGroepen().getPeriode() + "</HTML>";
+		String rondeText = "<html>Periode: " + controller.getGroepen().getPeriode() + "<BR>";
+		rondeText += "Ronde: " + controller.getGroepen().getRonde() + "</HTML>";
+
 		rondeLabel.setText(rondeText);
 	}
 	
@@ -388,7 +426,7 @@ public class Hoofdscherm extends JFrame {
 	public void initSizes() {
 		logger.log(Level.INFO, "Maak alle componenten van het juiste formaat");
 		// Fix the layout of the components on the screen.
-		fixedComponentSize(this, 1050, 670);
+		fixedComponentSize(this, 1150, 670);
 		fixedComponentSize(hoofdPanel, 1040, 580);
 		fixedComponentSize(tabs, 1020, 560);
 		for (int i = 0; i < aantal; ++i) {
@@ -396,21 +434,21 @@ public class Hoofdscherm extends JFrame {
 			fixedComponentSize(leftScrollPane[i], 320, 500);
 			fixedComponentSize(centerScrollPane[i], 320, 500);
 			fixedComponentSize(rightScrollPane[i], 320, 500);
-			fixedComponentSize(aanwezigheidsTabel[i], 320, 500);
-			fixedComponentSize(wedstrijdspelersTabel[i], 320, 500);
-			fixedComponentSize(updatedSpelersTabel[i], 320, 500);
-			fixedComponentSize(wedstrijdenTabel[i], 320, 500);
+			fixedComponentSize(aanwezigheidsTabel[i], 320, 475);
+			fixedComponentSize(wedstrijdspelersTabel[i], 320, 475);
+			fixedComponentSize(updatedSpelersTabel[i], 320, 475);
+			fixedComponentSize(wedstrijdenTabel[i], 320, 475);
 			// Fix the size of the displayed tables
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(0), 40);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(1), 30);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(2), 160);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(3), 40);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(4), 50);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(4), 45);
 
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(0), 20);
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(1), 170);
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(2), 30);
-			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(3), 90);
+			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(3), 95);
 
 			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(0), 20);
 			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(1), 160);
@@ -418,9 +456,9 @@ public class Hoofdscherm extends JFrame {
 			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(3), 40);
 
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(0), 35);
-			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(1), 130);
+			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(1), 120);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(2), 10);
-			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(3), 130);
+			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(3), 120);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(4), 30);
 		}
 	}
@@ -445,10 +483,7 @@ public class Hoofdscherm extends JFrame {
 		rightScrollPane[i] = new javax.swing.JScrollPane();
 
 		aanwezigheidsTabel[i] = new JTable(new SpelersModel(i, panel)) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = -8293073016982337108L;
 
 			@Override
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -523,6 +558,9 @@ public class Hoofdscherm extends JFrame {
 							nieuw.setWitvoorkeur(0);
 							nieuw.setAfwezigheidspunt(false);
 							nieuw.setAanwezig(true);
+							nieuw.setKeikansen(0);
+							nieuw.setKeipunten(0);
+							nieuw.setKNSBnummer(1234567);
 							if (s2 != null) {
 								nieuw.setPunten((s.getPunten() + s2.getPunten()) / 2);
 								nieuw.setRating((s.getRating() + s2.getRating()) / 2);
@@ -683,9 +721,25 @@ public class Hoofdscherm extends JFrame {
 		centerScrollPane[i].setViewportView(wedstrijdspelersTabel[i]);
 		rightScrollPane[i].setViewportView(wedstrijdenTabel[i]);
 
-		panel.add(leftScrollPane[i], BorderLayout.LINE_START);
-		panel.add(centerScrollPane[i], BorderLayout.CENTER);
-		panel.add(rightScrollPane[i], BorderLayout.LINE_END);
+		JPanel ibt = new JPanel();
+		ibt.add(new JTextField("Aanwezigheid spelers in de " + Groep.geefNaam(i)), BorderLayout.NORTH);
+		ibt.add(leftScrollPane[i], BorderLayout.SOUTH);
+		ibt.setBorder(new EmptyBorder(1, 1, 1, 1));
+		panel.add(ibt, BorderLayout.LINE_START);
+		//panel.add(leftScrollPane[i], BorderLayout.LINE_START);
+		JPanel ibt2 = new JPanel();
+		ibt2.add(new JTextField("Spelers die deze ronde spelen in de " + Groep.geefNaam(i)), BorderLayout.NORTH);
+		ibt2.add(centerScrollPane[i], BorderLayout.SOUTH);
+		ibt2.setBorder(new EmptyBorder(1, 1, 1, 1));
+		panel.add(ibt2, BorderLayout.LINE_START);
+		//panel.add(centerScrollPane[i], BorderLayout.CENTER);
+		JPanel ibt3 = new JPanel();
+		ibt3.add(new JTextField("Wedstrijden deze ronde in de " + Groep.geefNaam(i)), BorderLayout.NORTH);
+		ibt3.add(rightScrollPane[i], BorderLayout.SOUTH);
+		ibt3.setBorder(new EmptyBorder(1, 1, 1, 1));
+		panel.add(ibt3, BorderLayout.LINE_START);
+		//panel.add(rightScrollPane[i], BorderLayout.LINE_END);
+		panel.setBorder(new EmptyBorder(1, 1, 1, 1));
 
 		pack();
 

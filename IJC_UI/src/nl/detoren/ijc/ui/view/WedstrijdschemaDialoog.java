@@ -10,7 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-2.0.html
  *  
  * Problemen in deze code:
- * - ... 
+ * - TODO Tweede keer kleurwissel wisselt niet terug 
  * - ...
  */
 package nl.detoren.ijc.ui.view;

@@ -7,10 +7,9 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - ... 
  * - ...
  */
 package nl.detoren.ijc.ui.model;
@@ -67,7 +66,6 @@ public class WedstrijdModel extends AbstractTableModel {
         Groepswedstrijden gws = ws.getGroepswedstrijdenNiveau(groepID);
         ArrayList<Wedstrijd> w = gws.getWedstrijden();
         return w.size();
-        //return controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getWedstrijden().size();
     }
 
     @Override
@@ -137,6 +135,8 @@ public class WedstrijdModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object value, int row, int col) {
         fireTableCellUpdated(row, col);
+        Wedstrijd ws = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getWedstrijden().get(row);
+        ws.setUitslag012(Integer.valueOf((String)value));
         component.repaint();
     }
 

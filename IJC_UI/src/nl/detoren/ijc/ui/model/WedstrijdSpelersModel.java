@@ -126,14 +126,13 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
             String tt = "<HTML><TABLE><TR><TD COLSPAN = 2>";
             tt += speler.toString();
             tt += "</TD></TR>";
-            tt += "<TR><TD>Rating</TD><TD>" + speler.getRating() + "</TD></TR>";
+            tt += "<TR><TD>KNSB nr</TD><TD>" + speler.getKNSBnummer() + "</TD></TR>";
             tt += "<TR><TD>Punten</TD><TD>" + speler.getPunten() + "</TD></TR>";
+            tt += "<TR><TD>KEI Punten</TD><TD>" + speler.getKeipunten() + "/" + speler.getKeikansen()+"</TD></TR>";
+            tt += "<TR><TD>Rating</TD><TD>" + speler.getRating() + "</TD></TR>";
             tt += "<TR><TD>Initialen</TD><TD>" + speler.getInitialen() + " - " + speler.getAfkorting3() + "</TD></TR>";
             tt += "<TR><TD>Witvoorkeur</TD><TD>" + speler.getWitvoorkeur() + "</TD></TR>";
             tt += "<TR><TD>Tegenstanders</TD><TD>";
-            for (String tgn : speler.getTegenstanders()) {
-                tt += tgn + " ";
-            }
             tt += "</TD></TR>";
             tt += "</TABLE></HTML>";
             return tt;

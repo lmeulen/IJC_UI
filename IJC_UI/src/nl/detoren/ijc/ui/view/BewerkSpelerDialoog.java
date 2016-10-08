@@ -10,7 +10,8 @@
  * See: http://www.gnu.org/licenses/gpl-2.0.html
  *  
  * Problemen in deze code:
- * - ... 
+ * - TODO Toevoegen KNSB nummer en KEI punten
+ * - MINOR Toevoegen geschiedenis string? 
  * - ...
  */
 package nl.detoren.ijc.ui.view;

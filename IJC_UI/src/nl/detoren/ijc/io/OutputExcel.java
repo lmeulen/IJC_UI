@@ -7,10 +7,10 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - TODO Bij verwijderen tweede serie verdwijnt onderste streep speellijst
+ * - MINOR Bij verwijderen tweede serie verdwijnt onderste streep speellijst
  * - ...
  */
 package nl.detoren.ijc.io;

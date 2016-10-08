@@ -10,8 +10,9 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - TODO Het verwerken van uitslagen in de nieuwe rating van spelers gaat niet per wedstrijd maar per speler
+ * - MINOR Het verwerken van uitslagen in de nieuwe rating van spelers gaat niet per wedstrijd maar per speler
  * - TODO Generenen KNSB rating verwerkingsbestanden
+ * - FIXME KEI punten berekenen
  */
 package nl.detoren.ijc.ui.control;
 
@@ -161,6 +162,7 @@ public class Uitslagverwerker {
 	 * @return wedstrijden gespeeld door speler
 	 */
 	private ArrayList<Wedstrijd> getWedstrijdenVoorSpeler(Speler speler, Wedstrijden wedstrijden) {
+		logger.log(Level.INFO, "Vind wedstrijden voor speler :" + speler.toString());
 		ArrayList<Wedstrijd> result = new ArrayList<>();
 		for (Groepswedstrijden gws : wedstrijden.getGroepswedstrijden()) {
 			for (Serie serie : gws.getSeries()) {
@@ -176,6 +178,7 @@ public class Uitslagverwerker {
 				}
 			}
 		}
+		logger.log(Level.INFO, "" + result.size() + "wedstrijden gevonden voor " + speler.toString());
 		return result;
 	}
 
@@ -191,7 +194,7 @@ public class Uitslagverwerker {
        
        int[] ratingTabel = {0, 16, 31, 51, 71, 91, 116, 141, 166, 201, 236, 281, 371, 9999};
        int ratingVerschil = Math.abs(beginRating - tegenstanderRating);
-       boolean witHoger = beginRating > tegenstanderRating;
+       boolean ratingHogerDanTegenstander = beginRating > tegenstanderRating;
        int index = 0;
        while (ratingVerschil >= ratingTabel[index]) {
            index++;
@@ -223,16 +226,16 @@ public class Uitslagverwerker {
        // >371     + 0   - 0   +24   -24   -12   +12        
        int deltaRating;
        switch (uitslag) {
-           case 1:
-               deltaRating = 12 + (witHoger ? (-1 * index) : (+1 * index));
+           case 1: // Winst
+               deltaRating = 12 + (ratingHogerDanTegenstander ? (-1 * index) : (+1 * index));
                return beginRating + deltaRating;
-           case 2:
-               deltaRating = 12 + (witHoger ? (+1 * index) : (-1 * index));
+           case 2: // Verlies
+               deltaRating = 12 + (ratingHogerDanTegenstander ? (+1 * index) : (-1 * index));
                return beginRating - deltaRating;
-           case 3:
-               deltaRating = (witHoger ? (-1 * index) : (+1 * index));
+           case 3: // Remise
+               deltaRating = (ratingHogerDanTegenstander ? (-1 * index) : (+1 * index));
                return beginRating + deltaRating;
-           default:
+           default: // Geen uitstal
                return beginRating;
        }
    }
