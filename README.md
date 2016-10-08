@@ -1,2 +1,2 @@
 # IJC_UI
-Schaakindeling voor jeugdcompetitie
+Schaakindeling voor jeugdcompetitie voor Schaakvereniging De Toren
