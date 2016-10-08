@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-2.0.html
  *  
  * Problemen in deze code:
- * - TODO Toevoegen KNSB nummer en KEI punten
  * - MINOR Toevoegen geschiedenis string? 
  * - ...
  */
@@ -69,7 +68,7 @@ public class BewerkSpelerDialoog extends JDialog {
 
     private JPanel createPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(14, 2));
+        panel.setLayout(new GridLayout(17, 2));
         //ID
         panel.add(new JLabel("ID"));
         final JTextField tfID = new JTextField((new Integer(speler.getId())).toString());
@@ -100,6 +99,18 @@ public class BewerkSpelerDialoog extends JDialog {
         panel.add(new JLabel("Punten"));
         final JTextField tfPunten = new JTextField((new Integer(speler.getPunten())).toString());
         panel.add(tfPunten);
+        // KEIPunten
+        panel.add(new JLabel("KEI Punten"));
+        final JTextField tfKeiPunten = new JTextField((new Integer(speler.getKeipunten())).toString());
+        panel.add(tfKeiPunten);
+        // Punten
+        panel.add(new JLabel("KEI Kansen"));
+        final JTextField tfKeiKansen = new JTextField((new Integer(speler.getKeikansen())).toString());
+        panel.add(tfKeiKansen);
+        // KNSB
+        panel.add(new JLabel("KNSB Nummer"));
+        final JTextField tfKNSB = new JTextField((new Integer(speler.getKNSBnummer())).toString());
+        panel.add(tfKNSB);
         // Tegenstanders
         panel.add(new JLabel("Tegenstanders"));
         final JTextField tfTegenstander1 = new JTextField(speler.getTegenstanders()[0]);
@@ -138,6 +149,15 @@ public class BewerkSpelerDialoog extends JDialog {
                 // Punten
                 int punten = Integer.parseInt(tfPunten.getText());
                 speler.setPunten(punten);
+                // KEI Punten
+                int keipunten = Integer.parseInt(tfKeiPunten.getText());
+                speler.setKeipunten(keipunten);
+                // Kei kansen
+                int keikansen = Integer.parseInt(tfKeiKansen.getText());
+                speler.setKeikansen(keikansen);
+                // KNSB
+                int knsb = Integer.parseInt(tfKNSB.getText());
+                speler.setKNSBnummer(knsb);
                 // Tegenstanders
                 String[] tgn = new String[4];
                 tgn[0] = tfTegenstander1.getText();

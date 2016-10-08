@@ -1,7 +1,6 @@
 package nl.detoren.ijc.ui.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -16,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.table.TableColumn;
 
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
@@ -25,6 +23,10 @@ import nl.detoren.ijc.ui.util.Utils;
 
 public class ExternDialog extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5095831194228354742L;
 	private ArrayList<Speler> spelers = null;
 	private IJCController controller = null;
 
