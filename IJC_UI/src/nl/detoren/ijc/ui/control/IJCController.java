@@ -322,7 +322,7 @@ public class IJCController {
     public void verwerkUitslagen() {
     	logger.log(Level.INFO, "Verwerk uitslagen");
     	Uitslagverwerker uv = new Uitslagverwerker();
-    	status.resultaatVerwerkt =  uv.verwerkUitslag(status.groepen, status.wedstrijden);
+    	status.resultaatVerwerkt =  uv.verwerkUitslag(status.groepen, status.wedstrijden, status.externGespeeld);
     	status.resultaatVerwerkt.sorteerGroepen();
     	System.out.println(status.resultaatVerwerkt.toPrintableString());
     	logger.log(Level.INFO, "en sla uitslagen en status op");

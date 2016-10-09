@@ -13,7 +13,6 @@
  * - MINOR Het verwerken van uitslagen in de nieuwe rating van spelers gaat niet per wedstrijd maar per speler
  * - TODO Generenen KNSB rating verwerkingsbestanden
  * - FIXME KEI punten berekenen
- * - FIXME Externe resultaten meenemen
  */
 package nl.detoren.ijc.ui.control;
 
@@ -45,7 +44,7 @@ public class Uitslagverwerker {
 	 * @param wedstrijden De gespeelde wedstrijden
 	 * @return Bijgewerkte standen
 	 */
-	public Groepen verwerkUitslag(Groepen spelersgroepen, Wedstrijden wedstrijden) {
+	public Groepen verwerkUitslag(Groepen spelersgroepen, Wedstrijden wedstrijden, ArrayList<Speler> externGespeeld) {
 		Groepen updateGroepen = new Groepen();
 		updateGroepen.setPeriode(spelersgroepen.getPeriode());
 		updateGroepen.setRonde(spelersgroepen.getRonde());
@@ -55,12 +54,29 @@ public class Uitslagverwerker {
 			bijgewerkt.setNiveau(groep.getNiveau());
 			for (Speler speler : groep.getSpelers()) {
 				logger.log(Level.INFO, "Speler " + speler.getNaam());
-				Speler update = updateSpeler(speler, wedstrijden);
+				boolean extern = heeftExternGespeeld(speler, externGespeeld);
+				logger.log(Level.INFO, "Extern ? " + extern);
+				Speler update = updateSpeler(speler, wedstrijden, extern);
 				bijgewerkt.addSpeler(update);
 			}
 			updateGroepen.addGroep(bijgewerkt);
 		}
 		return updateGroepen;
+	}
+
+	/**
+	 * Bepaal of de gegeven speler extern heeft gespeeld
+	 * @param speler De betreffende speler
+	 * @param hebbenExternGespeeld Lijst van spelers die extern hebben gespeeld
+	 * @return
+	 */
+	private boolean heeftExternGespeeld(Speler speler, ArrayList<Speler> hebbenExternGespeeld) {
+		if ((speler != null) && (hebbenExternGespeeld != null) && (hebbenExternGespeeld.size() > 0)) {
+			for (Speler s : hebbenExternGespeeld) {
+				if (s.gelijkAan(speler)) return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -73,7 +89,7 @@ public class Uitslagverwerker {
 	 *            Alle wedstrijden
 	 * @return Bijgewerkte speler
 	 */
-	private Speler updateSpeler(Speler speler, Wedstrijden wedstrijden) {
+	private Speler updateSpeler(Speler speler, Wedstrijden wedstrijden, boolean extern) {
 		ArrayList<Wedstrijd> spelerWedstrijden = getWedstrijdenVoorSpeler(speler, wedstrijden);
 		Speler nieuw = new Speler(speler);
 		// Standaardpunt
@@ -145,6 +161,18 @@ public class Uitslagverwerker {
 				logger.log(Level.INFO, "      Eerste keer afw : 2 punte");
 			}
 		}
+		// Externe resultaten verwerken
+		if (extern) {
+			if (spelerWedstrijden.size() > 0) {
+				logger.log(Level.WARNING, "Speler " + nieuw.getNaam() + " zowel extern als intern. Extern telt niet mee");
+			}  else {
+				puntenbij = 3;
+				nieuw.addTegenstander("X3 ");
+				nieuw.setAfwezigheidspunt(true);
+				logger.log(Level.WARNING, "Speler " + nieuw.getNaam() + " extern gespeeld, dus 3 punten");
+			}
+		}
+		
 		logger.log(Level.INFO, "      Punten bij tot :" + puntenbij);
 		nieuw.setPunten(nieuw.getPunten() + puntenbij);
 		if (nieuw.getRating() < 100) nieuw.setRating(100);

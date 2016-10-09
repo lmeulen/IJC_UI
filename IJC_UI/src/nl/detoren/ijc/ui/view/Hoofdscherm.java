@@ -14,7 +14,7 @@
  * - TODO Te laat binnenkomende doorgeschoven speler kunnen toevoegen aan hogere groep
  * - TODO Bij inschakelen automatisch, gelijk een automatische indeling doen
  * - MINOR Als een uitslag ingevuld, aanwezigheid etc vastzetten
- * - TODO Als er een uitslag is ingevuld, lukt het wisselen van groepstabblad soms niet meer
+ * - MINOR Wisselen groepsblad werkt soms niet meer (nog niet reproduceerbaar) 
  * 
  */
 package nl.detoren.ijc.ui.view;
