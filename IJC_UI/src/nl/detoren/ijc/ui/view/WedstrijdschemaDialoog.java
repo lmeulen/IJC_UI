@@ -7,11 +7,9 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - TODO Tweede keer kleurwissel wisselt niet terug 
- * - ...
  */
 package nl.detoren.ijc.ui.view;
 
@@ -262,9 +260,7 @@ public class WedstrijdschemaDialoog extends JDialog {
 
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            Speler s1 = w.getWit();
-                            Speler s2 = w.getZwart();
-                            w.setSpelers(s2, s1);
+                            w.wisselSpelers();
                             model.forceRepaint();
                         }
                     });

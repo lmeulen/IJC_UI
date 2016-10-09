@@ -54,7 +54,6 @@ public class ExternDialog extends JDialog {
                 for (JTextField jtf : spelerVelden) {
                     if (jtf != null && jtf.getText() != null && !jtf.getText().equals("")) {
                     	logger.log(Level.INFO, "Extern gespeeld door (invoer) :" + jtf.getText());
-                        // TODO Opslaan externe resultaten in een datastructuur
                         Speler s = controller.addExterneSpeler(jtf.getText());
                     	logger.log(Level.INFO, "Extern gespeeld door (Speler) :" + s.getNaam());
                     }

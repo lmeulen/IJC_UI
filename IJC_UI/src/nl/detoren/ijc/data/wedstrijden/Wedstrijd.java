@@ -83,6 +83,12 @@ public class Wedstrijd {
             zwart = s1;
         }
     }
+    
+    public final void wisselSpelers() {
+    	Speler tmp = wit;
+    	wit = zwart;
+    	zwart = tmp;
+    }
 
     public int getUitslag() {
         return uitslag;

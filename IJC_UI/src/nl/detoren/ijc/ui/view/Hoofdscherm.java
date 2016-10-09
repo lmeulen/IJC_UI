@@ -10,9 +10,8 @@
  * See: http://www.gnu.org/licenses/gpl-2.0.html
  *  
  * Problemen in deze code:
- * - MINOR Vierde kolom met nieuwe groepstand na verwerken uitslagen 
  * - TODO Te laat binnenkomende doorgeschoven speler kunnen toevoegen aan hogere groep
- * - TODO Bij inschakelen automatisch, gelijk een automatische indeling doen
+ * - MINOR Vierde kolom met nieuwe groepstand na verwerken uitslagen 
  * - MINOR Als een uitslag ingevuld, aanwezigheid etc vastzetten
  * - MINOR Wisselen groepsblad werkt soms niet meer (nog niet reproduceerbaar) 
  * 
