@@ -12,7 +12,6 @@
  * Problemen in deze code:
  * - TODO Bij oneven aantal spelers in de hoogste groep wordt er een volledig trio ingepland -> Handmatig aanpassen   
  * - TODO Afmelden van speler die is doorgeschoven, werkt nog niet. -> Workaround: Delete in afwezigheidstabel
- * - FIXME Maximale afstand op rankinglijst bij indeling
  */
 package nl.detoren.ijc.ui.control;
 
@@ -459,7 +458,8 @@ public class GroepenIndeler {
             // Inplannen 'gewone' speler
             int plannenID = eersteOngeplandeSpeler(gepland, 0);
             int zoekID = plannenID + 1;
-            while (zoekID < gepland.length) {
+            // MINOR de maximale afstand van 4 mee varieren in het algoritme
+            while ((zoekID < gepland.length) && (Math.abs(zoekID - plannenID) < Math.max(4,minverschil))) {
                 int partner = eersteOngeplandeSpeler(gepland, zoekID);
                 if (partner == -1) {
                     return null;
