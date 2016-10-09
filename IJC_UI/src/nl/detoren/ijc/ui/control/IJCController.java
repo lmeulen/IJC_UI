@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - FIXME Toevoegen externe wedstrijden
  * - TODO Export naast uitslag ook een long versie
  * - TODO Verplaats export functies naar nieuwe klass in .io
  */
@@ -21,6 +20,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,6 +55,7 @@ public class IJCController {
         private Groepen wedstrijdgroepen;
         private Wedstrijden wedstrijden;
         private Groepen resultaatVerwerkt;
+        private ArrayList<Speler> externGespeeld;
     }
     private Status status;
 
@@ -64,6 +65,7 @@ public class IJCController {
     	status.groepen = null;
     	status.wedstrijden = null;
     	status.wedstrijdgroepen = null;
+    	status.externGespeeld = null;
 
     }
 
@@ -106,6 +108,7 @@ public class IJCController {
 			status.wedstrijdgroepen = null;
 			status.wedstrijden = null;
 			status.resultaatVerwerkt = null;
+			status.externGespeeld = null;
 			if (status.groepen.getRonde() == 1)
 				resetAanwezigheidspunt();
 		}
@@ -399,4 +402,71 @@ public class IJCController {
     	oe.updateExcel(status.wedstrijden);
     }
     
+    public ArrayList<Speler> getExterneSpelers() {
+    	return status.externGespeeld;
+    }
+    
+    /**
+     * Voeg externe speler toe 
+     * @param naam Naam of initialen
+     * @return De toegeveogde speler
+     */
+    public Speler addExterneSpeler(String naam) {
+    	if (status.externGespeeld == null) status.externGespeeld = new ArrayList<>();
+    	if (naam != null && naam.length() == 2) {
+    		Speler s = getSpelerOpInitialen(naam);
+    		if (s != null) status.externGespeeld.add(s);
+    		return s;
+    	} else if (naam != null && naam.length() > 2) {
+    		Speler s = getSpelerOpNaam(naam);
+    		if (s != null) status.externGespeeld.add(s);
+    		return s;
+    	} else {
+    		// ongeldige naam
+    		return null;
+    	}
+    }
+    
+    /**
+     * Wis lijst met exterene spelers
+     */
+    public void wisExterneSpelers() {
+    	status.externGespeeld = new ArrayList<>();
+    }
+
+    /**
+     * Vind speler in alle groepen op naam
+     * @param naam
+     * @return
+     */
+    public Speler getSpelerOpNaam(String naam) {
+    	if (status.groepen != null) {
+    		for (Groep groep : status.groepen.getGroepen()) {
+    			for (Speler speler : groep.getSpelers()) {
+    				if (speler.getNaam().equals(naam)) {
+    					return speler;
+    				}
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
+    /**
+     * Vind speler in alle groepen op initialen
+     * @param naam
+     * @return
+     */
+    public Speler getSpelerOpInitialen(String naam) {
+    	if (status.groepen != null) {
+    		for (Groep groep : status.groepen.getGroepen()) {
+    			for (Speler speler : groep.getSpelers()) {
+    				if (speler.getInitialen().equals(naam)) {
+    					return speler;
+    				}
+    			}
+    		}
+    	}
+    	return null;
+    }
 }

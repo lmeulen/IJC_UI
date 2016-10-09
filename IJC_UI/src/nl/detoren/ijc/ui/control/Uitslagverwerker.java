@@ -13,6 +13,7 @@
  * - MINOR Het verwerken van uitslagen in de nieuwe rating van spelers gaat niet per wedstrijd maar per speler
  * - TODO Generenen KNSB rating verwerkingsbestanden
  * - FIXME KEI punten berekenen
+ * - FIXME Externe resultaten meenemen
  */
 package nl.detoren.ijc.ui.control;
 

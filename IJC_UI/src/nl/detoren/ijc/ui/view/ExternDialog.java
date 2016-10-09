@@ -1,6 +1,5 @@
 package nl.detoren.ijc.ui.view;
 
-import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -14,66 +13,70 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
-import nl.detoren.ijc.ui.model.ExterneWedstrijdenModel;
-import nl.detoren.ijc.ui.util.Utils;
 
 public class ExternDialog extends JDialog {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5095831194228354742L;
-	private ArrayList<Speler> spelers = null;
+	private static final long serialVersionUID = -6694326748574261596L;
 	private IJCController controller = null;
+    JTextField[] spelerVelden;
 
 	private final static Logger logger = Logger.getLogger(ExternDialog.class.getName());
 
 	public ExternDialog(Frame frame, String title) {
-		super(frame, title);
-		controller = IJCController.getInstance();
-		setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		logger.log(Level.INFO, "Invoeren externe spelers");
+        super(frame, "Invoer externe spelers (invoer naam of initialen");
+        controller = IJCController.getInstance();
+        setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    	logger.log(Level.INFO, "Externe resultaten invoeren.");
 
-		JPanel panel = new JPanel(false);
-		panel.setLayout(new GridLayout(1, 2));
+    	ArrayList<Speler> spelers = controller.getExterneSpelers();
+    	if (spelers == null) spelers = new ArrayList<>(); 
+    	int aantal = 10;
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(aantal, 1));
+        spelerVelden = new JTextField[aantal];
+        for (int i = 0; i < aantal; ++i) {
+            spelerVelden[i] = new JTextField();
+            if (i < spelers.size()) spelerVelden[i].setText(spelers.get(i).getNaam()); 
+            spelerVelden[i].setMinimumSize(new Dimension(20, 10));
+            spelerVelden[i].setMaximumSize(new Dimension(20, 10));
+            panel.add(spelerVelden[i]);
+        }
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(new ActionListener() {
 
-		JTable table = new JTable(new ExterneWedstrijdenModel());
-		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-		table.setFillsViewportHeight(true);
-//		TableColumn column = table.getColumn(0);
-//		Component comp = table.getDefaultRenderer(table.getModel().getColumnClass(0))
-//				.getTableCellRendererComponent(table, null, false, false, 0, 0);
-		Utils.fixedColumSize(table.getColumnModel().getColumn(0), 200);
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.wisExterneSpelers();
+                for (JTextField jtf : spelerVelden) {
+                    if (jtf != null && jtf.getText() != null && !jtf.getText().equals("")) {
+                    	logger.log(Level.INFO, "Extern gespeeld door (invoer) :" + jtf.getText());
+                        // TODO Opslaan externe resultaten in een datastructuur
+                        Speler s = controller.addExterneSpeler(jtf.getText());
+                    	logger.log(Level.INFO, "Extern gespeeld door (Speler) :" + s.getNaam());
+                    }
+                }
+                setVisible(false);
+                dispose();
+            }
+        });
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(new ActionListener() {
 
-		panel.add(table, BorderLayout.LINE_START);
-
-		JButton okButton = new JButton("OK");
-		okButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		JButton cancelButton = new JButton("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				dispose();
-			}
-		});
-		panel.add(okButton);
-		panel.add(cancelButton);
-		getContentPane().add(panel);
-		setSize(600, 230);
-		setLocationRelativeTo(frame);
-	}
-
-
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                dispose();
+            }
+        }
+        );
+        panel.add(okButton);
+        panel.add(cancelButton);
+        getContentPane().add(panel);
+        setSize(600, (aantal+1)*23);
+        setLocationRelativeTo(frame);
+    }
 }
