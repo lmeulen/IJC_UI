@@ -82,6 +82,9 @@ public class Groepen {
 	 * @return
 	 */
     public String toPrintableString() {
+    	return toPrintableString(false);
+    }
+    public String toPrintableString(boolean lang) {
         String result = "";
         for (Groep groep : groepen) {
             //Stand na 3e ronde , 1e periode               Keizergroep (16)	
@@ -92,7 +95,7 @@ public class Groepen {
             result += "    Naam                           ini   zw rating  gespeeld tegen  pnt\n";
             result += "-----------------------------------------------------------------------\n";
 
-            result += groep.toPrintableString() + "\n";
+            result += groep.toPrintableString(lang) + "\n";
         }
         return result;
     }

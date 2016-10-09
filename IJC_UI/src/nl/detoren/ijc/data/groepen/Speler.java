@@ -10,7 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - MINOR GEbruik hash functie voor dummy knsbnummers
+ * - MINOR Gebruik hash functie voor dummy knsbnummers
  */
 package nl.detoren.ijc.data.groepen;
 
@@ -262,6 +262,16 @@ public class Speler implements Cloneable {
     }
 
     public String toPrintableString() {
+    	return toPrintableString(false);
+    }
+
+    public String toPrintableString(boolean lang) {
+    	String result = toPrintableStringShort();
+    	if (lang)result += printExtensie();
+    	return result;
+    }
+
+    public String toPrintableStringShort() {
         //16. Iva  Binnendijk                (Iv)* w1 ( 296)   RM Ja SW **    17
         String result;
         // ID
@@ -306,6 +316,29 @@ public class Speler implements Cloneable {
 
     }
 
+    public String printExtensie() {
+    	//   0/ 0 8560057 Im+## -- -- LE=-- BA=-- IW+## -- jA+-- -- -- --
+    	//1234567890123456789012345678901234567890123456789012345678901234567890
+    	//         1         2         3         4         5         6         7
+    	String result = " ";
+    	// Keipunten
+    	String tmp = Integer.toString(keipunten);
+    	result += (tmp.length() < 2 ? " " : "") + tmp + "/";
+    	// Keikansen
+    	tmp = Integer.toString(keikansen);
+    	result += (tmp.length() < 2 ? " " : "") + tmp + " ";
+    	// KNSB
+    	tmp = Integer.toString(KNSBnummer);
+        while (tmp.length() < 7) {
+            tmp = " " + tmp;
+        }    	
+        result += tmp + " ";
+    	// speelgeschiedenis
+        result += speelgeschiedenis;
+        return result;
+
+    }
+    
     private String verwijderAccenten(String s) {
         String norm = Normalizer.normalize(s, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");

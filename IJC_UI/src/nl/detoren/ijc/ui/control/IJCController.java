@@ -10,8 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - TODO Export naast uitslag ook een long versie
- * - TODO Verplaats export functies naar nieuwe klass in .io
  */
 package nl.detoren.ijc.ui.control;
 
@@ -36,6 +34,7 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.io.GroepenReader;
 import nl.detoren.ijc.io.OutputExcel;
+import nl.detoren.ijc.io.OutputTekst;
 
 /**
  * Main controller class voor afhandeling van de groepen en wedstrijden
@@ -326,34 +325,10 @@ public class IJCController {
     	status.resultaatVerwerkt.sorteerGroepen();
     	System.out.println(status.resultaatVerwerkt.toPrintableString());
     	logger.log(Level.INFO, "en sla uitslagen en status op");
-    	saveUitslag();
+    	new OutputTekst().saveUitslag(status.resultaatVerwerkt);
     	saveState(false);
     }
     
-    /**
-     * Sla de nieuwe stand op in een uitslag?-?.txt bestand
-     */
-    public void saveUitslag() {
-		try {
-			int periode = status.groepen.getPeriode();
-			int ronde = status.groepen.getRonde();
-			String uitslag = status.resultaatVerwerkt.toPrintableString();
-			String bestandsnaam = "Uitslag" + periode + "-" + ronde; 
-	    	logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
-			FileWriter writer = new FileWriter(bestandsnaam + ".txt");
-			writer.write(uitslag);
-			writer.close();
-			Gson gson = new Gson();
-			String jsonString = gson.toJson(status.resultaatVerwerkt);
-			writer = new FileWriter(bestandsnaam + ".json");
-			writer.write(jsonString);
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	
-    }
-
     /**
      * Save state of the application to disk
      * @param  unique if true, a unique file is created

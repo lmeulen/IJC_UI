@@ -99,9 +99,18 @@ public class Groep {
      * @return String met alle spelers
      */
     public String toPrintableString() {
+    	return toPrintableString(false);
+    }
+    
+    /**
+     * Retourneer een lijst van spelers. 
+     * @param lang Als waar, lange notatoe
+     * @return
+     */
+    public String toPrintableString(boolean lang) {
         String result = "";
         for (Speler s : getSpelers()) {
-            result += s.toPrintableString();
+            result += s.toPrintableString(lang);
             result += "\n";
         }
         return result;
