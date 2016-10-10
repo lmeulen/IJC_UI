@@ -421,6 +421,7 @@ public class GroepenIndeler {
         for (int i = 0; i < diepte; ++i) {
             System.out.print("  ");
         }
+        int maxverschil = minverschil + 3;
         System.out.print("vanaf:" + eersteOngeplandeSpeler(gepland, 0) + "#" + teplannen + "mv:" + minverschil);
         System.out.print(",itn:" + ignoreTgn + ",niv:" + niveau + "\n");
         
@@ -433,7 +434,7 @@ public class GroepenIndeler {
         int doorgeschovenID = laatsteOngeplandeDoorgeschovenspeler(spelers, gepland, niveau);
         if ((doorgeschovenID >= 0) && (ronde == 1)) {
             int zoekId = doorgeschovenID - 1;
-            while (zoekId != -1) {
+            while ((zoekId != -1) && ((Math.abs(zoekId - doorgeschovenID) < maxverschil))) {
                 int partner = laatsteOngeplandeSpeler(gepland, zoekId);
                 if (partner == -1) {
                     return null;
@@ -459,7 +460,7 @@ public class GroepenIndeler {
             int plannenID = eersteOngeplandeSpeler(gepland, 0);
             int zoekID = plannenID + 1;
             // MINOR de maximale afstand van 4 mee varieren in het algoritme
-            while ((zoekID < gepland.length) && (Math.abs(zoekID - plannenID) < Math.max(4,minverschil))) {
+            while ((zoekID < gepland.length) && (Math.abs(zoekID - plannenID) < maxverschil)) {
                 int partner = eersteOngeplandeSpeler(gepland, zoekID);
                 if (partner == -1) {
                     return null;

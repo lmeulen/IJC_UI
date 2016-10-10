@@ -143,7 +143,7 @@ public class Hoofdscherm extends JFrame {
 
 		this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
-                    controller.saveState(false);
+                    controller.saveState(false, null);
                 }
         });
 
@@ -233,6 +233,7 @@ public class Hoofdscherm extends JFrame {
 				// ResultaatDialoog
 				updateAutomatisch(false);
 				controller.exportToExcel();
+				controller.saveState(true, "export");
 				hoofdPanel.repaint();
 			}
 		});
@@ -371,7 +372,7 @@ public class Hoofdscherm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Save state");
-				controller.saveState(false);
+				controller.saveState(true, "save");
 			}
 		});
 		menu.add(item);
@@ -382,7 +383,7 @@ public class Hoofdscherm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Exit from meu");
-				controller.saveState(false);
+				controller.saveState(false, null);
 				System.exit(EXIT_ON_CLOSE);
 			}
 		});

@@ -12,7 +12,6 @@
  * Problemen in deze code:
  * - MINOR Het verwerken van uitslagen in de nieuwe rating van spelers gaat niet per wedstrijd maar per speler
  * - TODO Generenen KNSB rating verwerkingsbestanden
- * - FIXME KEI punten berekenen
  */
 package nl.detoren.ijc.ui.control;
 
@@ -92,6 +91,9 @@ public class Uitslagverwerker {
 	private Speler updateSpeler(Speler speler, Wedstrijden wedstrijden, boolean extern) {
 		ArrayList<Wedstrijd> spelerWedstrijden = getWedstrijdenVoorSpeler(speler, wedstrijden);
 		Speler nieuw = new Speler(speler);
+		int aantalgewonnen = 0;
+		int aantalremise = 0;
+		int aantalTegenstandersGroepHoger = 0;
 		// Standaardpunt
 		int puntenbij = 1;
 		logger.log(Level.INFO, "      Aanwezigheidspunt :" + puntenbij);
@@ -99,12 +101,14 @@ public class Uitslagverwerker {
 			logger.log(Level.INFO, "    Wedstrijd :" + w.toString());
 			int resultaat = 0; // TOTO style -> 0 = onbekend
 			Speler tegenstander = w.getWit().gelijkAan(speler) ? w.getZwart() : w.getWit();
+			if (nieuw.getGroep() < tegenstander.getGroep()) aantalTegenstandersGroepHoger++;
 			// RATING EN PUNTEN
 			if (w.getUitslag() == Wedstrijd.ONBEKEND) {
 				// doe niets
 				resultaat = 3;
 			} else if (w.getUitslag() == Wedstrijd.GELIJKSPEL) {
 				puntenbij += 1;
+				aantalremise++;
 				resultaat = 3;
 				logger.log(Level.INFO, "      Remise         : " + puntenbij);
 				int ratingoud = nieuw.getRating();
@@ -112,6 +116,7 @@ public class Uitslagverwerker {
 				logger.log(Level.INFO, "      Rating         : " + (nieuw.getRating() - ratingoud));
 			} else if ((w.getUitslag() == Wedstrijd.WIT_WINT) && (w.getWit().gelijkAan(speler))) {
 				puntenbij += 2;
+				aantalgewonnen++;
 				resultaat = 1;
 				logger.log(Level.INFO, "      Winst met wit  : " + puntenbij);
 				int ratingoud = nieuw.getRating();
@@ -119,6 +124,7 @@ public class Uitslagverwerker {
 				logger.log(Level.INFO, "      Rating         :" + (nieuw.getRating() - ratingoud));
 			} else if ((w.getUitslag() == Wedstrijd.ZWART_WINT) && (w.getZwart().gelijkAan(speler))) {
 				puntenbij += 2;
+				aantalgewonnen++;
 				resultaat = 1;
 				logger.log(Level.INFO, "      Winst met zwart :" + puntenbij);
 				int ratingoud = nieuw.getRating();
@@ -173,11 +179,23 @@ public class Uitslagverwerker {
 			}
 		}
 		
+		// KEI punten bepalen
+		if (aantalTegenstandersGroepHoger == spelerWedstrijden.size()) {
+			// Alle wedstrijden tegen speler hoger dus kant op punten
+			String lr = "KEI punten bepalen, aantal gewonnen = " + aantalgewonnen 
+					+ " aantal remise = " + aantalremise;
+			logger.log(Level.INFO, lr);
+			int keipunten_bij = 0;
+			if (aantalgewonnen == 1 && aantalremise == 1) keipunten_bij = 1;
+			if (aantalgewonnen == spelerWedstrijden.size()) keipunten_bij = 2;
+			logger.log(Level.INFO, "Speler " + nieuw.getNaam() + "verdient aantal keipunten: " + keipunten_bij);
+			nieuw.setKeikansen(nieuw.getKeikansen() + 1);
+			nieuw.setKeipunten(nieuw.getKeipunten() + keipunten_bij);
+		}
+		
 		logger.log(Level.INFO, "      Punten bij tot :" + puntenbij);
 		nieuw.setPunten(nieuw.getPunten() + puntenbij);
 		if (nieuw.getRating() < 100) nieuw.setRating(100);
-		// Tegenstanders
-		// witvoorkeur
 		return nieuw;
 	}
 

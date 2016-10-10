@@ -326,14 +326,15 @@ public class IJCController {
     	System.out.println(status.resultaatVerwerkt.toPrintableString());
     	logger.log(Level.INFO, "en sla uitslagen en status op");
     	new OutputTekst().saveUitslag(status.resultaatVerwerkt);
-    	saveState(false);
+    	saveState(true, "uitslag");
     }
     
     /**
      * Save state of the application to disk
-     * @param  unique if true, a unique file is created
+     * @param  unique if true, a unique file is created with timestamp in filename
+     * @param post-fix, post fix of filename, before extension. Only used in combination with unique = true
      */
-	public void saveState(boolean unique) {
+	public void saveState(boolean unique, String postfix) {
 		try {
 			String bestandsnaam = "status.json";
 			logger.log(Level.INFO, "Sla status op in bestand " + bestandsnaam);
@@ -346,7 +347,7 @@ public class IJCController {
 
 			if (unique) {
 				String s = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-				bestandsnaam = "status" + s + ".json";
+				bestandsnaam = "status" + s + "-" + postfix + ".json";
 				logger.log(Level.INFO, "Sla status op in bestand " + bestandsnaam);
 				// write converted json data to a file
 				writer = new FileWriter(bestandsnaam);

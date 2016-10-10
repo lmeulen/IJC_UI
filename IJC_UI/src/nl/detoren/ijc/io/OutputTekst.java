@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 
 import nl.detoren.ijc.data.groepen.Groepen;
-import nl.detoren.ijc.ui.view.Hoofdscherm;
 
 public class OutputTekst {
 
