@@ -76,20 +76,23 @@ import nl.detoren.ijc.ui.util.Utils;
  */
 public class Hoofdscherm extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2154845989579570030L;
+	//Colors and fonts
+	private static final Color light_green = new Color(240, 255, 240);
+	private static final Color light_red = new Color(250, 240, 230);
+	private static final Font courierFont = new Font("Courier", Font.PLAIN, 11);
 
+	private static final long serialVersionUID = -2154845989579570030L;
 	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());
 
-	private static final Font courierFont = new Font("Courier", Font.PLAIN, 11);
 	
 	private JPanel hoofdPanel;
 	private JTabbedPane tabs;
 	private JPanel[] panels;
 	private JLabel rondeLabel;
 	private JButton automatischButton;
+	private JButton wedstrijdgroepButton; 
+	private JButton speelschemaButton;
+	private JButton bewerkspeelschemaButton; 
 	private JScrollPane[] leftScrollPane;
 	private JScrollPane[] centerScrollPane;
 	private JScrollPane[] rightScrollPane;
@@ -158,23 +161,16 @@ public class Hoofdscherm extends JFrame {
 		automatischButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				// action
-				controller.setAutomatisch(!controller.isAutomatisch());
-				if (controller.isAutomatisch()) {
-					automatischButton.setBackground(Color.GREEN);
-					controller.maakGroepsindeling();
-				} else {
-					automatischButton.setBackground(Color.RED);
-				}
+				updateAutomatisch(!controller.isAutomatisch());
+				if (controller.isAutomatisch()) controller.maakGroepsindeling();
 				hoofdPanel.repaint();
 			}
 		});
-		automatischButton.setBackground(controller.isAutomatisch() ? Color.green : Color.red);
 		buttonPane.add(automatischButton);
 
 		// Button voor bepalen wedstrijdgroepen
-		final JButton wgButton = new JButton("1a. Maak wedstrijdgroep");
-		wgButton.addActionListener(new ActionListener() {
+		wedstrijdgroepButton = new JButton("1a. Maak wedstrijdgroep");
+		wedstrijdgroepButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controller.setAutomatisch(false);
@@ -183,11 +179,11 @@ public class Hoofdscherm extends JFrame {
 				hoofdPanel.repaint();
 			}
 		});
-		buttonPane.add(wgButton);
+		buttonPane.add(wedstrijdgroepButton);
 
 		// Button voor maken speelschema
-		final JButton ssButton = new JButton("1b. Maak speelschema");
-		ssButton.addActionListener(new ActionListener() {
+		speelschemaButton = new JButton("1b. Maak speelschema");
+		speelschemaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evetn) {
 				updateAutomatisch(false);
@@ -196,11 +192,11 @@ public class Hoofdscherm extends JFrame {
 				hoofdPanel.repaint();
 			}
 		});
-		buttonPane.add(ssButton);
+		buttonPane.add(speelschemaButton);
 
 		// Button voor bewerken speelschema
-		final JButton bsButton = new JButton("1c. Bewerk speelschema");
-		bsButton.addActionListener(new ActionListener() {
+		bewerkspeelschemaButton = new JButton("1c. Bewerk speelschema");
+		bewerkspeelschemaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				updateAutomatisch(false);
@@ -220,7 +216,7 @@ public class Hoofdscherm extends JFrame {
 				dialoog.setVisible(true);
 			}
 		});
-		buttonPane.add(bsButton);
+		buttonPane.add(bewerkspeelschemaButton);
 
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
@@ -309,6 +305,7 @@ public class Hoofdscherm extends JFrame {
 
 		rondeLabel = new JLabel();
 		updateRondeLabel();
+		updateAutomatisch(controller.isAutomatisch());
 		//hoofdPanel.add(new JLabel("IJC De Toren"));
 		hoofdPanel.add(buttonPane);
 		hoofdPanel.add(rondeLabel);
@@ -328,8 +325,15 @@ public class Hoofdscherm extends JFrame {
 		controller.setAutomatisch(newState);
 		if (controller.isAutomatisch()) {
 			automatischButton.setBackground(Color.GREEN);
+			bewerkspeelschemaButton.setBackground(light_green);
+			speelschemaButton.setBackground(light_green);
+			wedstrijdgroepButton.setBackground(light_green);
+			
 		} else {
 			automatischButton.setBackground(Color.RED);
+			bewerkspeelschemaButton.setBackground(light_red);
+			speelschemaButton.setBackground(light_red);
+			wedstrijdgroepButton.setBackground(light_red);
 		}
 	}
 
@@ -722,23 +726,31 @@ public class Hoofdscherm extends JFrame {
 		rightScrollPane[index].setViewportView(wedstrijdenTabel[index]);
 
 		JPanel ibt = new JPanel();
-		ibt.add(new JTextField("Aanwezigheid spelers in de " + Groep.geefNaam(index)), BorderLayout.NORTH);
+		JTextField jTFaanwezigheid = new JTextField("Aanwezigheid in de " + Groep.geefNaam(index));
+		jTFaanwezigheid.setBackground(ibt.getBackground());
+		jTFaanwezigheid.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+		ibt.add(jTFaanwezigheid, BorderLayout.NORTH);
 		ibt.add(leftScrollPane[index], BorderLayout.SOUTH);
 		ibt.setBorder(new EmptyBorder(1, 1, 1, 1));
 		panel.add(ibt, BorderLayout.LINE_START);
-		//panel.add(leftScrollPane[i], BorderLayout.LINE_START);
+
 		JPanel ibt2 = new JPanel();
-		ibt2.add(new JTextField("Spelers die deze ronde spelen in de " + Groep.geefNaam(index)), BorderLayout.NORTH);
+		JTextField jTFwedstrijdgroep = new JTextField("Spelers die spelen in de " + Groep.geefNaam(index));
+		jTFwedstrijdgroep.setBackground(ibt.getBackground());
+		jTFwedstrijdgroep.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+		ibt2.add(jTFwedstrijdgroep, BorderLayout.NORTH);
 		ibt2.add(centerScrollPane[index], BorderLayout.SOUTH);
 		ibt2.setBorder(new EmptyBorder(1, 1, 1, 1));
 		panel.add(ibt2, BorderLayout.LINE_START);
-		//panel.add(centerScrollPane[i], BorderLayout.CENTER);
+
 		JPanel ibt3 = new JPanel();
-		ibt3.add(new JTextField("Wedstrijden deze ronde in de " + Groep.geefNaam(index)), BorderLayout.NORTH);
+		JTextField jTFwedstrijden = new JTextField("Wedstrijden in de " + Groep.geefNaam(index));
+		jTFwedstrijden.setBackground(ibt.getBackground());
+		jTFwedstrijden.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+		ibt3.add(jTFwedstrijden, BorderLayout.NORTH);
 		ibt3.add(rightScrollPane[index], BorderLayout.SOUTH);
 		ibt3.setBorder(new EmptyBorder(1, 1, 1, 1));
 		panel.add(ibt3, BorderLayout.LINE_START);
-		//panel.add(rightScrollPane[i], BorderLayout.LINE_END);
 		panel.setBorder(new EmptyBorder(1, 1, 1, 1));
 
 		pack();

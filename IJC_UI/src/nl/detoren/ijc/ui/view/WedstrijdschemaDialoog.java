@@ -10,6 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
+ * - TODO Geen edit mogelijkheden op trio wedstrijden (bv wisselen kleur)
  */
 package nl.detoren.ijc.ui.view;
 
