@@ -50,6 +50,7 @@ public class OutputKNSB {
 			}
 			writer.close();
 		} catch (IOException e) {
+			logger.log(Level.WARNING, "Export mislukt : " + e.getMessage());
 			e.printStackTrace();
 		}
     	

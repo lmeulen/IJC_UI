@@ -34,6 +34,7 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.io.GroepenReader;
 import nl.detoren.ijc.io.OutputExcel;
+import nl.detoren.ijc.io.OutputKEI;
 import nl.detoren.ijc.io.OutputKNSB;
 import nl.detoren.ijc.io.OutputTekst;
 
@@ -318,6 +319,7 @@ public class IJCController {
     }
     /**
      * Verwerk uitslagen tot een nieuwe stand en sla deze op
+     * in de verschillende bestanden
      */
     public void verwerkUitslagen() {
     	logger.log(Level.INFO, "Verwerk uitslagen");
@@ -328,6 +330,7 @@ public class IJCController {
     	logger.log(Level.INFO, "en sla uitslagen en status op");
     	new OutputTekst().saveUitslag(status.resultaatVerwerkt);
     	new OutputKNSB().saveUitslag(status.wedstrijden);
+    	new OutputKEI().exportKEIlijst(status.resultaatVerwerkt);
     	saveState(true, "uitslag");
     }
     

@@ -180,7 +180,10 @@ public class Uitslagverwerker {
 		}
 		
 		// KEI punten bepalen
-		if ((wedstrijdenHoger > 0) && (wedstrijdenHoger == spelerWedstrijden.size())) {
+		if (updateSpeler.getInitialen().equals("SG")) {
+			int i =4;
+		}
+		if ((wedstrijdenHoger > 0) ) {
 			// Alle wedstrijden tegen speler hoger dus kant op punten
 			String lr = "KEI punten bepalen, aantal gewonnen = " + aantalgewonnen 
 					+ " aantal remise = " + aantalremise;
@@ -188,7 +191,7 @@ public class Uitslagverwerker {
 			int keipunten_bij = 0;
 			if (aantalgewonnen == 1 && aantalremise == 1) keipunten_bij = 1;
 			if (aantalgewonnen == spelerWedstrijden.size()) keipunten_bij = 2;
-			logger.log(Level.INFO, "Speler " + updateSpeler.getNaam() + "verdient aantal keipunten: " + keipunten_bij);
+			logger.log(Level.INFO, "Speler " + updateSpeler.getNaam() + " verdient aantal keipunten: " + keipunten_bij);
 			updateSpeler.setKeikansen(updateSpeler.getKeikansen() + 1);
 			updateSpeler.setKeipunten(updateSpeler.getKeipunten() + keipunten_bij);
 		}
