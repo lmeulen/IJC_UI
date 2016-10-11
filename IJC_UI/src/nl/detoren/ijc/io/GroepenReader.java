@@ -155,7 +155,7 @@ public class GroepenReader {
 		logger.log(Level.INFO, "Spelers groep beginnen op regel " + index);
         // Zolang er een punt in de regel staat, is er nog een speler gevonden
         while ((index < data.length) && data[index].contains(".")) {
-        	Speler s= genereerSpeler(data[index++], type);
+        	Speler s = genereerSpeler(data[index++], type);
     		logger.log(Level.FINE, "Spelerregel : " + data[index-1]);
     		logger.log(Level.FINE, "Speler      : " + s.toPrintableString());
             groep.addSpeler(s);

@@ -56,12 +56,12 @@ public class Groepswedstrijden {
         this.triowedstrijden = triowedstrijden;
     }
 
-    public void addTrioWedstrijd(Wedstrijd w) {
-        triowedstrijden.add(w);
+    public void addTrioWedstrijd(Wedstrijd wedstrijden) {
+        triowedstrijden.add(wedstrijden);
     }
 
-    public void addSerie(Serie s) {
-        series.add(s);
+    public void addSerie(Serie serie) {
+        series.add(serie);
     }
 
     public Serie getSerie(int index) {

@@ -48,21 +48,21 @@ public class Speler implements Cloneable {
         this(0, "", "", 0, 0, 0, new String[4], 0, false, true, 1234567, 0, 0, "");
     }
 
-    public Speler(Speler s) {
-        this.id = s.id;
-        this.naam = s.naam;
-        this.initialen = s.initialen;
-        this.witvoorkeur = s.witvoorkeur;
-        this.groep = s.groep;
-        this.rating = s.rating;
-        this.tegenstanders = s.tegenstanders.clone();
-        this.punten = s.punten;
-        this.afwezigheidspunt = s.afwezigheidspunt;
-        this.aanwezig = s.aanwezig;
-        this.KNSBnummer = s.KNSBnummer;
-        this.keipunten = s.keipunten;
-        this.keikansen = s.keikansen;
-        this.speelgeschiedenis = s.speelgeschiedenis;
+    public Speler(Speler speler) {
+        this.id = speler.id;
+        this.naam = speler.naam;
+        this.initialen = speler.initialen;
+        this.witvoorkeur = speler.witvoorkeur;
+        this.groep = speler.groep;
+        this.rating = speler.rating;
+        this.tegenstanders = speler.tegenstanders.clone();
+        this.punten = speler.punten;
+        this.afwezigheidspunt = speler.afwezigheidspunt;
+        this.aanwezig = speler.aanwezig;
+        this.KNSBnummer = speler.KNSBnummer;
+        this.keipunten = speler.keipunten;
+        this.keikansen = speler.keikansen;
+        this.speelgeschiedenis = speler.speelgeschiedenis;
     }
 
     public Speler(int id, String naam, String initialen, int witvk, int groep, int rating, String[] tgs, int punten,
@@ -103,8 +103,8 @@ public class Speler implements Cloneable {
         return initialen;
     }
 
-    public void setInitialen(String s) {
-        initialen = s;
+    public void setInitialen(String init) {
+        initialen = init;
     }
 
     public double getWitvoorkeur() {
@@ -239,14 +239,14 @@ public class Speler implements Cloneable {
 
     /**
      * Wordt dezelfde speler gerepresenteerd door het andere object?
-     * @param s
+     * @param speler
      * @return 
      */
-    public boolean gelijkAan(Speler s) {
-        return (this.getNaam().equals(s.getNaam())
-                && this.getInitialen().equals(s.getInitialen())
-                && this.getGroep() == s.getGroep()
-                && this.getKNSBnummer() == s.getKNSBnummer());
+    public boolean gelijkAan(Speler speler) {
+        return (this.getNaam().equals(speler.getNaam())
+                && this.getInitialen().equals(speler.getInitialen())
+                && this.getGroep() == speler.getGroep()
+                && this.getKNSBnummer() == speler.getKNSBnummer());
     }
 
     @Override
@@ -341,8 +341,8 @@ public class Speler implements Cloneable {
 
     }
     
-    private String verwijderAccenten(String s) {
-        String norm = Normalizer.normalize(s, Normalizer.Form.NFD);
+    private String verwijderAccenten(String naam) {
+        String norm = Normalizer.normalize(naam, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(norm).replaceAll("");
     }

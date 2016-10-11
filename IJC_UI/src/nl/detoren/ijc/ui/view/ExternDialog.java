@@ -63,7 +63,7 @@ public class ExternDialog extends JDialog {
         okButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 controller.wisExterneSpelers();
                 for (JTextField jtf : spelerVelden) {
                     if (jtf != null && jtf.getText() != null && !jtf.getText().equals("")) {
@@ -80,7 +80,7 @@ public class ExternDialog extends JDialog {
         cancelButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 setVisible(false);
                 dispose();
             }
@@ -89,7 +89,7 @@ public class ExternDialog extends JDialog {
         panel.add(okButton);
         panel.add(cancelButton);
         getContentPane().add(panel);
-        setSize(600, (aantal+1)*23);
+        setSize(600, (aantal + 1) * 23);
         setLocationRelativeTo(frame);
     }
 }

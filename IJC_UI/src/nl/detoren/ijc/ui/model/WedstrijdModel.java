@@ -42,9 +42,9 @@ public class WedstrijdModel extends AbstractTableModel {
         this(0, null);
     }
 
-    public WedstrijdModel(int g, JComponent c) {
-        component = c;
-        groepID = g;
+    public WedstrijdModel(int groep, JComponent comp) {
+        component = comp;
+        groepID = groep;
         init();
     }
 
@@ -96,7 +96,7 @@ public class WedstrijdModel extends AbstractTableModel {
             case 3:
                 return ws.getZwart().getNaam();
             default:
-                switch(ws.getUitslag()) {
+                switch (ws.getUitslag()) {
                     case 0:
                         return "0-0";
                     case 1:

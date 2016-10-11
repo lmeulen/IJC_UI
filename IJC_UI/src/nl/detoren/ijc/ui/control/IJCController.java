@@ -98,13 +98,15 @@ public class IJCController {
      */
 	public void leesGroepen(String bestandsnaam) {
 		synchronized (this) {
-			status.groepen = null;
+//			status.groepen = null;
 			if (bestandsnaam.endsWith(".txt")) {
 				logger.log(Level.INFO, "Lees groepen in TXT formaat uit " + bestandsnaam);
 				status.groepen = new GroepenReader().leesGroepen(bestandsnaam);
 			} else if (bestandsnaam.endsWith(".json")) {
 				logger.log(Level.INFO, "Lees groepen in JSON uit bestand " + bestandsnaam);
 				status.groepen = new GroepenReader().leesGroepenJSON(bestandsnaam);
+			} else {
+				return;
 			}
 			status.wedstrijdgroepen = null;
 			status.wedstrijden = null;
@@ -137,6 +139,7 @@ public class IJCController {
         	logger.log(Level.INFO, "Lees status");
         	leesStatus();
 			if ((status == null) || (status.groepen == null)) {
+				status = new Status();
 				status.groepen = null;
 				status.wedstrijdgroepen = null;
 				status.wedstrijden = null;
@@ -182,8 +185,8 @@ public class IJCController {
         return status.wedstrijden;
     }
 
-    public void setWedstrijden(Wedstrijden w) {
-    	status.wedstrijden = w;
+    public void setWedstrijden(Wedstrijden wedstrijden) {
+    	status.wedstrijden = wedstrijden;
     }
 
     /**
@@ -268,12 +271,12 @@ public class IJCController {
      * @param index Betreffende speler
      * @param waarde true, als aanwezig melden
      */
-    public void setSpelerAanwezigheid(Groep groep, int index, boolean waarde) {
+    public void setSpelerAanwezigheid(Groep groep, int index, final boolean waarde) {
         synchronized (this) {
-        	logger.log(Level.INFO, "Speler " + index + " in groep " + groep.getNaam() + " is " + (waarde ? "niet aanwezig" : "aanwezig"));
             if (groep != null) {
                 Speler s = groep.getSpelers().get(index);
                 if (s != null) {
+                	logger.log(Level.INFO, "Speler " + index + " in groep " + groep.getNaam() + " is " + (waarde ? "niet aanwezig" : "aanwezig"));
                     s.setAanwezig(waarde);
                     if (status.automatisch) {
                         maakGroepsindeling();
@@ -287,31 +290,31 @@ public class IJCController {
     /** 
      * Voeg een speler toe aan een groep
      * @param groepID Groep waaraan toe te voegen
-     * @param s Gedefinieerde speler die toegevoegd moet worden
+     * @param sp Gedefinieerde speler die toegevoegd moet worden
      * @param locatie Locatie in de tabel waar toe te voegen
      */
-    public void addSpeler(int groepID, Speler s, int locatie) {
-    	logger.log(Level.INFO, "Voeg speler " + s.getInitialen() + " toe aan groep " + groepID + ", locatie " + locatie);
+    public void addSpeler(int groepID, Speler sp, int locatie) {
+    	logger.log(Level.INFO, "Voeg speler " + sp.getInitialen() + " toe aan groep " + groepID + ", locatie " + locatie);
         Groep gr = status.groepen.getGroepById(groepID);
-        gr.addSpeler(s, locatie);
+        gr.addSpeler(sp, locatie);
         if (status.automatisch) {
             maakGroepsindeling();
         }
     }
     
-    public void verwijderSpeler(int groepID, Speler s, int locatie) {
-    	logger.log(Level.INFO, "Verwijder speler " + s.getInitialen() + " uit groep " + groepID + ", locatie " + locatie);
+    public void verwijderSpeler(int groepID, Speler sp, int locatie) {
+    	logger.log(Level.INFO, "Verwijder speler " + sp.getInitialen() + " uit groep " + groepID + ", locatie " + locatie);
         Groep gr = status.groepen.getGroepById(groepID);
-        gr.removeSpeler(s, locatie);
+        gr.removeSpeler(sp, locatie);
         if (status.automatisch) {
             maakGroepsindeling();
         }
     }
 
-    public void verwijderWedstrijdSpeler(int groepID, Speler s, int locatie) {
-    	logger.log(Level.INFO, "Verwijder speler " + s.getInitialen() + " uit wedstrijdgroep " + groepID + ", locatie " + locatie);
+    public void verwijderWedstrijdSpeler(int groepID, Speler sp, int locatie) {
+    	logger.log(Level.INFO, "Verwijder speler " + sp.getInitialen() + " uit wedstrijdgroep " + groepID + ", locatie " + locatie);
         Groep gr = status.wedstrijdgroepen.getGroepById(groepID);
-        gr.removeSpeler(s, locatie);
+        gr.removeSpeler(sp, locatie);
         gr.renumber();
         if (status.automatisch) {
             maakGroepsindeling();
@@ -334,12 +337,12 @@ public class IJCController {
     	saveState(true, "uitslag");
     }
     
-    /**
+	/**
      * Save state of the application to disk
-     * @param  unique if true, a unique file is created with timestamp in filename
-     * @param post-fix, post fix of filename, before extension. Only used in combination with unique = true
-     */
-	public void saveState(boolean unique, String postfix) {
+	 * @param unique if true, a unique file is created with timestamp in filename
+	 * @param postfix post fix of filename, before extension. Only used in combination with unique = true
+	 */
+    public void saveState(boolean unique, String postfix) {
 		try {
 			String bestandsnaam = "status.json";
 			logger.log(Level.INFO, "Sla status op in bestand " + bestandsnaam);

@@ -51,12 +51,12 @@ public class BewerkSpelerDialoog extends JDialog {
     boolean bestaandeSpeler;
     final int locatie;
 
-    public BewerkSpelerDialoog(Frame frame, String title, Speler s, boolean bestaand, int loc) {
+    public BewerkSpelerDialoog(Frame frame, String title, Speler sp, boolean bestaand, int loc) {
         super(frame, title);
-        this.speler = s;
+        this.speler = sp;
         this.bestaandeSpeler = bestaand;
         this.locatie = loc;
-    	logger.log(Level.INFO, "Bewerk speler " + s.toPrintableString());
+    	logger.log(Level.INFO, "Bewerk speler " + sp.toPrintableString());
         controller = IJCController.getInstance();
         setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -140,7 +140,7 @@ public class BewerkSpelerDialoog extends JDialog {
         okButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 // Do actions
                 // Naam
                 speler.setNaam(tfNaam.getText());
@@ -181,7 +181,7 @@ public class BewerkSpelerDialoog extends JDialog {
         cancelButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 setVisible(false);
                 dispose();
             }

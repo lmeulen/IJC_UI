@@ -49,8 +49,7 @@ public class OutputExcel {
 	 * Create the Excel version of the sheet
 	 * Original Empty file is stored in Empty.xlsx
 	 * Create version with round matches is stored in Indeling.xlsx
-	 * @param round The round to store in the Excel file
-	 * @param playerInfo Full info of the players
+	 * @param wedstrijden The round to store in the Excel file
 	 */
 	public void updateExcel(Wedstrijden wedstrijden) {
 		try {
@@ -81,7 +80,7 @@ public class OutputExcel {
 					Serie serie = gw.getSerie(s);
 					int i = 0;
 					for (Wedstrijd w : serie.getWedstrijden()) {
-						exportWedstrijd(sheet, w, rowOffset[s] + 2*i);
+						exportWedstrijd(sheet, w, rowOffset[s] + 2 * i);
 						i++;
 					}
 				}
@@ -89,14 +88,14 @@ public class OutputExcel {
 				ArrayList<Wedstrijd> trio = gw.getTriowedstrijden();
 				int i = 0;
 				for (Wedstrijd w : trio) {
-					exportWedstrijd(sheet, w, rowOffsetTrio + 2*i);
+					exportWedstrijd(sheet, w, rowOffsetTrio + 2 * i);
 					i++;
 				}
 				// Cleanup export sheets
 				// Clean up trios
 				if (trio.isEmpty()) {
 					for (int rowid = 1; rowid < 7; rowid++) {
-						XSSFRow row = sheet.getRow(rowOffsetTrio-2);
+						XSSFRow row = sheet.getRow(rowOffsetTrio - 2);
 						sheet.removeRow(row);
 						int lastRowNum = sheet.getLastRowNum();
 						sheet.shiftRows(rowOffsetTrio-1, lastRowNum, -1, true, false);
@@ -126,7 +125,7 @@ public class OutputExcel {
 						XSSFRow row = sheet.getRow(r);
 						sheet.removeRow(row);
 					}
-					int a = rowOffset[1]-3;
+					int a = rowOffset[1] - 3;
 					int b = lastRowNum - 4;
 					int c = (lastRowNum - rowOffset[1] - 4);
 					logger.log(Level.INFO, "shiftrows " + a + "," + b + "," + c);

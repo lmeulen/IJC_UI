@@ -142,7 +142,7 @@ public class Hoofdscherm extends JFrame {
 		pack();
 
 		this.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent e){
+            public void windowClosing(WindowEvent event){
                     controller.saveState(false, null);
                 }
         });
@@ -157,7 +157,7 @@ public class Hoofdscherm extends JFrame {
 		automatischButton = new JButton("Auto");
 		automatischButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent event) {
 				// action
 				controller.setAutomatisch(!controller.isAutomatisch());
 				if (controller.isAutomatisch()) {
@@ -189,7 +189,7 @@ public class Hoofdscherm extends JFrame {
 		final JButton ssButton = new JButton("1b. Maak speelschema");
 		ssButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evetn) {
 				updateAutomatisch(false);
 				int groep = tabs.getSelectedIndex();
 				controller.maakWedstrijden(groep);
@@ -202,7 +202,7 @@ public class Hoofdscherm extends JFrame {
 		final JButton bsButton = new JButton("1c. Bewerk speelschema");
 		bsButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent event) {
 				updateAutomatisch(false);
 				// ResultaatDialoog
 				hoofdPanel.repaint();
@@ -229,7 +229,7 @@ public class Hoofdscherm extends JFrame {
 		final JButton exportButton = new JButton("2. Export");
 		exportButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent event) {
 				// ResultaatDialoog
 				updateAutomatisch(false);
 				controller.exportToExcel();
@@ -246,7 +246,7 @@ public class Hoofdscherm extends JFrame {
 		final JButton guButton = new JButton("3a. Uitslagen");
 		guButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent event) {
 				// ResultaatDialoog
 				hoofdPanel.repaint();
 				updateAutomatisch(false);
@@ -391,25 +391,25 @@ public class Hoofdscherm extends JFrame {
 		this.setJMenuBar(menubar);
 	}
 
-	public JTable getAanwezigheidsTabel(int i) {
-		if ((i >= 0) && (i < aantal)) {
-			return aanwezigheidsTabel[i];
+	public JTable getAanwezigheidsTabel(int index) {
+		if ((index >= 0) && (index < aantal)) {
+			return aanwezigheidsTabel[index];
 		} else {
 			return null;
 		}
 	}
 
-	public JTable getWedstrijdspelersTabel(int i) {
-		if ((i >= 0) && (i < aantal)) {
-			return wedstrijdspelersTabel[i];
+	public JTable getWedstrijdspelersTabel(int index) {
+		if ((index >= 0) && (index < aantal)) {
+			return wedstrijdspelersTabel[index];
 		} else {
 			return null;
 		}
 	}
 
-	public JTable getWedstrijdenTabel(int i) {
-		if ((i >= 0) && (i < aantal)) {
-			return wedstrijdenTabel[i];
+	public JTable getWedstrijdenTabel(int index) {
+		if ((index >= 0) && (index < aantal)) {
+			return wedstrijdenTabel[index];
 		} else {
 			return null;
 		}
@@ -477,12 +477,12 @@ public class Hoofdscherm extends JFrame {
 		return panel;
 	}
 
-	protected void fillGroupPanel(JPanel panel, final int i) {
-		leftScrollPane[i] = new javax.swing.JScrollPane();
-		centerScrollPane[i] = new javax.swing.JScrollPane();
-		rightScrollPane[i] = new javax.swing.JScrollPane();
+	protected void fillGroupPanel(JPanel panel, final int index) {
+		leftScrollPane[index] = new javax.swing.JScrollPane();
+		centerScrollPane[index] = new javax.swing.JScrollPane();
+		rightScrollPane[index] = new javax.swing.JScrollPane();
 
-		aanwezigheidsTabel[i] = new JTable(new SpelersModel(i, panel)) {
+		aanwezigheidsTabel[index] = new JTable(new SpelersModel(index, panel)) {
 			private static final long serialVersionUID = -8293073016982337108L;
 
 			@Override
@@ -503,17 +503,17 @@ public class Hoofdscherm extends JFrame {
 			}
 		};
 
-		aanwezigheidsTabel[i].addMouseListener(new MouseAdapter() {
+		aanwezigheidsTabel[index].addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				int r = aanwezigheidsTabel[i].rowAtPoint(e.getPoint());
-				if (r >= 0 && r < aanwezigheidsTabel[i].getRowCount()) {
-					aanwezigheidsTabel[i].setRowSelectionInterval(r, r);
+				int r = aanwezigheidsTabel[index].rowAtPoint(e.getPoint());
+				if (r >= 0 && r < aanwezigheidsTabel[index].getRowCount()) {
+					aanwezigheidsTabel[index].setRowSelectionInterval(r, r);
 				} else {
-					aanwezigheidsTabel[i].clearSelection();
+					aanwezigheidsTabel[index].clearSelection();
 				}
 
-				int rowindex = aanwezigheidsTabel[i].getSelectedRow();
+				int rowindex = aanwezigheidsTabel[index].getSelectedRow();
 				if (rowindex < 0) {
 					return;
 				}
@@ -607,7 +607,7 @@ public class Hoofdscherm extends JFrame {
 			}
 		});
 
-		wedstrijdspelersTabel[i] = new JTable(new WedstrijdSpelersModel(i, panel)) {
+		wedstrijdspelersTabel[index] = new JTable(new WedstrijdSpelersModel(index, panel)) {
 			/**
 			 * 
 			 */
@@ -641,17 +641,17 @@ public class Hoofdscherm extends JFrame {
 			}
 		};
 
-		wedstrijdspelersTabel[i].addMouseListener(new MouseAdapter() {
+		wedstrijdspelersTabel[index].addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				int r = wedstrijdspelersTabel[i].rowAtPoint(e.getPoint());
-				if (r >= 0 && r < wedstrijdspelersTabel[i].getRowCount()) {
-					wedstrijdspelersTabel[i].setRowSelectionInterval(r, r);
+				int r = wedstrijdspelersTabel[index].rowAtPoint(e.getPoint());
+				if (r >= 0 && r < wedstrijdspelersTabel[index].getRowCount()) {
+					wedstrijdspelersTabel[index].setRowSelectionInterval(r, r);
 				} else {
-					wedstrijdspelersTabel[i].clearSelection();
+					wedstrijdspelersTabel[index].clearSelection();
 				}
 
-				int rowindex = wedstrijdspelersTabel[i].getSelectedRow();
+				int rowindex = wedstrijdspelersTabel[index].getSelectedRow();
 				if (rowindex < 0) {
 					return;
 				}
@@ -681,7 +681,7 @@ public class Hoofdscherm extends JFrame {
 			}
 		});
 
-		updatedSpelersTabel[i] = new JTable(new WedstrijdSpelersModel(i, panel)) {
+		updatedSpelersTabel[index] = new JTable(new WedstrijdSpelersModel(index, panel)) {
 			/**
 			 * 
 			 */
@@ -699,7 +699,7 @@ public class Hoofdscherm extends JFrame {
 			}
 		};
 
-		wedstrijdenTabel[i] = new JTable(new WedstrijdModel(i, panel)) {
+		wedstrijdenTabel[index] = new JTable(new WedstrijdModel(index, panel)) {
 			/**
 			 * 
 			 */
@@ -717,25 +717,25 @@ public class Hoofdscherm extends JFrame {
 			}
 		};
 
-		leftScrollPane[i].setViewportView(aanwezigheidsTabel[i]);
-		centerScrollPane[i].setViewportView(wedstrijdspelersTabel[i]);
-		rightScrollPane[i].setViewportView(wedstrijdenTabel[i]);
+		leftScrollPane[index].setViewportView(aanwezigheidsTabel[index]);
+		centerScrollPane[index].setViewportView(wedstrijdspelersTabel[index]);
+		rightScrollPane[index].setViewportView(wedstrijdenTabel[index]);
 
 		JPanel ibt = new JPanel();
-		ibt.add(new JTextField("Aanwezigheid spelers in de " + Groep.geefNaam(i)), BorderLayout.NORTH);
-		ibt.add(leftScrollPane[i], BorderLayout.SOUTH);
+		ibt.add(new JTextField("Aanwezigheid spelers in de " + Groep.geefNaam(index)), BorderLayout.NORTH);
+		ibt.add(leftScrollPane[index], BorderLayout.SOUTH);
 		ibt.setBorder(new EmptyBorder(1, 1, 1, 1));
 		panel.add(ibt, BorderLayout.LINE_START);
 		//panel.add(leftScrollPane[i], BorderLayout.LINE_START);
 		JPanel ibt2 = new JPanel();
-		ibt2.add(new JTextField("Spelers die deze ronde spelen in de " + Groep.geefNaam(i)), BorderLayout.NORTH);
-		ibt2.add(centerScrollPane[i], BorderLayout.SOUTH);
+		ibt2.add(new JTextField("Spelers die deze ronde spelen in de " + Groep.geefNaam(index)), BorderLayout.NORTH);
+		ibt2.add(centerScrollPane[index], BorderLayout.SOUTH);
 		ibt2.setBorder(new EmptyBorder(1, 1, 1, 1));
 		panel.add(ibt2, BorderLayout.LINE_START);
 		//panel.add(centerScrollPane[i], BorderLayout.CENTER);
 		JPanel ibt3 = new JPanel();
-		ibt3.add(new JTextField("Wedstrijden deze ronde in de " + Groep.geefNaam(i)), BorderLayout.NORTH);
-		ibt3.add(rightScrollPane[i], BorderLayout.SOUTH);
+		ibt3.add(new JTextField("Wedstrijden deze ronde in de " + Groep.geefNaam(index)), BorderLayout.NORTH);
+		ibt3.add(rightScrollPane[index], BorderLayout.SOUTH);
 		ibt3.setBorder(new EmptyBorder(1, 1, 1, 1));
 		panel.add(ibt3, BorderLayout.LINE_START);
 		//panel.add(rightScrollPane[i], BorderLayout.LINE_END);

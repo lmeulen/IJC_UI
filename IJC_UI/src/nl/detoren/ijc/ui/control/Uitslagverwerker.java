@@ -140,7 +140,7 @@ public class Uitslagverwerker {
 			}
 			// WITVOORKEUR
 			if (w.getWit().gelijkAan(speler)) {
-				updateSpeler.setWitvoorkeur(updateSpeler.getWitvoorkeur()-1);
+				updateSpeler.setWitvoorkeur(updateSpeler.getWitvoorkeur() - 1);
 				logger.log(Level.INFO, "      Witvoorkeur -1 :" + updateSpeler.getWitvoorkeur());
 			} else {
 				updateSpeler.setWitvoorkeur(updateSpeler.getWitvoorkeur()+1);
@@ -180,9 +180,6 @@ public class Uitslagverwerker {
 		}
 		
 		// KEI punten bepalen
-		if (updateSpeler.getInitialen().equals("SG")) {
-			int i =4;
-		}
 		if ((wedstrijdenHoger > 0) ) {
 			// Alle wedstrijden tegen speler hoger dus kant op punten
 			String lr = "KEI punten bepalen, aantal gewonnen = " + aantalgewonnen 

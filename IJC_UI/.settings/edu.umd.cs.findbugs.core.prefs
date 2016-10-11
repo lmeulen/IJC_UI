@@ -1,5 +1,5 @@
 #FindBugs User Preferences
-#Fri Sep 30 17:09:50 CEST 2016
+#Tue Oct 11 18:54:41 CEST 2016
 cloud_id=edu.umd.cs.findbugs.cloud.doNothingCloud
 detectorAppendingToAnObjectOutputStream=AppendingToAnObjectOutputStream|true
 detectorAtomicityProblem=AtomicityProblem|true

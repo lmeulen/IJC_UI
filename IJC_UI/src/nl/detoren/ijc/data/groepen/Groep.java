@@ -156,9 +156,9 @@ public class Groep {
        return namen.length;
     }
     
-    public Speler getSpelerByID(int ID) {
+    public Speler getSpelerByID(int id) {
         for (Speler s : spelers) {
-            if (s.getId() == ID) return s;
+            if (s.getId() == id) return s;
         }
         return null;
     }

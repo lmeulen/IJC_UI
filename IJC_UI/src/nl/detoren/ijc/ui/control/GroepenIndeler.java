@@ -353,7 +353,7 @@ public class GroepenIndeler {
 		// ALS 5 spelers in 2 ronden, dupliceer spelers naar 10 en plan
 		// maar 1 ronde in. Dit heeft het juiste aantal wedstrijden tot gevolg
 		if (groep.getAantalSpelers() == 5 && speelrondes == 2 ) {
-			speelrondes=1;
+			speelrondes = 1;
 	    	logger.log(Level.INFO, "Vijf spelers met 2 rondes dus spelers verdubbelen en maar één serie");    		
 		    for (Speler s : wedstrijdgroep.getSpelers()) {
 		        groep.addSpeler(new Speler(s));
