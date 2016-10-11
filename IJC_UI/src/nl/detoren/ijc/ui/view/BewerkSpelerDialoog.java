@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - MINOR Toevoegen geschiedenis string? 
  * - ...
  */
 package nl.detoren.ijc.ui.view;
