@@ -6,3 +6,5 @@
 /Uitslag*.txt
 /bin/
 /python/
+/.pydevproject
+/*KNSB.csv
