@@ -68,7 +68,7 @@ public class BewerkSpelerDialoog extends JDialog {
 
     private JPanel createPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(17, 2));
+        panel.setLayout(new GridLayout(18, 2));
         //ID
         panel.add(new JLabel("ID"));
         final JTextField tfID = new JTextField((new Integer(speler.getId())).toString());
@@ -124,6 +124,10 @@ public class BewerkSpelerDialoog extends JDialog {
         panel.add(new JLabel(""));
         final JTextField tfTegenstander4 = new JTextField(speler.getTegenstanders()[3]);
         panel.add(tfTegenstander4);
+        // Geschiedenis string
+        panel.add(new JLabel("Tegenstanders historie"));
+        final JTextField tfGeschiedenis = new JTextField(speler.getSpeelgeschiedenis());
+        panel.add(tfGeschiedenis);
         // Afwezigheidspunten
         panel.add(new JLabel("Afwezigheidspunt"));
         final JCheckBox cbAfwezigPunt = new JCheckBox("", speler.isAfwezigheidspunt());

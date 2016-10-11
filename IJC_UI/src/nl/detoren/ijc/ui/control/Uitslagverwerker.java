@@ -11,7 +11,7 @@
  *  
  * Problemen in deze code:
  * - MINOR Het verwerken van uitslagen in de nieuwe rating van spelers gaat niet per wedstrijd maar per speler
- * - TODO Genereren OSBO rating bestand
+ * - TODO Genereren OSBO rating bestand. Is deze nodig of is KNSB voldoende?
  */
 package nl.detoren.ijc.ui.control;
 

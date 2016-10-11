@@ -11,6 +11,7 @@
  *  
  * Problemen in deze code:
  * - MINOR Gebruik hash functie voor dummy knsbnummers
+ * - MINOR isGelijk alleen nog laten kijken naar KNSB nummer? Mogelijk voldoende
  */
 package nl.detoren.ijc.data.groepen;
 
@@ -244,7 +245,8 @@ public class Speler implements Cloneable {
     public boolean gelijkAan(Speler s) {
         return (this.getNaam().equals(s.getNaam())
                 && this.getInitialen().equals(s.getInitialen())
-                && this.getGroep() == s.getGroep());
+                && this.getGroep() == s.getGroep()
+                && this.getKNSBnummer() == s.getKNSBnummer());
     }
 
     @Override
