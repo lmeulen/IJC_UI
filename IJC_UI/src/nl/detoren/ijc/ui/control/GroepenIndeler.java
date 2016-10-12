@@ -345,6 +345,7 @@ public class GroepenIndeler {
 			// Sorteer keizergroep op rating voor indeling indien ronde = 2,3,4,5 of 6
 			groep.sorteerRating();
 		}
+		
 		// Maak wedstrijden
 		Groepswedstrijden gws = new Groepswedstrijden();
 		gws.setNiveau(groep.getNiveau());
@@ -398,6 +399,7 @@ public class GroepenIndeler {
 					ignoreTgns++;
 				}
 				maxverschil++;
+				ignoreTgns = 0;
 			}
 
 			if (serie != null) {
@@ -464,14 +466,14 @@ public class GroepenIndeler {
             // Inplannen 'gewone' speler
             int plannenID = eersteOngeplandeSpeler(gepland, 0);
             int zoekID = plannenID + 1;
-            while ((zoekID < gepland.length) && (Math.abs(zoekID - plannenID) <= maxverschil)) {
+            while ((zoekID < gepland.length) && (Math.abs(zoekID - plannenID) <= minverschil)) {
                 int partner = eersteOngeplandeSpeler(gepland, zoekID);
                 if (partner == -1) {
                     return null;
                 }
                 Speler s1 = spelers.get(plannenID);
                 Speler s2 = spelers.get(partner);
-                if (!s1.isGespeeldTegen(s2, ignoreTgn) && (s2.getId() - s1.getId() >= minverschil)) {
+                if (!s1.isGespeeldTegen(s2, ignoreTgn) && (Math.abs(s2.getId() - s1.getId()) <= maxverschil)) {
                     gepland[plannenID] = true;
                     gepland[partner] = true;
                     Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, maxverschil, ignoreTgn, niveau, diepte + 1, ronde);

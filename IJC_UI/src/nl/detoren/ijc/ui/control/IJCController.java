@@ -176,6 +176,14 @@ public class IJCController {
     public Groep getWedstrijdGroepByID(int id) {
         return status.wedstrijdgroepen.getGroepById(id);
     }
+    
+    public Groep getResultaatGroepByID(int id) {
+    	if (status.resultaatVerwerkt != null) {
+    		return status.resultaatVerwerkt.getGroepById(id);
+    	} else {
+    		return null;
+    	}
+    }
 
     public int getAantalWedstrijdGroepen() {
         return status.wedstrijdgroepen.getAantalGroepen();

@@ -28,7 +28,7 @@ public class Utils {
     
     public static void fixedComponentSize(Component c, int width, int height) {
         c.setMinimumSize(new Dimension(width, height));
-        c.setMinimumSize(new Dimension(width, height));
+        c.setMaximumSize(new Dimension(width, height));
         c.setPreferredSize(new Dimension(width, height));
         c.setSize(new Dimension(width, height));
     }

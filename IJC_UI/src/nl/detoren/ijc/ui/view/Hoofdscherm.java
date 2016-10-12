@@ -10,8 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - TODO Te laat binnenkomende doorgeschoven speler kunnen toevoegen aan hogere groep
- * - MINOR Vierde kolom met nieuwe groepstand na verwerken uitslagen 
+ * - MINOR Vierde kolom met nieuwe groepstand na verwerken uitslagen, uitgecomment aangezien sizng niet wil lukken
  * - MINOR Als een uitslag ingevuld, aanwezigheid etc vastzetten
  * - MINOR Wisselen groepsblad werkt soms niet meer (nog niet reproduceerbaar) 
  * 
@@ -21,6 +20,7 @@ package nl.detoren.ijc.ui.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -61,6 +61,7 @@ import javax.swing.table.TableColumn;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.model.NieuweStandModel;
 import nl.detoren.ijc.ui.model.SpelersModel;
 import nl.detoren.ijc.ui.model.WedstrijdModel;
 import nl.detoren.ijc.ui.model.WedstrijdSpelersModel;
@@ -94,7 +95,8 @@ public class Hoofdscherm extends JFrame {
 	private JButton speelschemaButton;
 	private JButton bewerkspeelschemaButton; 
 	private JScrollPane[] leftScrollPane;
-	private JScrollPane[] centerScrollPane;
+	private JScrollPane[] centerLeftScrollPane;
+	private JScrollPane[] centerRightScrollPane;
 	private JScrollPane[] rightScrollPane;
 	private JTable[] aanwezigheidsTabel;
 	private JTable[] wedstrijdspelersTabel;
@@ -126,7 +128,8 @@ public class Hoofdscherm extends JFrame {
 
 		panels = new JPanel[aantal];
 		leftScrollPane = new JScrollPane[aantal];
-		centerScrollPane = new JScrollPane[aantal];
+		centerLeftScrollPane = new JScrollPane[aantal];
+		centerRightScrollPane = new JScrollPane[aantal];
 		rightScrollPane = new JScrollPane[aantal];
 		aanwezigheidsTabel = new JTable[aantal];
 		wedstrijdspelersTabel = new JTable[aantal];
@@ -430,18 +433,23 @@ public class Hoofdscherm extends JFrame {
 	public void initSizes() {
 		logger.log(Level.INFO, "Maak alle componenten van het juiste formaat");
 		// Fix the layout of the components on the screen.
+//		fixedComponentSize(this, 1320, 670);
 		fixedComponentSize(this, 1150, 670);
+//		fixedComponentSize(hoofdPanel, 1310, 580);
 		fixedComponentSize(hoofdPanel, 1040, 580);
+//		fixedComponentSize(tabs, 1290, 560);
 		fixedComponentSize(tabs, 1020, 560);
 		for (int i = 0; i < aantal; ++i) {
+//			fixedComponentSize(panels[i], 1290, 500);
 			fixedComponentSize(panels[i], 1020, 500);
 			fixedComponentSize(leftScrollPane[i], 320, 500);
-			fixedComponentSize(centerScrollPane[i], 320, 500);
-			fixedComponentSize(rightScrollPane[i], 320, 500);
+			fixedComponentSize(centerLeftScrollPane[i], 320, 500);
+			fixedComponentSize(centerRightScrollPane[i], 320, 500);
+			fixedComponentSize(rightScrollPane[i], 230, 500);
 			fixedComponentSize(aanwezigheidsTabel[i], 320, 475);
 			fixedComponentSize(wedstrijdspelersTabel[i], 320, 475);
-			fixedComponentSize(updatedSpelersTabel[i], 320, 475);
 			fixedComponentSize(wedstrijdenTabel[i], 320, 475);
+			fixedComponentSize(updatedSpelersTabel[i], 230, 475);
 			// Fix the size of the displayed tables
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(0), 40);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(1), 30);
@@ -454,16 +462,17 @@ public class Hoofdscherm extends JFrame {
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(2), 30);
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(3), 95);
 
-			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(0), 20);
-			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(1), 160);
-			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(2), 40);
-			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(3), 40);
-
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(0), 35);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(1), 120);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(2), 10);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(3), 120);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(4), 30);
+
+			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(0), 20);
+			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(1), 160);
+			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(2), 0);
+			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(3), 45);
+
 		}
 	}
 
@@ -483,7 +492,8 @@ public class Hoofdscherm extends JFrame {
 
 	protected void fillGroupPanel(JPanel panel, final int index) {
 		leftScrollPane[index] = new javax.swing.JScrollPane();
-		centerScrollPane[index] = new javax.swing.JScrollPane();
+		centerLeftScrollPane[index] = new javax.swing.JScrollPane();
+		centerRightScrollPane[index] = new javax.swing.JScrollPane();
 		rightScrollPane[index] = new javax.swing.JScrollPane();
 
 		aanwezigheidsTabel[index] = new JTable(new SpelersModel(index, panel)) {
@@ -685,10 +695,7 @@ public class Hoofdscherm extends JFrame {
 			}
 		});
 
-		updatedSpelersTabel[index] = new JTable(new WedstrijdSpelersModel(index, panel)) {
-			/**
-			 * 
-			 */
+		updatedSpelersTabel[index] = new JTable(new NieuweStandModel(index, panel)) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -722,57 +729,74 @@ public class Hoofdscherm extends JFrame {
 		};
 
 		leftScrollPane[index].setViewportView(aanwezigheidsTabel[index]);
-		centerScrollPane[index].setViewportView(wedstrijdspelersTabel[index]);
-		rightScrollPane[index].setViewportView(wedstrijdenTabel[index]);
+		centerLeftScrollPane[index].setViewportView(wedstrijdspelersTabel[index]);
+		centerRightScrollPane[index].setViewportView(wedstrijdenTabel[index]);
+		rightScrollPane[index].setViewportView(updatedSpelersTabel[index]);
 
 		JPanel ibt = new JPanel();
+//		ibt.setBackground(Color.green);
 		JTextField jTFaanwezigheid = new JTextField("Aanwezigheid in de " + Groep.geefNaam(index));
 		jTFaanwezigheid.setBackground(ibt.getBackground());
 		jTFaanwezigheid.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		ibt.add(jTFaanwezigheid, BorderLayout.NORTH);
 		ibt.add(leftScrollPane[index], BorderLayout.SOUTH);
-		ibt.setBorder(new EmptyBorder(1, 1, 1, 1));
+		ibt.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(ibt, BorderLayout.LINE_START);
 
 		JPanel ibt2 = new JPanel();
+//		ibt2.setBackground(Color.blue);
 		JTextField jTFwedstrijdgroep = new JTextField("Spelers die spelen in de " + Groep.geefNaam(index));
-		jTFwedstrijdgroep.setBackground(ibt.getBackground());
+		jTFwedstrijdgroep.setBackground(ibt2.getBackground());
 		jTFwedstrijdgroep.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		ibt2.add(jTFwedstrijdgroep, BorderLayout.NORTH);
-		ibt2.add(centerScrollPane[index], BorderLayout.SOUTH);
-		ibt2.setBorder(new EmptyBorder(1, 1, 1, 1));
+		ibt2.add(centerLeftScrollPane[index], BorderLayout.SOUTH);
+		ibt2.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(ibt2, BorderLayout.LINE_START);
 
 		JPanel ibt3 = new JPanel();
+//		ibt3.setBackground(Color.yellow);
 		JTextField jTFwedstrijden = new JTextField("Wedstrijden in de " + Groep.geefNaam(index));
-		jTFwedstrijden.setBackground(ibt.getBackground());
+		jTFwedstrijden.setBackground(ibt3.getBackground());
 		jTFwedstrijden.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		ibt3.add(jTFwedstrijden, BorderLayout.NORTH);
-		ibt3.add(rightScrollPane[index], BorderLayout.SOUTH);
-		ibt3.setBorder(new EmptyBorder(1, 1, 1, 1));
+		ibt3.add(centerRightScrollPane[index], BorderLayout.SOUTH);
+		ibt3.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(ibt3, BorderLayout.LINE_START);
-		panel.setBorder(new EmptyBorder(1, 1, 1, 1));
 
+//		JPanel ibt4 = new JPanel();
+//		ibt4.setBackground(Color.cyan);
+//		JTextField jTFresultaat = new JTextField("Groepstand na wedstrijden");
+//		jTFresultaat.setBackground(ibt4.getBackground());
+//		jTFresultaat.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+//		ibt4.add(jTFresultaat, BorderLayout.NORTH);
+//		ibt4.add(rightScrollPane[index], BorderLayout.SOUTH);
+//		ibt4.setBorder(new EmptyBorder(5, 5, 5, 5));
+//		panel.add(ibt4, BorderLayout.LINE_END);
+		
+		panel.setBorder(new EmptyBorder(1, 1, 1, 1));
 		pack();
 
 	}
 
 	public void printSizeStatistics() {
-		// System.out.println("Frame : " + getSize().getWidth() + "," +
-		// getSize().getHeight());
-		// System.out.println(" Panel : " + hoofdPanel.getSize().getWidth() +
-		// "," + hoofdPanel.getSize().getHeight());
-		// System.out.println(" Tabs : " + tabs.getSize().getWidth() + "," +
-		// tabs.getSize().getHeight());
-		// System.out.println(" Panel : " +
-		// leftScrollPane[1].getSize().getWidth() + "," +
-		// leftScrollPane[1].getSize().getHeight());
-		// System.out.println(" Panel : " +
-		// centerScrollPane[1].getSize().getWidth() + "," +
-		// leftScrollPane[1].getSize().getHeight());
-		// System.out.println(" Panel : " +
-		// rightScrollPane[1].getSize().getWidth() + "," +
-		// leftScrollPane[1].getSize().getHeight());
+//		 System.out.println("Frame : " + getSize().getWidth() + "," +
+//		 getSize().getHeight());
+//		 System.out.println(" Panel : " + hoofdPanel.getSize().getWidth() +
+//		 "," + hoofdPanel.getSize().getHeight());
+//		 System.out.println(" Tabs : " + tabs.getSize().getWidth() + "," +
+//		 tabs.getSize().getHeight());
+//		 System.out.println(" Panel1 : " +
+//		 leftScrollPane[1].getSize().getWidth() + "," +
+//		 leftScrollPane[1].getSize().getHeight());
+//		 System.out.println(" Panel2 : " +
+//		 centerLeftScrollPane[1].getSize().getWidth() + "," +
+//		 centerLeftScrollPane[1].getSize().getHeight());
+//		 System.out.println(" Panel3 : " +
+//		 centerRightScrollPane[1].getSize().getWidth() + "," +
+//		 centerRightScrollPane[1].getSize().getHeight());
+//		 System.out.println(" Panel4 : " +
+//		 rightScrollPane[1].getSize().getWidth() + "," +
+//		 rightScrollPane[1].getSize().getHeight());
 	}
 
 	@Override
