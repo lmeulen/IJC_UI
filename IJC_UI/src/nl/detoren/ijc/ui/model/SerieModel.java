@@ -7,7 +7,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  * - ... 
@@ -47,10 +47,10 @@ public class SerieModel extends AbstractTableModel {
         this(0, 0, null);
     }
 
-    public SerieModel(int g, int s, JComponent c) {
-        component = c;
-        groepID = g;
-        serieID = s;
+    public SerieModel(int groep, int serie, JComponent comp) {
+        component = comp;
+        groepID = groep;
+        serieID = serie;
         init();
     }
 
@@ -182,7 +182,7 @@ public class SerieModel extends AbstractTableModel {
         component.repaint();
     }
 
-    public void insertWedstrijd(int ID) {
+    public void insertWedstrijd(int id) {
         Serie serie = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getSerie(serieID);
         Wedstrijd w = new Wedstrijd(0, Speler.dummySpeler(groepID), Speler.dummySpeler(groepID), 0);
         if (serie == null) {
@@ -199,7 +199,7 @@ public class SerieModel extends AbstractTableModel {
                 s.addWestrijd(w);
             }
         } else {
-            serie.addWestrijd(w, ID);
+            serie.addWestrijd(w, id);
         }
         component.repaint();
     }

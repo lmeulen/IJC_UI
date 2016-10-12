@@ -7,11 +7,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  * - TODO Bij oneven aantal spelers in de hoogste groep wordt er een volledig trio ingepland -> Handmatig aanpassen   
  * - TODO Afmelden van speler die is doorgeschoven, werkt nog niet. -> Workaround: Delete in afwezigheidstabel
+ * - MINOR Tijdens de 1e serie van 1e ronde van de 1e periode dient tijdens de 3e, 4e, 7e, 8e, 11e, 12e enz. wedstrijd
+ * - MINOR Derde serie in de eerste ronde van de eerste periode
  */
 package nl.detoren.ijc.ui.control;
 
@@ -343,6 +345,7 @@ public class GroepenIndeler {
 			// Sorteer keizergroep op rating voor indeling indien ronde = 2,3,4,5 of 6
 			groep.sorteerRating();
 		}
+		
 		// Maak wedstrijden
 		Groepswedstrijden gws = new Groepswedstrijden();
 		gws.setNiveau(groep.getNiveau());
@@ -353,7 +356,7 @@ public class GroepenIndeler {
 		// ALS 5 spelers in 2 ronden, dupliceer spelers naar 10 en plan
 		// maar 1 ronde in. Dit heeft het juiste aantal wedstrijden tot gevolg
 		if (groep.getAantalSpelers() == 5 && speelrondes == 2 ) {
-			speelrondes=1;
+			speelrondes = 1;
 	    	logger.log(Level.INFO, "Vijf spelers met 2 rondes dus spelers verdubbelen en maar één serie");    		
 		    for (Speler s : wedstrijdgroep.getSpelers()) {
 		        groep.addSpeler(new Speler(s));
@@ -389,10 +392,15 @@ public class GroepenIndeler {
 
 		    Serie serie = null;
 		    int ignoreTgns = 0;
-		    while ((serie == null) && (ignoreTgns <= 5)) {
-		        serie = maakSerie(groep, gepland, aantalSpelers, minverschil, ignoreTgns, ronde);
-		        ignoreTgns++;
-		    }
+	        int maxverschil = minverschil + 3;
+			while ((serie == null) && (maxverschil <= groep.getSpelers().size())) {
+				while ((serie == null) && (ignoreTgns <= 5)) {
+					serie = maakSerie(groep, gepland, aantalSpelers, minverschil, maxverschil, ignoreTgns, ronde);
+					ignoreTgns++;
+				}
+				maxverschil++;
+				ignoreTgns = 0;
+			}
 
 			if (serie != null) {
 				gws.addSerie(serie);
@@ -403,11 +411,11 @@ public class GroepenIndeler {
 		return gws;
 	}
 
-    public Serie maakSerie(Groep groep, boolean[] gepland, int aantalSpelers, int minverschil, int ignoreTgn, int ronde) {
+    public Serie maakSerie(Groep groep, boolean[] gepland, int aantalSpelers, int minverschil, int maxverschil, int ignoreTgn, int ronde) {
         Serie serie = new Serie();
         int mv = minverschil;
         while (mv >= 0) {
-            Serie s = planSerie(serie, groep.getSpelers(), gepland, aantalSpelers, minverschil, ignoreTgn, groep.getNiveau(), 1, ronde);
+            Serie s = planSerie(serie, groep.getSpelers(), gepland, aantalSpelers, minverschil, maxverschil, ignoreTgn, groep.getNiveau(), 1, ronde);
             if (s != null) {
                 return s;
             }
@@ -417,12 +425,12 @@ public class GroepenIndeler {
     }
 
     private Serie planSerie(Serie serie, ArrayList<Speler> spelers, boolean[] gepland,
-            int teplannen, int minverschil, int ignoreTgn, int niveau, int diepte, int ronde) {
+            int teplannen, int minverschil, int maxverschil, int ignoreTgn, int niveau, int diepte, int ronde) {
         for (int i = 0; i < diepte; ++i) {
             System.out.print("  ");
         }
-        System.out.print("vanaf:" + eersteOngeplandeSpeler(gepland, 0) + "#" + teplannen + "mv:" + minverschil);
-        System.out.print(",itn:" + ignoreTgn + ",niv:" + niveau + "\n");
+        System.out.print("vanaf:" + eersteOngeplandeSpeler(gepland, 0) + "#" + teplannen + "minv:" + minverschil);
+        System.out.print(",maxv:" + maxverschil + ",ignore:" + ignoreTgn + ",niv:" + niveau + "\n");
         
         // Laatste ronde?
         if (teplannen < 2) {
@@ -433,7 +441,7 @@ public class GroepenIndeler {
         int doorgeschovenID = laatsteOngeplandeDoorgeschovenspeler(spelers, gepland, niveau);
         if ((doorgeschovenID >= 0) && (ronde == 1)) {
             int zoekId = doorgeschovenID - 1;
-            while (zoekId != -1) {
+            while ((zoekId != -1) && ((Math.abs(zoekId - doorgeschovenID) <= maxverschil))) {
                 int partner = laatsteOngeplandeSpeler(gepland, zoekId);
                 if (partner == -1) {
                     return null;
@@ -443,7 +451,7 @@ public class GroepenIndeler {
                 if (!s1.isGespeeldTegen(s2, minverschil) && (s2.getGroep() != s1.getGroep())) {
                     gepland[doorgeschovenID] = true;
                     gepland[partner] = true;
-                    Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, ignoreTgn, niveau, diepte + 1, ronde);
+                    Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, maxverschil, ignoreTgn, niveau, diepte + 1, ronde);
                     if (s != null) {
                         Wedstrijd w = new Wedstrijd(diepte, s1, s2, 0);
                         s.addWestrijd(w, true);
@@ -458,17 +466,17 @@ public class GroepenIndeler {
             // Inplannen 'gewone' speler
             int plannenID = eersteOngeplandeSpeler(gepland, 0);
             int zoekID = plannenID + 1;
-            while (zoekID < gepland.length) {
+            while ((zoekID < gepland.length) && (Math.abs(zoekID - plannenID) <= minverschil)) {
                 int partner = eersteOngeplandeSpeler(gepland, zoekID);
                 if (partner == -1) {
                     return null;
                 }
                 Speler s1 = spelers.get(plannenID);
                 Speler s2 = spelers.get(partner);
-                if (!s1.isGespeeldTegen(s2, ignoreTgn) && (s2.getId() - s1.getId() >= minverschil)) {
+                if (!s1.isGespeeldTegen(s2, ignoreTgn) && (Math.abs(s2.getId() - s1.getId()) <= maxverschil)) {
                     gepland[plannenID] = true;
                     gepland[partner] = true;
-                    Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, ignoreTgn, niveau, diepte + 1, ronde);
+                    Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, maxverschil, ignoreTgn, niveau, diepte + 1, ronde);
                     if (s != null) {
                         Wedstrijd w = new Wedstrijd(s1.getId() * 100 + s2.getId(), s1, s2, 0);
                         s.addWestrijd(w, true);

@@ -7,7 +7,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  * - ... 
@@ -55,13 +55,13 @@ class ResultaatDialoog extends JDialog {
     JLabel[] zwartLabels;
     int groep;
     
-    ResultaatDialoog(Frame frame, String title, int g) {
+    ResultaatDialoog(Frame frame, String title, int groepID) {
         super(frame, title);
-        this.groep = g;
+        this.groep = groepID;
         controller = IJCController.getInstance();
         setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-    	logger.log(Level.INFO, "Resultaten invoeren voor " + Groep.geefNaam(g));
+    	logger.log(Level.INFO, "Resultaten invoeren voor " + Groep.geefNaam(groepID));
 
         ArrayList<Wedstrijd> wedstrijden = controller.getWedstrijden().getGroepswedstrijdenNiveau(groep).getWedstrijden();
         int aantal = wedstrijden.size();

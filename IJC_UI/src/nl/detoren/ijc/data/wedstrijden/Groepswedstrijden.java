@@ -7,7 +7,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  * - ... 
@@ -56,12 +56,12 @@ public class Groepswedstrijden {
         this.triowedstrijden = triowedstrijden;
     }
 
-    public void addTrioWedstrijd(Wedstrijd w) {
-        triowedstrijden.add(w);
+    public void addTrioWedstrijd(Wedstrijd wedstrijden) {
+        triowedstrijden.add(wedstrijden);
     }
 
-    public void addSerie(Serie s) {
-        series.add(s);
+    public void addSerie(Serie serie) {
+        series.add(serie);
     }
 
     public Serie getSerie(int index) {

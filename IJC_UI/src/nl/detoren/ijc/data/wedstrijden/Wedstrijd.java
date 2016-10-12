@@ -7,7 +7,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  * - ...
@@ -83,6 +83,12 @@ public class Wedstrijd {
             zwart = s1;
         }
     }
+    
+    public final void wisselSpelers() {
+    	Speler tmp = wit;
+    	wit = zwart;
+    	zwart = tmp;
+    }
 
     public int getUitslag() {
         return uitslag;
@@ -101,10 +107,10 @@ public class Wedstrijd {
      * eerste getal van de uitslag ingevuld kan worden (met 2 voor half). Dit
      * versnelt invoeren en resultaten en voorkomt dat een vertaalslag in het
      * hoofd nodig is van uitslag naar Toto stijl.
-     @param Uitslag 
+     @param uitslag 
      */
-    public void setUitslag012(int Uitslag) {
-        this.uitslag = (Uitslag == 0 ? 2 : (Uitslag == 1 ? 1 : (Uitslag == 2 ? 3 : 0)));
+    public void setUitslag012(int uitslag) {
+        this.uitslag = (uitslag == 0 ? 2 : (uitslag == 1 ? 1 : (uitslag == 2 ? 3 : 0)));
     }
 
     @Override

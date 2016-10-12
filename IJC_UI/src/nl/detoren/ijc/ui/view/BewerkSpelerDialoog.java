@@ -7,10 +7,9 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - ... 
  * - ...
  */
 package nl.detoren.ijc.ui.view;
@@ -52,12 +51,12 @@ public class BewerkSpelerDialoog extends JDialog {
     boolean bestaandeSpeler;
     final int locatie;
 
-    public BewerkSpelerDialoog(Frame frame, String title, Speler s, boolean bestaand, int loc) {
+    public BewerkSpelerDialoog(Frame frame, String title, Speler sp, boolean bestaand, int loc) {
         super(frame, title);
-        this.speler = s;
+        this.speler = sp;
         this.bestaandeSpeler = bestaand;
         this.locatie = loc;
-    	logger.log(Level.INFO, "Bewerk speler " + s.toPrintableString());
+    	logger.log(Level.INFO, "Bewerk speler " + sp.toPrintableString());
         controller = IJCController.getInstance();
         setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -68,7 +67,7 @@ public class BewerkSpelerDialoog extends JDialog {
 
     private JPanel createPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(14, 2));
+        panel.setLayout(new GridLayout(18, 2));
         //ID
         panel.add(new JLabel("ID"));
         final JTextField tfID = new JTextField((new Integer(speler.getId())).toString());
@@ -99,6 +98,18 @@ public class BewerkSpelerDialoog extends JDialog {
         panel.add(new JLabel("Punten"));
         final JTextField tfPunten = new JTextField((new Integer(speler.getPunten())).toString());
         panel.add(tfPunten);
+        // KEIPunten
+        panel.add(new JLabel("KEI Punten"));
+        final JTextField tfKeiPunten = new JTextField((new Integer(speler.getKeipunten())).toString());
+        panel.add(tfKeiPunten);
+        // Punten
+        panel.add(new JLabel("KEI Kansen"));
+        final JTextField tfKeiKansen = new JTextField((new Integer(speler.getKeikansen())).toString());
+        panel.add(tfKeiKansen);
+        // KNSB
+        panel.add(new JLabel("KNSB Nummer"));
+        final JTextField tfKNSB = new JTextField((new Integer(speler.getKNSBnummer())).toString());
+        panel.add(tfKNSB);
         // Tegenstanders
         panel.add(new JLabel("Tegenstanders"));
         final JTextField tfTegenstander1 = new JTextField(speler.getTegenstanders()[0]);
@@ -112,6 +123,10 @@ public class BewerkSpelerDialoog extends JDialog {
         panel.add(new JLabel(""));
         final JTextField tfTegenstander4 = new JTextField(speler.getTegenstanders()[3]);
         panel.add(tfTegenstander4);
+        // Geschiedenis string
+        panel.add(new JLabel("Tegenstanders historie"));
+        final JTextField tfGeschiedenis = new JTextField(speler.getSpeelgeschiedenis());
+        panel.add(tfGeschiedenis);
         // Afwezigheidspunten
         panel.add(new JLabel("Afwezigheidspunt"));
         final JCheckBox cbAfwezigPunt = new JCheckBox("", speler.isAfwezigheidspunt());
@@ -125,7 +140,7 @@ public class BewerkSpelerDialoog extends JDialog {
         okButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 // Do actions
                 // Naam
                 speler.setNaam(tfNaam.getText());
@@ -137,6 +152,15 @@ public class BewerkSpelerDialoog extends JDialog {
                 // Punten
                 int punten = Integer.parseInt(tfPunten.getText());
                 speler.setPunten(punten);
+                // KEI Punten
+                int keipunten = Integer.parseInt(tfKeiPunten.getText());
+                speler.setKeipunten(keipunten);
+                // Kei kansen
+                int keikansen = Integer.parseInt(tfKeiKansen.getText());
+                speler.setKeikansen(keikansen);
+                // KNSB
+                int knsb = Integer.parseInt(tfKNSB.getText());
+                speler.setKNSBnummer(knsb);
                 // Tegenstanders
                 String[] tgn = new String[4];
                 tgn[0] = tfTegenstander1.getText();
@@ -157,7 +181,7 @@ public class BewerkSpelerDialoog extends JDialog {
         cancelButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent event) {
                 setVisible(false);
                 dispose();
             }

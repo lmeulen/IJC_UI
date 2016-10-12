@@ -7,7 +7,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  * - ... 
@@ -28,7 +28,7 @@ public class Utils {
     
     public static void fixedComponentSize(Component c, int width, int height) {
         c.setMinimumSize(new Dimension(width, height));
-        c.setMinimumSize(new Dimension(width, height));
+        c.setMaximumSize(new Dimension(width, height));
         c.setPreferredSize(new Dimension(width, height));
         c.setSize(new Dimension(width, height));
     }

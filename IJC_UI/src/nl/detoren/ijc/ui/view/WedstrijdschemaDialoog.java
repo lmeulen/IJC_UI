@@ -7,11 +7,10 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - ... 
- * - ...
+ * - TODO Geen edit mogelijkheden op trio wedstrijden (bv wisselen kleur)
  */
 package nl.detoren.ijc.ui.view;
 
@@ -64,21 +63,21 @@ public class WedstrijdschemaDialoog extends JDialog {
 
 	private final static Logger logger = Logger.getLogger(GroepenReader.class.getName());
 
-	private static int groep;
-    private static JTable spelersTabel;
-    private static JTable[] serieTabel;
+	private  int groep;
+    private  JTable spelersTabel;
+    private  JTable[] serieTabel;
     private JScrollPane leftScrollPane;
     private JScrollPane[] centerScrollPane;
     private JPanel centerPanel;
     private JPanel rightPanel;
 
-    WedstrijdschemaDialoog(Frame frame, String title, int g) {
-        WedstrijdschemaDialoog.groep = g;
+    WedstrijdschemaDialoog(Frame frame, String title, int groepID) {
+    	groep = groepID;
         setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
 
-        logger.log(Level.INFO, "Dialoog voor groep " + Groep.geefNaam(g));
+        logger.log(Level.INFO, "Dialoog voor groep " + Groep.geefNaam(groepID));
 
         // Spelerstabel
         leftScrollPane = new JScrollPane();
@@ -201,8 +200,8 @@ public class WedstrijdschemaDialoog extends JDialog {
 
     }
 
-    private void createSerieTabel(final int i, JPanel panel) {
-        serieTabel[i] = new JTable(new SerieModel(groep, i, panel)) {
+    private void createSerieTabel(final int index, JPanel panel) {
+        serieTabel[index] = new JTable(new SerieModel(groep, index, panel)) {
             /**
 			 * 
 			 */
@@ -219,21 +218,21 @@ public class WedstrijdschemaDialoog extends JDialog {
                 return c;
             }
         };
-        serieTabel[i].addMouseListener(new MouseAdapter() {
+        serieTabel[index].addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                int r = serieTabel[i].rowAtPoint(e.getPoint());
-                if (r >= 0 && r < serieTabel[i].getRowCount()) {
-                    serieTabel[i].setRowSelectionInterval(r, r);
+                int r = serieTabel[index].rowAtPoint(e.getPoint());
+                if (r >= 0 && r < serieTabel[index].getRowCount()) {
+                    serieTabel[index].setRowSelectionInterval(r, r);
                 } else {
-                    serieTabel[i].clearSelection();
+                    serieTabel[index].clearSelection();
                 }
 
-                final int rowindex = serieTabel[i].getSelectedRow();
+                final int rowindex = serieTabel[index].getSelectedRow();
                 if (rowindex < 0) {
                     return;
                 }
-                final SerieModel model = (SerieModel) serieTabel[i].getModel();
+                final SerieModel model = (SerieModel) serieTabel[index].getModel();
                 final Wedstrijd w = model.getWedstrijd(rowindex);
                 if (e.isPopupTrigger() && e.getComponent() instanceof JTable) {
                     JPopupMenu popup = new JPopupMenu();
@@ -262,9 +261,7 @@ public class WedstrijdschemaDialoog extends JDialog {
 
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            Speler s1 = w.getWit();
-                            Speler s2 = w.getZwart();
-                            w.setSpelers(s2, s1);
+                            w.wisselSpelers();
                             model.forceRepaint();
                         }
                     });
@@ -274,14 +271,14 @@ public class WedstrijdschemaDialoog extends JDialog {
                 }
             }
         });
-        serieTabel[i].setDragEnabled(true);
+        serieTabel[index].setDragEnabled(true);
 //        if (i < 3) {
-            serieTabel[i].setDropMode(DropMode.ON_OR_INSERT_ROWS);
+            serieTabel[index].setDropMode(DropMode.ON_OR_INSERT_ROWS);
 //        } else {
 //            serieTabel[i].setDropMode(DropMode.ON);
 //        }
-        serieTabel[i].setFillsViewportHeight(true);
-        serieTabel[i].setTransferHandler(new TransferHandler() {
+        serieTabel[index].setFillsViewportHeight(true);
+        serieTabel[index].setTransferHandler(new TransferHandler() {
             /**
 			 * 
 			 */
@@ -342,11 +339,11 @@ public class WedstrijdschemaDialoog extends JDialog {
             }
         });
 
-        Utils.fixedColumSize(serieTabel[i].getColumnModel().getColumn(0), 30);
-        Utils.fixedColumSize(serieTabel[i].getColumnModel().getColumn(1), 130);
-        Utils.fixedColumSize(serieTabel[i].getColumnModel().getColumn(2), 15);
-        Utils.fixedColumSize(serieTabel[i].getColumnModel().getColumn(3), 30);
-        Utils.fixedColumSize(serieTabel[i].getColumnModel().getColumn(4), 130);
+        Utils.fixedColumSize(serieTabel[index].getColumnModel().getColumn(0), 30);
+        Utils.fixedColumSize(serieTabel[index].getColumnModel().getColumn(1), 130);
+        Utils.fixedColumSize(serieTabel[index].getColumnModel().getColumn(2), 15);
+        Utils.fixedColumSize(serieTabel[index].getColumnModel().getColumn(3), 30);
+        Utils.fixedColumSize(serieTabel[index].getColumnModel().getColumn(4), 130);
 
     }
 }

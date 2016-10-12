@@ -7,7 +7,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  * - ... 
@@ -82,6 +82,9 @@ public class Groepen {
 	 * @return
 	 */
     public String toPrintableString() {
+    	return toPrintableString(false);
+    }
+    public String toPrintableString(boolean lang) {
         String result = "";
         for (Groep groep : groepen) {
             //Stand na 3e ronde , 1e periode               Keizergroep (16)	
@@ -92,7 +95,7 @@ public class Groepen {
             result += "    Naam                           ini   zw rating  gespeeld tegen  pnt\n";
             result += "-----------------------------------------------------------------------\n";
 
-            result += groep.toPrintableString() + "\n";
+            result += groep.toPrintableString(lang) + "\n";
         }
         return result;
     }

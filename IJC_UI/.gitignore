@@ -1,1 +1,11 @@
 /app/
+/*.log
+/status.json
+/Indeling*.xlsx
+/*.json
+/Uitslag*.txt
+/bin/
+/python/
+/.pydevproject
+/*KNSB.csv
+/*KEIpuntenS.txt

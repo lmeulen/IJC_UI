@@ -7,7 +7,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  */
@@ -155,7 +155,7 @@ public class GroepenReader {
 		logger.log(Level.INFO, "Spelers groep beginnen op regel " + index);
         // Zolang er een punt in de regel staat, is er nog een speler gevonden
         while ((index < data.length) && data[index].contains(".")) {
-        	Speler s= genereerSpeler(data[index++], type);
+        	Speler s = genereerSpeler(data[index++], type);
     		logger.log(Level.FINE, "Spelerregel : " + data[index-1]);
     		logger.log(Level.FINE, "Speler      : " + s.toPrintableString());
             groep.addSpeler(s);
@@ -202,7 +202,19 @@ public class GroepenReader {
         tgn[3] = getStringDeel(desc, 62, 3);
         speler.setTegenstanders(tgn);
         // Punten. Extra spatie nodig om gegarandeerd te kunnen lezen
-        speler.setPunten(getIntegerDeel(desc + " ", 65, 5));
+        speler.setPunten(getIntegerDeel(desc, 65, 5));
+        //Kei punten en kansen
+        speler.setKeipunten(getIntegerDeel(desc, 71, 2));
+        speler.setKeikansen(getIntegerDeel(desc, 74, 2));
+        // KNSB nummer
+        speler.setKNSBnummer(getIntegerDeel(desc, 76, 9));
+        // Speehistorie
+        speler.setSpeelgeschiedenis(getStringDeel(desc, 85));
+        
+        // 1. Elmar Roothaan                 (ER)#    (1686)   TH+## FW+MR=   76  0/ 0 8560057 Im+## -- -- LE=-- BA=-- IW+## -- jA+-- -- -- -- 
+        //01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+        //          1         2         3         4         5         6         7         8         9         0         1         2         3
+        //                                                                                                    1         1         1         1
         // Eigen groep
         speler.setGroep(groep);
         return speler;
@@ -243,7 +255,7 @@ public class GroepenReader {
             index++;
         }
         index -= 1;
-        return getIntegerDeel(data[index], 18, 2);		// Ronde staat in kolom 19,19 van deze regel
+        return getIntegerDeel(data[index], 19, 2);		// Ronde staat in kolom 19,19 van deze regel
     }
 
     /**
@@ -257,6 +269,21 @@ public class GroepenReader {
     private String getStringDeel(String input, int offset, int length) {
         if ((input != null) && ((offset + length) <= input.length())) {
             return input.substring(offset, offset + length);
+        }
+        return "";
+    }
+
+    /**
+     * Retourneer een deelstring op basis van offset. De substring vanaf offset
+     * tot einde string wordt geretourneerd.
+     * Retourneert een lege string indien de deelstring niet bepaald kan worden
+     * @param input invoerstring
+     * @param offset offset waar substring moet worden bepaald
+     * @return de deelstring
+     */
+    private String getStringDeel(String input, int offset) {
+        if ((input != null) && (offset < input.length())) {
+            return input.substring(offset);
         }
         return "";
     }

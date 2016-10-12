@@ -7,7 +7,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  * - ... 
@@ -99,9 +99,18 @@ public class Groep {
      * @return String met alle spelers
      */
     public String toPrintableString() {
+    	return toPrintableString(false);
+    }
+    
+    /**
+     * Retourneer een lijst van spelers. 
+     * @param lang Als waar, lange notatoe
+     * @return
+     */
+    public String toPrintableString(boolean lang) {
         String result = "";
         for (Speler s : getSpelers()) {
-            result += s.toPrintableString();
+            result += s.toPrintableString(lang);
             result += "\n";
         }
         return result;
@@ -147,9 +156,9 @@ public class Groep {
        return namen.length;
     }
     
-    public Speler getSpelerByID(int ID) {
+    public Speler getSpelerByID(int id) {
         for (Speler s : spelers) {
-            if (s.getId() == ID) return s;
+            if (s.getId() == id) return s;
         }
         return null;
     }

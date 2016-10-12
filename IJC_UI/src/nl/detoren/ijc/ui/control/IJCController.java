@@ -7,7 +7,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
  */
@@ -18,6 +18,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +34,9 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.io.GroepenReader;
 import nl.detoren.ijc.io.OutputExcel;
+import nl.detoren.ijc.io.OutputKEI;
+import nl.detoren.ijc.io.OutputKNSB;
+import nl.detoren.ijc.io.OutputTekst;
 
 /**
  * Main controller class voor afhandeling van de groepen en wedstrijden
@@ -52,6 +56,7 @@ public class IJCController {
         private Groepen wedstrijdgroepen;
         private Wedstrijden wedstrijden;
         private Groepen resultaatVerwerkt;
+        private ArrayList<Speler> externGespeeld;
     }
     private Status status;
 
@@ -61,6 +66,7 @@ public class IJCController {
     	status.groepen = null;
     	status.wedstrijden = null;
     	status.wedstrijdgroepen = null;
+    	status.externGespeeld = null;
 
     }
 
@@ -92,17 +98,20 @@ public class IJCController {
      */
 	public void leesGroepen(String bestandsnaam) {
 		synchronized (this) {
-			status.groepen = null;
+//			status.groepen = null;
 			if (bestandsnaam.endsWith(".txt")) {
 				logger.log(Level.INFO, "Lees groepen in TXT formaat uit " + bestandsnaam);
 				status.groepen = new GroepenReader().leesGroepen(bestandsnaam);
 			} else if (bestandsnaam.endsWith(".json")) {
 				logger.log(Level.INFO, "Lees groepen in JSON uit bestand " + bestandsnaam);
 				status.groepen = new GroepenReader().leesGroepenJSON(bestandsnaam);
+			} else {
+				return;
 			}
 			status.wedstrijdgroepen = null;
 			status.wedstrijden = null;
 			status.resultaatVerwerkt = null;
+			status.externGespeeld = null;
 			if (status.groepen.getRonde() == 1)
 				resetAanwezigheidspunt();
 		}
@@ -130,6 +139,7 @@ public class IJCController {
         	logger.log(Level.INFO, "Lees status");
         	leesStatus();
 			if ((status == null) || (status.groepen == null)) {
+				status = new Status();
 				status.groepen = null;
 				status.wedstrijdgroepen = null;
 				status.wedstrijden = null;
@@ -166,6 +176,14 @@ public class IJCController {
     public Groep getWedstrijdGroepByID(int id) {
         return status.wedstrijdgroepen.getGroepById(id);
     }
+    
+    public Groep getResultaatGroepByID(int id) {
+    	if (status.resultaatVerwerkt != null) {
+    		return status.resultaatVerwerkt.getGroepById(id);
+    	} else {
+    		return null;
+    	}
+    }
 
     public int getAantalWedstrijdGroepen() {
         return status.wedstrijdgroepen.getAantalGroepen();
@@ -175,8 +193,8 @@ public class IJCController {
         return status.wedstrijden;
     }
 
-    public void setWedstrijden(Wedstrijden w) {
-    	status.wedstrijden = w;
+    public void setWedstrijden(Wedstrijden wedstrijden) {
+    	status.wedstrijden = wedstrijden;
     }
 
     /**
@@ -261,12 +279,12 @@ public class IJCController {
      * @param index Betreffende speler
      * @param waarde true, als aanwezig melden
      */
-    public void setSpelerAanwezigheid(Groep groep, int index, boolean waarde) {
+    public void setSpelerAanwezigheid(Groep groep, int index, final boolean waarde) {
         synchronized (this) {
-        	logger.log(Level.INFO, "Speler " + index + " in groep " + groep.getNaam() + " is " + (waarde ? "niet aanwezig" : "aanwezig"));
             if (groep != null) {
                 Speler s = groep.getSpelers().get(index);
                 if (s != null) {
+                	logger.log(Level.INFO, "Speler " + index + " in groep " + groep.getNaam() + " is " + (waarde ? "niet aanwezig" : "aanwezig"));
                     s.setAanwezig(waarde);
                     if (status.automatisch) {
                         maakGroepsindeling();
@@ -280,31 +298,31 @@ public class IJCController {
     /** 
      * Voeg een speler toe aan een groep
      * @param groepID Groep waaraan toe te voegen
-     * @param s Gedefinieerde speler die toegevoegd moet worden
+     * @param sp Gedefinieerde speler die toegevoegd moet worden
      * @param locatie Locatie in de tabel waar toe te voegen
      */
-    public void addSpeler(int groepID, Speler s, int locatie) {
-    	logger.log(Level.INFO, "Voeg speler " + s.getInitialen() + " toe aan groep " + groepID + ", locatie " + locatie);
+    public void addSpeler(int groepID, Speler sp, int locatie) {
+    	logger.log(Level.INFO, "Voeg speler " + sp.getInitialen() + " toe aan groep " + groepID + ", locatie " + locatie);
         Groep gr = status.groepen.getGroepById(groepID);
-        gr.addSpeler(s, locatie);
+        gr.addSpeler(sp, locatie);
         if (status.automatisch) {
             maakGroepsindeling();
         }
     }
     
-    public void verwijderSpeler(int groepID, Speler s, int locatie) {
-    	logger.log(Level.INFO, "Verwijder speler " + s.getInitialen() + " uit groep " + groepID + ", locatie " + locatie);
+    public void verwijderSpeler(int groepID, Speler sp, int locatie) {
+    	logger.log(Level.INFO, "Verwijder speler " + sp.getInitialen() + " uit groep " + groepID + ", locatie " + locatie);
         Groep gr = status.groepen.getGroepById(groepID);
-        gr.removeSpeler(s, locatie);
+        gr.removeSpeler(sp, locatie);
         if (status.automatisch) {
             maakGroepsindeling();
         }
     }
 
-    public void verwijderWedstrijdSpeler(int groepID, Speler s, int locatie) {
-    	logger.log(Level.INFO, "Verwijder speler " + s.getInitialen() + " uit wedstrijdgroep " + groepID + ", locatie " + locatie);
+    public void verwijderWedstrijdSpeler(int groepID, Speler sp, int locatie) {
+    	logger.log(Level.INFO, "Verwijder speler " + sp.getInitialen() + " uit wedstrijdgroep " + groepID + ", locatie " + locatie);
         Groep gr = status.wedstrijdgroepen.getGroepById(groepID);
-        gr.removeSpeler(s, locatie);
+        gr.removeSpeler(sp, locatie);
         gr.renumber();
         if (status.automatisch) {
             maakGroepsindeling();
@@ -312,41 +330,27 @@ public class IJCController {
     }
     /**
      * Verwerk uitslagen tot een nieuwe stand en sla deze op
+     * in de verschillende bestanden
      */
     public void verwerkUitslagen() {
     	logger.log(Level.INFO, "Verwerk uitslagen");
     	Uitslagverwerker uv = new Uitslagverwerker();
-    	status.resultaatVerwerkt =  uv.verwerkUitslag(status.groepen, status.wedstrijden);
+    	status.resultaatVerwerkt =  uv.verwerkUitslag(status.groepen, status.wedstrijden, status.externGespeeld);
     	status.resultaatVerwerkt.sorteerGroepen();
     	System.out.println(status.resultaatVerwerkt.toPrintableString());
     	logger.log(Level.INFO, "en sla uitslagen en status op");
-    	saveUitslag(status.groepen.getPeriode(), status.groepen.getRonde(), status.resultaatVerwerkt.toPrintableString());
-    	saveState(false);
+    	new OutputTekst().saveUitslag(status.resultaatVerwerkt);
+    	new OutputKNSB().saveUitslag(status.wedstrijden);
+    	new OutputKEI().exportKEIlijst(status.resultaatVerwerkt);
+    	saveState(true, "uitslag");
     }
     
-    public void saveUitslag(int periode, int ronde, String uitslag) {
-		try {
-			String bestandsnaam = "Uitslag" + periode + "-" + ronde; 
-	    	logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
-			FileWriter writer = new FileWriter(bestandsnaam + ".txt");
-			writer.write(uitslag);
-			writer.close();
-			Gson gson = new Gson();
-			String jsonString = gson.toJson(status.resultaatVerwerkt);
-			writer = new FileWriter(bestandsnaam + ".json");
-			writer.write(jsonString);
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	
-    }
-
-    /**
+	/**
      * Save state of the application to disk
-     * @param  unique if true, a unique file is created
-     */
-	public void saveState(boolean unique) {
+	 * @param unique if true, a unique file is created with timestamp in filename
+	 * @param postfix post fix of filename, before extension. Only used in combination with unique = true
+	 */
+    public void saveState(boolean unique, String postfix) {
 		try {
 			String bestandsnaam = "status.json";
 			logger.log(Level.INFO, "Sla status op in bestand " + bestandsnaam);
@@ -359,7 +363,7 @@ public class IJCController {
 
 			if (unique) {
 				String s = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-				bestandsnaam = "status" + s + ".json";
+				bestandsnaam = "status" + s + "-" + postfix + ".json";
 				logger.log(Level.INFO, "Sla status op in bestand " + bestandsnaam);
 				// write converted json data to a file
 				writer = new FileWriter(bestandsnaam);
@@ -390,4 +394,71 @@ public class IJCController {
     	oe.updateExcel(status.wedstrijden);
     }
     
+    public ArrayList<Speler> getExterneSpelers() {
+    	return status.externGespeeld;
+    }
+    
+    /**
+     * Voeg externe speler toe 
+     * @param naam Naam of initialen
+     * @return De toegeveogde speler
+     */
+    public Speler addExterneSpeler(String naam) {
+    	if (status.externGespeeld == null) status.externGespeeld = new ArrayList<>();
+    	if (naam != null && naam.length() == 2) {
+    		Speler s = getSpelerOpInitialen(naam);
+    		if (s != null) status.externGespeeld.add(s);
+    		return s;
+    	} else if (naam != null && naam.length() > 2) {
+    		Speler s = getSpelerOpNaam(naam);
+    		if (s != null) status.externGespeeld.add(s);
+    		return s;
+    	} else {
+    		// ongeldige naam
+    		return null;
+    	}
+    }
+    
+    /**
+     * Wis lijst met exterene spelers
+     */
+    public void wisExterneSpelers() {
+    	status.externGespeeld = new ArrayList<>();
+    }
+
+    /**
+     * Vind speler in alle groepen op naam
+     * @param naam
+     * @return
+     */
+    public Speler getSpelerOpNaam(String naam) {
+    	if (status.groepen != null) {
+    		for (Groep groep : status.groepen.getGroepen()) {
+    			for (Speler speler : groep.getSpelers()) {
+    				if (speler.getNaam().equals(naam)) {
+    					return speler;
+    				}
+    			}
+    		}
+    	}
+    	return null;
+    }
+    
+    /**
+     * Vind speler in alle groepen op initialen
+     * @param naam
+     * @return
+     */
+    public Speler getSpelerOpInitialen(String naam) {
+    	if (status.groepen != null) {
+    		for (Groep groep : status.groepen.getGroepen()) {
+    			for (Speler speler : groep.getSpelers()) {
+    				if (speler.getInitialen().equals(naam)) {
+    					return speler;
+    				}
+    			}
+    		}
+    	}
+    	return null;
+    }
 }

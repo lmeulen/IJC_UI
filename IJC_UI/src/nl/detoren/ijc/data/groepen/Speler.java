@@ -7,10 +7,10 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - FIXME KNSB lidmaatschapnummers
+ * - MINOR isGelijk alleen nog laten kijken naar KNSB nummer? Mogelijk voldoende
  */
 package nl.detoren.ijc.data.groepen;
 
@@ -36,28 +36,36 @@ public class Speler implements Cloneable {
     private int punten;
     private boolean afwezigheidspunt;
     private boolean aanwezig;
+    private int KNSBnummer;
+    private int keipunten;
+    private int keikansen;
+    private String speelgeschiedenis;
     
     private static final DecimalFormat decimalFormat = new DecimalFormat("#");
 
     public Speler() {
-        this(0, "", "", 0, 0, 0, new String[4], 0, false, true);
+        this(0, "", "", 0, 0, 0, new String[4], 0, false, true, 1234567, 0, 0, "");
     }
 
-    public Speler(Speler s) {
-        this.id = s.id;
-        this.naam = s.naam;
-        this.initialen = s.initialen;
-        this.witvoorkeur = s.witvoorkeur;
-        this.groep = s.groep;
-        this.rating = s.rating;
-        this.tegenstanders = s.tegenstanders.clone();
-        this.punten = s.punten;
-        this.afwezigheidspunt = s.afwezigheidspunt;
-        this.aanwezig = s.aanwezig;
+    public Speler(Speler speler) {
+        this.id = speler.id;
+        this.naam = speler.naam;
+        this.initialen = speler.initialen;
+        this.witvoorkeur = speler.witvoorkeur;
+        this.groep = speler.groep;
+        this.rating = speler.rating;
+        this.tegenstanders = speler.tegenstanders.clone();
+        this.punten = speler.punten;
+        this.afwezigheidspunt = speler.afwezigheidspunt;
+        this.aanwezig = speler.aanwezig;
+        this.KNSBnummer = speler.KNSBnummer;
+        this.keipunten = speler.keipunten;
+        this.keikansen = speler.keikansen;
+        this.speelgeschiedenis = speler.speelgeschiedenis;
     }
 
     public Speler(int id, String naam, String initialen, int witvk, int groep, int rating, String[] tgs, int punten,
-            boolean ap, boolean aanw) {
+            boolean ap, boolean aanw, int knsbnr, int keipunten, int keikansen, String geschiedenis) {
         this.id = id;
         this.naam = naam.trim();
         this.initialen = initialen;
@@ -68,6 +76,10 @@ public class Speler implements Cloneable {
         this.punten = punten;
         this.afwezigheidspunt = ap;
         this.aanwezig = aanw;
+        setKNSBnummer(knsbnr);
+        this.keipunten = keipunten;
+        this.keikansen = keikansen;
+        this.speelgeschiedenis = geschiedenis;
     }
 
     public int getId() {
@@ -90,8 +102,8 @@ public class Speler implements Cloneable {
         return initialen;
     }
 
-    public void setInitialen(String s) {
-        initialen = s;
+    public void setInitialen(String init) {
+        initialen = init;
     }
 
     public double getWitvoorkeur() {
@@ -138,7 +150,67 @@ public class Speler implements Cloneable {
         this.punten = punten;
     }
 
+    public int getKNSBnummer() {
+		return KNSBnummer;
+	}
+
     /**
+     * Zet het KNSBnummer. Als deze 1234567 of 0 is, oftewel
+     * onbekend dat wordt deze gevuld als primitieve hash op
+     * basis van de naam
+     * @param nieuwKNSBnr
+     */
+	public void setKNSBnummer(int nieuwKNSBnr) {
+		if ((nieuwKNSBnr == 1234567) && (naam.length() > 3)) {
+			KNSBnummer = getNameHash();
+		} else {
+			KNSBnummer = nieuwKNSBnr;
+		}
+	}
+
+	/**
+	 * Create a hash of 6 digits, prefixed with a 1, from
+	 * the name. 
+	 * @return
+	 */
+	public int getNameHash() {
+		String afk = getAfkorting6();
+		int hash = 1000000;
+		
+		int tmp = (afk.charAt(0) - 'a' + 1) + (afk.charAt(1) - 'a' + 1) + (afk.charAt(2) - 'a' + 1);  
+		hash += tmp * 10000;
+		tmp = (afk.charAt(3) - 'a' + 1) + (afk.charAt(4) - 'a' + 1) + (afk.charAt(5) - 'a' + 1);  
+		hash += tmp * 100;
+		tmp = (afk.charAt(6) - 'a' + 1) + (afk.charAt(7) - 'a' + 1) + (afk.charAt(8) - 'a' + 1);  
+		hash += tmp;
+		return hash;
+	}
+
+	public int getKeipunten() {
+		return keipunten;
+	}
+
+	public void setKeipunten(int keipunten) {
+		this.keipunten = keipunten;
+	}
+
+	public int getKeikansen() {
+		return keikansen;
+	}
+
+	public void setKeikansen(int keikansen) {
+		this.keikansen = keikansen;
+	}
+
+	public String getSpeelgeschiedenis() {
+		return speelgeschiedenis;
+	}
+
+	public void setSpeelgeschiedenis(String speelgeschiedenis) {
+		this.speelgeschiedenis = speelgeschiedenis;
+	}
+
+	/**
      * Geef de drie letterige afkorting van een spelersnaam. De afkorting bestaat uit de volgende3 karakters: 1. Eerste
      * letter voornaam 2. Eerste letter achternaam (laatste woord) 3. Tweede letter achternaam (laatste woord)
      *
@@ -162,6 +234,7 @@ public class Speler implements Cloneable {
         return verwijderAccenten(afkorting.toLowerCase());
     }
 
+
     public boolean isAfwezigheidspunt() {
         return afwezigheidspunt;
     }
@@ -180,13 +253,14 @@ public class Speler implements Cloneable {
 
     /**
      * Wordt dezelfde speler gerepresenteerd door het andere object?
-     * @param s
+     * @param speler
      * @return 
      */
-    public boolean gelijkAan(Speler s) {
-        return (this.getNaam().equals(s.getNaam())
-                && this.getInitialen().equals(s.getInitialen())
-                && this.getGroep() == s.getGroep());
+    public boolean gelijkAan(Speler speler) {
+        return (this.getNaam().equals(speler.getNaam())
+                && this.getInitialen().equals(speler.getInitialen())
+                && this.getGroep() == speler.getGroep()
+                && this.getKNSBnummer() == speler.getKNSBnummer());
     }
 
     @Override
@@ -204,6 +278,16 @@ public class Speler implements Cloneable {
     }
 
     public String toPrintableString() {
+    	return toPrintableString(false);
+    }
+
+    public String toPrintableString(boolean lang) {
+    	String result = toPrintableStringShort();
+    	if (lang)result += printExtensie();
+    	return result;
+    }
+
+    public String toPrintableStringShort() {
         //16. Iva  Binnendijk                (Iv)* w1 ( 296)   RM Ja SW **    17
         String result;
         // ID
@@ -248,8 +332,31 @@ public class Speler implements Cloneable {
 
     }
 
-    private String verwijderAccenten(String s) {
-        String norm = Normalizer.normalize(s, Normalizer.Form.NFD);
+    public String printExtensie() {
+    	//   0/ 0 8560057 Im+## -- -- LE=-- BA=-- IW+## -- jA+-- -- -- --
+    	//1234567890123456789012345678901234567890123456789012345678901234567890
+    	//         1         2         3         4         5         6         7
+    	String result = " ";
+    	// Keipunten
+    	String tmp = Integer.toString(keipunten);
+    	result += (tmp.length() < 2 ? " " : "") + tmp + "/";
+    	// Keikansen
+    	tmp = Integer.toString(keikansen);
+    	result += (tmp.length() < 2 ? " " : "") + tmp + " ";
+    	// KNSB
+    	tmp = Integer.toString(KNSBnummer);
+        while (tmp.length() < 7) {
+            tmp = " " + tmp;
+        }    	
+        result += tmp + " ";
+    	// speelgeschiedenis
+        result += speelgeschiedenis;
+        return result;
+
+    }
+    
+    private String verwijderAccenten(String naam) {
+        String norm = Normalizer.normalize(naam, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(norm).replaceAll("");
     }
@@ -263,7 +370,7 @@ public class Speler implements Cloneable {
      * Is er eerder tegen meegegeven speler gepseeld?
      *
      * @param speler2 Speler die gecontroleerd word
-     * @return True als er in één van de laatste vier wedstrijden tegen deze speler gespeeld is
+     * @return True als er in een van de laatste vier wedstrijden tegen deze speler gespeeld is
      */
     public boolean isGespeeldTegen(Speler speler2) {
         return isGespeeldTegen(speler2, 0);
@@ -274,7 +381,7 @@ public class Speler implements Cloneable {
      *
      * @param speler2 Speler die gecontroleerd word "param negeerNspelers Hoeveel van de oudste spelers worden niet
      * meetgeteld?
-     * @return True als er in één van de laatste vier wedstrijden tegen deze speler gespeeld is
+     * @return True als er in een van de laatste vier wedstrijden tegen deze speler gespeeld is
      */
     public boolean isGespeeldTegen(Speler speler2, int negeerNspelers) {
         String ini = speler2.getInitialen();
@@ -289,6 +396,8 @@ public class Speler implements Cloneable {
     }
 
     public void addTegenstander(String tgn) {
+    	speelgeschiedenis += tegenstanders[0];
+    	speelgeschiedenis = speelgeschiedenis.substring(3);
         tegenstanders[0] = tegenstanders[1];
         tegenstanders[1] = tegenstanders[2];
         tegenstanders[2] = tegenstanders[3];
@@ -296,7 +405,56 @@ public class Speler implements Cloneable {
     }
 
     public static Speler dummySpeler(int groepID) {
-        return new Speler(99, "Dummy", "--", 0, groepID, (groepID + 1) * 100, new String[]{"--", "--", "--", "--"}, 0, false, true);
+        return new Speler(99, "Dummy", "--", 0, groepID, (groepID + 1) * 100, new String[]{"--", "--", "--", "--"}, 
+        		0, false, true, 1234567,0,0, "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --");
 
     }
+    
+    /**
+     * Retourneert een 9 letterige afkorting van de naam.
+     * Deze is opgebouwd uit 
+     * 1. de eerste 3 van de eerste voornaam 
+     * 2. de eerste 3 van de eerste voornaam
+     * 3. de middelste drie letters van de volledige naam
+     * Te korte naamsdelen worden aangevuld met 'z'.
+     * Vooral bedoeld om semi-hash obv naam te realiseren
+     * @return
+     */
+    public String getAfkorting6() {
+        String afkorting;
+        String tmpnaam = naam;
+        tmpnaam = tmpnaam.replaceAll("\\s+","");
+        // Hele naam korter dan 9 karakters -> hele naam aanvullen met 'z'
+        if (tmpnaam.length() < 9) {
+        	while (tmpnaam.length() < 9) {
+        		tmpnaam += 'z';
+        	}
+            return tmpnaam.toLowerCase();
+        }
+        // 1. eerste drie letters voornaam
+        afkorting = tmpnaam.substring(0, 3);
+        // 2. eerste drie letters achternaam
+        String achternaam = null;
+        StringTokenizer tokenizer = new StringTokenizer(naam, " ");
+        while (tokenizer.hasMoreTokens()) {
+            achternaam = tokenizer.nextToken();
+        }
+        if (achternaam != null) {
+        	if (achternaam.length() >= 3) {
+        		afkorting += achternaam.substring(0, 3);
+        	} else {
+        		afkorting += achternaam;
+        		while (afkorting.length() < 6) {
+        			afkorting += "z";
+        		}
+        	}
+        } else {
+        	afkorting += "zzz";
+        }
+        // 3. middelste letters volledige naam
+        afkorting += tmpnaam.substring((tmpnaam.length()/2) - 1, (tmpnaam.length()/2) + 2);
+        
+        return verwijderAccenten(afkorting.toLowerCase());
+    }
+
 }
