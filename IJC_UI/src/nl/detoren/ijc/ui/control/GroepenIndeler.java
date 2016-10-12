@@ -10,9 +10,10 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - FIXME Trio in groep van 7 leidt tot één serie met trio ipv twee series met trio
  * - TODO Bij oneven aantal spelers in de hoogste groep wordt er een volledig trio ingepland -> Handmatig aanpassen   
  * - TODO Afmelden van speler die is doorgeschoven, werkt nog niet. -> Workaround: Delete in afwezigheidstabel
+ * - MINOR Tijdens de 1e serie van 1e ronde van de 1e periode dient tijdens de 3e, 4e, 7e, 8e, 11e, 12e enz. wedstrijd
+ * - MINOR Derde serie in de eerste ronde van de eerste periode
  */
 package nl.detoren.ijc.ui.control;
 
@@ -391,7 +392,7 @@ public class GroepenIndeler {
 		    Serie serie = null;
 		    int ignoreTgns = 0;
 	        int maxverschil = minverschil + 3;
-			while ((serie == null) && (maxverschil <= aantalSpelers)) {
+			while ((serie == null) && (maxverschil <= groep.getSpelers().size())) {
 				while ((serie == null) && (ignoreTgns <= 5)) {
 					serie = maakSerie(groep, gepland, aantalSpelers, minverschil, maxverschil, ignoreTgns, ronde);
 					ignoreTgns++;
