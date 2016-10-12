@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - MINOR Gebruik hash functie voor dummy knsbnummers
  * - MINOR isGelijk alleen nog laten kijken naar KNSB nummer? Mogelijk voldoende
  */
 package nl.detoren.ijc.data.groepen;
@@ -163,14 +162,28 @@ public class Speler implements Cloneable {
      */
 	public void setKNSBnummer(int nieuwKNSBnr) {
 		if ((nieuwKNSBnr == 1234567) && (naam.length() > 3)) {
-			String afk = getAfkorting3();
-			KNSBnummer = 1000000;
-			KNSBnummer += (afk.charAt(0) - 'a' + 1) * 10000;
-			KNSBnummer += (afk.charAt(1) - 'a' + 1) * 100;
-			KNSBnummer += (afk.charAt(2) - 'a' + 1);
+			KNSBnummer = getNameHash();
 		} else {
 			KNSBnummer = nieuwKNSBnr;
 		}
+	}
+
+	/**
+	 * Create a hash of 6 digits, prefixed with a 1, from
+	 * the name. 
+	 * @return
+	 */
+	public int getNameHash() {
+		String afk = getAfkorting6();
+		int hash = 1000000;
+		
+		int tmp = (afk.charAt(0) - 'a' + 1) + (afk.charAt(1) - 'a' + 1) + (afk.charAt(2) - 'a' + 1);  
+		hash += tmp * 10000;
+		tmp = (afk.charAt(3) - 'a' + 1) + (afk.charAt(4) - 'a' + 1) + (afk.charAt(5) - 'a' + 1);  
+		hash += tmp * 100;
+		tmp = (afk.charAt(6) - 'a' + 1) + (afk.charAt(7) - 'a' + 1) + (afk.charAt(8) - 'a' + 1);  
+		hash += tmp;
+		return hash;
 	}
 
 	public int getKeipunten() {
@@ -220,6 +233,7 @@ public class Speler implements Cloneable {
         }
         return verwijderAccenten(afkorting.toLowerCase());
     }
+
 
     public boolean isAfwezigheidspunt() {
         return afwezigheidspunt;
@@ -394,6 +408,53 @@ public class Speler implements Cloneable {
         return new Speler(99, "Dummy", "--", 0, groepID, (groepID + 1) * 100, new String[]{"--", "--", "--", "--"}, 
         		0, false, true, 1234567,0,0, "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --");
 
+    }
+    
+    /**
+     * Retourneert een 9 letterige afkorting van de naam.
+     * Deze is opgebouwd uit 
+     * 1. de eerste 3 van de eerste voornaam 
+     * 2. de eerste 3 van de eerste voornaam
+     * 3. de middelste drie letters van de volledige naam
+     * Te korte naamsdelen worden aangevuld met 'z'.
+     * Vooral bedoeld om semi-hash obv naam te realiseren
+     * @return
+     */
+    public String getAfkorting6() {
+        String afkorting;
+        String tmpnaam = naam;
+        tmpnaam = tmpnaam.replaceAll("\\s+","");
+        // Hele naam korter dan 9 karakters -> hele naam aanvullen met 'z'
+        if (tmpnaam.length() < 9) {
+        	while (tmpnaam.length() < 9) {
+        		tmpnaam += 'z';
+        	}
+            return tmpnaam.toLowerCase();
+        }
+        // 1. eerste drie letters voornaam
+        afkorting = tmpnaam.substring(0, 3);
+        // 2. eerste drie letters achternaam
+        String achternaam = null;
+        StringTokenizer tokenizer = new StringTokenizer(naam, " ");
+        while (tokenizer.hasMoreTokens()) {
+            achternaam = tokenizer.nextToken();
+        }
+        if (achternaam != null) {
+        	if (achternaam.length() >= 3) {
+        		afkorting += achternaam.substring(0, 3);
+        	} else {
+        		afkorting += achternaam;
+        		while (afkorting.length() < 6) {
+        			afkorting += "z";
+        		}
+        	}
+        } else {
+        	afkorting += "zzz";
+        }
+        // 3. middelste letters volledige naam
+        afkorting += tmpnaam.substring((tmpnaam.length()/2) - 1, (tmpnaam.length()/2) + 2);
+        
+        return verwijderAccenten(afkorting.toLowerCase());
     }
 
 }
