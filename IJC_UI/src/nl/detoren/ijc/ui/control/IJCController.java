@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import nl.detoren.ijc.Configuratie;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.data.groepen.Speler;
@@ -52,6 +53,7 @@ public class IJCController {
 
     private class Status {
         private boolean automatisch = true;
+        private Configuratie configuratie = new Configuratie();
         private Groepen groepen;
         private Groepen wedstrijdgroepen;
         private Wedstrijden wedstrijden;
@@ -67,7 +69,7 @@ public class IJCController {
     	status.wedstrijden = null;
     	status.wedstrijdgroepen = null;
     	status.externGespeeld = null;
-
+    	status.configuratie = new Configuratie();
     }
 
     public static IJCController getInstance() {
@@ -140,6 +142,7 @@ public class IJCController {
         	leesStatus();
 			if ((status == null) || (status.groepen == null)) {
 				status = new Status();
+				status.configuratie = new Configuratie();
 				status.groepen = null;
 				status.wedstrijdgroepen = null;
 				status.wedstrijden = null;
@@ -383,6 +386,7 @@ public class IJCController {
 			Gson gson = new Gson();
 			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
 			status = gson.fromJson(br, Status.class);
+			if (status.configuratie == null) status.configuratie = new Configuratie();
 		} catch (IOException e) {
 			// Could not read status
 		}
