@@ -176,6 +176,33 @@ public class Configuratie {
 	 * menu.
 	 */
 	public boolean saveAdditionalStates = true;
+	
+	/**
+	 * Waar beginnen met zoeken naar een trio?
+	 * param x = groepsgrootte
+	 */
+	private String grBeginRating = "x / 2";
+	
+	/**
+	 * Bepaal beginpunt voor zoeken naar trio
+	 * @param groepsgrootte
+	 * @return index voor beginpunt trio
+	 */
+	public int getBeginpuntTrio (int groepsgrootte) {
+		return (Integer)groovy.util.Eval.x(groepsgrootte, grBeginRating);
+	}
+	
+	/**
+	 * Bestandsnaam voor configuratie bestand
+	 * prefix .json wordt automatisch toegevoegd 
+	 */
+	public String configuratieBestand = "configuratie";
+
+	/**
+	 * Bestandsnaam voor status bestand
+	 * prefix .json )en evt datum postfix) wordt automatisch toegevoegd 
+	 */
+	public String statusBestand = "status";
 }
 
 

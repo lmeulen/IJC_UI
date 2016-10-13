@@ -53,7 +53,6 @@ public class IJCController {
 
     private class Status {
         private boolean automatisch = true;
-        private Configuratie configuratie = new Configuratie();
         private Groepen groepen;
         private Groepen wedstrijdgroepen;
         private Wedstrijden wedstrijden;
@@ -61,6 +60,7 @@ public class IJCController {
         private ArrayList<Speler> externGespeeld;
     }
     private Status status;
+    private Configuratie configuratie;
 
 
     protected IJCController() {
@@ -69,7 +69,7 @@ public class IJCController {
     	status.wedstrijden = null;
     	status.wedstrijdgroepen = null;
     	status.externGespeeld = null;
-    	status.configuratie = new Configuratie();
+    	configuratie = new Configuratie();
     }
 
     public static IJCController getInstance() {
@@ -140,9 +140,9 @@ public class IJCController {
 		synchronized (this) {
         	logger.log(Level.INFO, "Lees status");
         	leesStatus();
+        	leesConfiguratie();
 			if ((status == null) || (status.groepen == null)) {
 				status = new Status();
-				status.configuratie = new Configuratie();
 				status.groepen = null;
 				status.wedstrijdgroepen = null;
 				status.wedstrijden = null;
@@ -373,6 +373,13 @@ public class IJCController {
 				writer.write(jsonString);
 				writer.close();
 			}
+			bestandsnaam = "configuratie.json";
+			logger.log(Level.INFO, "Sla configuratie op in bestand " + bestandsnaam);
+			// write converted json data to a file
+			writer = new FileWriter(bestandsnaam);
+			jsonString = gson.toJson(configuratie);
+			writer.write(jsonString);
+			writer.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -386,7 +393,19 @@ public class IJCController {
 			Gson gson = new Gson();
 			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
 			status = gson.fromJson(br, Status.class);
-			if (status.configuratie == null) status.configuratie = new Configuratie();
+		} catch (IOException e) {
+			// Could not read status
+		}
+	}
+
+	public void leesConfiguratie() {
+		try {
+			String bestandsnaam = "configuratie.json";
+	    	logger.log(Level.INFO, "Lees configuratie uit bestand " + bestandsnaam);
+			Gson gson = new Gson();
+			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
+			configuratie = gson.fromJson(br, Configuratie.class);
+			if (configuratie == null) configuratie = new Configuratie();
 		} catch (IOException e) {
 			// Could not read status
 		}
