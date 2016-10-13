@@ -392,8 +392,8 @@ public class GroepenIndeler {
 
 		    Serie serie = null;
 		    int ignoreTgns = 0;
-	        int maxverschil = minverschil + 3;
-			while ((serie == null) && (maxverschil <= groep.getSpelers().size())) {
+	        int maxverschil = Math.min(minverschil + 3, groep.getAantalSpelers());
+			while ((serie == null) && (maxverschil <= groep.getAantalSpelers())) {
 				while ((serie == null) && (ignoreTgns <= 5)) {
 					serie = maakSerie(groep, gepland, aantalSpelers, minverschil, maxverschil, ignoreTgns, ronde);
 					ignoreTgns++;
