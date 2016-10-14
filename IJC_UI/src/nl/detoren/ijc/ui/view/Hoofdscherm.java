@@ -14,7 +14,6 @@
  * - MINOR Als een uitslag ingevuld, aanwezigheid etc vastzetten
  * - MINOR Wisselen groepsblad werkt soms niet meer (nog niet reproduceerbaar) 
  * - TODO Menu "Volgende Ronde" en "Instellingen" implementeren
- * - TODO Openen nieuw uitslag bestand zet automatisch wel op waar, maar update de interface niet goed
  * 
  */
 package nl.detoren.ijc.ui.view;
@@ -314,7 +313,7 @@ public class Hoofdscherm extends JFrame {
 					File file = fc.getSelectedFile();
 					System.out.println("Opening: " + file.getAbsolutePath() + ".");
 					controller.leesGroepen(file.getAbsolutePath());
-					controller.setAutomatisch(true);
+					updateAutomatisch(true);
 					controller.maakGroepsindeling();
 					updateRondeLabel();
 					hs.repaint();
