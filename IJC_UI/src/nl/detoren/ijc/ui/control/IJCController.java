@@ -245,7 +245,7 @@ public class IJCController {
         synchronized (this) {
         	logger.log(Level.INFO, "Maak wedstrijden voor groep " + groepID);
         	status.wedstrijden = new GroepenIndeler().updateWedstrijdschema(status.wedstrijden, status.wedstrijdgroepen, groepID);
-            printWedstrijden();
+            printWedstrijden(groepID);
         }
     }
 
@@ -275,6 +275,36 @@ public class IJCController {
             }
         }
     }
+
+    /**
+     * Print wedstrijden voor één groep op het scherm, opgedeeld per serie
+     */
+	public void printWedstrijden(int groep) {
+		logger.log(Level.INFO, "Print wedstrijden");
+		System.out.print("\nWedstrijden Periode " + status.wedstrijden.getPeriode());
+		System.out.println(" Ronde " + status.wedstrijden.getRonde() + "\n-----------");
+		Groepswedstrijden gw = status.wedstrijden.getGroepswedstrijdenNiveau(groep);
+		System.out.println("  " + Groep.geefNaam(gw.getNiveau()));
+		int i = 1;
+		int distance = 0;
+		for (Serie serie : gw.getSeries()) {
+			System.out.println("    Serie " + i);
+			for (Wedstrijd w : serie.getWedstrijden()) {
+				System.out.println("      " + w.toString());
+				distance += w.getDistance();
+			}
+			++i;
+		}
+		if (!gw.getTriowedstrijden().isEmpty()) {
+			System.out.println("    Trio");
+			for (Wedstrijd w : gw.getTriowedstrijden()) {
+				System.out.println("      " + w.toString());
+				distance += w.getDistance();
+			}
+
+		}
+		System.out.println("Totale afstand : " + distance);
+	}
 
     /**
      * Meld een speler aan/afwezig 

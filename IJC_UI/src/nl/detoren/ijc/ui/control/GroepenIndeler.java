@@ -406,6 +406,7 @@ public class GroepenIndeler {
 				gws.addSerie(serie);
 				groep = updateSpelers(groep, serie);
 				// update gegevens tegenstanders en witvoorkeur
+				System.out.println("Bijgewerkt");
 			}
 		}
 		return gws;
@@ -448,7 +449,7 @@ public class GroepenIndeler {
                 }
                 Speler s1 = spelers.get(doorgeschovenID);
                 Speler s2 = spelers.get(partner);
-                if (!s1.isGespeeldTegen(s2, minverschil) && (s2.getGroep() != s1.getGroep())) {
+                if (!s1.isGespeeldTegen(s2, ignoreTgn) && (s2.getGroep() != s1.getGroep())) {
                     gepland[doorgeschovenID] = true;
                     gepland[partner] = true;
                     Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, maxverschil, ignoreTgn, niveau, diepte + 1, ronde);
@@ -465,8 +466,8 @@ public class GroepenIndeler {
         } else {
             // Inplannen 'gewone' speler
             int plannenID = eersteOngeplandeSpeler(gepland, 0);
-            int zoekID = plannenID + 1;
-            while ((zoekID < gepland.length) && (Math.abs(zoekID - plannenID) <= minverschil)) {
+            int zoekID = plannenID + minverschil;
+            while ((zoekID < gepland.length) && (Math.abs(zoekID - plannenID) <= maxverschil)) {
                 int partner = eersteOngeplandeSpeler(gepland, zoekID);
                 if (partner == -1) {
                     return null;

@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * -TODO Opslaan in eigen json bestand
  */
 package nl.detoren.ijc;
 
@@ -145,7 +144,7 @@ public class Configuratie {
 	 * speler is dit de standaard rating, afhankelijk van de groep waarin hij
 	 * begint.
 	 */
-	public int[] startRating = { 100, 200, 300, 400, 500, 600, 800 };
+	public int[] startRating = { 100, 150, 200, 300, 500, 800, 1400 };
 
 	/**
 	 * Geef aan of er een bestand gegenereerd moet worden dat door de KNSB

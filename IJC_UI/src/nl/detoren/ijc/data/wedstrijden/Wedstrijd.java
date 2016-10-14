@@ -120,4 +120,7 @@ public class Wedstrijd {
         return result;
     }
 
+    public int getDistance() {
+    	return Math.abs(wit.getId() - zwart.getId());
+    }
 }
