@@ -13,7 +13,7 @@
  * - MINOR Vierde kolom met nieuwe groepstand na verwerken uitslagen, uitgecomment aangezien sizng niet wil lukken
  * - MINOR Als een uitslag ingevuld, aanwezigheid etc vastzetten
  * - MINOR Wisselen groepsblad werkt soms niet meer (nog niet reproduceerbaar) 
- * - TODO Menu "Volgende Ronde" en "Instellingen" implementeren
+ * - TODO Menu "Instellingen" implementeren
  * 
  */
 package nl.detoren.ijc.ui.view;
@@ -934,15 +934,10 @@ public class Hoofdscherm extends JFrame {
 	}
 
 	public void actieVolgendeRonde() {
+		controller.volgendeRonde();
+		updateAutomatisch(true);
+		updateRondeLabel();
 		hoofdPanel.repaint();
-		// update stand naar groepen
-		// ronde verhogen
-		// update label
-		// wedstrijdgroep, wedstrijden, externe spelers, resultaat leeg maken
-		// indien nodig aanwezigheid resetten
-		// automatisch aan
-		// maak wedstrijdgroep
-		// repaint
 	}
 
 	public void actieInstellingen() {

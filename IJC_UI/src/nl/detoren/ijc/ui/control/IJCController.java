@@ -507,4 +507,34 @@ public class IJCController {
     	}
     	return null;
     }
+    
+    /**
+     * Ga over naar de volgende ronde.
+     * Uitslag van deze ronde wordt de start van de volgende
+     */
+    public void volgendeRonde() {
+    	if (status.resultaatVerwerkt != null) {
+    		status.groepen = status.resultaatVerwerkt;
+			status.wedstrijdgroepen = null;
+			status.wedstrijden = null;
+			status.resultaatVerwerkt = null;
+			status.externGespeeld = null;
+
+			int ronde = status.groepen.getRonde();
+			int periode = status.groepen.getPeriode();
+			ronde += 1;
+	        if (ronde > 8) {
+	        	ronde = 1;
+	        	periode++;
+	        	if (periode > 4) periode = 1;
+	        }
+	        status.groepen.setRonde(ronde);
+	        status.groepen.setPeriode(periode);
+			if (ronde == 1)
+				resetAanwezigheidspunt();
+			setAutomatisch(true);
+			maakGroepsindeling();
+    	}
+    }
+
 }
