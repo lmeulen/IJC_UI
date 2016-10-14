@@ -60,7 +60,7 @@ public class IJCController {
         private ArrayList<Speler> externGespeeld;
     }
     private Status status;
-    private Configuratie configuratie;
+    private Configuratie c;
 
 
     protected IJCController() {
@@ -69,7 +69,7 @@ public class IJCController {
     	status.wedstrijden = null;
     	status.wedstrijdgroepen = null;
     	status.externGespeeld = null;
-    	configuratie = new Configuratie();
+    	c = new Configuratie();
     }
 
     public static IJCController getInstance() {
@@ -257,22 +257,7 @@ public class IJCController {
         System.out.print("\nWedstrijden Periode " + status.wedstrijden.getPeriode());
         System.out.println(" Ronde " + status.wedstrijden.getRonde() + "\n-----------");
         for (Groepswedstrijden gw : status.wedstrijden.getGroepswedstrijden()) {
-            System.out.println("  " + Groep.geefNaam(gw.getNiveau()));
-            int i = 1;
-            for (Serie serie : gw.getSeries()) {
-                System.out.println("    Serie " + i);
-                for (Wedstrijd w : serie.getWedstrijden()) {
-                    System.out.println("      " + w.toString());
-                }
-                ++i;
-            }
-            if (!gw.getTriowedstrijden().isEmpty()) {
-                System.out.println("    Trio");
-                for (Wedstrijd w : gw.getTriowedstrijden()) {
-                    System.out.println("      " + w.toString());
-                }
-
-            }
+        	printGroepsWedstrijden(gw);
         }
     }
 
@@ -284,6 +269,14 @@ public class IJCController {
 		System.out.print("\nWedstrijden Periode " + status.wedstrijden.getPeriode());
 		System.out.println(" Ronde " + status.wedstrijden.getRonde() + "\n-----------");
 		Groepswedstrijden gw = status.wedstrijden.getGroepswedstrijdenNiveau(groep);
+		printGroepsWedstrijden(gw);
+	}
+
+	/**
+	 * Print wedstrijden voor gespecificeerde Groepswedstrijden
+	 * @param gw
+	 */
+	public void printGroepsWedstrijden(Groepswedstrijden gw) {
 		System.out.println("  " + Groep.geefNaam(gw.getNiveau()));
 		int i = 1;
 		int distance = 0;
@@ -303,7 +296,7 @@ public class IJCController {
 			}
 
 		}
-		System.out.println("Totale afstand : " + distance);
+		System.out.println("    Totale afstand : " + distance);
 	}
 
     /**
@@ -407,7 +400,7 @@ public class IJCController {
 			logger.log(Level.INFO, "Sla configuratie op in bestand " + bestandsnaam);
 			// write converted json data to a file
 			writer = new FileWriter(bestandsnaam);
-			jsonString = gson.toJson(configuratie);
+			jsonString = gson.toJson(c);
 			writer.write(jsonString);
 			writer.close();
 
@@ -434,8 +427,8 @@ public class IJCController {
 	    	logger.log(Level.INFO, "Lees configuratie uit bestand " + bestandsnaam);
 			Gson gson = new Gson();
 			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
-			configuratie = gson.fromJson(br, Configuratie.class);
-			if (configuratie == null) configuratie = new Configuratie();
+			c = gson.fromJson(br, Configuratie.class);
+			if (c == null) c = new Configuratie();
 		} catch (IOException e) {
 			// Could not read status
 		}

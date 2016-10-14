@@ -13,6 +13,8 @@
  * - MINOR Vierde kolom met nieuwe groepstand na verwerken uitslagen, uitgecomment aangezien sizng niet wil lukken
  * - MINOR Als een uitslag ingevuld, aanwezigheid etc vastzetten
  * - MINOR Wisselen groepsblad werkt soms niet meer (nog niet reproduceerbaar) 
+ * - TODO Menu "Volgende Ronde" en "Instellingen" implementeren
+ * - TODO Openen nieuw uitslag bestand zet automatisch wel op waar, maar update de interface niet goed
  * 
  */
 package nl.detoren.ijc.ui.view;
@@ -20,7 +22,6 @@ package nl.detoren.ijc.ui.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -68,10 +69,18 @@ import nl.detoren.ijc.ui.model.WedstrijdSpelersModel;
 import nl.detoren.ijc.ui.util.Utils;
 
 /**
- * Structure of the GUI: JFrame Hoofdscherm (this) JPanel hoofdPanel JTabbedPane
- * tabs JPanel panels[i] JScrollPane leftScrollPane[i] JTable
- * aanwezigheidsTabel[i] JScrollPane centerScrollPane[i] JTable
- * centerScrollPane[i] JScrollPane rightScrollPane[i] JTable rightScrollPane[i]
+ * Structure of the GUI: 
+ * JFrame Hoofdscherm (this)
+ * 		JPanel ButtonPane
+ * 		JPanel hoofdPanel 
+ * 			JTabbedPane tabs
+ * 				JPanel panels[i] 
+ * 					JScrollPane leftScrollPane[i] 
+ * 						JTable aanwezigheidsTabel[i] 
+ * 					JScrollPane centerScrollPane[i] 
+ * 						JTable centerScrollPane[i] 
+ * 					JScrollPane rightScrollPane[i] 
+ * 						JTable rightScrollPane[i]
  *
  * @author Leo van der Meulen
  */
@@ -164,9 +173,7 @@ public class Hoofdscherm extends JFrame {
 		automatischButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				updateAutomatisch(!controller.isAutomatisch());
-				if (controller.isAutomatisch()) controller.maakGroepsindeling();
-				hoofdPanel.repaint();
+				actieAutomatisch();
 			}
 		});
 		buttonPane.add(automatischButton);
@@ -176,10 +183,7 @@ public class Hoofdscherm extends JFrame {
 		wedstrijdgroepButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.setAutomatisch(false);
-				int groep = tabs.getSelectedIndex();
-				controller.maakGroepsindeling(groep);
-				hoofdPanel.repaint();
+				actieMaakWedstrijdgroep();
 			}
 		});
 		buttonPane.add(wedstrijdgroepButton);
@@ -189,10 +193,7 @@ public class Hoofdscherm extends JFrame {
 		speelschemaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evetn) {
-				updateAutomatisch(false);
-				int groep = tabs.getSelectedIndex();
-				controller.maakWedstrijden(groep);
-				hoofdPanel.repaint();
+				actieMaakSpeelschema();
 			}
 		});
 		buttonPane.add(speelschemaButton);
@@ -202,21 +203,7 @@ public class Hoofdscherm extends JFrame {
 		bewerkspeelschemaButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				updateAutomatisch(false);
-				// ResultaatDialoog
-				hoofdPanel.repaint();
-				int groep = tabs.getSelectedIndex();
-				WedstrijdschemaDialoog dialoog = new WedstrijdschemaDialoog(new JFrame(), "Wedstrijden", groep);
-				dialoog.addWindowListener(new WindowAdapter() {
-					@Override
-					public void windowClosed(WindowEvent e) {
-						System.out.println("closing...");
-						hoofdPanel.repaint();
-						// do something...
-					}
-
-				});
-				dialoog.setVisible(true);
+				actieBewerkSchema();
 			}
 		});
 		buttonPane.add(bewerkspeelschemaButton);
@@ -229,11 +216,7 @@ public class Hoofdscherm extends JFrame {
 		exportButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				// ResultaatDialoog
-				updateAutomatisch(false);
-				controller.exportToExcel();
-				controller.saveState(true, "export");
-				hoofdPanel.repaint();
+				actieExport();
 			}
 		});
 		buttonPane.add(exportButton);
@@ -246,21 +229,7 @@ public class Hoofdscherm extends JFrame {
 		guButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				// ResultaatDialoog
-				hoofdPanel.repaint();
-				updateAutomatisch(false);
-				int groep = tabs.getSelectedIndex();
-				ResultaatDialoog rd = new ResultaatDialoog(new JFrame(), "Wedstrijdresultaten: 1=wit wint, 0=zwart wint, 2=remise", groep);
-				rd.addWindowListener(new WindowAdapter() {
-					@Override
-					public void windowClosed(WindowEvent e) {
-						System.out.println("closing...");
-						hoofdPanel.repaint();
-						// do something...
-					}
-
-				});
-				rd.setVisible(true);
+				actieVoerUitslagenIn();
 			}
 		});
 		buttonPane.add(guButton);
@@ -269,21 +238,7 @@ public class Hoofdscherm extends JFrame {
 		geButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Implementeer selectie lijst externe spelers
-				// ResultaatDialoog
-				hoofdPanel.repaint();
-				updateAutomatisch(false);
-				ExternDialog ed = new ExternDialog(new JFrame(), "Externe spelers");
-				ed.addWindowListener(new WindowAdapter() {
-					@Override
-					public void windowClosed(WindowEvent e) {
-						System.out.println("closing...");
-						hoofdPanel.repaint();
-						// do something...
-					}
-
-				});
-				ed.setVisible(true);
+				actieExterneSpelers();
 			}
 		});
 		buttonPane.add(geButton);
@@ -296,9 +251,7 @@ public class Hoofdscherm extends JFrame {
 		usButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				controller.setAutomatisch(false);
-				controller.verwerkUitslagen();
-				hoofdPanel.repaint();
+				actieUpdateStand();
 			}
 		});
 		buttonPane.add(usButton);
@@ -343,8 +296,7 @@ public class Hoofdscherm extends JFrame {
 	private void addMenubar() {
 		// Menu bar met 1 niveau
 		JMenuBar menubar = new JMenuBar();
-		JMenu menu = new JMenu("File");
-		menubar.add(menu);
+		JMenu filemenu = new JMenu("File");
 		// File menu
 		JMenuItem item = new JMenuItem("Open");
 		item.setAccelerator(KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
@@ -360,7 +312,6 @@ public class Hoofdscherm extends JFrame {
 				int returnVal = fc.showOpenDialog(hs);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
-					// This is where a real application would open the file.
 					System.out.println("Opening: " + file.getAbsolutePath() + ".");
 					controller.leesGroepen(file.getAbsolutePath());
 					controller.setAutomatisch(true);
@@ -372,7 +323,7 @@ public class Hoofdscherm extends JFrame {
 				}
 			}
 		});
-		menu.add(item);
+		filemenu.add(item);
 		item = new JMenuItem("Save");
 		item.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 		item.addActionListener(new ActionListener() {
@@ -382,8 +333,18 @@ public class Hoofdscherm extends JFrame {
 				controller.saveState(true, "save");
 			}
 		});
-		menu.add(item);
-		menu.addSeparator();
+		filemenu.add(item);
+		filemenu.addSeparator();
+		item = new JMenuItem("Instellingen...");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actieInstellingen();
+			}
+		});
+		item.setAccelerator(KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
+		filemenu.add(item);
+		filemenu.addSeparator();
 		item = new JMenuItem("Exit        ");
 		item.setAccelerator(KeyStroke.getKeyStroke('Q', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 		item.addActionListener(new ActionListener() {
@@ -394,7 +355,91 @@ public class Hoofdscherm extends JFrame {
 				System.exit(EXIT_ON_CLOSE);
 			}
 		});
-		menu.add(item);
+		filemenu.add(item);
+		menubar.add(filemenu);
+		
+		JMenu indelingMenu = new JMenu("Indeling");
+		item = new JMenuItem("Automatisch aan/uit");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				actieAutomatisch();
+			}
+		});
+
+		indelingMenu.add(item);
+		item = new JMenuItem("Maak wedstrijdgroep");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actieMaakWedstrijdgroep();
+			}
+		});
+
+		indelingMenu.add(item);
+		item = new JMenuItem("Maak speelschema");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evetn) {
+				actieMaakSpeelschema();
+			}
+		});
+		indelingMenu.add(item);
+		item = new JMenuItem("Bewerk speelschema");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				updateAutomatisch(false);
+				// ResultaatDialoog
+				actieBewerkSchema();
+			}
+		});
+
+		indelingMenu.add(item);
+		indelingMenu.addSeparator();
+		item = new JMenuItem("Export");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				actieExport();
+			}
+		});
+		indelingMenu.add(item);
+		indelingMenu.addSeparator();
+		item = new JMenuItem("Vul uitslagen in");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actieVoerUitslagenIn();
+			}
+		});
+		indelingMenu.add(item);
+		item = new JMenuItem("Externe spelers");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actieExterneSpelers();
+			}
+		});
+		indelingMenu.add(item);
+		item = new JMenuItem("Maak nieuwe stand");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actieUpdateStand();
+			}
+		});
+		indelingMenu.add(item);
+		indelingMenu.addSeparator();
+		item = new JMenuItem("Volgende ronde");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actieVolgendeRonde();
+			}
+		});
+		indelingMenu.add(item);
+		menubar.add(indelingMenu);
 		this.setJMenuBar(menubar);
 	}
 
@@ -806,4 +851,102 @@ public class Hoofdscherm extends JFrame {
 										// choose Tools | Templates.
 	}
 
+	public void actieExport() {
+		updateAutomatisch(false);
+		controller.exportToExcel();
+		controller.saveState(true, "export");
+		hoofdPanel.repaint();
+	}
+
+	/**
+	 * Dialoog voor het bewerken van het speelschema
+	 */
+	public void actieBewerkSchema() {
+		updateAutomatisch(false);
+		hoofdPanel.repaint();
+		int groep = tabs.getSelectedIndex();
+		WedstrijdschemaDialoog dialoog = new WedstrijdschemaDialoog(new JFrame(), "Wedstrijden", groep);
+		dialoog.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.out.println("closing...");
+				hoofdPanel.repaint();
+			}
+
+		});
+		dialoog.setVisible(true);
+	}
+
+	public void actieAutomatisch() {
+		updateAutomatisch(!controller.isAutomatisch());
+		if (controller.isAutomatisch()) controller.maakGroepsindeling();
+		hoofdPanel.repaint();
+	}
+
+	public void actieMaakWedstrijdgroep() {
+		controller.setAutomatisch(false);
+		int groep = tabs.getSelectedIndex();
+		controller.maakGroepsindeling(groep);
+		hoofdPanel.repaint();
+	}
+
+	public void actieMaakSpeelschema() {
+		updateAutomatisch(false);
+		int groep = tabs.getSelectedIndex();
+		controller.maakWedstrijden(groep);
+		hoofdPanel.repaint();
+	}
+
+	public void actieVoerUitslagenIn() {
+		hoofdPanel.repaint();
+		updateAutomatisch(false);
+		int groep = tabs.getSelectedIndex();
+		ResultaatDialoog rd = new ResultaatDialoog(new JFrame(), "Wedstrijdresultaten: 1=wit wint, 0=zwart wint, 2=remise", groep);
+		rd.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.out.println("closing...");
+				hoofdPanel.repaint();
+				// do something...
+			}
+
+		});
+		rd.setVisible(true);
+	}
+
+	public void actieExterneSpelers() {
+		hoofdPanel.repaint();
+		updateAutomatisch(false);
+		ExternDialog ed = new ExternDialog(new JFrame(), "Externe spelers");
+		ed.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.out.println("closing...");
+				hoofdPanel.repaint();
+			}
+		});
+		ed.setVisible(true);
+	}
+
+	public void actieUpdateStand() {
+		controller.setAutomatisch(false);
+		controller.verwerkUitslagen();
+		hoofdPanel.repaint();
+	}
+
+	public void actieVolgendeRonde() {
+		hoofdPanel.repaint();
+		// update stand naar groepen
+		// ronde verhogen
+		// update label
+		// wedstrijdgroep, wedstrijden, externe spelers, resultaat leeg maken
+		// indien nodig aanwezigheid resetten
+		// automatisch aan
+		// maak wedstrijdgroep
+		// repaint
+	}
+
+	public void actieInstellingen() {
+		hoofdPanel.repaint();
+	}
 }
