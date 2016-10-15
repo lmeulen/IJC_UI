@@ -98,7 +98,7 @@ public class GroepenIndeler {
      * @param aanwezigheidsGroepen Overzicht spelers per groep met aanwezigheidsinfo
      * @param wedstrijdGroepen Huidige wedstrijdgroepen
      * @param groepID Specificeert de groep die ge-update moet worden
-     * @return de wedstrijdgroepen
+     * @return de betreffende wedstrijdgroep
      */
     public Groepen maakGroepsindeling(Groepen aanwezigheidsGroepen, Groepen wedstrijdGroepen, int groepID) {
     	logger.log(Level.INFO, "Maken groepsindeling voor groep" + aanwezigheidsGroepen.getGroepById(groepID).getNaam());
@@ -110,7 +110,7 @@ public class GroepenIndeler {
     	if (groepHoger != null) {
         	logger.log(Level.FINE, "Bepalen doorgeschoven spelers in deze groep");
     		doorgeschoven = groepHoger.getSpelersMetAnderNiveau();
-        	logger.log(Level.FINE, "Aantal doorgeschoven spelers : " + doorgeschoven.size());    		
+        	logger.log(Level.INFO, "Aantal doorgeschoven spelers : " + doorgeschoven.size());    		
     	} 	
     	// Creeer nieuwe groep
     	// Neem alle aanwezige spelers hier in op, behalve degene die al doorgeschoven
@@ -119,14 +119,14 @@ public class GroepenIndeler {
         nieuweWedstrijdGroep.setNiveau(aanwezigheidsGroep.getNiveau());
         for (Speler speler : aanwezigheidsGroep.getSpelers()) {
             if (speler.isAanwezig() && !groepBevat(doorgeschoven, speler)) {
-            	logger.log(Level.FINE, "Toevoegen aan wedstrijdgroep van speler" + speler.getNaam());
+            	logger.log(Level.INFO, "Toevoegen aan wedstrijdgroep van speler" + speler.getNaam());
                 nieuweWedstrijdGroep.addSpeler(new Speler(speler));
             }
         }
         // Kopieer doorgescheven spelers uit oude lijst
         for (Speler speler : origineleWedstrijdGroep.getSpelers()) {
         	if (speler.getGroep() != origineleWedstrijdGroep.getNiveau()) {
-            	logger.log(Level.FINE, "Toevoegen aan wedstrijdgroep van doorgeschoven speler" + speler.getNaam());
+            	logger.log(Level.INFO, "Toevoegen aan wedstrijdgroep van doorgeschoven speler" + speler.getNaam());
         		nieuweWedstrijdGroep.addSpeler(speler);
         	}
         }
@@ -137,7 +137,7 @@ public class GroepenIndeler {
     }
 
     public boolean groepBevat(ArrayList<Speler> doorgeschoven, Speler speler) {
-    	logger.log(Level.INFO, "Speler : " + speler + ", in lijst met grootte " + doorgeschoven.size() );    		
+    	//logger.log(Level.INFO, "Speler : " + speler + ", in lijst met grootte " + doorgeschoven.size() );    		
     	for (Speler s : doorgeschoven) {
     		if (s.gelijkAan(speler)) return true;
     	}
@@ -158,6 +158,7 @@ public class GroepenIndeler {
         for (int i = 0; i < groepen.size() - 1; ++i) {
         	logger.log(Level.FINE, "Doorschuiven van groep "  + groepen.get(i).getNaam() + " naar " + groepen.get(i).getNaam());    		
             ArrayList<Speler> naarGroep = groepen.get(i).getSpelers();
+            if (naarGroep == null) naarGroep = new ArrayList<>();
             ArrayList<Speler> vanGroep = groepen.get(i + 1).getSpelers();
             for (int j = 1; j <= aantal; ++j) {
                 Speler s = groepen.get(i + 1).getSpelerByID(j);

@@ -43,6 +43,7 @@ public class Groep {
     private ArrayList<Speler> spelers;
 
     public Groep() {
+    	spelers = new ArrayList<>();
     }
 
     public Groep(int niveau) {
@@ -120,6 +121,7 @@ public class Groep {
      * Hernummer alle spelers in de groep als 1,2,3...
      */
     public void renumber() {
+    	if (spelers == null) return;
         int nummer = 1;
         for (Speler s : spelers) {
             s.setId(nummer++);

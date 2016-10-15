@@ -222,10 +222,10 @@ public class IJCController {
      * 
      */
     public void maakGroepsindeling(int groepID) {
-    	synchronized (this) {
+    	//synchronized (this) {
         	logger.log(Level.INFO, "Maak groepsindeling voor groep " + groepID);
     		status.wedstrijdgroepen = new GroepenIndeler().maakGroepsindeling(status.groepen, status.wedstrijdgroepen, groepID);
-		}
+		//}
     }
     /**
      * Bepaal de te spelen wedstrijden op basis van de wedstrijdgroepen.
@@ -537,4 +537,22 @@ public class IJCController {
     	}
     }
 
+    /**
+     * Alle spelers in betreffende groep aan/afwezig.
+     * Groep wordt inverse status van max
+     */
+    public void setAlleSpelersAanwezigheid(int groepID) {
+    	Groep groep = getGroepByID(groepID);
+    	if (groep != null) {
+    		int aan = 0;
+    		int af = 0;
+    		for (Speler s : groep.getSpelers()) {
+    			if (s.isAanwezig()) aan++; else af++;
+    		}
+    		boolean newstatus = (aan >= af) ? false : true;
+    		for (Speler s : groep.getSpelers()) {
+    			s.setAanwezig(newstatus);
+    		}
+    	}
+    }
 }
