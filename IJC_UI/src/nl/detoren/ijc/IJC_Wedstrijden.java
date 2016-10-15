@@ -50,7 +50,7 @@ public class IJC_Wedstrijden {
         IJCController controller = IJCController.getInstance();
         boolean statusGelezen = controller.leesStatusBestand();
         if (!statusGelezen) controller.leesGroepen();
-        controller.maakGroepsindeling();
+        if (controller.isAutomatisch()) controller.maakGroepsindeling();
 
         logger.log(Level.INFO, "Opstarten user interface");
         Hoofdscherm hs = new Hoofdscherm();
