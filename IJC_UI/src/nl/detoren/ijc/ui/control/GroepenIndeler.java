@@ -14,6 +14,7 @@
  * - TODO Afmelden van speler die is doorgeschoven, werkt nog niet. -> Workaround: Delete in afwezigheidstabel
  * - MINOR Tijdens de 1e serie van 1e ronde van de 1e periode dient tijdens de 3e, 4e, 7e, 8e, 11e, 12e enz. wedstrijd
  * - MINOR Derde serie in de eerste ronde van de eerste periode
+ * - TODO Bij trio's wordt geen rekening gehouden met witvoorkeur
  */
 package nl.detoren.ijc.ui.control;
 
@@ -38,10 +39,6 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
  * @author Leo van der Meulen
  */
 public class GroepenIndeler {
-
-    public static final int VASTEGROEP = 0;
-    public static final int DOORSCHUIVEN = 1;
-    public static final int AANTALDOORSCHUIVEN = 4;
 
     private final static Logger logger = Logger.getLogger(GroepenIndeler.class.getName());
 
@@ -377,9 +374,9 @@ public class GroepenIndeler {
 		    Speler sid2 = groep.getSpelerByID(trio.get(1).intValue());
 		    Speler sid3 = groep.getSpelerByID(trio.get(2).intValue());
 	    	logger.log(Level.INFO, "Spelers in trio " + sid1.getInitialen() + " " + sid2.getInitialen() + " " + sid3.getInitialen());    		
-		    gws.addTrioWedstrijd(new Wedstrijd(997, sid1, sid2, 0));
-		    gws.addTrioWedstrijd(new Wedstrijd(998, sid2, sid3, 0));
-		    gws.addTrioWedstrijd(new Wedstrijd(999, sid1, sid3, 0));
+		    gws.addTrioWedstrijd(new Wedstrijd(sid1.getId()*100 + sid2.getId(), sid1, sid2, 0));
+		    gws.addTrioWedstrijd(new Wedstrijd(sid2.getId()*100 + sid3.getId(), sid2, sid3, 0));
+		    gws.addTrioWedstrijd(new Wedstrijd(sid1.getId()*100 + sid3.getId(), sid1, sid3, 0));
 		}
 		for (int i = 0; i < speelrondes; ++i) {
 		    int minverschil = bepaalMinimaalVerschil(groep, periode, ronde, i + 1);
