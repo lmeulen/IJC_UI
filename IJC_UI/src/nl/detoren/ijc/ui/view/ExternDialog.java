@@ -48,9 +48,9 @@ public class ExternDialog extends JDialog {
 
     	ArrayList<Speler> spelers = controller.getExterneSpelers();
     	if (spelers == null) spelers = new ArrayList<>(); 
-    	int aantal = 10;
+    	int aantal = 12;
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(aantal, 1));
+        panel.setLayout(new GridLayout(aantal/2+1, 2));
         spelerVelden = new JTextField[aantal];
         for (int i = 0; i < aantal; ++i) {
             spelerVelden[i] = new JTextField();
@@ -89,7 +89,7 @@ public class ExternDialog extends JDialog {
         panel.add(okButton);
         panel.add(cancelButton);
         getContentPane().add(panel);
-        setSize(600, (aantal + 1) * 23);
+        setSize(600, (aantal + 1) * 16);
         setLocationRelativeTo(frame);
     }
 }
