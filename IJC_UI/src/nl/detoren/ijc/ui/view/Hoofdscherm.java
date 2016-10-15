@@ -561,6 +561,17 @@ public class Hoofdscherm extends JFrame {
 			}
 		};
 
+		aanwezigheidsTabel[index].getTableHeader().addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        int col = aanwezigheidsTabel[index].columnAtPoint(e.getPoint());
+		        String name = aanwezigheidsTabel[index].getColumnName(col);
+		        int groepID = tabs.getSelectedIndex();
+		        controller.setAlleSpelersAanwezigheid(groepID);
+		        System.out.println("Column index selected " + col + " " + name);
+		    }
+		});
+		
 		aanwezigheidsTabel[index].addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
