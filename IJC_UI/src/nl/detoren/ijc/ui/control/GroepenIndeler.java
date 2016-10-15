@@ -14,7 +14,8 @@
  * - TODO Afmelden van speler die is doorgeschoven, werkt nog niet. -> Workaround: Delete in afwezigheidstabel
  * - MINOR Tijdens de 1e serie van 1e ronde van de 1e periode dient tijdens de 3e, 4e, 7e, 8e, 11e, 12e enz. wedstrijd
  * - MINOR Derde serie in de eerste ronde van de eerste periode
- * - TODO Bij trio's wordt geen rekening gehouden met witvoorkeur
+ * - FIXME Bij trio's wordt geen rekening gehouden met witvoorkeur
+ * - FIXME ALs laatste doorschuiver afwezig, dan nummer 3 optioneel
  */
 package nl.detoren.ijc.ui.control;
 
@@ -116,14 +117,14 @@ public class GroepenIndeler {
         nieuweWedstrijdGroep.setNiveau(aanwezigheidsGroep.getNiveau());
         for (Speler speler : aanwezigheidsGroep.getSpelers()) {
             if (speler.isAanwezig() && !groepBevat(doorgeschoven, speler)) {
-            	logger.log(Level.INFO, "Toevoegen aan wedstrijdgroep van speler" + speler.getNaam());
+            	logger.log(Level.INFO, "Toevoegen aan wedstrijdgroep van speler               : " + speler.getNaam());
                 nieuweWedstrijdGroep.addSpeler(new Speler(speler));
             }
         }
         // Kopieer doorgescheven spelers uit oude lijst
         for (Speler speler : origineleWedstrijdGroep.getSpelers()) {
         	if (speler.getGroep() != origineleWedstrijdGroep.getNiveau()) {
-            	logger.log(Level.INFO, "Toevoegen aan wedstrijdgroep van doorgeschoven speler" + speler.getNaam());
+            	logger.log(Level.INFO, "Toevoegen aan wedstrijdgroep van doorgeschoven speler : " + speler.getNaam());
         		nieuweWedstrijdGroep.addSpeler(speler);
         	}
         }
@@ -134,7 +135,6 @@ public class GroepenIndeler {
     }
 
     public boolean groepBevat(ArrayList<Speler> doorgeschoven, Speler speler) {
-    	//logger.log(Level.INFO, "Speler : " + speler + ", in lijst met grootte " + doorgeschoven.size() );    		
     	for (Speler s : doorgeschoven) {
     		if (s.gelijkAan(speler)) return true;
     	}

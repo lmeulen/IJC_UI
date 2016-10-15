@@ -205,8 +205,14 @@ public class SerieModel extends AbstractTableModel {
     }
 
     public Wedstrijd getWedstrijd(int idx) {
-        Serie serie = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getSerie(serieID);
-        return serie.getWedstrijd(idx);
+    	if (serieID < 3) {
+    		Serie serie = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getSerie(serieID);
+    		return serie.getWedstrijd(idx);
+    	} else if (serieID == 3) {
+    		ArrayList<Wedstrijd> trio = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getTriowedstrijden();
+    		return trio.get(idx);
+    	}
+    	return null;
     }
 
     public void verwijderWedstrijd(int idx) {
