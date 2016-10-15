@@ -11,7 +11,6 @@
  *  
  * Problemen in deze code:
  * - MINOR 'Leeg' kunnen starten
- * - MINOR Configuratie object met aantal ronden/periodes, indelingsalternatieven etc.
  */
 package nl.detoren.ijc;
 

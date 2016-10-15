@@ -12,7 +12,6 @@
  * Problemen in deze code:
  * - MINOR Vierde kolom met nieuwe groepstand na verwerken uitslagen, uitgecomment aangezien sizng niet wil lukken
  * - MINOR Als een uitslag ingevuld, aanwezigheid etc vastzetten
- * - MINOR Wisselen groepsblad werkt soms niet meer (nog niet reproduceerbaar) 
  * - TODO Menu "Instellingen" implementeren
  * 
  */
