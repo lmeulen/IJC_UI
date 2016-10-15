@@ -11,7 +11,6 @@
  *  
  * Problemen in deze code:
  * - MINOR Bij verwijderen tweede serie verdwijnt onderste streep speellijst
- * - FIXME Datum/tijd in Excel worden neit goed gezet
  */
 package nl.detoren.ijc.io;
 
