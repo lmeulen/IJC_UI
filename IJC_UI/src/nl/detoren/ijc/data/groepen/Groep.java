@@ -177,7 +177,11 @@ public class Groep {
     	Collections.sort(spelers, new Comparator<Speler>() {
     	    @Override
     	    public int compare(Speler o1, Speler o2) {
-    	        return o2.getPunten() - (o1.getPunten());
+    	    	int result = o2.getPunten() - o1.getPunten();
+    	    	if (result == 0) {
+    	    		result = o2.getRating() - o1.getRating(); 
+    	    	}
+    	    	return result;
     	    }
     	});
     }
@@ -186,7 +190,7 @@ public class Groep {
     	Collections.sort(spelers, new Comparator<Speler>() {
     	    @Override
     	    public int compare(Speler o1, Speler o2) {
-    	        return o2.getRating() - (o1.getRating());
+    	        return o2.getRating() - o1.getRating();
     	    }
     	});
     }
