@@ -127,7 +127,7 @@ class ResultaatDialoog extends JDialog {
         panel.add(okButton);
         panel.add(cancelButton);
         getContentPane().add(panel);
-        setSize(600, (aantal+1)*23);
+        setSize(600, (aantal+3)*20);
         setLocationRelativeTo(frame);
     }
 }
