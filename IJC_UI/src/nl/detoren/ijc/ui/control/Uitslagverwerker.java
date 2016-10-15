@@ -151,20 +151,25 @@ public class Uitslagverwerker {
 			updateSpeler.addTegenstander(tegenstander.getInitialen()+res);			
 			logger.log(Level.INFO, "      Tegenstanders  :" + updateSpeler.getTegenstandersString());
 		}
-		puntenbij = Math.min(puntenbij, 5); // niet meer dan 5 punten er bij
 		if (spelerWedstrijden.size() == 1) {
 			// bij 1 wedstrijd dubbele punten
 			logger.log(Level.INFO, "Enkele wedstrijd gepeeld dus verdubbelaar");
 			if (puntenbij == 3)	puntenbij = 5;
 			if (puntenbij == 2)	puntenbij = 3;
 		}
+		// Spelen in een hogere groep levert punten op
+		if (heeftHogerGespeeld(speler, wedstrijden)) {
+			logger.log(Level.INFO, "      Hoger gespeeld :" + puntenbij);
+			puntenbij++;
+		}
+		puntenbij = Math.min(puntenbij, 5); // niet meer dan 5 punten er bij
 		// Geen wedstrijden dus speler was afwezig
 		if (spelerWedstrijden.size() == 0) {
 			updateSpeler.addTegenstander("-- ");
 			if (!updateSpeler.isAfwezigheidspunt()) {
 				puntenbij += 2;
 				updateSpeler.setAfwezigheidspunt(true);
-				logger.log(Level.INFO, "      Eerste keer afw : 2 punte");
+				logger.log(Level.INFO, "      Eerste keer afw : 2 punten");
 			}
 		}
 		// Externe resultaten verwerken
@@ -197,6 +202,24 @@ public class Uitslagverwerker {
 		updateSpeler.setPunten(updateSpeler.getPunten() + puntenbij);
 		if (updateSpeler.getRating() < 100) updateSpeler.setRating(100);
 		return updateSpeler;
+	}
+
+	/**
+	 * Stel vast of de meegegeven speler in een hogere groep heeft gespeeld
+	 * @param speler Speler
+	 * @param wedstrijden Alle weedstrijden
+	 * @return true, als hoger gespeeld
+	 */
+	private boolean heeftHogerGespeeld(Speler speler, Wedstrijden wedstrijden) {
+		for (Groepswedstrijden gws : wedstrijden.getGroepswedstrijden()) {
+			if (gws.getNiveau() > speler.getGroep()) {
+				for (Wedstrijd w : gws.getWedstrijden()) {
+					if (w.getWit().gelijkAan(speler) || (w.getZwart().gelijkAan(speler)))
+						return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
