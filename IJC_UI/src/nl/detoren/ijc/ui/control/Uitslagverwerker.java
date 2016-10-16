@@ -165,7 +165,7 @@ public class Uitslagverwerker {
 		puntenbij = Math.min(puntenbij, 5); // niet meer dan 5 punten er bij
 		// Geen wedstrijden dus speler was afwezig
 		if (spelerWedstrijden.size() == 0) {
-			updateSpeler.addTegenstander("-- ");
+			if (!extern) updateSpeler.addTegenstander("-- ");
 			if (!updateSpeler.isAfwezigheidspunt()) {
 				puntenbij += 2;
 				updateSpeler.setAfwezigheidspunt(true);
