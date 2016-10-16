@@ -10,7 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - ...
+ * - TODO Doorschuivende spelers opnemen in het uitslagbestand
  */
 package nl.detoren.ijc.io;
 
@@ -33,7 +33,7 @@ public class OutputTekst {
      */
     public void saveUitslag(Groepen uitslag) {
 		try {
-			String bestandsnaam = "Uitslag" + uitslag.getPeriode() + "-" + uitslag.getRonde(); 
+			String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "Uitslag"; 
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
 			// Short variant
