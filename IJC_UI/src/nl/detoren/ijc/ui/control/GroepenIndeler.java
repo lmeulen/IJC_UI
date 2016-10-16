@@ -15,7 +15,6 @@
  * - MINOR Tijdens de 1e serie van 1e ronde van de 1e periode dient tijdens de 3e, 4e, 7e, 8e, 11e, 12e enz. wedstrijd
  * - MINOR Derde serie in de eerste ronde van de eerste periode
  * - FIXME Bij trio's wordt geen rekening gehouden met witvoorkeur
- * - FIXME ALs laatste doorschuiver afwezig, dan nummer 3 optioneel
  */
 package nl.detoren.ijc.ui.control;
 
@@ -149,14 +148,19 @@ public class GroepenIndeler {
     private void doorschuiven(Groepen wedstrijdGroepen, Groepen aanwezigheidsGroepen) {
         int aantal = bepaalAantalDoorschuiven(aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
     	logger.log(Level.INFO, "Aantal door te schuiven spelers "  + aantal);    		
-        // Doorloop hoogste groep tot Ã©Ã©n na laagste groep. In de laagste groep
+        // Doorloop hoogste groep tot één na laagste groep. In de laagste groep
         // kunnen geen spelers inschuiven
+    	// Let op: iterator gaat op array index en NIET op groepID
         ArrayList<Groep> groepen = wedstrijdGroepen.getGroepen();
         for (int i = 0; i < groepen.size() - 1; ++i) {
-        	logger.log(Level.FINE, "Doorschuiven van groep "  + groepen.get(i).getNaam() + " naar " + groepen.get(i).getNaam());    		
+        	logger.log(Level.FINE, "Doorschuiven van groep "  + groepen.get(i+1).getNaam() + " naar " + groepen.get(i).getNaam());    		
             ArrayList<Speler> naarGroep = groepen.get(i).getSpelers();
             if (naarGroep == null) naarGroep = new ArrayList<>();
             ArrayList<Speler> vanGroep = groepen.get(i + 1).getSpelers();
+            // ALs laatste speler niet aanwezig, dan één minder doorschuiven
+            Speler laatste = groepen.get(i + 1).getSpelerByID(aantal);
+            if (laatste == null) aantal--;
+            		
             for (int j = 1; j <= aantal; ++j) {
                 Speler s = groepen.get(i + 1).getSpelerByID(j);
             	logger.log(Level.FINE, "Speler : " + (s != null ? s.getNaam() : "null"));    		
