@@ -961,6 +961,7 @@ public class Hoofdscherm extends JFrame {
 		controller.setAutomatisch(false);
 		controller.verwerkUitslagen();
 		hoofdPanel.repaint();
+		new UitslagDialoog().createDialog();
 	}
 
 	public void actieVolgendeRonde() {

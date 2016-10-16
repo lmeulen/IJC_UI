@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 
 import nl.detoren.ijc.data.groepen.Groepen;
+import nl.detoren.ijc.ui.control.IJCController;
 
 public class OutputTekst {
 
@@ -45,6 +46,7 @@ public class OutputTekst {
 			writer = new FileWriter(bestandsnaam + "-long.txt");
 			writer.write(uitslag.toPrintableString(true));
 			writer.close();
+			IJCController.getInstance().setLaatsteExport(bestandsnaam + "-long.txt");
 
 			// GSON variant
 			Gson gson = new Gson();

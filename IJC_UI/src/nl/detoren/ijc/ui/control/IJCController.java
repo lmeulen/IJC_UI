@@ -61,6 +61,8 @@ public class IJCController {
     }
     private Status status;
     private Configuratie c;
+    
+    private String laatsteExport;
 
 
     protected IJCController() {
@@ -588,5 +590,13 @@ public class IJCController {
 		lagereGroep.renumber();
 		huidigeGroep.removeSpeler(speler, locatie);
 		lagereGroep.renumber();
+	}
+
+	public String getLaatsteExport() {
+		return laatsteExport;
+	}
+
+	public void setLaatsteExport(String laatsteExport) {
+		this.laatsteExport = laatsteExport;
 	}
 }
