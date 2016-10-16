@@ -104,12 +104,17 @@ public class Groepen {
         return result;
     }
     
+    /**
+     * Hernummer alle groepen
+     */
     public void hernummerGroepen() {
         for (Groep g : groepen) {
             g.renumber();
         }
     }
-    
+    /**
+     * Sorteer alle groepen op punten
+     */
     public void sorteerGroepen() {
         for (Groep g : groepen) {
         	g.sorteerPunten();
@@ -117,5 +122,17 @@ public class Groepen {
         }
         
     }
-
+    
+    /**
+     * Zoek speler in alle groepen
+     * 
+     */
+    public Speler getSpelerByKNSB(int knsb) {
+    	for (Groep g: groepen) {
+    		for (Speler s: g.getSpelers()) {
+    			if (s.getKNSBnummer() == knsb) return s;
+    		}
+    	}
+    	return null;
+    }
 }

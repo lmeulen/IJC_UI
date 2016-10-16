@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - MINOR Het verwerken van uitslagen in de nieuwe rating van spelers gaat niet per wedstrijd maar per speler
  * - TODO Genereren OSBO rating bestand. Is deze nodig of is KNSB voldoende?
  */
 package nl.detoren.ijc.ui.control;
@@ -60,6 +59,7 @@ public class Uitslagverwerker {
 			}
 			updateGroepen.addGroep(bijgewerkt);
 		}
+		updateRating(updateGroepen, wedstrijden);
 		return updateGroepen;
 	}
 
@@ -102,7 +102,7 @@ public class Uitslagverwerker {
 			int resultaat = 0; // TOTO style -> 0 = onbekend
 			Speler tegenstander = w.getWit().gelijkAan(speler) ? w.getZwart() : w.getWit();
 			if (updateSpeler.getGroep() < tegenstander.getGroep()) wedstrijdenHoger++;
-			// RATING EN PUNTEN
+			// PUNTEN
 			if (w.getUitslag() == Wedstrijd.ONBEKEND) {
 				// doe niets
 				resultaat = 3;
@@ -111,32 +111,20 @@ public class Uitslagverwerker {
 				aantalremise++;
 				resultaat = 3;
 				logger.log(Level.INFO, "      Remise         : " + puntenbij);
-				int ratingoud = updateSpeler.getRating();
-				updateSpeler.setRating(nieuweRatingOSBO(updateSpeler.getRating(), tegenstander.getRating(), 3));
-				logger.log(Level.INFO, "      Rating         : " + (updateSpeler.getRating() - ratingoud));
 			} else if ((w.getUitslag() == Wedstrijd.WIT_WINT) && (w.getWit().gelijkAan(speler))) {
 				puntenbij += 2;
 				aantalgewonnen++;
 				resultaat = 1;
 				logger.log(Level.INFO, "      Winst met wit  : " + puntenbij);
-				int ratingoud = updateSpeler.getRating();
-				updateSpeler.setRating(nieuweRatingOSBO(updateSpeler.getRating(), tegenstander.getRating(), 1));
-				logger.log(Level.INFO, "      Rating         :" + (updateSpeler.getRating() - ratingoud));
 			} else if ((w.getUitslag() == Wedstrijd.ZWART_WINT) && (w.getZwart().gelijkAan(speler))) {
 				puntenbij += 2;
 				aantalgewonnen++;
 				resultaat = 1;
 				logger.log(Level.INFO, "      Winst met zwart :" + puntenbij);
-				int ratingoud = updateSpeler.getRating();
-				updateSpeler.setRating(nieuweRatingOSBO(updateSpeler.getRating(), tegenstander.getRating(), 1));
-				logger.log(Level.INFO, "      Rating :" + (updateSpeler.getRating() - ratingoud));
 			} else {
 				// verlies
 				resultaat = 2;
 				logger.log(Level.INFO, "      Verlies        :" + puntenbij);
-				int ratingoud = updateSpeler.getRating();
-				updateSpeler.setRating(nieuweRatingOSBO(updateSpeler.getRating(), tegenstander.getRating(), 2));
-				logger.log(Level.INFO, "      Rating         :" + (updateSpeler.getRating() - ratingoud));
 			}
 			// WITVOORKEUR
 			if (w.getWit().gelijkAan(speler)) {
@@ -200,7 +188,6 @@ public class Uitslagverwerker {
 		
 		logger.log(Level.INFO, "      Punten bij tot :" + puntenbij);
 		updateSpeler.setPunten(updateSpeler.getPunten() + puntenbij);
-		if (updateSpeler.getRating() < 100) updateSpeler.setRating(100);
 		return updateSpeler;
 	}
 
@@ -251,6 +238,39 @@ public class Uitslagverwerker {
 		logger.log(Level.INFO, "" + result.size() + "wedstrijden gevonden voor " + speler.toString());
 		return result;
 	}
+	
+	/**
+	 * UPdate rating van alle spelers. Itereer hiervoor door alle wedstrijden en pas per
+	 * wedstrijd de rating van iedere speler aan.
+	 * @param groepen
+	 * @param wedstrijden
+	 */
+	private void updateRating(Groepen groepen, Wedstrijden wedstrijden) {
+		for (Groepswedstrijden gws : wedstrijden.getGroepswedstrijden()) {
+			for (Wedstrijd wedstrijd : gws.getWedstrijden()) {
+				
+				Speler wit   = groepen.getSpelerByKNSB(wedstrijd.getWit().getKNSBnummer()); // Speler in uitslaglijst
+				Speler zwart = groepen.getSpelerByKNSB(wedstrijd.getZwart().getKNSBnummer()); // Speler in uitslaglijst
+				
+				int ratingWit = wit.getRating();
+				int ratingZwart = zwart.getRating();
+				
+				// w.getUitslag   1=wit wint   2=zwart wint   3=remise   
+				int uitslagWit = wedstrijd.getUitslag(); // uitslag vanuit perspectief wit
+				int uitslagZwart = (wedstrijd.getUitslag() == 1) ? 2 : ((wedstrijd.getUitslag() == 2) ? 1 : 3); 
+				
+				int nieuwWit = nieuweRatingOSBO(ratingWit, ratingZwart, uitslagWit);
+				int nieuwZwart = nieuweRatingOSBO(ratingZwart, ratingWit, uitslagZwart);
+				
+				wit.setRating(Math.max(nieuwWit, 100));
+				zwart.setRating(Math.max(nieuwZwart, 100));
+				
+				logger.log(Level.INFO, wedstrijd.toString());
+				logger.log(Level.INFO, "Wit: " + wit.getNaam() + " van " + ratingWit + " naar " + nieuwWit);
+				logger.log(Level.INFO, "Zwart: " + zwart.getNaam() + " van " + ratingZwart + " naar " + nieuwZwart);
+			}
+		}
+	}
 
     /**
     Bereken nieuwe rating conform de regels van de OSBO en zoals gebruikt
@@ -269,6 +289,8 @@ public class Uitslagverwerker {
        while (ratingVerschil >= ratingTabel[index]) {
            index++;
        }
+       index--; // iterator goes one to far.
+       if (index == -1) index = 0;
        // Update rating wit
        // Dit gebeurd aan de hand van de volgende OSBO tabel
        // Hierin is: W> = winnaar heeft de hoogste rating
