@@ -11,6 +11,7 @@
  *  
  * Problemen in deze code:
  * - TODO Genereren OSBO rating bestand. Is deze nodig of is KNSB voldoende?
+ * - TODO ## in tegenstanderlijst als afwezigheidspunt gekregen.
  */
 package nl.detoren.ijc.ui.control;
 

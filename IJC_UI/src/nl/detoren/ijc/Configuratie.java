@@ -147,6 +147,11 @@ public class Configuratie {
 	public int[] startRating = { 100, 150, 200, 300, 500, 800, 1400 };
 
 	/**
+	 * standaard punten per groep bij aanvang periode
+	 */
+	public int[] startPunten = {0, 10, 20, 30, 40, 50, 60 };
+	
+	/**
 	 * Geef aan of er een bestand gegenereerd moet worden dat door de KNSB
 	 * gebruikt kan worden voor verwerking resultaten in de KNSB rating
 	 */
