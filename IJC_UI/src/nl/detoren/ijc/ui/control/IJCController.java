@@ -555,4 +555,38 @@ public class IJCController {
     		}
     	}
     }
+
+    /**
+     * Speler naar hogere groep verplaatsen
+     * @param groepID Huidige groep
+     * @param speler Speler
+     * @param locatie huidige locatie in huidige groep
+     */
+	public void spelerNaarHogereGroep(int groepID, Speler speler, int locatie) {
+		Groep huidigeGroep = status.wedstrijdgroepen.getGroepById(groepID);
+		Groep hogereGroep = status.wedstrijdgroepen.getGroepById(groepID+1);
+		if (huidigeGroep == null || hogereGroep == null) return;
+		logger.log(Level.INFO, "Verplaats " + speler.getNaam() + " van " + huidigeGroep.getNaam() + " naar " + hogereGroep.getNaam());
+		hogereGroep.addSpeler(speler);
+		hogereGroep.renumber();
+		huidigeGroep.removeSpeler(speler, locatie);
+		huidigeGroep.renumber();
+	}
+
+    /**
+     * Speler naar lagere groep verplaatsen
+     * @param groepID Huidige groep
+     * @param speler Speler
+     * @param locatie huidige locatie in huidige groep
+     */
+	public void spelerNaarLagereGroep(int groepID, Speler speler, int locatie) {
+		Groep huidigeGroep = status.wedstrijdgroepen.getGroepById(groepID);
+		Groep lagereGroep = status.wedstrijdgroepen.getGroepById(groepID-1);
+		if (huidigeGroep == null || lagereGroep == null) return;
+		logger.log(Level.INFO, "Verplaats " + speler.getNaam() + " van " + huidigeGroep.getNaam() + " naar " + lagereGroep.getNaam());
+		lagereGroep.addSpeler(speler, 0); //vooraan plaatsen
+		lagereGroep.renumber();
+		huidigeGroep.removeSpeler(speler, locatie);
+		lagereGroep.renumber();
+	}
 }

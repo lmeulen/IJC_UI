@@ -744,6 +744,26 @@ public class Hoofdscherm extends JFrame {
 							hoofdPanel.repaint();
 						}
 					});
+					menuItem = new JMenuItem("Speler naar hogere groep");
+					popup.add(menuItem);
+					menuItem.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							controller.spelerNaarHogereGroep(groepID, s, s.getId() - 1);
+							hoofdPanel.repaint();
+						}
+					});
+					menuItem = new JMenuItem("Speler naar lagere groep");
+					popup.add(menuItem);
+					menuItem.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							controller.spelerNaarLagereGroep(groepID, s, s.getId() - 1);
+							hoofdPanel.repaint();
+						}
+					});
 					popup.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
