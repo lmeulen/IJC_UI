@@ -106,7 +106,8 @@ public class GroepenReader {
         groepen.addGroep(leesGroep(stringArr, "PAARDENGROEP", Groep.PAARDENGROEP));
         groepen.addGroep(leesGroep(stringArr, "PIONNENGROEP", Groep.PIONNENGROEP));
 		logger.log(Level.INFO, "Groepen gelezen, speel periode " +  groepen.getPeriode() + " en ronde " + groepen.getRonde());
-        return groepen;
+        if (ronde == 1) groepen.resetPunten();
+		return groepen;
     }
 
     /**

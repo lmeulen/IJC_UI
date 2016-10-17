@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - FIXME Eerste ronde van een periode alle punten resetten
  * - FIXME Eerste ronde van periode 2.3 en 4 spelers door (kunnen) schuiven (rechtermuis groep hoger/lager)?
  */
 package nl.detoren.ijc.ui.control;
@@ -532,6 +531,7 @@ public class IJCController {
 	        	ronde = 1;
 	        	periode++;
 	        	if (periode > 4) periode = 1;
+	        	resetPunten();
 	        }
 	        status.groepen.setRonde(ronde);
 	        status.groepen.setPeriode(periode);
