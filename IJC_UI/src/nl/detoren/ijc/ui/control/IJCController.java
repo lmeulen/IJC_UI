@@ -526,10 +526,10 @@ public class IJCController {
 			int ronde = status.groepen.getRonde();
 			int periode = status.groepen.getPeriode();
 			ronde += 1;
-	        if (ronde > 8) {
+	        if (ronde > c.rondes) {
 	        	ronde = 1;
 	        	periode++;
-	        	if (periode > 4) periode = 1;
+	        	if (periode > c.perioden) periode = 1;
 	        	resetPunten();
 	        }
 	        status.groepen.setRonde(ronde);

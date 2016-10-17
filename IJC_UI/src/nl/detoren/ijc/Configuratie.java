@@ -25,26 +25,24 @@ public class Configuratie {
 
 	/**
 	 * Aantal periodes in een seizoen
-	 * MINOR Nog niet in gebruik
 	 */
 	public int perioden = 4;
 	/**
 	 * Aantal rondes per periode. Alle perioden in een seizoen hebben hetzelfde
 	 * aantal rondes
-	 * MINOR Nog niet in gebruik
 	 */
 	public int rondes = 8;
 
 	/**
 	 * Aantal groepen waarin wordt gespeeld
-	 * MINOR Nog niet in gebruik
+	 * MINOR conf.aantalgroepen Nog niet in gebruik
 	 */
 	public int aantalGroepen = 7;
 
 	/**
 	 * Identiefier van de hoogste groep. Is gelijk aan aantal groepen minus 1,
 	 * maar is voor leesbaarheid code apart opgenomen
-	 * MINOR Nog niet in gebruik
+	 * MINOR conf.hoogstegroep Nog niet in gebruik
 	 */
 	public int hoogsteGroep = 6;
 
@@ -73,7 +71,6 @@ public class Configuratie {
 	 * @param periode
 	 * @param ronde
 	 * @return aantal series
-	 * MINOR Nog niet in gebruik
 	 */
 	public int bepaalAantalSeries(int groep, int periode, int ronde) {
 		return (Integer)groovy.util.Eval.xyz(groep, periode, ronde, grAantalSeries);
@@ -82,7 +79,7 @@ public class Configuratie {
 	/**
 	 * Groovy functie die bepaalt hoeveel doorschuivers er zijn. 
 	 * Input is
-	 * X=groepnummer, Y=periodenummer, Z=rondenummer 
+	 * X=periodenummer, Y=rondenummer 
 	 * Gebruik: 
 	 * int groep,periode,ronde; 
 	 * int doorschuivers = Eval.xyz(groep, periode, ronde, Configuratie.grAantalDoorschuivers);
@@ -91,14 +88,12 @@ public class Configuratie {
 
 	/**
 	 * Retourneer aantal doorschuivers
-	 * @param groep
 	 * @param periode
 	 * @param ronde
 	 * @return aantal doorschuivers
-	 * MINOR Nog niet in gebruik
 	 */
-	public int bepaalAantalDoorschuivers(int groep, int periode, int ronde) {
-		return (Integer)groovy.util.Eval.xyz(groep, periode, ronde, grAantalDoorschuivers);
+	public int bepaalAantalDoorschuivers(int periode, int ronde) {
+		return (Integer)groovy.util.Eval.xy(periode, ronde, grAantalDoorschuivers);
 	}
 	/**
 	 * Groovy functie die bepaalt of op rating wordt gesorteerd. 
@@ -118,7 +113,7 @@ public class Configuratie {
 	 * @param periode
 	 * @param ronde
 	 * @return true, als er voor indelen gesorteerd moet worden op rating
-	 * MINOR Nog niet in gebruik
+	 * MINOR conf.sorteeroprating Nog niet in gebruik
 	 */
 	public boolean sorteerOpRating (int groep, int periode, int ronde) {
 		return (Boolean)groovy.util.Eval.xyz(groep, periode, ronde, grSorteerOpRating);
@@ -127,7 +122,7 @@ public class Configuratie {
 	 * Standaard wordt er gecontroleerd of de doorschuiver in de laatste ronde
 	 * gegarandeerd kampioen is en niet te achterhalen door nummer 2. Door deze
 	 * op false te true te zetten, wordt deze controle niet uitgevoerd
-	 * MINOR Nog niet in gebruik
+	 * MINOR conf.laatsterondedoorschuiven Nog niet in gebruik
 	 */
 	public boolean laasteRondeDoorschuivenAltijd = false;
 
@@ -137,7 +132,7 @@ public class Configuratie {
 	 * te doen, wordt er snel een scheiding gemaakt tussen de goede en minder
 	 * goede spelers in een groep. Hierna wordt dus sneller tegen spelers van
 	 * het eigen niveau gespeeld.
-	 * MINOR Nog niet in gebruik
+	 * MINOR conf.specialeindelingronde1 Nog niet in gebruik
 	 */
 	public boolean specialeIndelingEersteRonde = true;
 
@@ -152,7 +147,6 @@ public class Configuratie {
 	 * Standaard rating voor nieuwe speler. Bij het toevoegen van een nieuwe
 	 * speler is dit de standaard rating, afhankelijk van de groep waarin hij
 	 * begint.
-	 * MINOR Nog niet in gebruik
 	 */
 	public int[] startRating = { 100, 150, 200, 300, 500, 800, 1400 };
 

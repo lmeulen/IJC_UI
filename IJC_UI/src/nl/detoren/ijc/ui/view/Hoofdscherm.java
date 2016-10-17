@@ -661,8 +661,8 @@ public class Hoofdscherm extends JFrame {
 								nieuw.setPunten((s.getPunten() + s2.getPunten()) / 2);
 								nieuw.setRating((s.getRating() + s2.getRating()) / 2);
 							} else {
-								// Onderaan altijd laagste rating
-								nieuw.setRating(200);
+								// Onderaan altijd standaard rating
+								nieuw.setRating(IJCController.getInstance().c().startRating[groepID]);
 							}
 							BewerkSpelerDialoog rd = new BewerkSpelerDialoog(new JFrame(), "Bewerk Speler", nieuw,
 									false, s.getId());

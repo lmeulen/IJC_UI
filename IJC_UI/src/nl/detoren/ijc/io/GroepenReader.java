@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.data.groepen.Speler;
+import nl.detoren.ijc.ui.control.IJCController;
 
 /**
  * Leest alle gegevens van de spelers uit een invoerbestand
@@ -61,10 +62,10 @@ public class GroepenReader {
 			Groepen groepen = gson.fromJson(br, Groepen.class);
 			logger.log(Level.INFO, "Groepen gelezen met periode " +  groepen.getPeriode() + " en ronde " + groepen.getRonde());
 	        groepen.setRonde(groepen.getRonde()+1);
-	        if (groepen.getRonde() > 8) {
+	        if (groepen.getRonde() > IJCController.getInstance().c().rondes) {
 	        	groepen.setRonde(1);
 	        	groepen.setPeriode(groepen.getPeriode()+1);
-	        	if (groepen.getPeriode() > 4) groepen.setPeriode(1);
+	        	if (groepen.getPeriode() > IJCController.getInstance().c().perioden) groepen.setPeriode(1);
 	        }
 			logger.log(Level.INFO, "Volgende periode " +  groepen.getPeriode() + " en ronde " + groepen.getRonde());
 	        return groepen;
@@ -90,10 +91,10 @@ public class GroepenReader {
         int ronde = leesRonde(stringArr, "STAND NA");
         int periode = leesPeriode(stringArr, "STAND NA");
         ronde += 1;
-        if (ronde > 8) {
+        if (ronde > IJCController.getInstance().c().rondes) {
         	ronde = 1;
         	periode++;
-        	if (periode > 4) periode = 1;
+        	if (periode > IJCController.getInstance().c().perioden) periode = 1;
         }
 		logger.log(Level.INFO, "Periode " + periode  + " en ronde " + ronde + " als speelronde");
         groepen.setRonde(ronde);

@@ -198,18 +198,11 @@ public class GroepenIndeler {
      * @return true als er met doorschuiven wordt gespeeld
      */
     public boolean bepaalDoorschuiven(int periode, int ronde) {
-        return ronde >= 4;
+    	return (bepaalAantalDoorschuiven(periode, ronde) > 0);
     }
 
     public int bepaalAantalDoorschuiven(int periode, int ronde) {
-        if (ronde >= 4) {
-            if (ronde < 8) {
-                return 4;
-            } else {
-                return 1;
-            }
-        }
-        return 0;
+    	return IJCController.getInstance().c().bepaalAantalDoorschuivers(periode, ronde);
     }
 
     /**
@@ -254,20 +247,7 @@ public class GroepenIndeler {
      */
     public int bepaalAantalSeries(int groep, int periode, int ronde) {
     	logger.log(Level.INFO, "Vaststellen aantal te spelen series");    		
-        if (groep == Groep.KEIZERGROEP) {
-            if ((periode == 1) && (ronde == 1)) {
-            	logger.log(Level.INFO, "Keizergroep, periode 1 en ronde 1. # series = 2");    		
-                return 2;
-            }
-        	logger.log(Level.INFO, "Keizergroep, niet (periode 1 en ronde 1). # series = 1");    		
-            return 1;
-        }
-        if ((periode == 1) && (ronde == 1)) {
-        	logger.log(Level.INFO, "Niet Keizergroep, periode 1 en ronde 1. # series = 3");    		
-            return 3;
-        }
-    	logger.log(Level.INFO, "Niet Keizergroep, niet (periode 1 en ronde 1). # series = 2");    		
-        return 2;
+    	return IJCController.getInstance().c().bepaalAantalSeries(groep, periode, ronde);
     }
 
     /**
