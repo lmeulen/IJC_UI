@@ -11,7 +11,6 @@
  *  
  * Problemen in deze code:
  * - MINOR isGelijk alleen nog laten kijken naar KNSB nummer? Mogelijk voldoende
- * - FIXME Veelvuldig gebruik van getID. Is dit correct?
  */
 package nl.detoren.ijc.data.groepen;
 
@@ -457,5 +456,12 @@ public class Speler implements Cloneable {
         
         return verwijderAccenten(afkorting.toLowerCase());
     }
+
+	@Override
+	public boolean equals(Object arg0) {
+		return gelijkAan((Speler) arg0);
+	}
+    
+    
 
 }
