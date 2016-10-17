@@ -14,7 +14,6 @@
  * - FIXME Eerste ronde van periode 2.3 en 4 spelers door (kunnen) schuiven (rechtermuis groep hoger/lager)?
  * - TODO Rechtermuis menu reset punten
  * - TODO Menu tovoegen: reset punten
- * - FIXME Klik op header voor sorteren op die kolom (punten / rating) [m.n. start periode] 
  */
 package nl.detoren.ijc.ui.control;
 
@@ -581,7 +580,7 @@ public class IJCController {
 	}
 
     /**
-     * Speler naar lagere groep verplaatsen
+     * Speler naar lagere groep verplaatsen in wedstrijdgroepen
      * @param groepID Huidige groep
      * @param speler Speler
      * @param locatie huidige locatie in huidige groep
@@ -603,5 +602,29 @@ public class IJCController {
 
 	public void setLaatsteExport(String laatsteExport) {
 		this.laatsteExport = laatsteExport;
+	}
+
+	/**
+	 * Sorteer in aanwezigheidsgroep op rating
+	 * @param groepID
+	 */
+	public void sorteerGroepOpRating(int groepID) {
+		Groep groep = status.groepen.getGroepById(groepID);
+		if (groep != null) {
+			groep.sorteerRating();
+			groep.renumber();
+		}
+	}
+
+	/**
+	 * Sorteer in aanwezigheidsgroep op Punten
+	 * @param groepID
+	 */
+	public void sorteerGroepOpPunten(int groepID) {
+		Groep groep = status.groepen.getGroepById(groepID);
+		if (groep != null) {
+			groep.sorteerPunten();
+			groep.renumber();
+		}
 	}
 }

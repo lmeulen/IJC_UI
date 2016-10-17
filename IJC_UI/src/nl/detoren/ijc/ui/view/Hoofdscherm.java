@@ -565,9 +565,22 @@ public class Hoofdscherm extends JFrame {
 		    public void mouseClicked(MouseEvent e) {
 		        int col = aanwezigheidsTabel[index].columnAtPoint(e.getPoint());
 		        String name = aanwezigheidsTabel[index].getColumnName(col);
-		        int groepID = tabs.getSelectedIndex();
-		        if (col == 0) controller.setAlleSpelersAanwezigheid(groepID);
 		        System.out.println("Column index selected " + col + " " + name);
+		        int groepID = tabs.getSelectedIndex();
+		        switch (col) {
+		        case 0:
+		        	logger.log(Level.INFO, "Zet aanwezigheid alle spelers");
+		        	controller.setAlleSpelersAanwezigheid(groepID);
+		        	break;
+		        case 3:
+		        	logger.log(Level.INFO, "Sorteer op rating in de groep");
+		        	controller.sorteerGroepOpRating(groepID);
+		        	break;
+		        case 4:
+		        	logger.log(Level.INFO, "Sorteer op punte in de groep");
+		        	controller.sorteerGroepOpPunten(groepID);
+		        	break;
+		        }
 		    }
 		});
 		
