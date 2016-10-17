@@ -698,6 +698,20 @@ public class Hoofdscherm extends JFrame {
 							hoofdPanel.repaint();
 						}
 					});
+					
+					popup.addSeparator();
+					menuItem = new JMenuItem("Doorschuiven Speler");
+					popup.add(menuItem);
+					menuItem.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							//controller.verwijderSpeler(groepID, s, s.getId() - 1);
+							controller.doorschuiven(groepID, s.getId()-1);
+							hoofdPanel.repaint();
+						}
+					});
+					
 					popup.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}

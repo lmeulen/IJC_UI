@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - FIXME Eerste ronde van periode 2.3 en 4 spelers door (kunnen) schuiven (rechtermuis groep hoger/lager)?
  */
 package nl.detoren.ijc.ui.control;
 
@@ -632,5 +631,20 @@ public class IJCController {
 	 */
 	public void resetPunten() {
 		status.groepen.resetPunten();
+	}
+
+	/**
+	 * Schuif sper door
+	 * @param groepID Groep ID van huidige groep
+	 * @param i speler ID
+	 */
+	public void doorschuiven(int groepID, int i) {
+		Groep huidigeGroep = status.groepen.getGroepById(groepID);
+		Groep hogereGroep = status.groepen.getGroepById(groepID+1);
+		if (huidigeGroep != null && hogereGroep != null) {
+			Speler s = huidigeGroep.getSpelerByID(i+1);
+			huidigeGroep.removeSpeler(s, i);
+			hogereGroep.addSpeler(new Speler(s));
+		}
 	}
 }
