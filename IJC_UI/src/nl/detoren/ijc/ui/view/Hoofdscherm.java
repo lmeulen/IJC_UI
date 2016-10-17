@@ -124,7 +124,7 @@ public class Hoofdscherm extends JFrame {
 		controller = IJCController.getInstance();
 		aantal = Groep.getAantalGroepen();
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle("SV De Toren - Indeling Interne Jeugd Competitie");
+		setTitle(controller.c().appTitle);
 
 		hoofdPanel = new javax.swing.JPanel();
 		addButtons();

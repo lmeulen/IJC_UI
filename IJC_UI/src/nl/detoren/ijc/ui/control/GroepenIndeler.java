@@ -166,12 +166,14 @@ public class GroepenIndeler {
                     if ((j == aantal) && (aantal == 1)) {
                         // Alleen doorschuiven als speler 1 niet meer ingehaald kan worden
                         Speler s2 = groepen.get(i + 1).getSpelerByID(j);
-                        if (s.getPunten() > (s2.getPunten() + 5)) {
-                        	logger.log(Level.FINE, "Speler doorgeschoven, niet meer in te halen ");    		
-                            naarGroep.add(new Speler(s));
-                            vanGroep.remove(s);
+						if (!IJCController.getInstance().c().laasteRondeDoorschuivenAltijd) {
+							if (s.getPunten() > (s2.getPunten() + 5)) {
+								logger.log(Level.FINE, "Speler doorgeschoven, niet meer in te halen ");
+								naarGroep.add(new Speler(s));
+								vanGroep.remove(s);
 
-                        }
+							}
+						}
                     } else if (j == aantal) {
                         if (naarGroep.size() % 2 != 0) {
                         	logger.log(Level.FINE, "Speler doorgeschoven, laatste doorschuiver maar door om even aantal ");    		
@@ -321,7 +323,7 @@ public class GroepenIndeler {
 	    	logger.log(Level.FINE, "Toevoegen van speler " + s.getNaam());    		
 		    groep.addSpeler(new Speler(s));
 		}
-		if ((groep.getNiveau() == Groep.KEIZERGROEP) && (ronde < 7) && (ronde > 1)) {
+		if (IJCController.getInstance().c().sorteerOpRating(groep.getNiveau(), periode, ronde)) {
 			// Sorteer keizergroep op rating voor indeling indien ronde = 2,3,4,5 of 6
 			groep.sorteerRating();
 		}

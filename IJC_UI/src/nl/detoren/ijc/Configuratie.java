@@ -35,14 +35,12 @@ public class Configuratie {
 
 	/**
 	 * Aantal groepen waarin wordt gespeeld
-	 * MINOR conf.aantalgroepen Nog niet in gebruik
 	 */
 	public int aantalGroepen = 7;
 
 	/**
 	 * Identiefier van de hoogste groep. Is gelijk aan aantal groepen minus 1,
 	 * maar is voor leesbaarheid code apart opgenomen
-	 * MINOR conf.hoogstegroep Nog niet in gebruik
 	 */
 	public int hoogsteGroep = 6;
 
@@ -113,7 +111,6 @@ public class Configuratie {
 	 * @param periode
 	 * @param ronde
 	 * @return true, als er voor indelen gesorteerd moet worden op rating
-	 * MINOR conf.sorteeroprating Nog niet in gebruik
 	 */
 	public boolean sorteerOpRating (int groep, int periode, int ronde) {
 		return (Boolean)groovy.util.Eval.xyz(groep, periode, ronde, grSorteerOpRating);
@@ -122,7 +119,6 @@ public class Configuratie {
 	 * Standaard wordt er gecontroleerd of de doorschuiver in de laatste ronde
 	 * gegarandeerd kampioen is en niet te achterhalen door nummer 2. Door deze
 	 * op false te true te zetten, wordt deze controle niet uitgevoerd
-	 * MINOR conf.laatsterondedoorschuiven Nog niet in gebruik
 	 */
 	public boolean laasteRondeDoorschuivenAltijd = false;
 
@@ -228,6 +224,11 @@ public class Configuratie {
 	 * prefix .json )en evt datum postfix) wordt automatisch toegevoegd 
 	 */
 	public String statusBestand = "status";
+	
+	/**
+	 * Applicatie titel
+	 */
+	public String appTitle = "SV De Toren - Indeling Interne Jeugd Competitie";
 }
 
 
