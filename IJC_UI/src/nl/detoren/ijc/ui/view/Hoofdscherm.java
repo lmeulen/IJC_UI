@@ -706,8 +706,18 @@ public class Hoofdscherm extends JFrame {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							//controller.verwijderSpeler(groepID, s, s.getId() - 1);
 							controller.doorschuiven(groepID, s.getId()-1);
+							hoofdPanel.repaint();
+						}
+					});
+
+					menuItem = new JMenuItem("Terugschuiven Speler");
+					popup.add(menuItem);
+					menuItem.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							controller.terugschuiven(groepID, s.getId()-1);
 							hoofdPanel.repaint();
 						}
 					});

@@ -634,17 +634,35 @@ public class IJCController {
 	}
 
 	/**
-	 * Schuif sper door
+	 * Schuif spelerr door
 	 * @param groepID Groep ID van huidige groep
-	 * @param i speler ID
+	 * @param spelerID speler ID
 	 */
-	public void doorschuiven(int groepID, int i) {
+	public void doorschuiven(int groepID, int spelerID) {
 		Groep huidigeGroep = status.groepen.getGroepById(groepID);
 		Groep hogereGroep = status.groepen.getGroepById(groepID+1);
 		if (huidigeGroep != null && hogereGroep != null) {
-			Speler s = huidigeGroep.getSpelerByID(i+1);
-			huidigeGroep.removeSpeler(s, i);
+			Speler s = huidigeGroep.getSpelerByID(spelerID+1);
+			huidigeGroep.removeSpeler(s, spelerID);
 			hogereGroep.addSpeler(new Speler(s));
+			logger.log(Level.INFO, "Speler " + s.getNaam() + " doorgeschoven naar groep " + Groep.geefNaam(groepID+1));
 		}
 	}
+
+	/**
+	 * Schuif speler terug naar een groep lager
+	 * @param groepID Groep ID van huidige groep
+	 * @param spelerID speler ID
+	 */
+	public void terugschuiven(int groepID, int spelerID) {
+		Groep huidigeGroep = status.groepen.getGroepById(groepID);
+		Groep lagereGroep = status.groepen.getGroepById(groepID-1);
+		if (huidigeGroep != null && lagereGroep != null) {
+			Speler s = huidigeGroep.getSpelerByID(spelerID+1);
+			huidigeGroep.removeSpeler(s, spelerID);
+			lagereGroep.addSpeler(new Speler(s));
+			logger.log(Level.INFO, "Speler " + s.getNaam() + " teruggeschoven naar groep " + Groep.geefNaam(groepID+1));
+		}
+	}
+
 }
