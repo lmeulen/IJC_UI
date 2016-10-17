@@ -135,4 +135,11 @@ public class Groepen {
     	}
     	return null;
     }
+    
+    public void resetPunten() {
+    	for (Groep g : groepen) {
+    		g.resetPunten();
+    	}
+    }
+    
 }

@@ -438,6 +438,21 @@ public class Hoofdscherm extends JFrame {
 		});
 		indelingMenu.add(item);
 		menubar.add(indelingMenu);
+
+		JMenu overigmenu = new JMenu("Overig");
+
+		item = new JMenuItem("Reset punten");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.resetPunten();
+				hoofdPanel.repaint();
+			}
+		});
+		
+		overigmenu.add(item);
+		menubar.add(overigmenu);
+		
 		this.setJMenuBar(menubar);
 	}
 

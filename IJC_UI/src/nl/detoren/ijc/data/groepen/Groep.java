@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import nl.detoren.ijc.ui.control.IJCController;
+
 /**
  * Deze klasse bevat alle gegevens van een groep met een specifiek niveau
  * Vastgelegd is het niveau van de groep en de spelers waaruit de groep bestaat
@@ -194,4 +196,11 @@ public class Groep {
     	    }
     	});
     }
+
+	public void resetPunten() {
+		int punten = IJCController.getInstance().c().startPunten[niveau];
+		for (Speler s : spelers) {
+			s.setPunten(punten);
+		}
+	}
 }

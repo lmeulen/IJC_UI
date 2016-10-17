@@ -12,8 +12,6 @@
  * Problemen in deze code:
  * - FIXME Eerste ronde van een periode alle punten resetten
  * - FIXME Eerste ronde van periode 2.3 en 4 spelers door (kunnen) schuiven (rechtermuis groep hoger/lager)?
- * - TODO Rechtermuis menu reset punten
- * - TODO Menu tovoegen: reset punten
  */
 package nl.detoren.ijc.ui.control;
 
@@ -65,6 +63,7 @@ public class IJCController {
     }
     private Status status;
     private Configuratie c;
+    public Configuratie c() { return c;}
     
     private String laatsteExport;
 
@@ -626,5 +625,12 @@ public class IJCController {
 			groep.sorteerPunten();
 			groep.renumber();
 		}
+	}
+	
+	/**
+	 * Reset de punten in alle aanwezigheidsgroepen 
+	 */
+	public void resetPunten() {
+		status.groepen.resetPunten();
 	}
 }
