@@ -566,7 +566,7 @@ public class Hoofdscherm extends JFrame {
 		        int col = aanwezigheidsTabel[index].columnAtPoint(e.getPoint());
 		        String name = aanwezigheidsTabel[index].getColumnName(col);
 		        int groepID = tabs.getSelectedIndex();
-		        controller.setAlleSpelersAanwezigheid(groepID);
+		        if (col == 0) controller.setAlleSpelersAanwezigheid(groepID);
 		        System.out.println("Column index selected " + col + " " + name);
 		    }
 		});

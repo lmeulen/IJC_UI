@@ -11,6 +11,7 @@
  *  
  * Problemen in deze code:
  * - MINOR isGelijk alleen nog laten kijken naar KNSB nummer? Mogelijk voldoende
+ * - FIXME Veelvuldig gebruik van getID. Is dit correct?
  */
 package nl.detoren.ijc.data.groepen;
 

@@ -120,6 +120,10 @@ public class Wedstrijd {
         return result;
     }
 
+    /**
+     * Geef afstand in de rankinglijst
+     * @return
+     */
     public int getDistance() {
     	return Math.abs(wit.getId() - zwart.getId());
     }

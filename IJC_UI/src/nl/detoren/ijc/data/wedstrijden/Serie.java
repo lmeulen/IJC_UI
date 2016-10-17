@@ -73,7 +73,7 @@ public class Serie {
 
     public Wedstrijd getWedstrijdVoorSpeler(Speler speler) {
         for (Wedstrijd w : wedstrijden) {
-            if ((w.getWit() == speler) || (w.getZwart() == speler)) {
+            if ((w.getWit().gelijkAan(speler)) || (w.getZwart().gelijkAan(speler))) {
                 return w;
             }
         }
