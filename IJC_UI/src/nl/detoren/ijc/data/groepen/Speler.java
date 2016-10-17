@@ -162,18 +162,14 @@ public class Speler implements Cloneable {
      */
 	public void setKNSBnummer(int nieuwKNSBnr) {
 		if ((nieuwKNSBnr == 1234567) && (naam.length() > 3)) {
-			KNSBnummer = getNameHash();
+			KNSBnummer = hashCode();
 		} else {
 			KNSBnummer = nieuwKNSBnr;
 		}
 	}
 
-	/**
-	 * Create a hash of 6 digits, prefixed with a 1, from
-	 * the name. 
-	 * @return
-	 */
-	public int getNameHash() {
+	@Override
+	public int hashCode() {
 		String afk = getAfkorting6();
 		int hash = 1000000;
 		
@@ -459,6 +455,7 @@ public class Speler implements Cloneable {
 
 	@Override
 	public boolean equals(Object arg0) {
+		if (arg0 == null) return false;
 		return gelijkAan((Speler) arg0);
 	}
     

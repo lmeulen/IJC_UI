@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - TODO Doorschuivende spelers opnemen in het uitslagbestand
  */
 package nl.detoren.ijc.io;
 
@@ -38,19 +37,23 @@ public class OutputTekst {
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
 			// Short variant
-			FileWriter writer = new FileWriter(bestandsnaam + ".txt");
-			writer.write(uitslag.toPrintableString(false));
-			writer.close();
+			if (IJCController.getInstance().c().exportTextLong) {
+				FileWriter writer = new FileWriter(bestandsnaam + ".txt");
+				writer.write(uitslag.toPrintableString(false));
+				writer.close();
+				IJCController.getInstance().setLaatsteExport(bestandsnaam + ".txt");
+			}
 
 			// Long variant
-			writer = new FileWriter(bestandsnaam + "-long.txt");
-			writer.write(uitslag.toPrintableString(true));
-			writer.close();
-			IJCController.getInstance().setLaatsteExport(bestandsnaam + "-long.txt");
-
+			if (IJCController.getInstance().c().exportTextLong) {
+				FileWriter writer = new FileWriter(bestandsnaam + "-long.txt");
+				writer.write(uitslag.toPrintableString(true));
+				writer.close();
+				IJCController.getInstance().setLaatsteExport(bestandsnaam + "-long.txt");
+			}
 			// GSON variant
 			Gson gson = new Gson();
-			writer = new FileWriter(bestandsnaam + ".json");
+			FileWriter writer = new FileWriter(bestandsnaam + ".json");
 			writer.write(gson.toJson(uitslag));
 			writer.close();
 		} catch (IOException e) {

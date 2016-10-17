@@ -24,10 +24,12 @@ import java.util.logging.Logger;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.data.groepen.Speler;
+import nl.detoren.ijc.ui.control.IJCController;
 
 /**
  * Schrijf het bestand met KEI stand. Alleen spelers die daadwerkelijk punten
  * hebben behaald, worden getoond.
+ * 
  * @author Leo.vanderMeulen
  *
  */
@@ -36,58 +38,64 @@ public class OutputKEI {
 	private final static Logger logger = Logger.getLogger(OutputKNSB.class.getName());
 
 	/**
-	 * Exporteer de KEI stand naar bestand Rp-rKEIpuntenS.txt
-	 * Alleen spelers met behaalde punten worden getoond
+	 * Exporteer de KEI stand naar bestand Rp-rKEIpuntenS.txt Alleen spelers met
+	 * behaalde punten worden getoond
 	 * 
-	 * @param groepen bevat de stand die geexporteerd moet worden
+	 * @param groepen
+	 *            bevat de stand die geexporteerd moet worden
 	 */
 	public void exportKEIlijst(Groepen groepen) {
 		try {
-			String bestandsnaam = "R" + groepen.getPeriode() + "-" + groepen.getRonde() + "KEIpuntenS"; 
-			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
+			if (IJCController.getInstance().c().exportKEIlijst) {
+				String bestandsnaam = "R" + groepen.getPeriode() + "-" + groepen.getRonde() + "KEIpuntenS";
+				logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
-			FileWriter writer = new FileWriter(bestandsnaam + ".txt");
-			writer.write(getHeader(groepen.getPeriode(), groepen.getRonde()));
-			
-			// Vind spelers met KEI punten
-			ArrayList<Speler> keispelers = new ArrayList<>();
-			for (Groep groep : groepen.getGroepen()) {
-				for (Speler speler : groep.getSpelers()) {
-					if ((speler.getKeikansen() > 0)) {
-						keispelers.add(speler);
+				FileWriter writer = new FileWriter(bestandsnaam + ".txt");
+				writer.write(getHeader(groepen.getPeriode(), groepen.getRonde()));
+
+				// Vind spelers met KEI punten
+				ArrayList<Speler> keispelers = new ArrayList<>();
+				for (Groep groep : groepen.getGroepen()) {
+					for (Speler speler : groep.getSpelers()) {
+						if ((speler.getKeikansen() > 0)) {
+							keispelers.add(speler);
+						}
 					}
 				}
+
+				// Sorteer deze eerst op punten, dan op kansen
+				Collections.sort(keispelers, new Comparator<Speler>() {
+					@Override
+					public int compare(Speler o1, Speler o2) {
+						// return o2.getRating() - (o1.getRating());
+						return (o2.getKeipunten() * 100 + o2.getKeikansen())
+								- (o1.getKeipunten() * 100 + o1.getKeikansen());
+					}
+				});
+
+				// Exporteer de gesorteerde lijst
+				int pos = 1;
+				for (Speler s : keispelers) {
+					String res = Integer.toString(pos++);
+					if (res.length() < 2)
+						res = " " + res;
+					res += ". " + s.getNaam();
+					while (res.length() < 34) {
+						res += " ";
+					}
+					String p = Integer.toString(s.getKeipunten());
+					if (p.length() < 2)
+						p = " " + p;
+					res += p + "/";
+					p = Integer.toString(s.getKeikansen());
+					if (p.length() < 2)
+						p = " " + p;
+					res += p;
+					writer.write(res + "\n");
+
+				}
+				writer.close();
 			}
-
-			// Sorteer deze eerst op punten, dan op kansen
-	    	Collections.sort(keispelers, new Comparator<Speler>() {
-	    	    @Override
-	    	    public int compare(Speler o1, Speler o2) {
-	    	        //return o2.getRating() - (o1.getRating());
-	    	        return (o2.getKeipunten()*100 + o2.getKeikansen()) - (o1.getKeipunten()*100 + o1.getKeikansen());
-	    	    }
-	    	});
-
-	    	// Exporteer de gesorteerde lijst
-	    	int pos = 1;
-	    	for (Speler s : keispelers) {
-	    		String res = Integer.toString(pos++);
-	    		if (res.length() < 2) res = " " + res;
-	    		res += ". ";
-	    		res += s.getNaam();
-	    		while (res.length() < 34) {
-	    			res += " ";
-	    		}
-	    		String p = Integer.toString(s.getKeipunten());
-	    		if (p.length() < 2) p = " " + p;
-	    		res += p + "/"; 
-	    		p = Integer.toString(s.getKeikansen());
-	    		if (p.length() < 2) p = " " + p;
-	    		res += p;
-				writer.write(res + "\n");
-	    		
-	    	}
-			writer.close();
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Export mislukt : " + e.getMessage());
 			e.printStackTrace();

@@ -18,6 +18,8 @@ package nl.detoren.ijc.data.groepen;
 
 import java.util.ArrayList;
 
+import nl.detoren.ijc.ui.control.IJCController;
+
 /**
  * Bevat een verzameling groepen, een per niveau.
  * Naast de verschillende groepen ligt hier ook de periode en de
@@ -90,8 +92,9 @@ public class Groepen {
     }
     public String toPrintableString(boolean lang) {
         String result = "";
-        for (Groep groep : groepen) {
-            //Stand na 3e ronde , 1e periode               Keizergroep (16)	
+        for (int i = 0; i < groepen.size(); ++i) {
+        	Groep groep = groepen.get(i);
+        	//Stand na 3e ronde , 1e periode               Keizergroep (16)	
             //pos naam                           ini   zw rating  gespeeld tegen  punt
             //------------------------------------------------------------------------
             result += "Stand na " + ronde + "e ronde, " + periode;
@@ -100,6 +103,20 @@ public class Groepen {
             result += "-----------------------------------------------------------------------\n";
 
             result += groep.toPrintableString(lang) + "\n";
+            
+            if (IJCController.getInstance().c().exportDoorschuivers) {
+            	int ndoor = IJCController.getInstance().c().bepaalAantalDoorschuivers(groep.getNiveau(), periode, ronde);
+                if ( i + 1 < groepen.size()) {
+                	result += IJCController.getInstance().c().exportDoorschuiversStart + "\n";
+                	Groep lager = groepen.get(i+1);
+                	for (int j = 0; j < ndoor; j++) {
+                		Speler s = lager.getSpelerByID(j+1); 
+                		result += s.toPrintableString(lang) + "\n";
+                	}
+                	result += IJCController.getInstance().c().exportDoorschuiversStop + "\n" + "\n";
+                }
+            }
+            result += "\n";
         }
         return result;
     }
