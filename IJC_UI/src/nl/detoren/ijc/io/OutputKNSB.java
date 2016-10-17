@@ -23,48 +23,51 @@ import java.util.logging.Logger;
 import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
+import nl.detoren.ijc.ui.control.IJCController;
 
 public class OutputKNSB {
 
 	private final static Logger logger = Logger.getLogger(OutputKNSB.class.getName());
 
 	/**
-     * Sla de nieuwe stand op in een uitslag?-?.txt bestand en
-     * in een json versie van resultaatVerwerkt
-     */
-    public void saveUitslag(Wedstrijden uitslag) {
+	 * Sla de nieuwe stand op in een uitslag?-?.txt bestand en in een json
+	 * versie van resultaatVerwerkt
+	 */
+	public void saveUitslag(Wedstrijden uitslag) {
 		try {
-			String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "KNSB"; 
-			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
-
-			FileWriter writer = new FileWriter(bestandsnaam + ".csv");
-			writer.write(getHeader());
-			int i = 1;
-			for (Groepswedstrijden gws : uitslag.getGroepswedstrijden()) {
-				for (Wedstrijd w : gws.getWedstrijden()) {
-					String result = verwerkWedstrijd(w, i++);
-					if (result != null) {
-						writer.write(result + "\n");
+			if (IJCController.getInstance().c().exportKNSBRating) {
+				String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "KNSB";
+				logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
+				FileWriter writer = new FileWriter(bestandsnaam + ".csv");
+				writer.write(getHeader());
+				int i = 1;
+				for (Groepswedstrijden gws : uitslag.getGroepswedstrijden()) {
+					for (Wedstrijd w : gws.getWedstrijden()) {
+						String result = verwerkWedstrijd(w, i++);
+						if (result != null) {
+							writer.write(result + "\n");
+						}
 					}
 				}
+				writer.close();
 			}
-			writer.close();
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Export mislukt : " + e.getMessage());
 			e.printStackTrace();
 		}
-    	
-    }
+	}
 
-    /**
-     * Zet één wedstrijd om naar KNSB file formaat
-     * @param w Wedstrijd
-     * @return regel voor KNSB bestand
-     */
+	/**
+	 * Zet één wedstrijd om naar KNSB file formaat
+	 * 
+	 * @param w
+	 *            Wedstrijd
+	 * @return regel voor KNSB bestand
+	 */
 	private String verwerkWedstrijd(Wedstrijd w, int volgnummer) {
 		String result = "";
 		if ((w.getWit().getKNSBnummer() > 2000000) && (w.getZwart().getKNSBnummer() > 2000000)) {
-			//900;1;2016-10-10;8000000;8000001;1;Piet Puk;Jan Janssen;
+			// 900;1;2016-10-10;8000000;8000001;1;Piet Puk;Jan Janssen;
 			result += "900;" + volgnummer + ";";
 			result += new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 			result += ";" + w.getWit().getKNSBnummer() + ";" + w.getZwart().getKNSBnummer() + ";";
@@ -94,4 +97,3 @@ public class OutputKNSB {
 		return result;
 	}
 }
-

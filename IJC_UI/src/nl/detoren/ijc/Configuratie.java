@@ -149,7 +149,6 @@ public class Configuratie {
 	 * Bepaald hoe groot het verschil standaard mag zijn tussen twee
 	 * tegenstanders in het klassement. Hiermee krijgt spelen tegen eigen niveau
 	 * een hogere prioriteit dan spelen tegen een nieuwe tegenstander
-	 * MINOR Nog niet in gebruik
 	 */
 	public int indelingMaximumVerschil = 3;
 
@@ -169,7 +168,6 @@ public class Configuratie {
 	/**
 	 * Geef aan of er een bestand gegenereerd moet worden dat door de KNSB
 	 * gebruikt kan worden voor verwerking resultaten in de KNSB rating
-	 * MINOR Nog niet in gebruik
 	 */
 	public boolean exportKNSBRating = true;
 
@@ -187,7 +185,6 @@ public class Configuratie {
 	
 	/**
 	 * Geef aan of in het lange bestandsformaat eventuele doorschuivers
-	 * MINOR Nog niet in gebruik
 	 */
 	public boolean exportDoorschuivers = true;
 	
@@ -221,7 +218,7 @@ public class Configuratie {
 	 * param x = groepsgrootte
 	 * MINOR Nog niet in gebruik
 	 */
-	private String grBeginRating = "x / 2";
+	private String grBeginTrio = "x / 2";
 	
 	/**
 	 * Bepaal beginpunt voor zoeken naar trio
@@ -230,7 +227,7 @@ public class Configuratie {
 	 * MINOR Nog niet in gebruik
 	 */
 	public int getBeginpuntTrio (int groepsgrootte) {
-		return (Integer)groovy.util.Eval.x(groepsgrootte, grBeginRating);
+		return (Integer)groovy.util.Eval.x(groepsgrootte, grBeginTrio);
 	}
 	
 	/**
