@@ -587,7 +587,7 @@ public class GroepenIndeler {
             trio.add(groep.getSpelers().get(2).getId());
             return trio;
         }
-        int spelerID = groep.getSpelers().size() / 2;
+        int spelerID = IJCController.getInstance().c().getBeginpuntTrio(groep.getSpelers().size());
         int minDelta = 1;
         int plusDelta = 1;
         int ignore = 0;

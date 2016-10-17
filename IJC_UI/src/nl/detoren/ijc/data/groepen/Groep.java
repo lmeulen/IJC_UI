@@ -37,10 +37,6 @@ public class Groep {
     public static int KONINGSGROEP = 5;
     public static int KEIZERGROEP = 6;
 
-    private static final String[] namen = {
-        "Pionnengroep", "Paardengroep", "Lopergroep","Torengroep", "Damegroep", "Koningsgroep", "Keizergroep"
-    };
-
     private int niveau;
     private ArrayList<Speler> spelers;
 
@@ -94,7 +90,7 @@ public class Groep {
      * @return GRoepsnaam
      */
     public String getNaam() {
-        return namen[niveau];
+    	return IJCController.getInstance().c().groepsnamen[niveau];
     }
 
     /**
@@ -149,7 +145,8 @@ public class Groep {
      * @return
      */
     public static String geefNaam(int id) { 
-        return id < namen.length ? namen[id] : "";
+    	String[] namen = IJCController.getInstance().c().groepsnamen;
+    	return id < namen.length ? namen[id] : "";
     } 
     
     /**
@@ -157,9 +154,14 @@ public class Groep {
      * @return
      */
     public static int getAantalGroepen() {
-       return namen.length;
+    	return IJCController.getInstance().c().aantalGroepen;
     }
     
+    /**
+     * Geef speler met specifiek id (positie in de lijst)
+     * @param id ID
+     * @return betreffende speler
+     */
     public Speler getSpelerByID(int id) {
         for (Speler s : spelers) {
             if (s.getId() == id) return s;
@@ -167,6 +169,11 @@ public class Groep {
         return null;
     }
     
+    /**
+     * Retourneer de spelers in deze groep die een andere groep als niveau
+     * hebben staan
+     * @return
+     */
     public ArrayList<Speler> getSpelersMetAnderNiveau() {
     	ArrayList<Speler> result = new ArrayList<>();
     	for (Speler s : spelers) {
@@ -175,6 +182,10 @@ public class Groep {
     	return result;
     }
     
+    /**
+     * Sorteer de spelers in deze groep op punten. Bij hetzelfde aantal
+     * punten wordt gesorteerd op rating
+     */
     public void sorteerPunten() {
     	Collections.sort(spelers, new Comparator<Speler>() {
     	    @Override
@@ -188,6 +199,9 @@ public class Groep {
     	});
     }
 
+    /**
+     * Sorteer de spelers in deze groep op rating
+     */
     public void sorteerRating() {
     	Collections.sort(spelers, new Comparator<Speler>() {
     	    @Override
@@ -197,6 +211,9 @@ public class Groep {
     	});
     }
 
+    /**
+     * Reset de punten van alle spelers in deze groep
+     */
 	public void resetPunten() {
 		int punten = IJCController.getInstance().c().startPunten[niveau];
 		for (Speler s : spelers) {

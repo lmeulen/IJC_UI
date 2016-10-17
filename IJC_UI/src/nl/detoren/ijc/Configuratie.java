@@ -51,7 +51,6 @@ public class Configuratie {
 	/**
 	 * Geef hier voor iedere groep de naam op, lopende van de laagst groep tot
 	 * de hoogste groep
-	 * MINOR Nog niet in gebruik
 	 */
 	public String[] groepsnamen = { "Pionnengroep", "Paardengroep", "Lopergroep", "Torengroep",
 			"Damegroep", "Koningsgroep", "Keizergroep" };
@@ -63,7 +62,6 @@ public class Configuratie {
 	 * Gebruik: 
 	 * int groep,periode,ronde; 
 	 * int series = Eval.xyz(groep, periode, ronde, Configuratie.grAantalSeries);
-	 * MINOR Nog niet in gebruik
 	 */
 	private String grAantalSeries =
         "if (x == 6) { if ((y == 1) && (z == 1)) { return 2 } else { return 1 } }" +
@@ -88,7 +86,6 @@ public class Configuratie {
 	 * Gebruik: 
 	 * int groep,periode,ronde; 
 	 * int doorschuivers = Eval.xyz(groep, periode, ronde, Configuratie.grAantalDoorschuivers);
-	 * MINOR Nog niet in gebruik
 	 */
 	private String grAantalDoorschuivers = "if (z >= 4) { if (z < 8) { return 4 } else {  return 1 } } else { return 0 }";
 
@@ -112,7 +109,6 @@ public class Configuratie {
 	 * int periode; 
 	 * int ronde; 
 	 * boolean sort = Eval.xyz(groep, periode, ronde, Configuratie.grSorteerOpRating);
-	 * MINOR Nog niet in gebruik
 	 */
 	private String grSorteerOpRating = "if ((x == 6) && (z > 1) && (z < 7)) { true } else { false }";
 	
@@ -209,14 +205,12 @@ public class Configuratie {
 	 * Geef aan of er speciale status bestanden opgeslagen moeten worden,
 	 * bijvoorbeeld bij exporteren wedstrijden en een expliciete save in het
 	 * menu.
-	 * MINOR Nog niet in gebruik
 	 */
 	public boolean saveAdditionalStates = true;
 	
 	/**
 	 * Waar beginnen met zoeken naar een trio?
 	 * param x = groepsgrootte
-	 * MINOR Nog niet in gebruik
 	 */
 	private String grBeginTrio = "x / 2";
 	
@@ -224,7 +218,6 @@ public class Configuratie {
 	 * Bepaal beginpunt voor zoeken naar trio
 	 * @param groepsgrootte
 	 * @return index voor beginpunt trio
-	 * MINOR Nog niet in gebruik
 	 */
 	public int getBeginpuntTrio (int groepsgrootte) {
 		return (Integer)groovy.util.Eval.x(groepsgrootte, grBeginTrio);
@@ -233,14 +226,12 @@ public class Configuratie {
 	/**
 	 * Bestandsnaam voor configuratie bestand
 	 * prefix .json wordt automatisch toegevoegd 
-	 * MINOR Nog niet in gebruik
 	 */
 	public String configuratieBestand = "configuratie";
 
 	/**
 	 * Bestandsnaam voor status bestand
 	 * prefix .json )en evt datum postfix) wordt automatisch toegevoegd 
-	 * MINOR Nog niet in gebruik
 	 */
 	public String statusBestand = "status";
 }

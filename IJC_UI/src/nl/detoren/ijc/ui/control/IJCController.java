@@ -381,7 +381,7 @@ public class IJCController {
 	 */
     public void saveState(boolean unique, String postfix) {
 		try {
-			String bestandsnaam = "status.json";
+			String bestandsnaam = c.statusBestand + ".json"; 
 			logger.log(Level.INFO, "Sla status op in bestand " + bestandsnaam);
 			Gson gson = new Gson();
 			String jsonString = gson.toJson(status);
@@ -390,16 +390,16 @@ public class IJCController {
 			writer.write(jsonString);
 			writer.close();
 
-			if (unique) {
+			if (c.saveAdditionalStates && unique) {
 				String s = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-				bestandsnaam = "status" + s + "-" + postfix + ".json";
+				bestandsnaam = c.statusBestand + s + "-" + postfix + ".json";
 				logger.log(Level.INFO, "Sla status op in bestand " + bestandsnaam);
 				// write converted json data to a file
 				writer = new FileWriter(bestandsnaam);
 				writer.write(jsonString);
 				writer.close();
 			}
-			bestandsnaam = "configuratie.json";
+			bestandsnaam = c.configuratieBestand + ".json";
 			logger.log(Level.INFO, "Sla configuratie op in bestand " + bestandsnaam);
 			// write converted json data to a file
 			writer = new FileWriter(bestandsnaam);
@@ -414,7 +414,7 @@ public class IJCController {
 	
 	public void leesStatus() {
 		try {
-			String bestandsnaam = "status.json";
+			String bestandsnaam = c.statusBestand + ".json";
 	    	logger.log(Level.INFO, "Lees status uit bestand " + bestandsnaam);
 			Gson gson = new Gson();
 			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
@@ -426,7 +426,7 @@ public class IJCController {
 
 	public void leesConfiguratie() {
 		try {
-			String bestandsnaam = "configuratie.json";
+			String bestandsnaam = c.configuratieBestand + ".json";
 	    	logger.log(Level.INFO, "Lees configuratie uit bestand " + bestandsnaam);
 			Gson gson = new Gson();
 			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
