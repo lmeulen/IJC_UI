@@ -11,7 +11,6 @@
  *  
  * Problemen in deze code:
  * - TODO Genereren OSBO rating bestand. Is deze nodig of is KNSB voldoende?
- * - TODO ## in tegenstanderlijst als afwezigheidspunt gekregen.
  */
 package nl.detoren.ijc.ui.control;
 
@@ -154,11 +153,13 @@ public class Uitslagverwerker {
 		puntenbij = Math.min(puntenbij, 5); // niet meer dan 5 punten er bij
 		// Geen wedstrijden dus speler was afwezig
 		if (spelerWedstrijden.size() == 0) {
-			if (!extern) updateSpeler.addTegenstander("-- ");
 			if (!updateSpeler.isAfwezigheidspunt()) {
 				puntenbij += 2;
 				updateSpeler.setAfwezigheidspunt(true);
+				updateSpeler.addTegenstander("## ");
 				logger.log(Level.INFO, "      Eerste keer afw : 2 punten");
+			} else if (!extern) {
+				updateSpeler.addTegenstander("-- ");
 			}
 		}
 		// Externe resultaten verwerken
