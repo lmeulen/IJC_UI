@@ -10,7 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - MINOR 'Leeg' kunnen starten
+ * - MINOR Bij leeg starten, geen mogelijkheid om speler toe te voegen, dus onmogelijk om groep te maken
  */
 package nl.detoren.ijc;
 

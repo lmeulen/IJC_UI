@@ -42,10 +42,7 @@ public class BewerkSpelerDialoog extends JDialog {
 
 	private static final long serialVersionUID = -5297394315846599903L;
 
-	private final static Logger logger = Logger.getLogger(GroepenReader.class.getName());
-	/**
-	 * 
-	 */
+	private final static Logger logger = Logger.getLogger(BewerkSpelerDialoog.class.getName());
 	private static IJCController controller;
     private Speler speler;
     boolean bestaandeSpeler;

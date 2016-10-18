@@ -13,6 +13,8 @@
  */
 package nl.detoren.ijc;
 
+import java.math.BigDecimal;
+
 /**
  * Configuratie van het indelingsprogramma. Doel is dat hier geen code in staat
  * maar alleen data. Hiermee kan deze geexporteerd worden naar een json bestand
@@ -39,7 +41,7 @@ public class Configuratie {
 	public int aantalGroepen = 7;
 
 	/**
-	 * Identiefier van de hoogste groep. Is gelijk aan aantal groepen minus 1,
+	 * Identifier van de hoogste groep. Is gelijk aan aantal groepen minus 1,
 	 * maar is voor leesbaarheid code apart opgenomen
 	 */
 	public int hoogsteGroep = 6;
@@ -59,7 +61,7 @@ public class Configuratie {
 	 * int groep,periode,ronde; 
 	 * int series = Eval.xyz(groep, periode, ronde, Configuratie.grAantalSeries);
 	 */
-	private String grAantalSeries =
+	public String grAantalSeries =
         "if (x == 6) { if ((y == 1) && (z == 1)) { return 2 } else { return 1 } }" +
         " else if ((y == 1) && (z == 1)) { return 3 } else { return 2 } ";
 	
@@ -80,9 +82,9 @@ public class Configuratie {
 	 * X=periodenummer, Y=rondenummer 
 	 * Gebruik: 
 	 * int groep,periode,ronde; 
-	 * int doorschuivers = Eval.xyz(groep, periode, ronde, Configuratie.grAantalDoorschuivers);
+	 * int doorschuivers = Eval.xy(periode, ronde, Configuratie.grAantalDoorschuivers);
 	 */
-	private String grAantalDoorschuivers = "if (z >= 4) { if (z < 8) { return 4 } else {  return 1 } } else { return 0 }";
+	public String grAantalDoorschuivers = "if (y >= 4) { if (y < 8) { return 4 } else {  return 1 } } else { return 0 }";
 
 	/**
 	 * Retourneer aantal doorschuivers
@@ -103,7 +105,7 @@ public class Configuratie {
 	 * int ronde; 
 	 * boolean sort = Eval.xyz(groep, periode, ronde, Configuratie.grSorteerOpRating);
 	 */
-	private String grSorteerOpRating = "if ((x == 6) && (z > 1) && (z < 7)) { true } else { false }";
+	public String grSorteerOpRating = "if ((x == 6) && (z > 1) && (z < 7)) { true } else { false }";
 	
 	/**
 	 * Bepaal of er gesorteerd moet worden op rating
@@ -202,7 +204,7 @@ public class Configuratie {
 	 * Waar beginnen met zoeken naar een trio?
 	 * param x = groepsgrootte
 	 */
-	private String grBeginTrio = "x / 2";
+	public String grBeginTrio = "if (x > 0) { x / 2 } else { 0 }";
 	
 	/**
 	 * Bepaal beginpunt voor zoeken naar trio
@@ -210,7 +212,8 @@ public class Configuratie {
 	 * @return index voor beginpunt trio
 	 */
 	public int getBeginpuntTrio (int groepsgrootte) {
-		return (Integer)groovy.util.Eval.x(groepsgrootte, grBeginTrio);
+		BigDecimal bd = (BigDecimal)groovy.util.Eval.x(groepsgrootte, grBeginTrio);
+		return bd.intValue();
 	}
 	
 	/**
@@ -229,6 +232,8 @@ public class Configuratie {
 	 * Applicatie titel
 	 */
 	public String appTitle = "SV De Toren - Indeling Interne Jeugd Competitie";
+	
+	
 }
 
 

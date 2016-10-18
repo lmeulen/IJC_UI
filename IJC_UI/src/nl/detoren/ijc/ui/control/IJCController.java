@@ -103,20 +103,27 @@ public class IJCController {
      */
 	public void leesGroepen(String bestandsnaam) {
 		synchronized (this) {
-//			status.groepen = null;
-			if (bestandsnaam.endsWith(".txt")) {
-				logger.log(Level.INFO, "Lees groepen in TXT formaat uit " + bestandsnaam);
-				status.groepen = new GroepenReader().leesGroepen(bestandsnaam);
-			} else if (bestandsnaam.endsWith(".json")) {
-				logger.log(Level.INFO, "Lees groepen in JSON uit bestand " + bestandsnaam);
-				status.groepen = new GroepenReader().leesGroepenJSON(bestandsnaam);
-			} else {
-				return;
+			status.groepen = null;
+			try {
+				if (bestandsnaam.endsWith(".txt")) {
+					logger.log(Level.INFO, "Lees groepen in TXT formaat uit " + bestandsnaam);
+					status.groepen = new GroepenReader().leesGroepen(bestandsnaam);
+				} else if (bestandsnaam.endsWith(".json")) {
+					logger.log(Level.INFO, "Lees groepen in JSON uit bestand " + bestandsnaam);
+					status.groepen = new GroepenReader().leesGroepenJSON(bestandsnaam);
+				} else {
+					return;
+				}
+			} catch (Exception e) {
+				logger.log(Level.WARNING, "Geens statusbestand gelezen");
+				status.groepen = new Groepen();
+				status.groepen.setPeriode(1);
+				status.groepen.setRonde(1);
 			}
-			status.wedstrijdgroepen = null;
-			status.wedstrijden = null;
-			status.resultaatVerwerkt = null;
-			status.externGespeeld = null;
+			status.wedstrijdgroepen = new Groepen();
+			status.wedstrijden = new Wedstrijden();
+			status.resultaatVerwerkt = new Groepen();
+			status.externGespeeld = new ArrayList<>();
 			if (status.groepen.getRonde() == 1)
 				resetAanwezigheidspunt();
 		}

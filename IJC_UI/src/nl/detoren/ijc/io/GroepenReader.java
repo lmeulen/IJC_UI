@@ -127,7 +127,6 @@ public class GroepenReader {
             in.close();
             return list.toArray(new String[0]);
         } catch (IOException e) {
-            System.out.println("Exception :" + e);
         }
         return null;
     }

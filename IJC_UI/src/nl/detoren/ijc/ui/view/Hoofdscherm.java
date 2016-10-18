@@ -12,7 +12,7 @@
  * Problemen in deze code:
  * - MINOR Vierde kolom met nieuwe groepstand na verwerken uitslagen, uitgecomment aangezien sizng niet wil lukken
  * - MINOR Als een uitslag ingevuld, aanwezigheid etc vastzetten
- * - TODO Menu "Instellingen" implementeren
+ * - TODO Instellingen na wijzigingen ook opslaan
  * 
  */
 package nl.detoren.ijc.ui.view;
@@ -1025,5 +1025,15 @@ public class Hoofdscherm extends JFrame {
 
 	public void actieInstellingen() {
 		hoofdPanel.repaint();
+		ConfigurationDialog dialoog = new ConfigurationDialog(new JFrame(), "Configuarie");
+		dialoog.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.out.println("closing...");
+				hoofdPanel.repaint();
+			}
+
+		});
+		dialoog.setVisible(true);
 	}
 }
