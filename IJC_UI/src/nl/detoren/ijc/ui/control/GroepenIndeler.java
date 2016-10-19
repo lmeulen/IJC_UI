@@ -34,7 +34,6 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
  * 2. 3 of 4 spelers schuiven een groep omhoog. 
  * Eindresultaat is altijd een groep met even spelers
  *
- * @author Leo van der Meulen
  */
 public class GroepenIndeler {
 

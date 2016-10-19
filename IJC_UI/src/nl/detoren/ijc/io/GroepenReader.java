@@ -99,6 +99,7 @@ public class GroepenReader {
 		logger.log(Level.INFO, "Periode " + periode  + " en ronde " + ronde + " als speelronde");
         groepen.setRonde(ronde);
         groepen.setPeriode(periode);
+        // TODO : Inlezen groepen af laten hangen van configuratie
         groepen.addGroep(leesGroep(stringArr, "KEIZERGROEP", Groep.KEIZERGROEP));
         groepen.addGroep(leesGroep(stringArr, "KONINGSGROEP", Groep.KONINGSGROEP));
         groepen.addGroep(leesGroep(stringArr, "DAMEGROEP", Groep.DAMEGROEP));

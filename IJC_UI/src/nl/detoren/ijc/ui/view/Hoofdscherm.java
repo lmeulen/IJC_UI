@@ -356,6 +356,20 @@ public class Hoofdscherm extends JFrame {
 		filemenu.add(item);
 		menubar.add(filemenu);
 		
+		JMenu spelermenu = new JMenu("Speler");
+
+		item = new JMenuItem("Nieuwe speler");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				actieNieuweSpeler(null, null);
+				hoofdPanel.repaint();
+			}
+		});
+		
+		spelermenu.add(item);
+		menubar.add(spelermenu);
+
 		JMenu indelingMenu = new JMenu("Indeling");
 		item = new JMenuItem("Automatisch aan/uit");
 		item.addActionListener(new ActionListener() {
@@ -645,37 +659,7 @@ public class Hoofdscherm extends JFrame {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							Speler nieuw = new Speler(s);
-							nieuw.setId(0);
-							nieuw.setNaam("");
-							nieuw.setInitialen("");
-							String[] tgn = { "--", "--", "--", "--" };
-							nieuw.setTegenstanders(tgn);
-							nieuw.setWitvoorkeur(0);
-							nieuw.setAfwezigheidspunt(false);
-							nieuw.setAanwezig(true);
-							nieuw.setKeikansen(0);
-							nieuw.setKeipunten(0);
-							nieuw.setKNSBnummer(1234567);
-							if (s2 != null) {
-								nieuw.setPunten((s.getPunten() + s2.getPunten()) / 2);
-								nieuw.setRating((s.getRating() + s2.getRating()) / 2);
-							} else {
-								// Onderaan altijd standaard rating
-								nieuw.setRating(IJCController.getInstance().c().startRating[groepID]);
-							}
-							BewerkSpelerDialoog rd = new BewerkSpelerDialoog(new JFrame(), "Bewerk Speler", nieuw,
-									false, s.getId());
-							rd.addWindowListener(new WindowAdapter() {
-								@Override
-								public void windowClosed(WindowEvent e) {
-									System.out.println("closing...");
-									hoofdPanel.repaint();
-									// do something...
-								}
-
-							});
-							rd.setVisible(true);
+							actieNieuweSpeler(s, s2);
 						}
 
 					});
@@ -962,6 +946,39 @@ public class Hoofdscherm extends JFrame {
 		updateAutomatisch(!controller.isAutomatisch());
 		if (controller.isAutomatisch()) controller.maakGroepsindeling();
 		hoofdPanel.repaint();
+	}
+
+	public void actieNieuweSpeler(final Speler s, final Speler s2) {
+		int groepID = tabs.getSelectedIndex();
+		Speler nieuw = new Speler();
+		nieuw.setGroep(groepID);
+		String[] tgn = { "--", "--", "--", "--" };
+		nieuw.setTegenstanders(tgn);
+		nieuw.setKeikansen(0);
+		nieuw.setKeipunten(0);
+		nieuw.setSpeelgeschiedenis("-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- ");
+		if ((s != null) && (s2 != null)) {
+			nieuw.setPunten((s.getPunten() + s2.getPunten()) / 2);
+			nieuw.setRating((s.getRating() + s2.getRating()) / 2);
+		} else {
+			// Onderaan altijd standaard rating
+			nieuw.setRating(IJCController.getInstance().c().startRating[groepID]);
+			nieuw.setPunten(IJCController.getInstance().c().startPunten[groepID]);
+		}
+		int locatie = (s != null) ? s.getId() : 0;
+		BewerkSpelerDialoog rd = new BewerkSpelerDialoog(new JFrame(), "Bewerk Speler", nieuw,
+				false, locatie);
+		rd.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.out.println("closing...");
+				controller.getGroepByID(groepID).renumber();
+				hoofdPanel.repaint();
+				// do something...
+			}
+
+		});
+		rd.setVisible(true);
 	}
 
 	public void actieMaakWedstrijdgroep() {

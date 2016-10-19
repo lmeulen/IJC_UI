@@ -10,7 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - MINOR Bij verwijderen tweede serie verdwijnt onderste streep speellijst
+ * - MINOR Excel: Bij verwijderen tweede serie verdwijnt onderste streep speellijst
  */
 package nl.detoren.ijc.io;
 

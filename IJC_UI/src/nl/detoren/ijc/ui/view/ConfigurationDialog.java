@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - TODO Implementeer Configuratie editor
  */
 package nl.detoren.ijc.ui.view;
 
@@ -19,6 +18,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,11 +36,8 @@ import nl.detoren.ijc.ui.control.IJCController;
 import nl.detoren.ijc.ui.util.Utils;
 
 /**
- * Panel met editor voor Configuratie object, waarbij deze interface dynamisch
- * wordt opgebouwd.
+ * Panel met editor voor Configuratie object.
  * 
- * @author Leo.vanderMeulen
- *
  */
 public class ConfigurationDialog extends JDialog {
 	private static final long serialVersionUID = -4220297943910687398L;
@@ -108,14 +105,8 @@ public class ConfigurationDialog extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				// Do actions
-				// Naam
-				// speler.setNaam(tfRondes.getText());
+				storeValues();
 				setVisible(false);
-				// Als nieuwe speler, dan invoegen.
-				// if (!bestaandeSpeler) {
-				// controller.addSpeler(speler.getGroep(), speler, locatie);
-				// }
 				dispose();
 			}
 		});
@@ -175,7 +166,6 @@ public class ConfigurationDialog extends JDialog {
 		tfGrSeries.setToolTipText("Groovy functie: x=groep, y=periode, z=ronde");
 		panel.add(tfGrSeries);
 		// public int aantalGroepen = 7;
-		// public int hoogsteGroep = 6;
 		panel.add(new JLabel("Aantal speelgroepen"));
 		tfSpeelgroepen = new JTextField((new Integer(config.aantalGroepen)).toString());
 		panel.add(tfSpeelgroepen);
@@ -318,6 +308,106 @@ public class ConfigurationDialog extends JDialog {
 			panel.add(new JLabel(" "));
 		}
 		return panel;
+	}
+
+	private void storeValues() {
+		// private JTextField tfAppnaam;
+		updateTextConfig(config,"appTitle", tfAppnaam.getText(),5);
+		// private JTextField tfPerioden;
+		updateIntConfig(config, "perioden", tfPerioden.getText(), 1, 10);
+		// private JTextField tfRondes;
+		updateIntConfig(config, "rondes", tfRondes.getText(), 1, 99);
+		// private JTextField tfGrSeries;
+		updateTextConfig(config,"grAantalSeries", tfGrSeries.getText(),2);
+		// private JTextField tfSpeelgroepen;
+		updateIntConfig(config, "aantalGroepen", tfSpeelgroepen.getText(), 1, 10);
+		// private JTextField[] tfGroepsnamens;
+		// private JTextField[] tfStartPuntens;
+		// private JTextField[] tfStartRatings;
+		config.groepsnamen = new String[10];
+		config.startPunten = new int[10];
+		config.startRating = new int[10];
+		for (int i = 0; i < 10; ++i) {
+			config.groepsnamen[i] = tfGroepsnamens[i].getText();
+			config.startPunten[i] = Integer.parseInt(tfStartPuntens[i].getText());
+			config.startRating[i] = Integer.parseInt(tfStartRatings[i].getText());
+		}
+		// private JTextField tfGrDoorschuivers;
+		updateTextConfig(config,"grAantalDoorschuivers", tfGrDoorschuivers.getText(),2);
+		// private JTextField tfGrSorteerRating;
+		updateTextConfig(config,"grSorteerOpRating", tfGrSorteerRating.getText(),2);
+		// private JTextField tfGrBegintrio;
+		updateTextConfig(config,"grBeginTrio", tfGrBegintrio.getText(),2);
+		// private JCheckBox cbLaatsteRondeDoorschuiven;
+		config.laasteRondeDoorschuivenAltijd = cbLaatsteRondeDoorschuiven.isSelected();
+		// private JCheckBox cbSpeciaalRonde1;
+		config.specialeIndelingEersteRonde = cbSpeciaalRonde1.isSelected();
+		// private JTextField tfMaxVerschil;
+		updateIntConfig(config, "indelingMaximumVerschil", tfMaxVerschil.getText(), 0, 99);
+		// private JCheckBox cbExportShort;
+		config.exportTextShort = cbExportShort.isSelected();
+		// private JCheckBox cbSaveLongformat;
+		config.exportTextLong = cbSaveLongformat.isSelected();
+		// private JCheckBox cbSaveDoorschuivers;
+		config.exportDoorschuivers = cbSaveDoorschuivers.isSelected();
+		// private JTextField tfHeaderDoor;
+		updateTextConfig(config,"exportDoorschuiversStart", tfHeaderDoor.getText(),10);
+		// private JTextField tfFooterDoor
+		updateTextConfig(config,"exportDoorschuiversStop", tfHeaderDoor.getText(),10);
+		// private JCheckBox cbSaveKEI;
+		config.exportKEIlijst = cbSaveKEI.isSelected();
+		// private JCheckBox cbSaveKNSB;
+		config.exportKNSBRating = cbSaveKNSB.isSelected();
+		// private JCheckBox cbSaveAdditionals;
+		config.saveAdditionalStates = cbSaveAdditionals.isSelected();
+		// private JTextField tfConfigfile;
+		updateTextConfig(config,"configuratieBestand", tfConfigfile.getText(),5);
+		// private JTextField tfStatusfile;
+		updateTextConfig(config,"statusBestand", tfStatusfile.getText(),5);
+	}
+	
+	private static void updateTextConfig(Configuratie c, String fieldname, String value, int minlengte) {
+		String msg = "Saving value \'" + value + "\' to field " + fieldname;
+		if ((value != null) && (value.length() >= minlengte)) {
+			try {
+				Field field = c.getClass().getField(fieldname);
+				field.set(c, value);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void updateIntConfig(Configuratie c, String fieldname, String value, int min, int max) {
+		try {
+			String msg = "Saving value \'" + value + "\' to field " + fieldname;
+			logger.log(Level.INFO, msg);
+			int nieuw = Integer.parseInt(value);
+			if ((nieuw >= min) && (nieuw <= max)) {
+				Field field = c.getClass().getField(fieldname);
+				field.set(c, nieuw);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
+	public static void main(String[] args) {
+		Configuratie c = new Configuratie();
+		System.out.println(c.statusBestand);
+		updateTextConfig(c, "statusBestand", "s", 2);
+		System.out.println(c.statusBestand);
+		updateTextConfig(c,"statusBestand", "state", 2);
+		System.out.println(c.statusBestand);
+		System.out.println(c.perioden);
+		updateIntConfig(c, "perioden", "-1", 1, 10);
+		System.out.println(c.perioden);
+		updateIntConfig(c, "perioden", "3", 1, 10);
+		System.out.println(c.perioden);
+		
 	}
 
 }

@@ -41,7 +41,6 @@ import nl.detoren.ijc.io.OutputTekst;
 
 /**
  * Main controller class voor afhandeling van de groepen en wedstrijden
- * @author Leo van der Meulen
  */
 public class IJCController {
 
@@ -340,7 +339,11 @@ public class IJCController {
     public void addSpeler(int groepID, Speler sp, int locatie) {
     	logger.log(Level.INFO, "Voeg speler " + sp.getInitialen() + " toe aan groep " + groepID + ", locatie " + locatie);
         Groep gr = status.groepen.getGroepById(groepID);
-        gr.addSpeler(sp, locatie);
+        if (locatie > 0) {
+        	gr.addSpeler(sp, locatie);
+        } else {
+        	gr.addSpeler(sp);
+        }
         if (status.automatisch) {
             maakGroepsindeling();
         }

@@ -40,11 +40,6 @@ public class Configuratie {
 	 */
 	public int aantalGroepen = 7;
 
-	/**
-	 * Identifier van de hoogste groep. Is gelijk aan aantal groepen minus 1,
-	 * maar is voor leesbaarheid code apart opgenomen
-	 */
-	public int hoogsteGroep = 6;
 
 	/**
 	 * Geef hier voor iedere groep de naam op, lopende van de laagst groep tot

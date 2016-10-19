@@ -10,7 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - TODO Genereren OSBO rating bestand. Is deze nodig of is KNSB voldoende?
+ * - MINOR Genereren OSBO rating bestand. Is deze nodig of is KNSB voldoende?
  */
 package nl.detoren.ijc.ui.control;
 
@@ -29,7 +29,7 @@ import nl.detoren.ijc.io.GroepenReader;
 
 /**
  * 
- * @author Leo van der Meulen
+ * Verwerk uitslagen in een nieuwe stand
  *
  */
 public class Uitslagverwerker {
