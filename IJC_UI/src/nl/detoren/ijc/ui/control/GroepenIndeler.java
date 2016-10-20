@@ -165,7 +165,7 @@ public class GroepenIndeler {
                     if ((j == aantal) && (aantal == 1)) {
                         // Alleen doorschuiven als speler 1 niet meer ingehaald kan worden
                         Speler s2 = groepen.get(i + 1).getSpelerByID(j);
-						if (!IJCController.getInstance().c().laasteRondeDoorschuivenAltijd) {
+						if (!IJCController.c().laasteRondeDoorschuivenAltijd) {
 							if (s.getPunten() > (s2.getPunten() + 5)) {
 								logger.log(Level.FINE, "Speler doorgeschoven, niet meer in te halen ");
 								naarGroep.add(new Speler(s));
@@ -203,7 +203,7 @@ public class GroepenIndeler {
     }
 
     public int bepaalAantalDoorschuiven(int periode, int ronde) {
-    	return IJCController.getInstance().c().bepaalAantalDoorschuivers(periode, ronde);
+    	return IJCController.c().bepaalAantalDoorschuivers(periode, ronde);
     }
 
     /**
@@ -248,7 +248,7 @@ public class GroepenIndeler {
      */
     public int bepaalAantalSeries(int groep, int periode, int ronde) {
     	logger.log(Level.INFO, "Vaststellen aantal te spelen series");    		
-    	return IJCController.getInstance().c().bepaalAantalSeries(groep, periode, ronde);
+    	return IJCController.c().bepaalAantalSeries(groep, periode, ronde);
     }
 
     /**
@@ -322,7 +322,7 @@ public class GroepenIndeler {
 	    	logger.log(Level.FINE, "Toevoegen van speler " + s.getNaam());    		
 		    groep.addSpeler(new Speler(s));
 		}
-		if (IJCController.getInstance().c().sorteerOpRating(groep.getNiveau(), periode, ronde)) {
+		if (IJCController.c().sorteerOpRating(groep.getNiveau(), periode, ronde)) {
 			// Sorteer keizergroep op rating voor indeling indien ronde = 2,3,4,5 of 6
 			groep.sorteerRating();
 		}
@@ -373,7 +373,7 @@ public class GroepenIndeler {
 
 		    Serie serie = null;
 		    int ignoreTgns = 0;
-		    int maxverschil = minverschil + IJCController.getInstance().c().indelingMaximumVerschil;
+		    int maxverschil = minverschil + IJCController.c().indelingMaximumVerschil;
 	        maxverschil = Math.min(minverschil + 3, groep.getAantalSpelers());
 			while ((serie == null) && (maxverschil <= groep.getAantalSpelers())) {
 				while ((serie == null) && (ignoreTgns <= 5)) {
@@ -568,7 +568,7 @@ public class GroepenIndeler {
             trio.add(groep.getSpelers().get(2).getId());
             return trio;
         }
-        int spelerID = IJCController.getInstance().c().getBeginpuntTrio(groep.getSpelers().size());
+        int spelerID = IJCController.c().getBeginpuntTrio(groep.getSpelers().size());
         int minDelta = 1;
         int plusDelta = 1;
         int ignore = 0;

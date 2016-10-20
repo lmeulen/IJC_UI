@@ -10,9 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - MINOR Vierde kolom met nieuwe groepstand na verwerken uitslagen, uitgecomment aangezien sizng niet wil lukken
- * - MINOR Als een uitslag ingevuld, aanwezigheid etc vastzetten
- * - TODO Instellingen na wijzigingen ook opslaan
  * 
  */
 package nl.detoren.ijc.ui.view;
@@ -124,7 +121,7 @@ public class Hoofdscherm extends JFrame {
 		controller = IJCController.getInstance();
 		aantal = Groep.getAantalGroepen();
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle(controller.c().appTitle);
+		setTitle(IJCController.c().verenigingNaam + " - " + IJCController.c().appTitle);
 
 		hoofdPanel = new javax.swing.JPanel();
 		addButtons();
@@ -962,8 +959,8 @@ public class Hoofdscherm extends JFrame {
 			nieuw.setRating((s.getRating() + s2.getRating()) / 2);
 		} else {
 			// Onderaan altijd standaard rating
-			nieuw.setRating(IJCController.getInstance().c().startRating[groepID]);
-			nieuw.setPunten(IJCController.getInstance().c().startPunten[groepID]);
+			nieuw.setRating(IJCController.c().startRating[groepID]);
+			nieuw.setPunten(IJCController.c().startPunten[groepID]);
 		}
 		int locatie = (s != null) ? s.getId() : 0;
 		BewerkSpelerDialoog rd = new BewerkSpelerDialoog(new JFrame(), "Bewerk Speler", nieuw,

@@ -60,7 +60,6 @@ public class IJCController {
     }
     private Status status;
     private Configuratie c;
-    public Configuratie c() { return c;}
     
     private String laatsteExport;
 
@@ -80,6 +79,22 @@ public class IJCController {
             instance = new IJCController();
         }
         return instance;
+    }
+    
+    /**
+     * Alias voor getInstance, korter voor beter leesbare code
+     * @return
+     */
+    public static IJCController getI() {
+    	return getInstance();
+    }
+
+    /**
+     * Snelle methode om tot de configuratie te komen
+     * @return
+     */
+    public static Configuratie c() {
+    	return getInstance().c;
     }
 
     public boolean isAutomatisch() {

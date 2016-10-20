@@ -46,7 +46,7 @@ public class OutputKEI {
 	 */
 	public void exportKEIlijst(Groepen groepen) {
 		try {
-			if (IJCController.getInstance().c().exportKEIlijst) {
+			if (IJCController.c().exportKEIlijst) {
 				String bestandsnaam = "R" + groepen.getPeriode() + "-" + groepen.getRonde() + "KEIpuntenS";
 				logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 

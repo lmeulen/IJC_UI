@@ -42,12 +42,16 @@ import nl.detoren.ijc.ui.util.Utils;
 public class ConfigurationDialog extends JDialog {
 	private static final long serialVersionUID = -4220297943910687398L;
 
-	private IJCController controller;
 	private Configuratie config;
 
 	private final static Logger logger = Logger.getLogger(ConfigurationDialog.class.getName());
 
 	private JTextField tfAppnaam;
+	private JTextField tfVerenigingNaam;
+	private JTextField tfCompetititeNaam;
+	private JTextField tfCompetitieLocatie;
+	private JTextField tfContactNaam;
+	private JTextField tfContactEmail;
 	private JTextField tfPerioden;
 	private JTextField tfRondes;
 	private JTextField tfGrSeries;
@@ -75,8 +79,7 @@ public class ConfigurationDialog extends JDialog {
 	public ConfigurationDialog(Frame frame, String title) {
 		super(frame, title);
 		logger.log(Level.INFO, "Bewerk configuratie");
-		controller = IJCController.getInstance();
-		config = controller.c();
+		config = IJCController.c();
 		setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		getContentPane().add(createPanel());
@@ -133,10 +136,34 @@ public class ConfigurationDialog extends JDialog {
 
 		// public String appTitle = "SV De Toren - Indeling Interne Jeugd
 		// Competitie";
+		tabInstellingen.add(new JLabel("Vereniging"));
+		tfVerenigingNaam = new JTextField(config.verenigingNaam, 20);
+		tabInstellingen.add(tfVerenigingNaam);
+
+		tabInstellingen.add(new JLabel("Competitie Naam"));
+		tfCompetititeNaam = new JTextField(config.competitieNaam, 20);
+		tabInstellingen.add(tfCompetititeNaam);
+
+		tabInstellingen.add(new JLabel("Locatie"));
+		tfCompetitieLocatie = new JTextField(config.competitieLocatie, 20);
+		tabInstellingen.add(tfCompetitieLocatie);
+
+		tabInstellingen.add(new JLabel("Contactpersoon - Naam"));
+		tfContactNaam = new JTextField(config.contactPersoonNaam, 20);
+		tabInstellingen.add(tfContactNaam);
+		
+		tabInstellingen.add(new JLabel("Contactpersoon - Email"));
+		tfContactEmail= new JTextField(config.contactPersoonEmail, 20);
+		tabInstellingen.add(tfContactEmail);
+		
+		//addTextInput(tabInstellingen, tfContactEmail, "Contactpersoon - Email", config.contactPersoonEmail);
+		// TODO Competitienaam en Competitie locatie toevoegen
+		
 		tabInstellingen.add(new JLabel("Applicatie titel"));
 		tfAppnaam = new JTextField(config.appTitle, 20);
 		tabInstellingen.add(tfAppnaam);
-		for (int i = 0; i < 19; i++) {
+		
+		for (int i = 0; i < 14; i++) {
 			JLabel left = new JLabel(" ");
 			tabInstellingen.add(left);
 			JLabel right = new JLabel(" ");
@@ -312,7 +339,18 @@ public class ConfigurationDialog extends JDialog {
 
 	private void storeValues() {
 		// private JTextField tfAppnaam;
-		updateTextConfig(config,"appTitle", tfAppnaam.getText(),5);
+		updateTextConfig(config, "appTitle", tfAppnaam.getText(), 5);
+		// private JTextField tfVerenigingNaam;
+		updateTextConfig(config, "verenigingNaam", tfVerenigingNaam.getText(), 5);
+		// private JTextField tfCompetititeNaam;
+		updateTextConfig(config, "competitieNaam", tfCompetititeNaam.getText(), 5);
+		// private JTextField tfCompetitieLocatie;
+		updateTextConfig(config, "competitieLocatie", tfCompetitieLocatie.getText(), 5);
+		// private JTextField tfContactNaam;
+		updateTextConfig(config, "contactPersoonNaam", tfContactNaam.getText(), 5);
+		// private JTextField tfContactEmail;
+		updateTextConfig(config, "contactPersoonEmail", tfContactEmail.getText(), 5);
+
 		// private JTextField tfPerioden;
 		updateIntConfig(config, "perioden", tfPerioden.getText(), 1, 10);
 		// private JTextField tfRondes;
@@ -327,10 +365,15 @@ public class ConfigurationDialog extends JDialog {
 		config.groepsnamen = new String[10];
 		config.startPunten = new int[10];
 		config.startRating = new int[10];
-		for (int i = 0; i < 10; ++i) {
+		for (int i = 0; i < config.aantalGroepen; ++i) {
 			config.groepsnamen[i] = tfGroepsnamens[i].getText();
 			config.startPunten[i] = Integer.parseInt(tfStartPuntens[i].getText());
 			config.startRating[i] = Integer.parseInt(tfStartRatings[i].getText());
+		}
+		for (int i = config.aantalGroepen; i < 10; ++i) {
+			config.groepsnamen[i] = "";
+			config.startPunten[i] = 0;
+			config.startRating[i] = 0;
 		}
 		// private JTextField tfGrDoorschuivers;
 		updateTextConfig(config,"grAantalDoorschuivers", tfGrDoorschuivers.getText(),2);
@@ -353,7 +396,7 @@ public class ConfigurationDialog extends JDialog {
 		// private JTextField tfHeaderDoor;
 		updateTextConfig(config,"exportDoorschuiversStart", tfHeaderDoor.getText(),10);
 		// private JTextField tfFooterDoor
-		updateTextConfig(config,"exportDoorschuiversStop", tfHeaderDoor.getText(),10);
+		updateTextConfig(config,"exportDoorschuiversStop", tfFooterDoor.getText(),10);
 		// private JCheckBox cbSaveKEI;
 		config.exportKEIlijst = cbSaveKEI.isSelected();
 		// private JCheckBox cbSaveKNSB;
@@ -368,13 +411,12 @@ public class ConfigurationDialog extends JDialog {
 	
 	private static void updateTextConfig(Configuratie c, String fieldname, String value, int minlengte) {
 		String msg = "Saving value \'" + value + "\' to field " + fieldname;
+		logger.log(Level.INFO, msg);
 		if ((value != null) && (value.length() >= minlengte)) {
 			try {
 				Field field = c.getClass().getField(fieldname);
 				field.set(c, value);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 	}
@@ -389,8 +431,6 @@ public class ConfigurationDialog extends JDialog {
 				field.set(c, nieuw);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 

@@ -90,7 +90,7 @@ public class Groep {
      * @return GRoepsnaam
      */
     public String getNaam() {
-    	return IJCController.getInstance().c().groepsnamen[niveau];
+    	return IJCController.c().groepsnamen[niveau];
     }
 
     /**
@@ -145,7 +145,7 @@ public class Groep {
      * @return
      */
     public static String geefNaam(int id) { 
-    	String[] namen = IJCController.getInstance().c().groepsnamen;
+    	String[] namen = IJCController.c().groepsnamen;
     	return id < namen.length ? namen[id] : "";
     } 
     
@@ -154,7 +154,7 @@ public class Groep {
      * @return
      */
     public static int getAantalGroepen() {
-    	return IJCController.getInstance().c().aantalGroepen;
+    	return IJCController.c().aantalGroepen;
     }
     
     /**
@@ -215,7 +215,7 @@ public class Groep {
      * Reset de punten van alle spelers in deze groep
      */
 	public void resetPunten() {
-		int punten = IJCController.getInstance().c().startPunten[niveau];
+		int punten = IJCController.c().startPunten[niveau];
 		for (Speler s : spelers) {
 			s.setPunten(punten);
 		}

@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - MINOR isGelijk alleen nog laten kijken naar KNSB nummer? Mogelijk voldoende
  */
 package nl.detoren.ijc.data.groepen;
 

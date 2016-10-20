@@ -31,7 +31,6 @@ import javax.swing.JTextField;
 
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
-import nl.detoren.ijc.io.GroepenReader;
 import nl.detoren.ijc.ui.control.IJCController;
 
 /**

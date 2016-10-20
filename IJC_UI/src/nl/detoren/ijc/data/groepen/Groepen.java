@@ -104,16 +104,16 @@ public class Groepen {
 
             result += groep.toPrintableString(lang) + "\n";
             
-            if (IJCController.getInstance().c().exportDoorschuivers) {
-            	int ndoor = IJCController.getInstance().c().bepaalAantalDoorschuivers(periode, ronde);
+            if (IJCController.c().exportDoorschuivers) {
+            	int ndoor = IJCController.c().bepaalAantalDoorschuivers(periode, ronde);
                 if ( i + 1 < groepen.size()) {
-                	result += IJCController.getInstance().c().exportDoorschuiversStart + "\n";
+                	result += IJCController.c().exportDoorschuiversStart + "\n";
                 	Groep lager = groepen.get(i+1);
                 	for (int j = 0; j < ndoor; j++) {
                 		Speler s = lager.getSpelerByID(j+1); 
                 		result += s.toPrintableString(lang) + "\n";
                 	}
-                	result += IJCController.getInstance().c().exportDoorschuiversStop + "\n" + "\n";
+                	result += IJCController.c().exportDoorschuiversStop + "\n" + "\n";
                 }
             }
             result += "\n";

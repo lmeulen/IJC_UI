@@ -35,11 +35,11 @@ public class OutputKNSB {
 	 */
 	public void saveUitslag(Wedstrijden uitslag) {
 		try {
-			if (IJCController.getInstance().c().exportKNSBRating) {
+			if (IJCController.c().exportKNSBRating) {
 				String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "KNSB";
 				logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 				FileWriter writer = new FileWriter(bestandsnaam + ".csv");
-				writer.write(getHeader());
+				writer.write(getHeader(uitslag.getPeriode(), uitslag.getRonde()));
 				int i = 1;
 				for (Groepswedstrijden gws : uitslag.getGroepswedstrijden()) {
 					for (Wedstrijd w : gws.getWedstrijden()) {
@@ -82,15 +82,16 @@ public class OutputKNSB {
 		}
 	}
 
-	private String getHeader() {
+	private String getHeader(int periode, int ronde) {
 		String result = "";
-		result += "12;IJC de Toren Arnhem, ronde 5, periode 1\n";
+		result += "12;" + IJCController.c().competitieNaam + ", ronde " + ronde + ", periode " + periode
+				+ "\n";
 		result += "22;Arnhem\n";
 		result += "32;NED\n";
 		String datum = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 		result += "42;" + datum + "\n";
 		result += "52;" + datum + "\n";
-		result += "102;Jeroen van Onzen jeroen@vanonzen.com\n";
+		result += "102;" + IJCController.c().contactPersoonNaam + " " + IJCController.c().contactPersoonNaam +  "\n";
 		result += "122;15 tot 60 min pppp\n";
 		result += "\n";
 		result += ";ronde_nr;ronde_dat;relnr_w;relnr_z;score;naam_w;naam_z\n";

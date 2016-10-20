@@ -40,78 +40,73 @@ public class Configuratie {
 	 */
 	public int aantalGroepen = 7;
 
-
 	/**
 	 * Geef hier voor iedere groep de naam op, lopende van de laagst groep tot
 	 * de hoogste groep
 	 */
-	public String[] groepsnamen = { "Pionnengroep", "Paardengroep", "Lopergroep", "Torengroep",
-			"Damegroep", "Koningsgroep", "Keizergroep" };
+	public String[] groepsnamen = { "Pionnengroep", "Paardengroep", "Lopergroep", "Torengroep", "Damegroep",
+			"Koningsgroep", "Keizergroep" };
 
 	/**
-	 * Groovy functie die bepaalt hoeveel series er gespeeld moeten. 
-	 * Input is
-	 * X=groepnummer, Y=periodenummer, Z=rondenummer 
-	 * Gebruik: 
-	 * int groep,periode,ronde; 
-	 * int series = Eval.xyz(groep, periode, ronde, Configuratie.grAantalSeries);
+	 * Groovy functie die bepaalt hoeveel series er gespeeld moeten. Input is
+	 * X=groepnummer, Y=periodenummer, Z=rondenummer Gebruik: int
+	 * groep,periode,ronde; int series = Eval.xyz(groep, periode, ronde,
+	 * Configuratie.grAantalSeries);
 	 */
-	public String grAantalSeries =
-        "if (x == 6) { if ((y == 1) && (z == 1)) { return 2 } else { return 1 } }" +
-        " else if ((y == 1) && (z == 1)) { return 3 } else { return 2 } ";
-	
+	public String grAantalSeries = "if (x == 6) { if ((y == 1) && (z == 1)) { return 2 } else { return 1 } }"
+			+ " else if ((y == 1) && (z == 1)) { return 3 } else { return 2 } ";
+
 	/**
 	 * Retour aantal series
+	 * 
 	 * @param groep
 	 * @param periode
 	 * @param ronde
 	 * @return aantal series
 	 */
 	public int bepaalAantalSeries(int groep, int periode, int ronde) {
-		return (Integer)groovy.util.Eval.xyz(groep, periode, ronde, grAantalSeries);
+		return (Integer) groovy.util.Eval.xyz(groep, periode, ronde, grAantalSeries);
 	}
 
 	/**
-	 * Groovy functie die bepaalt hoeveel doorschuivers er zijn. 
-	 * Input is
-	 * X=periodenummer, Y=rondenummer 
-	 * Gebruik: 
-	 * int groep,periode,ronde; 
-	 * int doorschuivers = Eval.xy(periode, ronde, Configuratie.grAantalDoorschuivers);
+	 * Groovy functie die bepaalt hoeveel doorschuivers er zijn. Input is
+	 * X=periodenummer, Y=rondenummer Gebruik: int groep,periode,ronde; int
+	 * doorschuivers = Eval.xy(periode, ronde,
+	 * Configuratie.grAantalDoorschuivers);
 	 */
 	public String grAantalDoorschuivers = "if (y >= 4) { if (y < 8) { return 4 } else {  return 1 } } else { return 0 }";
 
 	/**
 	 * Retourneer aantal doorschuivers
+	 * 
 	 * @param periode
 	 * @param ronde
 	 * @return aantal doorschuivers
 	 */
 	public int bepaalAantalDoorschuivers(int periode, int ronde) {
-		return (Integer)groovy.util.Eval.xy(periode, ronde, grAantalDoorschuivers);
+		return (Integer) groovy.util.Eval.xy(periode, ronde, grAantalDoorschuivers);
 	}
+
 	/**
-	 * Groovy functie die bepaalt of op rating wordt gesorteerd. 
-	 * Input is
-	 * X=groepnummer, Y=periodenummer, Z=rondenummer 
-	 * Gebruik: 
-	 * int groep; 
-	 * int periode; 
-	 * int ronde; 
-	 * boolean sort = Eval.xyz(groep, periode, ronde, Configuratie.grSorteerOpRating);
+	 * Groovy functie die bepaalt of op rating wordt gesorteerd. Input is
+	 * X=groepnummer, Y=periodenummer, Z=rondenummer Gebruik: int groep; int
+	 * periode; int ronde; boolean sort = Eval.xyz(groep, periode, ronde,
+	 * Configuratie.grSorteerOpRating);
 	 */
 	public String grSorteerOpRating = "if ((x == 6) && (z > 1) && (z < 7)) { true } else { false }";
-	
+
 	/**
 	 * Bepaal of er gesorteerd moet worden op rating
+	 * 
 	 * @param groep
 	 * @param periode
 	 * @param ronde
 	 * @return true, als er voor indelen gesorteerd moet worden op rating
 	 */
-	public boolean sorteerOpRating (int groep, int periode, int ronde) {
-		return (Boolean)groovy.util.Eval.xyz(groep, periode, ronde, grSorteerOpRating);
+	public boolean sorteerOpRating(int groep, int periode, int ronde) {
+		return (Boolean) groovy.util.Eval.xyz(groep, periode, ronde, grSorteerOpRating);
 	}
+
 	/**
 	 * Standaard wordt er gecontroleerd of de doorschuiver in de laatste ronde
 	 * gegarandeerd kampioen is en niet te achterhalen door nummer 2. Door deze
@@ -124,8 +119,8 @@ public class Configuratie {
 	 * worden waarbij de bovenste helft tegen de onderste helft speelt. Door dit
 	 * te doen, wordt er snel een scheiding gemaakt tussen de goede en minder
 	 * goede spelers in een groep. Hierna wordt dus sneller tegen spelers van
-	 * het eigen niveau gespeeld.
-	 * MINOR conf.specialeindelingronde1 Nog niet in gebruik
+	 * het eigen niveau gespeeld. MINOR conf.specialeindelingronde1 Nog niet in
+	 * gebruik
 	 */
 	public boolean specialeIndelingEersteRonde = true;
 
@@ -146,8 +141,8 @@ public class Configuratie {
 	/**
 	 * standaard punten per groep bij aanvang periode
 	 */
-	public int[] startPunten = {0, 10, 20, 30, 40, 50, 60 };
-	
+	public int[] startPunten = { 0, 10, 20, 30, 40, 50, 60 };
+
 	/**
 	 * Geef aan of er een bestand gegenereerd moet worden dat door de KNSB
 	 * gebruikt kan worden voor verwerking resultaten in de KNSB rating
@@ -165,12 +160,12 @@ public class Configuratie {
 	 * formaat is compatible met oudere indelingsoftware.
 	 */
 	public boolean exportTextLong = true;
-	
+
 	/**
 	 * Geef aan of in het lange bestandsformaat eventuele doorschuivers
 	 */
 	public boolean exportDoorschuivers = true;
-	
+
 	/**
 	 * Geef header doorschuivers
 	 */
@@ -180,8 +175,7 @@ public class Configuratie {
 	 * Geef footer doorschuivers
 	 */
 
-	public String exportDoorschuiversStop  = "Spelers no 3 en 4 schuiven alleen door als de groep even wordt";
-	
+	public String exportDoorschuiversStop = "Spelers no 3 en 4 schuiven alleen door als de groep even wordt";
 
 	/**
 	 * Geef aan of de KEI stand geexporteerd moet worden.
@@ -194,41 +188,63 @@ public class Configuratie {
 	 * menu.
 	 */
 	public boolean saveAdditionalStates = true;
-	
+
 	/**
-	 * Waar beginnen met zoeken naar een trio?
-	 * param x = groepsgrootte
+	 * Waar beginnen met zoeken naar een trio? param x = groepsgrootte
 	 */
 	public String grBeginTrio = "if (x > 0) { x / 2 } else { 0 }";
-	
+
 	/**
 	 * Bepaal beginpunt voor zoeken naar trio
+	 * 
 	 * @param groepsgrootte
 	 * @return index voor beginpunt trio
 	 */
-	public int getBeginpuntTrio (int groepsgrootte) {
-		BigDecimal bd = (BigDecimal)groovy.util.Eval.x(groepsgrootte, grBeginTrio);
+	public int getBeginpuntTrio(int groepsgrootte) {
+		BigDecimal bd = (BigDecimal) groovy.util.Eval.x(groepsgrootte, grBeginTrio);
 		return bd.intValue();
 	}
-	
+
 	/**
-	 * Bestandsnaam voor configuratie bestand
-	 * prefix .json wordt automatisch toegevoegd 
+	 * Bestandsnaam voor configuratie bestand prefix .json wordt automatisch
+	 * toegevoegd
 	 */
 	public String configuratieBestand = "configuratie";
 
 	/**
-	 * Bestandsnaam voor status bestand
-	 * prefix .json )en evt datum postfix) wordt automatisch toegevoegd 
+	 * Bestandsnaam voor status bestand prefix .json )en evt datum postfix)
+	 * wordt automatisch toegevoegd
 	 */
 	public String statusBestand = "status";
-	
+
 	/**
 	 * Applicatie titel
 	 */
-	public String appTitle = "SV De Toren - Indeling Interne Jeugd Competitie";
+	public String appTitle = "Indeling Interne Jeugd Competitie";
+
+	/**
+	 * Naam Vereniging
+	 */
+	public String verenigingNaam = "SV De Toren";
 	
+	/**
+	 * Naam competitie
+	 */
+	public String competitieNaam = "IJC de Toren Arnhem";
 	
+	/**
+	 * Locatie
+	 */
+	public String competitieLocatie = "Arnhem";
+	
+	/**
+	 * Contactpersoon - Naam
+	 */
+	public String contactPersoonNaam = "Wedstrijdleiding Jeugd";
+
+	/**
+	 * Contactpersoon - Email
+	 */
+	public String contactPersoonEmail = "ijc@schaakverenigingdetoren.nl";
+
 }
-
-

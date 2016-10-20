@@ -37,7 +37,7 @@ public class OutputTekst {
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
 			// Short variant
-			if (IJCController.getInstance().c().exportTextLong) {
+			if (IJCController.c().exportTextLong) {
 				FileWriter writer = new FileWriter(bestandsnaam + ".txt");
 				writer.write(uitslag.toPrintableString(false));
 				writer.close();
@@ -45,7 +45,7 @@ public class OutputTekst {
 			}
 
 			// Long variant
-			if (IJCController.getInstance().c().exportTextLong) {
+			if (IJCController.c().exportTextLong) {
 				FileWriter writer = new FileWriter(bestandsnaam + "-long.txt");
 				writer.write(uitslag.toPrintableString(true));
 				writer.close();
