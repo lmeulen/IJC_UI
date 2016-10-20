@@ -441,20 +441,4 @@ public class ConfigurationDialog extends JDialog {
 		}
 	}
 
-	
-	public static void main(String[] args) {
-		Configuratie c = new Configuratie();
-		System.out.println(c.statusBestand);
-		updateTextConfig(c, "statusBestand", "s", 2);
-		System.out.println(c.statusBestand);
-		updateTextConfig(c,"statusBestand", "state", 2);
-		System.out.println(c.statusBestand);
-		System.out.println(c.perioden);
-		updateIntConfig(c, "perioden", "-1", 1, 10);
-		System.out.println(c.perioden);
-		updateIntConfig(c, "perioden", "3", 1, 10);
-		System.out.println(c.perioden);
-		
-	}
-
 }
