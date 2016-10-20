@@ -35,6 +35,7 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.io.GroepenReader;
 import nl.detoren.ijc.io.OutputExcel;
+import nl.detoren.ijc.io.OutputIntekenlijst;
 import nl.detoren.ijc.io.OutputKEI;
 import nl.detoren.ijc.io.OutputKNSB;
 import nl.detoren.ijc.io.OutputTekst;
@@ -399,6 +400,7 @@ public class IJCController {
     	new OutputTekst().saveUitslag(status.resultaatVerwerkt);
     	new OutputKNSB().saveUitslag(status.wedstrijden);
     	new OutputKEI().exportKEIlijst(status.resultaatVerwerkt);
+    	new OutputIntekenlijst().exportIntekenlijst(status.resultaatVerwerkt);
     	saveState(true, "uitslag");
     }
     

@@ -181,6 +181,11 @@ public class Configuratie {
 	 * Geef aan of de KEI stand geexporteerd moet worden.
 	 */
 	public boolean exportKEIlijst = true;
+	
+	/**
+	 * Geef aan of de intekenlijsten gemaakt moeten worden
+	 */
+	public boolean exportIntekenlijst = true;
 
 	/**
 	 * Geef aan of er speciale status bestanden opgeslagen moeten worden,

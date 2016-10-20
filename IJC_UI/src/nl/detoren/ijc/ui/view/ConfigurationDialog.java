@@ -73,6 +73,7 @@ public class ConfigurationDialog extends JDialog {
 	private JTextField tfFooterDoor;
 	private JCheckBox cbSaveKEI;
 	private JCheckBox cbSaveKNSB;
+	private JCheckBox cbSaveInteken;
 	private JCheckBox cbSaveAdditionals;
 	private JTextField tfConfigfile;
 	private JTextField tfStatusfile;
@@ -314,6 +315,10 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Export KEI lijst"));
 		cbSaveKEI = new JCheckBox("", config.exportKEIlijst);
 		panel.add(cbSaveKEI);
+		//public boolean exportIntekenlijst = true;
+		panel.add(new JLabel("Export Intekenlijsten"));
+		cbSaveInteken = new JCheckBox("", config.exportIntekenlijst);
+		panel.add(cbSaveInteken);
 		// public boolean exportKNSBRating = true;
 		panel.add(new JLabel("Export KNSB rating bestand"));
 		cbSaveKNSB = new JCheckBox("", config.exportKNSBRating);
@@ -332,7 +337,7 @@ public class ConfigurationDialog extends JDialog {
 		tfStatusfile = new JTextField(config.statusBestand, 30);
 		tfStatusfile.setCaretPosition(0);
 		panel.add(tfStatusfile);
-		for (int i = 0; i < 10; ++i) {
+		for (int i = 0; i < 9; ++i) {
 			panel.add(new JLabel(" "));
 			panel.add(new JLabel(" "));
 		}
@@ -403,6 +408,8 @@ public class ConfigurationDialog extends JDialog {
 		updateTextConfig(config,"exportDoorschuiversStop", tfFooterDoor.getText(),10);
 		// private JCheckBox cbSaveKEI;
 		config.exportKEIlijst = cbSaveKEI.isSelected();
+		//private JCheckBox cbSaveInteken;
+		config.exportIntekenlijst = cbSaveInteken.isSelected();
 		// private JCheckBox cbSaveKNSB;
 		config.exportKNSBRating = cbSaveKNSB.isSelected();
 		// private JCheckBox cbSaveAdditionals;
