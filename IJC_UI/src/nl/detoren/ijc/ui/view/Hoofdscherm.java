@@ -597,6 +597,9 @@ public class Hoofdscherm extends JFrame {
 		        case 0:
 		        	logger.log(Level.INFO, "Zet aanwezigheid alle spelers");
 		        	controller.setAlleSpelersAanwezigheid(groepID);
+		        	if (controller.isAutomatisch()) {
+		        		controller.maakGroepsindeling();
+		        	}
 		        	break;
 		        case 3:
 		        	logger.log(Level.INFO, "Sorteer op rating in de groep");

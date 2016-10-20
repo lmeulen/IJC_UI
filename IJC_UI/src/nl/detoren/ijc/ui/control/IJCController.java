@@ -566,6 +566,12 @@ public class IJCController {
 	        status.groepen.setPeriode(periode);
 			if (ronde == 1)
 				resetAanwezigheidspunt();
+			// Iedereen aanwezig zetten
+			for (Groep groep : status.groepen.getGroepen()) {
+				for (Speler s : groep.getSpelers()) {
+					s.setAanwezig(true);
+				}
+			}
 			setAutomatisch(true);
 			maakGroepsindeling();
     	}
