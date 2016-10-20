@@ -45,7 +45,7 @@ public class OutputIntekenlijst {
 			FileInputStream file = new FileInputStream("Leeg.docx");
 			XWPFDocument document = new XWPFDocument(file);
 			XWPFParagraph paragraph = document.getLastParagraph();
-			setSingleLineSpacing(paragraph);
+			setDoubleLineSpacing(paragraph);
 			XWPFRun run = paragraph.createRun();
 			run.setFontFamily("Courier New");
 			run.setFontSize(12);
@@ -106,7 +106,11 @@ public class OutputIntekenlijst {
 		}
 	}
 
-	public void setSingleLineSpacing(XWPFParagraph para) {
+	/**
+	 * Set spacing to double
+	 * @param para
+	 */
+	public void setDoubleLineSpacing(XWPFParagraph para) {
 	    CTPPr ppr = para.getCTP().getPPr();
 	    if (ppr == null) ppr = para.getCTP().addNewPPr();
 	    CTSpacing spacing = ppr.isSetSpacing()? ppr.getSpacing() : ppr.addNewSpacing();
