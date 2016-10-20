@@ -157,9 +157,6 @@ public class ConfigurationDialog extends JDialog {
 		tfContactEmail= new JTextField(config.contactPersoonEmail, 20);
 		tabInstellingen.add(tfContactEmail);
 		
-		//addTextInput(tabInstellingen, tfContactEmail, "Contactpersoon - Email", config.contactPersoonEmail);
-		// TODO Competitienaam en Competitie locatie toevoegen
-		
 		tabInstellingen.add(new JLabel("Applicatie titel"));
 		tfAppnaam = new JTextField(config.appTitle, 20);
 		tabInstellingen.add(tfAppnaam);

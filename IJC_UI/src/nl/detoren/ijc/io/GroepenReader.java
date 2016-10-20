@@ -99,14 +99,17 @@ public class GroepenReader {
 		logger.log(Level.INFO, "Periode " + periode  + " en ronde " + ronde + " als speelronde");
         groepen.setRonde(ronde);
         groepen.setPeriode(periode);
-        // TODO : Inlezen groepen af laten hangen van configuratie
-        groepen.addGroep(leesGroep(stringArr, "KEIZERGROEP", Groep.KEIZERGROEP));
-        groepen.addGroep(leesGroep(stringArr, "KONINGSGROEP", Groep.KONINGSGROEP));
-        groepen.addGroep(leesGroep(stringArr, "DAMEGROEP", Groep.DAMEGROEP));
-        groepen.addGroep(leesGroep(stringArr, "TORENGROEP", Groep.TORENGROEP));
-        groepen.addGroep(leesGroep(stringArr, "LOPERGROEP", Groep.LOPERGROEP));
-        groepen.addGroep(leesGroep(stringArr, "PAARDENGROEP", Groep.PAARDENGROEP));
-        groepen.addGroep(leesGroep(stringArr, "PIONNENGROEP", Groep.PIONNENGROEP));
+        // Groepen achterste voren inlezen
+        for (int i = IJCController.c().aantalGroepen - 1; i >= 0; i--) {
+            groepen.addGroep(leesGroep(stringArr, IJCController.c().groepsnamen[i].toUpperCase(), i));
+        }
+//        groepen.addGroep(leesGroep(stringArr, "KEIZERGROEP", Groep.KEIZERGROEP));
+//        groepen.addGroep(leesGroep(stringArr, "KONINGSGROEP", Groep.KONINGSGROEP));
+//        groepen.addGroep(leesGroep(stringArr, "DAMEGROEP", Groep.DAMEGROEP));
+//        groepen.addGroep(leesGroep(stringArr, "TORENGROEP", Groep.TORENGROEP));
+//        groepen.addGroep(leesGroep(stringArr, "LOPERGROEP", Groep.LOPERGROEP));
+//        groepen.addGroep(leesGroep(stringArr, "PAARDENGROEP", Groep.PAARDENGROEP));
+//        groepen.addGroep(leesGroep(stringArr, "PIONNENGROEP", Groep.PIONNENGROEP));
 		logger.log(Level.INFO, "Groepen gelezen, speel periode " +  groepen.getPeriode() + " en ronde " + groepen.getRonde());
         if (ronde == 1) groepen.resetPunten();
 		return groepen;

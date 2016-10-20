@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
 
@@ -34,11 +33,10 @@ public class ExterneWedstrijdenModel extends AbstractTableModel {
 		controller = IJCController.getInstance();
 		inputSpelers = new ArrayList<>();
 		selected = new ArrayList<>();
-		for (Speler s : controller.getGroepByID(Groep.KEIZERGROEP).getSpelers()) {
-			inputSpelers.add(s);
-		}
-		for (Speler s : controller.getGroepByID(Groep.KONINGSGROEP).getSpelers()) {
-			inputSpelers.add(s);
+		for (int i = 0; i < IJCController.c().aantalGroepen; i++) {
+			for (Speler s : controller.getGroepByID(i).getSpelers()) {
+				inputSpelers.add(s);
+			}
 		}
 	}
 

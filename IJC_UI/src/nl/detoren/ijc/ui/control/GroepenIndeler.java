@@ -209,7 +209,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
     	logger.log(Level.INFO, "Periode " + periode + " ronde " + ronde + " serie " + serie);    		
     	logger.log(Level.INFO, "groep " + groep.getNaam() + " met grootte " + aantal);  
     	int resultaat;
-        if (groep.getNiveau() == Groep.KEIZERGROEP) {
+        if (groep.getNiveau() == IJCController.c().aantalGroepen - 1) {
             resultaat = ((periode == 1) && (ronde == 1) && (serie == 1)) ? (aantal / 2) : 1;
         	logger.log(Level.FINE, "Keizergroep: Minimaal verschil = " + resultaat);    		
         } else if (ronde > 1) {

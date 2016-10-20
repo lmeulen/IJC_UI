@@ -29,14 +29,6 @@ import nl.detoren.ijc.ui.control.IJCController;
  */
 public class Groep {
 
-    public static int PIONNENGROEP = 0;
-    public static int PAARDENGROEP = 1;
-    public static int LOPERGROEP = 2;
-    public static int TORENGROEP = 3;
-    public static int DAMEGROEP = 4;
-    public static int KONINGSGROEP = 5;
-    public static int KEIZERGROEP = 6;
-
     private int niveau;
     private ArrayList<Speler> spelers;
 
