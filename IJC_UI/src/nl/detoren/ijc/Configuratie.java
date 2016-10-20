@@ -254,7 +254,7 @@ public class Configuratie {
 
 	/**
 	 * Fuzzy indeling wordt gebruikt indien waarde 'true'.
-	 * Anders old skool algoritme
+	 * Anders old skool algoritme, aangestuurd door configuratie
 	 */
 	public boolean fuzzyIndeling = false;
 }
