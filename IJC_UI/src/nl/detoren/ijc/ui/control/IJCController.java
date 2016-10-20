@@ -62,6 +62,8 @@ public class IJCController {
     private Configuratie c;
     
     private String laatsteExport;
+    
+    private GroepenIndelerInterface indeler;
 
 
     protected IJCController() {
@@ -71,6 +73,7 @@ public class IJCController {
     	status.wedstrijdgroepen = null;
     	status.externGespeeld = null;
     	c = new Configuratie();
+    	indeler = new GroepenIndeler();
     }
 
     public static IJCController getInstance() {
@@ -233,7 +236,7 @@ public class IJCController {
     public void maakGroepsindeling() {
         synchronized (this) {
         	logger.log(Level.INFO, "Maak groepsindeling");
-        	status.wedstrijdgroepen = new GroepenIndeler().maakGroepsindeling(status.groepen);
+        	status.wedstrijdgroepen = indeler.maakGroepsindeling(status.groepen);
             if (status.automatisch) {
                 maakWedstrijden();
             }
@@ -248,7 +251,7 @@ public class IJCController {
     public void maakGroepsindeling(int groepID) {
     	//synchronized (this) {
         	logger.log(Level.INFO, "Maak groepsindeling voor groep " + groepID);
-    		status.wedstrijdgroepen = new GroepenIndeler().maakGroepsindeling(status.groepen, status.wedstrijdgroepen, groepID);
+    		status.wedstrijdgroepen = indeler.maakGroepsindeling(status.groepen, status.wedstrijdgroepen, groepID);
 		//}
     }
     /**
@@ -257,7 +260,7 @@ public class IJCController {
     public void maakWedstrijden() {
         synchronized (this) {
         	logger.log(Level.INFO, "Maak wedstrijden voor alle groepen");
-        	status.wedstrijden = new GroepenIndeler().maakWedstrijdschema(status.wedstrijdgroepen);
+        	status.wedstrijden = indeler.maakWedstrijdschema(status.wedstrijdgroepen);
             printWedstrijden();
         }
     }
@@ -268,7 +271,7 @@ public class IJCController {
     public void maakWedstrijden(int groepID) {
         synchronized (this) {
         	logger.log(Level.INFO, "Maak wedstrijden voor groep " + groepID);
-        	status.wedstrijden = new GroepenIndeler().updateWedstrijdschema(status.wedstrijden, status.wedstrijdgroepen, groepID);
+        	status.wedstrijden = indeler.updateWedstrijdschema(status.wedstrijden, status.wedstrijdgroepen, groepID);
             printWedstrijden(groepID);
         }
     }

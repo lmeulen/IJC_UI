@@ -60,6 +60,7 @@ public class ConfigurationDialog extends JDialog {
 	private JTextField[] tfStartPuntens;
 	private JTextField[] tfStartRatings;
 	private JTextField tfGrDoorschuivers;
+	private JCheckBox cbFyuzzyIndeling;
 	private JTextField tfGrSorteerRating;
 	private JTextField tfGrBegintrio;
 	private JCheckBox cbLaatsteRondeDoorschuiven;
@@ -250,6 +251,10 @@ public class ConfigurationDialog extends JDialog {
 		tfGrDoorschuivers.setCaretPosition(0);
 		tfGrDoorschuivers.setToolTipText("Groovy functie: x=periode, y=ronde, resultaat 0 is geen doorschuivers");
 		panel.add(tfGrDoorschuivers);
+		// private boolean fuzzyIndeling
+		panel.add(new JLabel("Gebruik fuzzy algoritme (experimenteel)"));
+		cbFyuzzyIndeling = new JCheckBox("", config.fuzzyIndeling);
+		panel.add(cbFyuzzyIndeling);
 		// private String grSorteerOpRating = "if ((x == 6) && (z > 1) && (z <
 		// 7)) { true } else { false }";
 		panel.add(new JLabel("Sorteer op rating voor indelen"));
@@ -258,7 +263,7 @@ public class ConfigurationDialog extends JDialog {
 		tfGrSorteerRating.setToolTipText("Groovy functie: x=groep, y=periode, z=ronde");
 		panel.add(tfGrSorteerRating);
 		// private String grBeginTrio = "x / 2";
-		panel.add(new JLabel("Sorteer op rating voor indelen"));
+		panel.add(new JLabel("Beginpunt trio"));
 		tfGrBegintrio = new JTextField(config.grBeginTrio);
 		tfGrBegintrio.setCaretPosition(0);
 		tfGrBegintrio.setToolTipText("Groovy functie: x=groepsgrootte");
@@ -275,7 +280,7 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Max verschil tussenspelers"));
 		tfMaxVerschil = new JTextField((new Integer(config.indelingMaximumVerschil)).toString());
 		panel.add(tfMaxVerschil);
-		for (int i = 0; i < 14; ++i) {
+		for (int i = 0; i < 13; ++i) {
 			panel.add(new JLabel(" "));
 			panel.add(new JLabel(" "));
 		}
@@ -377,6 +382,8 @@ public class ConfigurationDialog extends JDialog {
 		}
 		// private JTextField tfGrDoorschuivers;
 		updateTextConfig(config,"grAantalDoorschuivers", tfGrDoorschuivers.getText(),2);
+		//private JCheckbox cbFyuzzyIndeling
+		config.fuzzyIndeling = cbFyuzzyIndeling.isSelected();
 		// private JTextField tfGrSorteerRating;
 		updateTextConfig(config,"grSorteerOpRating", tfGrSorteerRating.getText(),2);
 		// private JTextField tfGrBegintrio;

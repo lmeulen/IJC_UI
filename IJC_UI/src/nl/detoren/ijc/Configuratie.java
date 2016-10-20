@@ -247,4 +247,9 @@ public class Configuratie {
 	 */
 	public String contactPersoonEmail = "ijc@schaakverenigingdetoren.nl";
 
+	/**
+	 * Fuzzy indeling wordt gebruikt indien waarde 'true'.
+	 * Anders old skool algoritme
+	 */
+	public boolean fuzzyIndeling = false;
 }

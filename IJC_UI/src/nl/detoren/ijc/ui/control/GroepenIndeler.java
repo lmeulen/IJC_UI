@@ -35,20 +35,15 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
  * Eindresultaat is altijd een groep met even spelers
  *
  */
-public class GroepenIndeler {
+public class GroepenIndeler implements GroepenIndelerInterface {
 
     private final static Logger logger = Logger.getLogger(GroepenIndeler.class.getName());
 
-    /**
-     * Maak de groepsindeling voordat de wedstrijden worden bepaald. Spelers die afwezig zijn, worden uit de speellijst
-     * verwijderd. Indien van toepassing, worden 3 of 4 spelers doorgescheven naar een hogere groep. De hogere groep
-     * eindigt altijd met een even aantal spelers. Bij oneven spelers worden er dus 3 doorgeschoven en bij even spelers
-     * mogen er 4 doorschuiven.
-     *
-     * @param aanwezigheidsGroepen Overzicht spelers per groen met aanwezigheidsinfo
-     * @return de wedstrijdgroepen
-     */
-    public Groepen maakGroepsindeling(Groepen aanwezigheidsGroepen) {
+    /* (non-Javadoc)
+	 * @see nl.detoren.ijc.ui.control.GroepenIndelerInterface#maakGroepsindeling(nl.detoren.ijc.data.groepen.Groepen)
+	 */
+    @Override
+	public Groepen maakGroepsindeling(Groepen aanwezigheidsGroepen) {
     	logger.log(Level.INFO, "Maken groepsindeling voor alle groepen");
         // Er wordt een nieuwe groepen gemaakt, welke stapsgewijs gevuld gaat worden.
         int ronde = aanwezigheidsGroepen.getRonde();
@@ -84,17 +79,11 @@ public class GroepenIndeler {
         return wedstrijdGroepen;
     }
 
-    /**
-     * Werk de groepsindeling van één groep bij voordat de wedstrijden worden bepaald. Spelers die afwezig zijn, worden 
-     * uit de speellijst verwijderd. Indien van toepassing, worden 3 of 4 spelers doorgescheven naar een hogere groep. 
-     * De hogere groep eindigt altijd met een even aantal spelers. Bij oneven spelers worden er dus 3 doorgeschoven en 
-     * bij even spelers mogen er 4 doorschuiven.
-     * @param aanwezigheidsGroepen Overzicht spelers per groep met aanwezigheidsinfo
-     * @param wedstrijdGroepen Huidige wedstrijdgroepen
-     * @param groepID Specificeert de groep die ge-update moet worden
-     * @return de betreffende wedstrijdgroep
-     */
-    public Groepen maakGroepsindeling(Groepen aanwezigheidsGroepen, Groepen wedstrijdGroepen, int groepID) {
+    /* (non-Javadoc)
+	 * @see nl.detoren.ijc.ui.control.GroepenIndelerInterface#maakGroepsindeling(nl.detoren.ijc.data.groepen.Groepen, nl.detoren.ijc.data.groepen.Groepen, int)
+	 */
+    @Override
+	public Groepen maakGroepsindeling(Groepen aanwezigheidsGroepen, Groepen wedstrijdGroepen, int groepID) {
     	logger.log(Level.INFO, "Maken groepsindeling voor groep" + aanwezigheidsGroepen.getGroepById(groepID).getNaam());
     	Groep aanwezigheidsGroep = aanwezigheidsGroepen.getGroepById(groepID);
     	Groep origineleWedstrijdGroep = wedstrijdGroepen.getGroepById(groepID);
@@ -130,7 +119,7 @@ public class GroepenIndeler {
     	return wedstrijdGroepen;
     }
 
-    public boolean groepBevat(ArrayList<Speler> doorgeschoven, Speler speler) {
+    private boolean groepBevat(ArrayList<Speler> doorgeschoven, Speler speler) {
     	for (Speler s : doorgeschoven) {
     		if (s.gelijkAan(speler)) return true;
     	}
@@ -198,11 +187,11 @@ public class GroepenIndeler {
      * @param ronde Huidige ronde
      * @return true als er met doorschuiven wordt gespeeld
      */
-    public boolean bepaalDoorschuiven(int periode, int ronde) {
+    private boolean bepaalDoorschuiven(int periode, int ronde) {
     	return (bepaalAantalDoorschuiven(periode, ronde) > 0);
     }
 
-    public int bepaalAantalDoorschuiven(int periode, int ronde) {
+    private int bepaalAantalDoorschuiven(int periode, int ronde) {
     	return IJCController.c().bepaalAantalDoorschuivers(periode, ronde);
     }
 
@@ -215,7 +204,7 @@ public class GroepenIndeler {
      * @param serie serie wedstrijden binnen de ronde
      * @return
      */
-    public int bepaalMinimaalVerschil(Groep groep, int periode, int ronde, int serie) {
+    private int bepaalMinimaalVerschil(Groep groep, int periode, int ronde, int serie) {
         int aantal = groep.getSpelers().size();
     	logger.log(Level.INFO, "Periode " + periode + " ronde " + ronde + " serie " + serie);    		
     	logger.log(Level.INFO, "groep " + groep.getNaam() + " met grootte " + aantal);  
@@ -246,19 +235,16 @@ public class GroepenIndeler {
      * @param ronde Ronde in de periode
      * @return
      */
-    public int bepaalAantalSeries(int groep, int periode, int ronde) {
+    private int bepaalAantalSeries(int groep, int periode, int ronde) {
     	logger.log(Level.INFO, "Vaststellen aantal te spelen series");    		
     	return IJCController.c().bepaalAantalSeries(groep, periode, ronde);
     }
 
-    /**
-     Maak het westrijdschema voor een avond
-     @param groepen
-     @param periode
-     @param ronde
-     @return 
-     */
-    public Wedstrijden maakWedstrijdschema(Groepen groepen) {
+    /* (non-Javadoc)
+	 * @see nl.detoren.ijc.ui.control.GroepenIndelerInterface#maakWedstrijdschema(nl.detoren.ijc.data.groepen.Groepen)
+	 */
+    @Override
+	public Wedstrijden maakWedstrijdschema(Groepen groepen) {
     	int periode = groepen.getPeriode();
     	int ronde = groepen.getRonde();
     	logger.log(Level.INFO, "Maken wedstrijden voor periode " + periode + " ronde " + ronde);    		
@@ -279,15 +265,11 @@ public class GroepenIndeler {
         return wedstrijden;
     }
     
-    /**
-     * Update wedstrijden voor één groep. Wedstrijden voor alle andere groepen blijven
-     * ongewijzigd.
-     * @param wedstrijden Huidige wedstrijden voor alle groepen
-     * @param wedstrijdgroepen Huidige wedstrijdgroepen voor all groepen
-     * @param groepID ID van groep om opnieuw te bepalen
-     * @return update van wedstrijden met nieuwe wedstrijden voor specifieke groep
-     */
-    public Wedstrijden updateWedstrijdschema(Wedstrijden wedstrijden, Groepen wedstrijdgroepen, int groepID) {
+    /* (non-Javadoc)
+	 * @see nl.detoren.ijc.ui.control.GroepenIndelerInterface#updateWedstrijdschema(nl.detoren.ijc.data.wedstrijden.Wedstrijden, nl.detoren.ijc.data.groepen.Groepen, int)
+	 */
+    @Override
+	public Wedstrijden updateWedstrijdschema(Wedstrijden wedstrijden, Groepen wedstrijdgroepen, int groepID) {
     	int periode = wedstrijdgroepen.getPeriode();
     	int ronde = wedstrijdgroepen.getRonde();
     	logger.log(Level.INFO, "Update wedstrijden voor groep " + groepID + " periode " + periode + " ronde " + ronde);    		
@@ -394,7 +376,7 @@ public class GroepenIndeler {
 		return gws;
 	}
 
-    public Serie maakSerie(Groep groep, boolean[] gepland, int aantalSpelers, int minverschil, int maxverschil, int ignoreTgn, int ronde) {
+    private Serie maakSerie(Groep groep, boolean[] gepland, int aantalSpelers, int minverschil, int maxverschil, int ignoreTgn, int ronde) {
         Serie serie = new Serie();
         int mv = minverschil;
         while (mv >= 0) {
@@ -480,7 +462,7 @@ public class GroepenIndeler {
      @param start
      @return 
      */
-    public static int eersteOngeplandeSpeler(boolean[] gepland, int start) {
+    private static int eersteOngeplandeSpeler(boolean[] gepland, int start) {
         if ((start < 0) || (start >= gepland.length)) {
             return -1;
         }
@@ -498,7 +480,7 @@ public class GroepenIndeler {
      @param start
      @return 
      */
-    public static int laatsteOngeplandeSpeler(boolean[] gepland, int start) {
+    private static int laatsteOngeplandeSpeler(boolean[] gepland, int start) {
         if ((start < 0) || (start >= gepland.length)) {
             return -1;
         }
@@ -533,7 +515,7 @@ public class GroepenIndeler {
      * @param serie
      * @return
      */
-    public Groep updateSpelers(Groep groep, Serie serie) {
+    private Groep updateSpelers(Groep groep, Serie serie) {
 
         for (Speler speler : groep.getSpelers()) {
             Wedstrijd wedstrijd = serie.getWedstrijdVoorSpeler(speler);
