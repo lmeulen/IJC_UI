@@ -365,7 +365,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			int witv1 = (int) wedstrijdgroep.getSpelerByID(i).getWitvoorkeur();
 			for (j = 1; j <= wedstrijdgroep.getAantalSpelers(); j++) {
 				int witv2 = (int) wedstrijdgroep.getSpelerByID(j).getWitvoorkeur();
-				if (i == j) {
+				if (/*i == j*/ true) {
 					matrix3[i - 1][j] = 0;
 				} else {
 					switch (witv1) {

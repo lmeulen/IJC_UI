@@ -152,7 +152,7 @@ public class Uitslagverwerker {
 		}
 		puntenbij = Math.min(puntenbij, 5); // niet meer dan 5 punten er bij
 		// Geen wedstrijden dus speler was afwezig
-		if (spelerWedstrijden.size() == 0) {
+		if ((spelerWedstrijden.size() == 0) && (!extern)) {
 			if (!updateSpeler.isAfwezigheidspunt()) {
 				puntenbij += 2;
 				updateSpeler.setAfwezigheidspunt(true);
@@ -169,7 +169,6 @@ public class Uitslagverwerker {
 			}  else {
 				puntenbij = 3;
 				updateSpeler.addTegenstander("X3 ");
-				updateSpeler.setAfwezigheidspunt(true);
 				logger.log(Level.WARNING, "Speler " + updateSpeler.getNaam() + " extern gespeeld, dus 3 punten");
 			}
 		}
