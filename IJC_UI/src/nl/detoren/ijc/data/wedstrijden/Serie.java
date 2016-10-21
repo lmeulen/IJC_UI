@@ -90,4 +90,14 @@ public class Serie {
         }
         return null;
     }
+    
+    /**
+     * Hernummer alle wedstrijden in de serie als 1,2,3...
+     */
+	public void renumber(int serie) {
+		int nummer = serie * wedstrijden.size() + 1;
+		for (Wedstrijd w : wedstrijden) {
+			w.setId(nummer++);
+		}
+	}
 }

@@ -133,6 +133,29 @@ public class Speler implements Cloneable {
         return tegenstanders;
     }
 
+    /**
+     * Is er eerder tegen meegegeven speler gespeeld en hoeveel partijen geleden?
+     *
+     * @param speler2 Speler die gecontroleerd word
+     * @return 0 als er niet in één van de laatste vier wedstrijden tegen deze speler gespeeld is,
+     *         anders 1 voor vorige partij, 2 voor de partij daarvoor, etc
+     */
+    public int[] getGespeeldTegen(Speler speler2) {
+    	int ronde[] = new int [4];
+        String ini = speler2.getInitialen();
+        // ff checken dat het niet de speler zelf is ;-)
+        if (initialen.equals(ini)) {
+        	ronde[0]=0;
+        	return ronde;
+        }
+        for (int i = 0; i < 4; i++) {
+            if (tegenstanders[i].substring(0, 2).equals(ini)) {
+            	ronde[i]=4-i;
+            }
+        }
+        return ronde;
+    }
+    
     public String getTegenstandersString() {
         return tegenstanders[0] + tegenstanders[1] + tegenstanders[2] + tegenstanders[3];
     }

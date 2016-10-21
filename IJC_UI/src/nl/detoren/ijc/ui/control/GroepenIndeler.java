@@ -119,7 +119,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
     	return wedstrijdGroepen;
     }
 
-    private boolean groepBevat(ArrayList<Speler> doorgeschoven, Speler speler) {
+    protected boolean groepBevat(ArrayList<Speler> doorgeschoven, Speler speler) {
     	for (Speler s : doorgeschoven) {
     		if (s.gelijkAan(speler)) return true;
     	}
@@ -131,7 +131,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      * @param wedstrijdGroepen
      * @param aanwezigheidsGroepen 
      */
-    private void doorschuiven(Groepen wedstrijdGroepen, Groepen aanwezigheidsGroepen) {
+    protected void doorschuiven(Groepen wedstrijdGroepen, Groepen aanwezigheidsGroepen) {
         int aantal = bepaalAantalDoorschuiven(aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
     	logger.log(Level.INFO, "Aantal door te schuiven spelers "  + aantal);    		
         // Doorloop hoogste groep tot één na laagste groep. In de laagste groep
@@ -187,11 +187,11 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      * @param ronde Huidige ronde
      * @return true als er met doorschuiven wordt gespeeld
      */
-    private boolean bepaalDoorschuiven(int periode, int ronde) {
+    protected boolean bepaalDoorschuiven(int periode, int ronde) {
     	return (bepaalAantalDoorschuiven(periode, ronde) > 0);
     }
 
-    private int bepaalAantalDoorschuiven(int periode, int ronde) {
+    protected int bepaalAantalDoorschuiven(int periode, int ronde) {
     	return IJCController.c().bepaalAantalDoorschuivers(periode, ronde);
     }
 
@@ -204,7 +204,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      * @param serie serie wedstrijden binnen de ronde
      * @return
      */
-    private int bepaalMinimaalVerschil(Groep groep, int periode, int ronde, int serie) {
+    protected int bepaalMinimaalVerschil(Groep groep, int periode, int ronde, int serie) {
         int aantal = groep.getSpelers().size();
     	logger.log(Level.INFO, "Periode " + periode + " ronde " + ronde + " serie " + serie);    		
     	logger.log(Level.INFO, "groep " + groep.getNaam() + " met grootte " + aantal);  
@@ -235,7 +235,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      * @param ronde Ronde in de periode
      * @return
      */
-    private int bepaalAantalSeries(int groep, int periode, int ronde) {
+    protected int bepaalAantalSeries(int groep, int periode, int ronde) {
     	logger.log(Level.INFO, "Vaststellen aantal te spelen series");    		
     	return IJCController.c().bepaalAantalSeries(groep, periode, ronde);
     }
@@ -295,7 +295,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      * @param wedstrijdgroep
      * @return
      */
-	private Groepswedstrijden maakWedstrijdenVoorGroep(int periode, int ronde, Groep wedstrijdgroep) {
+	public Groepswedstrijden maakWedstrijdenVoorGroep(int periode, int ronde, Groep wedstrijdgroep) {
     	logger.log(Level.INFO, "Bepalen wedstrijden voor groep " + wedstrijdgroep.getNaam() + " periode " + periode + " ronde " + ronde);    		
 		// Maak clone van de Groep om ongewenste updates te voorkomen
 		Groep groep = new Groep();
@@ -376,7 +376,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 		return gws;
 	}
 
-    private Serie maakSerie(Groep groep, boolean[] gepland, int aantalSpelers, int minverschil, int maxverschil, int ignoreTgn, int ronde) {
+    protected Serie maakSerie(Groep groep, boolean[] gepland, int aantalSpelers, int minverschil, int maxverschil, int ignoreTgn, int ronde) {
         Serie serie = new Serie();
         int mv = minverschil;
         while (mv >= 0) {
@@ -389,7 +389,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
         return null;
     }
 
-    private Serie planSerie(Serie serie, ArrayList<Speler> spelers, boolean[] gepland,
+    protected Serie planSerie(Serie serie, ArrayList<Speler> spelers, boolean[] gepland,
             int teplannen, int minverschil, int maxverschil, int ignoreTgn, int niveau, int diepte, int ronde) {
         for (int i = 0; i < diepte; ++i) {
             System.out.print("  ");
@@ -462,7 +462,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      @param start
      @return 
      */
-    private static int eersteOngeplandeSpeler(boolean[] gepland, int start) {
+    protected static int eersteOngeplandeSpeler(boolean[] gepland, int start) {
         if ((start < 0) || (start >= gepland.length)) {
             return -1;
         }
@@ -480,7 +480,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      @param start
      @return 
      */
-    private static int laatsteOngeplandeSpeler(boolean[] gepland, int start) {
+    protected static int laatsteOngeplandeSpeler(boolean[] gepland, int start) {
         if ((start < 0) || (start >= gepland.length)) {
             return -1;
         }
@@ -499,7 +499,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      @param niveau
      @return 
      */
-    private int laatsteOngeplandeDoorgeschovenspeler(ArrayList<Speler> spelers, boolean[] gepland, int niveau) {
+    protected int laatsteOngeplandeDoorgeschovenspeler(ArrayList<Speler> spelers, boolean[] gepland, int niveau) {
         for (int i = (gepland.length - 1); i > 0; --i) {
             if (!gepland[i] && spelers.get(i).getGroep() != niveau) {
                 return i;
@@ -515,7 +515,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      * @param serie
      * @return
      */
-    private Groep updateSpelers(Groep groep, Serie serie) {
+    protected Groep updateSpelers(Groep groep, Serie serie) {
 
         for (Speler speler : groep.getSpelers()) {
             Wedstrijd wedstrijd = serie.getWedstrijdVoorSpeler(speler);
@@ -541,7 +541,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      * @param groep Groep
      * @return
      */
-    private ArrayList<Integer> maakTrioWedstrijden(Groep groep) {
+    protected ArrayList<Integer> maakTrioWedstrijden(Groep groep) {
         ArrayList<Integer> trio = new ArrayList<>();
         if (groep.getSpelers().size() == 3) {
         	// 3 spelers, dus maak gelijk trio
@@ -593,7 +593,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      * @param ignore Aantal te negeren rondes in het verleden 
      * @return
      */
-    private boolean isGoedTrio(Speler s1, Speler s2, Speler s3, int ignore) {
+    protected boolean isGoedTrio(Speler s1, Speler s2, Speler s3, int ignore) {
         if ((s1 != null) && (s2 != null) && (s3 != null)) {
             return !s1.isGespeeldTegen(s2, ignore) && !s1.isGespeeldTegen(s3, ignore) && !s2.isGespeeldTegen(s1, ignore)
                     && !s2.isGespeeldTegen(s3, ignore) && !s3.isGespeeldTegen(s1, ignore)

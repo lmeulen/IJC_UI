@@ -74,7 +74,7 @@ public class IJCController {
     	status.wedstrijdgroepen = null;
     	status.externGespeeld = null;
     	c = new Configuratie();
-    	indeler = new GroepenIndeler();
+    	indeler = null;
     }
 
     public static IJCController getInstance() {
@@ -237,7 +237,7 @@ public class IJCController {
     public void maakGroepsindeling() {
         synchronized (this) {
         	logger.log(Level.INFO, "Maak groepsindeling");
-        	status.wedstrijdgroepen = indeler.maakGroepsindeling(status.groepen);
+        	status.wedstrijdgroepen = getIndeler().maakGroepsindeling(status.groepen);
             if (status.automatisch) {
                 maakWedstrijden();
             }
@@ -252,7 +252,7 @@ public class IJCController {
     public void maakGroepsindeling(int groepID) {
     	//synchronized (this) {
         	logger.log(Level.INFO, "Maak groepsindeling voor groep " + groepID);
-    		status.wedstrijdgroepen = indeler.maakGroepsindeling(status.groepen, status.wedstrijdgroepen, groepID);
+    		status.wedstrijdgroepen = getIndeler().maakGroepsindeling(status.groepen, status.wedstrijdgroepen, groepID);
 		//}
     }
     /**
@@ -261,7 +261,7 @@ public class IJCController {
     public void maakWedstrijden() {
         synchronized (this) {
         	logger.log(Level.INFO, "Maak wedstrijden voor alle groepen");
-        	status.wedstrijden = indeler.maakWedstrijdschema(status.wedstrijdgroepen);
+        	status.wedstrijden = getIndeler().maakWedstrijdschema(status.wedstrijdgroepen);
             printWedstrijden();
         }
     }
@@ -272,7 +272,7 @@ public class IJCController {
     public void maakWedstrijden(int groepID) {
         synchronized (this) {
         	logger.log(Level.INFO, "Maak wedstrijden voor groep " + groepID);
-        	status.wedstrijden = indeler.updateWedstrijdschema(status.wedstrijden, status.wedstrijdgroepen, groepID);
+        	status.wedstrijden = getIndeler().updateWedstrijdschema(status.wedstrijden, status.wedstrijdgroepen, groepID);
             printWedstrijden(groepID);
         }
     }
@@ -699,6 +699,13 @@ public class IJCController {
 			lagereGroep.addSpeler(new Speler(s));
 			logger.log(Level.INFO, "Speler " + s.getNaam() + " teruggeschoven naar groep " + Groep.geefNaam(groepID+1));
 		}
+	}
+	
+	public GroepenIndelerInterface getIndeler() {
+		if (indeler == null) {
+			indeler = new GroepenIndelerFacory().getIndeler();
+		}
+		return indeler;
 	}
 
 }
