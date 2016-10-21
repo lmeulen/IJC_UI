@@ -117,35 +117,10 @@ public class minimizetriagonal {
 		return trio;
 	}
 
-    public static int[][] redoSwaps (int[][] A) {
-    // Solves best pairing by minimizing matrix triagonal 
-    	int i, j, k, val;
-    	int[][] swaps;
-    	swaps = minimizetriagonal.getSwaps();
-    	for (k=0;k<swaps.length;k++){ 
-        			for (i = 0; i < A.length; i++) {
-        				//System.out.print("i is %d \n", i);
-//        			  	val = A[k][i];
-//        			  	A[k][i] = A[j][i];
-//        			  	A[j][i] = val;
-        				/* swap column */	
-        			}		  
-        			for (i = 0; i < A.length; i++) {
-        				//System.out.print("i is %d \n", i);
-//        			  	val = A[i][k];
-//        			  	A[i][k] = A[i][j];
-//        			  	A[i][j] = val;
-        			}
-    				
-   		}
-    return A;
-    }
-	
-	
     public static int minimize ()
     // Solves best pairing by minimizing matrix triagonal 
     {
-    	int i, j, k, t;
+    	int i, j, k;
     	int tri[][] = new int[getADimensionx()][getADimensiony()];
     	int val;
     	int sumo = 0; // som van omliggende waarden rond j en k die in de sub- en superdiagonaal liggen.
@@ -154,7 +129,6 @@ public class minimizetriagonal {
     	int trisum2 = 0; // som van de mini matrix na swap.
     	int swapped = 0;
         System.out.print("Starting minimizing process\n");
-        int[] order = getOrder();
         int indexrow = 1;
         tri = getA();
         //System.out.printf(	"triagonal sum is %d.\n", Utils.triagonalsum(tri,indexrow));

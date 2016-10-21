@@ -64,9 +64,6 @@ public class IJCController {
     
     private String laatsteExport;
     
-    private GroepenIndelerInterface indeler;
-
-
     protected IJCController() {
     	status = new Status();
     	status.groepen = null;
@@ -74,7 +71,6 @@ public class IJCController {
     	status.wedstrijdgroepen = null;
     	status.externGespeeld = null;
     	c = new Configuratie();
-    	indeler = null;
     }
 
     public static IJCController getInstance() {
@@ -670,7 +666,7 @@ public class IJCController {
 	}
 
 	/**
-	 * Schuif spelerr door
+	 * Schuif speler door
 	 * @param groepID Groep ID van huidige groep
 	 * @param spelerID speler ID
 	 */
@@ -701,6 +697,11 @@ public class IJCController {
 		}
 	}
 	
+	/**
+	 * Geen een groepen indeler. Type is afhankelijk van de settings
+	 * in Configuratie. Dynamisch wisselen tussen indelers is mogelijk.
+	 * @return
+	 */
 	public GroepenIndelerInterface getIndeler() {
 		return new GroepenIndelerFactory().getIndeler();
 	}

@@ -48,7 +48,7 @@ public class ConfigurationDialog extends JDialog {
 
 	private JTextField tfAppnaam;
 	private JTextField tfVerenigingNaam;
-	private JTextField tfCompetititeNaam;
+	private JTextField tfCompetitieNaam;
 	private JTextField tfCompetitieLocatie;
 	private JTextField tfContactNaam;
 	private JTextField tfContactEmail;
@@ -60,7 +60,7 @@ public class ConfigurationDialog extends JDialog {
 	private JTextField[] tfStartPuntens;
 	private JTextField[] tfStartRatings;
 	private JTextField tfGrDoorschuivers;
-	private JCheckBox cbFyuzzyIndeling;
+	private JCheckBox cbFuzzyIndeling;
 	private JTextField tfGrSorteerRating;
 	private JTextField tfGrBegintrio;
 	private JCheckBox cbLaatsteRondeDoorschuiven;
@@ -143,8 +143,8 @@ public class ConfigurationDialog extends JDialog {
 		tabInstellingen.add(tfVerenigingNaam);
 
 		tabInstellingen.add(new JLabel("Competitie Naam"));
-		tfCompetititeNaam = new JTextField(config.competitieNaam, 20);
-		tabInstellingen.add(tfCompetititeNaam);
+		tfCompetitieNaam = new JTextField(config.competitieNaam, 20);
+		tabInstellingen.add(tfCompetitieNaam);
 
 		tabInstellingen.add(new JLabel("Locatie"));
 		tfCompetitieLocatie = new JTextField(config.competitieLocatie, 20);
@@ -251,8 +251,8 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(tfGrDoorschuivers);
 		// private boolean fuzzyIndeling
 		panel.add(new JLabel("Gebruik fuzzy algoritme (experimenteel)"));
-		cbFyuzzyIndeling = new JCheckBox("", config.fuzzyIndeling);
-		panel.add(cbFyuzzyIndeling);
+		cbFuzzyIndeling = new JCheckBox("", config.fuzzyIndeling);
+		panel.add(cbFuzzyIndeling);
 		// private String grSorteerOpRating = "if ((x == 6) && (z > 1) && (z <
 		// 7)) { true } else { false }";
 		panel.add(new JLabel("Sorteer op rating voor indelen"));
@@ -350,7 +350,7 @@ public class ConfigurationDialog extends JDialog {
 		// private JTextField tfVerenigingNaam;
 		updateTextConfig(config, "verenigingNaam", tfVerenigingNaam.getText(), 5);
 		// private JTextField tfCompetititeNaam;
-		updateTextConfig(config, "competitieNaam", tfCompetititeNaam.getText(), 5);
+		updateTextConfig(config, "competitieNaam", tfCompetitieNaam.getText(), 5);
 		// private JTextField tfCompetitieLocatie;
 		updateTextConfig(config, "competitieLocatie", tfCompetitieLocatie.getText(), 5);
 		// private JTextField tfContactNaam;
@@ -385,7 +385,7 @@ public class ConfigurationDialog extends JDialog {
 		// private JTextField tfGrDoorschuivers;
 		updateTextConfig(config,"grAantalDoorschuivers", tfGrDoorschuivers.getText(),2);
 		//private JCheckbox cbFyuzzyIndeling
-		config.fuzzyIndeling = cbFyuzzyIndeling.isSelected();
+		config.fuzzyIndeling = cbFuzzyIndeling.isSelected();
 		// private JTextField tfGrSorteerRating;
 		updateTextConfig(config,"grSorteerOpRating", tfGrSorteerRating.getText(),2);
 		// private JTextField tfGrBegintrio;
