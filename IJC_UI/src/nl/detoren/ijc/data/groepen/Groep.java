@@ -32,53 +32,96 @@ public class Groep {
     private int niveau;
     private ArrayList<Speler> spelers;
 
+    /**
+     * Default constructor.
+     * Creer lege spelerslijst
+     */
     public Groep() {
     	spelers = new ArrayList<>();
     }
 
+    /**
+     * Creeer nieuwe groep van gespecificeerd niveau
+     * Spelerslijst is leeg
+     * @param niveau
+     */
     public Groep(int niveau) {
+    	this();
         this.niveau = niveau;
     }
 
+    /**
+     * Retourneert niveau van deze groep
+     * @return
+     */
     public int getNiveau() {
         return niveau;
     }
 
+    /**
+     * Geen deze groep gespecificeerd niveau
+     * @param niveau
+     */
     public void setNiveau(int niveau) {
         this.niveau = niveau;
     }
 
+    /**
+     * Retourneert lijst van spelers in deze groeo
+     * @return
+     */
     public ArrayList<Speler> getSpelers() {
         return spelers;
     }
     
+    /**
+     * Retourneert hoeveel spelers er in deze groep zitten
+     * @return
+     */
     public int getAantalSpelers() {
         return spelers.size();
     }
 
+    /**
+     * Vervang de huidige spelerslijst door de meegegeven
+     * spelerslijst
+     * @param spelers
+     */
     public void setSpelers(ArrayList<Speler> spelers) {
         this.spelers = spelers;
     }
 
+    /**
+     * Voeg een speler toe aan de spelerslijst
+     * @param speler Toe te voegen speler
+     */
     public void addSpeler(Speler speler) {
         if (spelers == null) {
             spelers = new ArrayList<>();
         }
         spelers.add(speler);
     }
-
+	/**
+	 * Voeg een speler toe aan de lijst op de aangegeven locatie
+	 * @param speler Toe te voegen speler
+	 * @param loc Locatie in de lijst waar speler te plaatsen
+	 */
     public void addSpeler(Speler speler, int loc) {
         spelers.add(loc, speler);
         renumber();
     }
     
+    /**
+     * Verwijder speler op de opgegeven locatie
+     * @param loc Locatie van de te verwijderen speler
+     */
     public void removeSpeler(Speler speler, int loc) {
         spelers.remove(loc);
         renumber();
     }
 
     /** 
-     * Geen naam van deze groep
+     * Geef naam van deze groep
      * @return GRoepsnaam
      */
     public String getNaam() {
@@ -86,7 +129,7 @@ public class Groep {
     }
 
     /**
-     * Retourneer een lijst van spelers. 
+     * Retourneer een lijst van spelers als printvare string 
      * @return String met alle spelers
      */
     public String toPrintableString() {
@@ -94,7 +137,8 @@ public class Groep {
     }
     
     /**
-     * Retourneer een lijst van spelers. 
+     * Retourneer een lijst van spelers. Vorm:
+     * 
      * @param lang Als waar, lange notatoe
      * @return
      */

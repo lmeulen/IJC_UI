@@ -330,7 +330,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 		boolean[] gepland = new boolean[groep.getSpelers().size()];
 		int aantalSpelers = groep.getSpelers().size();
 		ArrayList<Integer> trio = new ArrayList<>();
-		if (groep.getAantalSpelers() % 2 != 0) {
+		if ((groep.getAantalSpelers() % 2 != 0) && groep.getAantalSpelers() >= 3) {
 	    	logger.log(Level.INFO, "Maken van een trio vanwege oneven aantal spelers");    		
 		    // Bij oneven aantal spelers wordt een trio gemaakt.
 		    trio = maakTrioWedstrijden(groep);
