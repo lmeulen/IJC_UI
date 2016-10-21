@@ -65,6 +65,7 @@ public class Utils {
 
     public static int[][] add2DArrays(int A[][], int B[][]){
     	// Just for cubic equal size arrays!
+    	if (A.length==0) return A;
     	int C[][] = new int[A.length][A.length];
     	for (int i=0;i<A.length;i++) {
     		for (int j=0;j<B.length;j++) {
@@ -76,6 +77,7 @@ public class Utils {
 
     public static int[][] add2DArrays(double mf1, int A[][], double mf2, int B[][]){
     	// Just for [X+1][X] arrays! with index in first row.
+    	if (A.length==0) return A;
     	int C[][] = new int[A.length][A[0].length];
     	for (int i=0;i<A.length;i++) {
     		for (int j=0;j<A[0].length;j++) {
@@ -90,7 +92,8 @@ public class Utils {
     }
 
     public static int triagonalsum(int A[][]){
-    	// Just for [X][X] arrays! 
+    	// Just for [X][X] arrays!
+    	if (A.length==0) return 0;
     	int sum = 0;
     	for (int i=0;i<A.length;i++) {
     		for (int j=Math.max(0, i-1);j<Math.min(i+2, A.length);j++) {
