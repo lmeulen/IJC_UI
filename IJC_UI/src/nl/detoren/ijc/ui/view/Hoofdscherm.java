@@ -600,6 +600,7 @@ public class Hoofdscherm extends JFrame {
 		        	if (controller.isAutomatisch()) {
 		        		controller.maakGroepsindeling();
 		        	}
+		        	repaint();
 		        	break;
 		        case 3:
 		        	logger.log(Level.INFO, "Sorteer op rating in de groep");

@@ -13,7 +13,7 @@
  */
 package nl.detoren.ijc.ui.control;
 
-public class GroepenIndelerFacory {
+public class GroepenIndelerFactory {
 	
 	public GroepenIndelerInterface getIndeler() {
 		if (IJCController.c().fuzzyIndeling) {
