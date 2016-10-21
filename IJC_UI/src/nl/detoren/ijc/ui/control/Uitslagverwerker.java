@@ -162,7 +162,7 @@ public class Uitslagverwerker {
 				updateSpeler.addTegenstander("-- ");
 			}
 		}
-		// Externe resultaten verwerken
+		// Externe resultaten verwerken, niet als afwezig laten gelden
 		if (extern) {
 			if (spelerWedstrijden.size() > 0) {
 				logger.log(Level.WARNING, "Speler " + updateSpeler.getNaam() + " zowel extern als intern. Extern telt niet mee");
