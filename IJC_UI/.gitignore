@@ -1,4 +1,3 @@
-/app/
 /*.log
 /status.json
 /Indeling*.xlsx
@@ -11,5 +10,5 @@
 /*KEIpuntenS.txt
 /*.lck
 /R?-?*.txt
-/app/
 Inteken*docx
+/app/
