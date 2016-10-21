@@ -702,10 +702,7 @@ public class IJCController {
 	}
 	
 	public GroepenIndelerInterface getIndeler() {
-		if (indeler == null) {
-			indeler = new GroepenIndelerFactory().getIndeler();
-		}
-		return indeler;
+		return new GroepenIndelerFactory().getIndeler();
 	}
 
 }
