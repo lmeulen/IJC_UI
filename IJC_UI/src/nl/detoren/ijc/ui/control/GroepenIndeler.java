@@ -11,9 +11,7 @@
  *  
  * Problemen in deze code:
  * - TODO Bij oneven aantal spelers in de hoogste groep wordt er een volledig trio ingepland -> Handmatig aanpassen   
- * - MINOR Tijdens de 1e serie van 1e ronde van de 1e periode dient tijdens de 3e, 4e, 7e, 8e, 11e, 12e enz. wedstrijd
  * - MINOR Derde serie in de eerste ronde van de eerste periode
- * - FIXME Alleen doorschuiven in laatste ronde als gegarandeerd kampioen
  */
 package nl.detoren.ijc.ui.control;
 
@@ -155,9 +153,9 @@ public class GroepenIndeler implements GroepenIndelerInterface {
                 if ((s != null) && s.isAanwezig()) {
                     if ((j == aantal) && (aantal == 1)) {
                         // Alleen doorschuiven als speler 1 niet meer ingehaald kan worden
-                        Speler s2 = groepen.get(i + 1).getSpelerByID(j-1);
+                        Speler s2 = groepen.get(i + 1).getSpelerByID(2);
 						if (!IJCController.c().laasteRondeDoorschuivenAltijd) {
-							if (s.getPunten() > (s2.getPunten() + 5)) {
+							if ((s2 != null) && (s.getPunten() > (s2.getPunten() + 4))) {
 								logger.log(Level.FINE, "Speler doorgeschoven, niet meer in te halen ");
 								naarGroep.add(new Speler(s));
 								vanGroep.remove(s);
