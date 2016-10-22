@@ -88,6 +88,26 @@ public class Configuratie {
 	}
 
 	/**
+	 * Retourneer aantal doorschuivers in de volgende ronde
+	 * 
+	 * @param p Huidige periode
+	 * @param r Huidige ronde
+	 * @return aantal doorschuivers
+	 */
+	public int bepaalAantalDoorschuiversVolgendeRonde(int p, int r) {
+		int ronde = r;
+		int periode = p;
+		ronde += 1;
+        if (ronde > rondes) {
+        	ronde = 1;
+        	periode++;
+        	if (periode > perioden) periode = 1;
+        }
+
+		return (Integer) groovy.util.Eval.xy(periode, ronde, grAantalDoorschuivers);
+	}
+
+	/**
 	 * Groovy functie die bepaalt of op rating wordt gesorteerd. Input is
 	 * X=groepnummer, Y=periodenummer, Z=rondenummer Gebruik: int groep; int
 	 * periode; int ronde; boolean sort = Eval.xyz(groep, periode, ronde,

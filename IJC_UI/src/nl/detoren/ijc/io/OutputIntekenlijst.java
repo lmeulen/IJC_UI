@@ -10,8 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - FIXME Voor wel/niet doorschuivers tonen, naar nummer volgende ronde kijken, ipv huidige
- * - FIXME Alleen in laatte ronde doorschuiver tonen als kampioen
  */
 package nl.detoren.ijc.io;
 
@@ -74,20 +72,28 @@ public class OutputIntekenlijst {
 				}
 
 				if (IJCController.c().exportDoorschuivers) {
-					int ndoor = IJCController.c().bepaalAantalDoorschuivers(uitslag.getPeriode(), uitslag.getRonde());
+					int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(uitslag.getPeriode(), uitslag.getRonde());
 					if (i - 1 >= 0) {
-						result = IJCController.c().exportDoorschuiversStart + "\n";
-						run.setText(result);
+						run.setText(IJCController.c().exportDoorschuiversStart + "\n");
 						run.addBreak();
 						Groep lager = uitslag.getGroepById(i - 1);
+						if (ndoor > 1) {
 						for (int j = 0; j < ndoor; j++) {
 							Speler s = lager.getSpelerByID(j + 1);
-							result = s.toPrintableString(false) + "\n";
-							run.setText(result);
+							run.setText(s.toPrintableString(false) + "\n");
 							run.addBreak();
 						}
-						result = IJCController.c().exportDoorschuiversStop + "\n" + "\n";
-						run.setText(result);
+						run.setText(IJCController.c().exportDoorschuiversStop + "\n" + "\n");
+						} else {
+							// Bij één doorschuiver, alleen doorschuiVen als kampioen
+							Speler s1 = lager.getSpelerByID(1);
+							Speler s2 = lager.getSpelerByID(2);
+							if ((s2 != null) && ((s1.getPunten() - s2.getPunten()) > 4)) {
+								run.setText(s1.toPrintableString(false) + "\n");
+								run.addBreak();
+							}
+							
+						}
 					}
 				}
 				run.addCarriageReturn(); // separate previous text from break

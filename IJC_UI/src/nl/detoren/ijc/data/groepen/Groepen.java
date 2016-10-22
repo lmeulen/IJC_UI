@@ -104,17 +104,26 @@ public class Groepen {
 
             result += groep.toPrintableString(lang) + "\n";
             
-            if (IJCController.c().exportDoorschuivers) {
-            	int ndoor = IJCController.c().bepaalAantalDoorschuivers(periode, ronde);
-                if ( i + 1 < groepen.size()) {
-                	result += IJCController.c().exportDoorschuiversStart + "\n";
-                	Groep lager = groepen.get(i+1);
-                	for (int j = 0; j < ndoor; j++) {
-                		Speler s = lager.getSpelerByID(j+1); 
-                		result += s.toPrintableString(lang) + "\n";
-                	}
-                	result += IJCController.c().exportDoorschuiversStop + "\n" + "\n";
-                }
+			if (IJCController.c().exportDoorschuivers) {
+				int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(periode, ronde);
+				if (i + 1 < groepen.size()) {
+					result += IJCController.c().exportDoorschuiversStart + "\n";
+					Groep lager = groepen.get(i + 1);
+					if (ndoor > 1) {
+						for (int j = 0; j < ndoor; j++) {
+							Speler s = lager.getSpelerByID(j + 1);
+							result += s.toPrintableString(lang) + "\n";
+						}
+						result += IJCController.c().exportDoorschuiversStop + "\n" + "\n";
+					} else {
+						// Bij één doorschuiver, alleen doorschuiVen als kampioen
+						Speler s1 = lager.getSpelerByID(1);
+						Speler s2 = lager.getSpelerByID(2);
+						if ((s2 != null) && ((s1.getPunten() - s2.getPunten()) > 4)) {
+							result += s1.toPrintableString(lang) + "\n";
+						}
+					}
+				}
             }
             result += "\n";
         }
