@@ -38,8 +38,11 @@ public class Uitslagverwerker {
 
 	/**
 	 * Verwerk de wedstrijduitslagen en werk de standen bij
-	 * @param spelersgroepen De spelersgroepen
-	 * @param wedstrijden De gespeelde wedstrijden
+	 * 
+	 * @param spelersgroepen
+	 *            De spelersgroepen
+	 * @param wedstrijden
+	 *            De gespeelde wedstrijden
 	 * @return Bijgewerkte standen
 	 */
 	public Groepen verwerkUitslag(Groepen spelersgroepen, Wedstrijden wedstrijden, ArrayList<Speler> externGespeeld) {
@@ -65,14 +68,18 @@ public class Uitslagverwerker {
 
 	/**
 	 * Bepaal of de gegeven speler extern heeft gespeeld
-	 * @param speler De betreffende speler
-	 * @param hebbenExternGespeeld Lijst van spelers die extern hebben gespeeld
+	 * 
+	 * @param speler
+	 *            De betreffende speler
+	 * @param hebbenExternGespeeld
+	 *            Lijst van spelers die extern hebben gespeeld
 	 * @return
 	 */
 	private boolean heeftExternGespeeld(Speler speler, ArrayList<Speler> hebbenExternGespeeld) {
 		if ((speler != null) && (hebbenExternGespeeld != null) && (hebbenExternGespeeld.size() > 0)) {
 			for (Speler s : hebbenExternGespeeld) {
-				if (s.gelijkAan(speler)) return true;
+				if (s.gelijkAan(speler))
+					return true;
 			}
 		}
 		return false;
@@ -97,11 +104,19 @@ public class Uitslagverwerker {
 		// Standaardpunt
 		int puntenbij = 1;
 		logger.log(Level.INFO, "      Aanwezigheidspunt :" + puntenbij);
+		if (!speler.isAanwezig()) {
+			// Speler heeft mogelijk wel reglementair verloren door niet aanwezig te zijn.
+			// Tegenstander moet punten behouden en niet nadelig geraakt worden door afwezigheid
+			// van deze speler.
+			// Deze betreffende speler wel als afwezig behandelen
+			spelerWedstrijden = new ArrayList<>();
+		}
 		for (Wedstrijd w : spelerWedstrijden) {
 			logger.log(Level.INFO, "    Wedstrijd :" + w.toString());
 			int resultaat = 0; // TOTO style -> 0 = onbekend
 			Speler tegenstander = w.getWit().gelijkAan(speler) ? w.getZwart() : w.getWit();
-			if (updateSpeler.getGroep() < tegenstander.getGroep()) wedstrijdenHoger++;
+			if (updateSpeler.getGroep() < tegenstander.getGroep())
+				wedstrijdenHoger++;
 			// PUNTEN
 			if (w.getUitslag() == Wedstrijd.ONBEKEND) {
 				// doe niets
@@ -131,19 +146,21 @@ public class Uitslagverwerker {
 				updateSpeler.setWitvoorkeur(updateSpeler.getWitvoorkeur() - 1);
 				logger.log(Level.INFO, "      Witvoorkeur -1 :" + updateSpeler.getWitvoorkeur());
 			} else {
-				updateSpeler.setWitvoorkeur(updateSpeler.getWitvoorkeur()+1);
+				updateSpeler.setWitvoorkeur(updateSpeler.getWitvoorkeur() + 1);
 				logger.log(Level.INFO, "      Witvoorkeur +1 :" + updateSpeler.getWitvoorkeur());
 			}
 			// TEGENSTANDERS
 			String res = resultaat == 1 ? "+" : (resultaat == 2 ? "-" : (resultaat == 3 ? "=" : "?"));
-			updateSpeler.addTegenstander(tegenstander.getInitialen()+res);			
+			updateSpeler.addTegenstander(tegenstander.getInitialen() + res);
 			logger.log(Level.INFO, "      Tegenstanders  :" + updateSpeler.getTegenstandersString());
 		}
 		if (spelerWedstrijden.size() == 1) {
 			// bij 1 wedstrijd dubbele punten
 			logger.log(Level.INFO, "Enkele wedstrijd gepeeld dus verdubbelaar");
-			if (puntenbij == 3)	puntenbij = 5;
-			if (puntenbij == 2)	puntenbij = 3;
+			if (puntenbij == 3)
+				puntenbij = 5;
+			if (puntenbij == 2)
+				puntenbij = 3;
 		}
 		// Spelen in een hogere groep levert punten op
 		if (heeftHogerGespeeld(speler, wedstrijden)) {
@@ -165,28 +182,30 @@ public class Uitslagverwerker {
 		// Externe resultaten verwerken, niet als afwezig laten gelden
 		if (extern) {
 			if (spelerWedstrijden.size() > 0) {
-				logger.log(Level.WARNING, "Speler " + updateSpeler.getNaam() + " zowel extern als intern. Extern telt niet mee");
-			}  else {
+				logger.log(Level.WARNING,
+						"Speler " + updateSpeler.getNaam() + " zowel extern als intern. Extern telt niet mee");
+			} else {
 				puntenbij = 3;
 				updateSpeler.addTegenstander("X3 ");
 				logger.log(Level.WARNING, "Speler " + updateSpeler.getNaam() + " extern gespeeld, dus 3 punten");
 			}
 		}
-		
+
 		// KEI punten bepalen
-		if ((wedstrijdenHoger > 0) ) {
+		if ((wedstrijdenHoger > 0)) {
 			// Alle wedstrijden tegen speler hoger dus kant op punten
-			String lr = "KEI punten bepalen, aantal gewonnen = " + aantalgewonnen 
-					+ " aantal remise = " + aantalremise;
+			String lr = "KEI punten bepalen, aantal gewonnen = " + aantalgewonnen + " aantal remise = " + aantalremise;
 			logger.log(Level.INFO, lr);
 			int keipunten_bij = 0;
-			if (aantalgewonnen == 1 && aantalremise == 1) keipunten_bij = 1;
-			if (aantalgewonnen == spelerWedstrijden.size()) keipunten_bij = 2;
+			if (aantalgewonnen == 1 && aantalremise == 1)
+				keipunten_bij = 1;
+			if (aantalgewonnen == spelerWedstrijden.size())
+				keipunten_bij = 2;
 			logger.log(Level.INFO, "Speler " + updateSpeler.getNaam() + " verdient aantal keipunten: " + keipunten_bij);
 			updateSpeler.setKeikansen(updateSpeler.getKeikansen() + 1);
 			updateSpeler.setKeipunten(updateSpeler.getKeipunten() + keipunten_bij);
 		}
-		
+
 		logger.log(Level.INFO, "      Punten bij tot :" + puntenbij);
 		updateSpeler.setPunten(updateSpeler.getPunten() + puntenbij);
 		return updateSpeler;
@@ -194,8 +213,11 @@ public class Uitslagverwerker {
 
 	/**
 	 * Stel vast of de meegegeven speler in een hogere groep heeft gespeeld
-	 * @param speler Speler
-	 * @param wedstrijden Alle weedstrijden
+	 * 
+	 * @param speler
+	 *            Speler
+	 * @param wedstrijden
+	 *            Alle weedstrijden
 	 * @return true, als hoger gespeeld
 	 */
 	private boolean heeftHogerGespeeld(Speler speler, Wedstrijden wedstrijden) {
@@ -239,33 +261,39 @@ public class Uitslagverwerker {
 		logger.log(Level.INFO, "" + result.size() + "wedstrijden gevonden voor " + speler.toString());
 		return result;
 	}
-	
+
 	/**
-	 * UPdate rating van alle spelers. Itereer hiervoor door alle wedstrijden en pas per
-	 * wedstrijd de rating van iedere speler aan.
+	 * UPdate rating van alle spelers. Itereer hiervoor door alle wedstrijden en
+	 * pas per wedstrijd de rating van iedere speler aan.
+	 * 
 	 * @param groepen
 	 * @param wedstrijden
 	 */
 	private void updateRating(Groepen groepen, Wedstrijden wedstrijden) {
 		for (Groepswedstrijden gws : wedstrijden.getGroepswedstrijden()) {
 			for (Wedstrijd wedstrijd : gws.getWedstrijden()) {
-				
-				Speler wit   = groepen.getSpelerByKNSB(wedstrijd.getWit().getKNSBnummer()); // Speler in uitslaglijst
-				Speler zwart = groepen.getSpelerByKNSB(wedstrijd.getZwart().getKNSBnummer()); // Speler in uitslaglijst
-				
+
+				Speler wit = groepen.getSpelerByKNSB(wedstrijd.getWit().getKNSBnummer()); // Speler
+																							// in
+																							// uitslaglijst
+				Speler zwart = groepen.getSpelerByKNSB(wedstrijd.getZwart().getKNSBnummer()); // Speler
+																								// in
+																								// uitslaglijst
+
 				int ratingWit = wit.getRating();
 				int ratingZwart = zwart.getRating();
-				
-				// w.getUitslag   1=wit wint   2=zwart wint   3=remise   
-				int uitslagWit = wedstrijd.getUitslag(); // uitslag vanuit perspectief wit
-				int uitslagZwart = (wedstrijd.getUitslag() == 1) ? 2 : ((wedstrijd.getUitslag() == 2) ? 1 : 3); 
-				
+
+				// w.getUitslag 1=wit wint 2=zwart wint 3=remise
+				int uitslagWit = wedstrijd.getUitslag(); // uitslag vanuit
+															// perspectief wit
+				int uitslagZwart = (wedstrijd.getUitslag() == 1) ? 2 : ((wedstrijd.getUitslag() == 2) ? 1 : 3);
+
 				int nieuwWit = nieuweRatingOSBO(ratingWit, ratingZwart, uitslagWit);
 				int nieuwZwart = nieuweRatingOSBO(ratingZwart, ratingWit, uitslagZwart);
-				
+
 				wit.setRating(Math.max(nieuwWit, 100));
 				zwart.setRating(Math.max(nieuwZwart, 100));
-				
+
 				logger.log(Level.INFO, wedstrijd.toString());
 				logger.log(Level.INFO, "Wit: " + wit.getNaam() + " van " + ratingWit + " naar " + nieuwWit);
 				logger.log(Level.INFO, "Zwart: " + zwart.getNaam() + " van " + ratingZwart + " naar " + nieuwZwart);
@@ -273,63 +301,66 @@ public class Uitslagverwerker {
 		}
 	}
 
-    /**
-    Bereken nieuwe rating conform de regels van de OSBO en zoals gebruikt
-   bij de interne competitie
-    @param beginRating
-    @param tegenstanderRating
-    @param uitslag 1 = winst, 2 = verlies, 3 = remise
-    * @return  
-    */
-   public int nieuweRatingOSBO(int beginRating, int tegenstanderRating, int uitslag) {
-       
-       int[] ratingTabel = {0, 16, 31, 51, 71, 91, 116, 141, 166, 201, 236, 281, 371, 9999};
-       int ratingVerschil = Math.abs(beginRating - tegenstanderRating);
-       boolean ratingHogerDanTegenstander = beginRating > tegenstanderRating;
-       int index = 0;
-       while (ratingVerschil >= ratingTabel[index]) {
-           index++;
-       }
-       index--; // iterator goes one to far.
-       if (index == -1) index = 0;
-       // Update rating wit
-       // Dit gebeurd aan de hand van de volgende OSBO tabel
-       // Hierin is: W> = winnaar heeft de hoogste rating
-       //            W< = winnaar heeft de laagste rating
-       //            V> = verliezer heeft de hoogste rating
-       //            V< = verliezer heeft de laagste rating
-       //            R> = remise met de hoogste rating
-       //            R< = remise met de laagste rating
-       //
-       //In de volgende tabel wordt de aanpassing van de rating weergegeven
-       //rating   
-       //verschil  W>    V<    W<    V>    R>    R<
-       //  0- 15   +12   -12   +12   -12     0     0
-       // 16- 30   +11   -11   +13   -13   - 1   + 1
-       // 31- 50   +10   -10   +14   -14   - 2   + 2
-       // 51- 70   + 9   - 9   +15   -15   - 3   + 3
-       // 71- 90   + 8   - 8   +16   -16   - 4   + 4
-       // 91-115   + 7   - 7   +17   -17   - 5   + 5
-       //116-140   + 6   - 6   +18   -18   - 6   + 6
-       //141-165   + 5   - 5   +19   -19   - 7   + 7
-       //166-200   + 4   - 4   +20   -20   - 8   + 8
-       //201-235   + 3   - 3   +21   -21   - 9   + 9
-       //236-280   + 2   - 2   +22   -22   -10   +10
-       //281-370   + 1   - 1   +23   -23   -11   +11
-       // >371     + 0   - 0   +24   -24   -12   +12        
-       int deltaRating;
-       switch (uitslag) {
-           case 1: // Winst
-               deltaRating = 12 + (ratingHogerDanTegenstander ? (-1 * index) : (+1 * index));
-               return beginRating + deltaRating;
-           case 2: // Verlies
-               deltaRating = 12 + (ratingHogerDanTegenstander ? (+1 * index) : (-1 * index));
-               return beginRating - deltaRating;
-           case 3: // Remise
-               deltaRating = (ratingHogerDanTegenstander ? (-1 * index) : (+1 * index));
-               return beginRating + deltaRating;
-           default: // Geen uitstal
-               return beginRating;
-       }
-   }
+	/**
+	 * Bereken nieuwe rating conform de regels van de OSBO en zoals gebruikt bij
+	 * de interne competitie
+	 * 
+	 * @param beginRating
+	 * @param tegenstanderRating
+	 * @param uitslag
+	 *            1 = winst, 2 = verlies, 3 = remise
+	 * @return
+	 */
+	public int nieuweRatingOSBO(int beginRating, int tegenstanderRating, int uitslag) {
+
+		int[] ratingTabel = { 0, 16, 31, 51, 71, 91, 116, 141, 166, 201, 236, 281, 371, 9999 };
+		int ratingVerschil = Math.abs(beginRating - tegenstanderRating);
+		boolean ratingHogerDanTegenstander = beginRating > tegenstanderRating;
+		int index = 0;
+		while (ratingVerschil >= ratingTabel[index]) {
+			index++;
+		}
+		index--; // iterator goes one to far.
+		if (index == -1)
+			index = 0;
+		// Update rating wit
+		// Dit gebeurd aan de hand van de volgende OSBO tabel
+		// Hierin is: W> = winnaar heeft de hoogste rating
+		// W< = winnaar heeft de laagste rating
+		// V> = verliezer heeft de hoogste rating
+		// V< = verliezer heeft de laagste rating
+		// R> = remise met de hoogste rating
+		// R< = remise met de laagste rating
+		//
+		// In de volgende tabel wordt de aanpassing van de rating weergegeven
+		// rating
+		// verschil W> V< W< V> R> R<
+		// 0- 15 +12 -12 +12 -12 0 0
+		// 16- 30 +11 -11 +13 -13 - 1 + 1
+		// 31- 50 +10 -10 +14 -14 - 2 + 2
+		// 51- 70 + 9 - 9 +15 -15 - 3 + 3
+		// 71- 90 + 8 - 8 +16 -16 - 4 + 4
+		// 91-115 + 7 - 7 +17 -17 - 5 + 5
+		// 116-140 + 6 - 6 +18 -18 - 6 + 6
+		// 141-165 + 5 - 5 +19 -19 - 7 + 7
+		// 166-200 + 4 - 4 +20 -20 - 8 + 8
+		// 201-235 + 3 - 3 +21 -21 - 9 + 9
+		// 236-280 + 2 - 2 +22 -22 -10 +10
+		// 281-370 + 1 - 1 +23 -23 -11 +11
+		// >371 + 0 - 0 +24 -24 -12 +12
+		int deltaRating;
+		switch (uitslag) {
+		case 1: // Winst
+			deltaRating = 12 + (ratingHogerDanTegenstander ? (-1 * index) : (+1 * index));
+			return beginRating + deltaRating;
+		case 2: // Verlies
+			deltaRating = 12 + (ratingHogerDanTegenstander ? (+1 * index) : (-1 * index));
+			return beginRating - deltaRating;
+		case 3: // Remise
+			deltaRating = (ratingHogerDanTegenstander ? (-1 * index) : (+1 * index));
+			return beginRating + deltaRating;
+		default: // Geen uitstal
+			return beginRating;
+		}
+	}
 }
