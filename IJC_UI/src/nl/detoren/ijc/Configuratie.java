@@ -139,8 +139,7 @@ public class Configuratie {
 	 * worden waarbij de bovenste helft tegen de onderste helft speelt. Door dit
 	 * te doen, wordt er snel een scheiding gemaakt tussen de goede en minder
 	 * goede spelers in een groep. Hierna wordt dus sneller tegen spelers van
-	 * het eigen niveau gespeeld. MINOR conf.specialeindelingronde1 Nog niet in
-	 * gebruik
+	 * het eigen niveau gespeeld. 
 	 */
 	public boolean specialeIndelingEersteRonde = true;
 

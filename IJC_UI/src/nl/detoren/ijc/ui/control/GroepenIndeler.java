@@ -197,7 +197,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 
     /**
      * Bepaal het minimale verschil tussen twee spelers die tegen elkaar spelen
-     *
+     * TODO: Functie Minimaalverschil naar configuratie
      * @param groep De groep
      * @param periode Periode
      * @param ronde Ronde in de periode
@@ -209,16 +209,12 @@ public class GroepenIndeler implements GroepenIndelerInterface {
     	logger.log(Level.INFO, "Periode " + periode + " ronde " + ronde + " serie " + serie);    		
     	logger.log(Level.INFO, "groep " + groep.getNaam() + " met grootte " + aantal);  
     	int resultaat;
-        if (groep.getNiveau() == IJCController.c().aantalGroepen - 1) {
-            resultaat = ((periode == 1) && (ronde == 1) && (serie == 1)) ? (aantal / 2) : 1;
-        	logger.log(Level.FINE, "Keizergroep: Minimaal verschil = " + resultaat);    		
-        } else if (ronde > 1) {
-        	logger.log(Level.FINE, "Ronde > 1: Minimaal verschil = " + serie);    		
-            resultaat = serie;
-        } else {
+    	
+    	if ((IJCController.c().specialeIndelingEersteRonde) && (ronde == 1)) {
             resultaat = (serie == 1 ? (aantal / 2) : (serie == 2 ? 1 : 2));
-        	logger.log(Level.FINE, "Ronde = 1 : Minimaal verschil = " + resultaat);    		
-        }
+    	} else {
+            resultaat = serie;
+    	}
         String log = groep.getNaam() + "in periode "+ periode + ", ronde " + ronde;
         log += ", serie " + serie + "-> minimaal verschil = " + resultaat;
     	logger.log(Level.INFO, log);  

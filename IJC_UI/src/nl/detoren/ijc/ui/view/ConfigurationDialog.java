@@ -267,6 +267,7 @@ public class ConfigurationDialog extends JDialog {
 		// public boolean specialeIndelingEersteRonde = true;
 		panel.add(new JLabel("Speciale indeling eerste ronde"));
 		cbSpeciaalRonde1 = new JCheckBox("", config.specialeIndelingEersteRonde);
+		cbSpeciaalRonde1.setToolTipText("Als waar, dan speekt in de eerste ronde van de eerste serie de bovenste helft tegen de onderste helft");
 		panel.add(cbSpeciaalRonde1);
 		// private boolean fuzzyIndeling
 		panel.add(new JLabel("Gebruik fuzzy algoritme (experimenteel)"));
@@ -378,30 +379,17 @@ public class ConfigurationDialog extends JDialog {
 	}
 
 	private void storeValues() {
-		// private JTextField tfAppnaam;
 		updateTextConfig(config, "appTitle", tfAppnaam.getText(), 5);
-		// private JTextField tfVerenigingNaam;
 		updateTextConfig(config, "verenigingNaam", tfVerenigingNaam.getText(), 5);
-		// private JTextField tfCompetititeNaam;
 		updateTextConfig(config, "competitieNaam", tfCompetitieNaam.getText(), 5);
-		// private JTextField tfCompetitieLocatie;
 		updateTextConfig(config, "competitieLocatie", tfCompetitieLocatie.getText(), 5);
-		// private JTextField tfContactNaam;
 		updateTextConfig(config, "contactPersoonNaam", tfContactNaam.getText(), 5);
-		// private JTextField tfContactEmail;
 		updateTextConfig(config, "contactPersoonEmail", tfContactEmail.getText(), 5);
 
-		// private JTextField tfPerioden;
 		updateIntConfig(config, "perioden", tfPerioden.getText(), 1, 10);
-		// private JTextField tfRondes;
 		updateIntConfig(config, "rondes", tfRondes.getText(), 1, 99);
-		// private JTextField tfGrSeries;
 		updateTextConfig(config, "grAantalSeries", tfGrSeries.getText(), 2);
-		// private JTextField tfSpeelgroepen;
 		updateIntConfig(config, "aantalGroepen", tfSpeelgroepen.getText(), 1, 10);
-		// private JTextField[] tfGroepsnamens;
-		// private JTextField[] tfStartPuntens;
-		// private JTextField[] tfStartRatings;
 		config.groepsnamen = new String[10];
 		config.startPunten = new int[10];
 		config.startRating = new int[10];
@@ -415,54 +403,38 @@ public class ConfigurationDialog extends JDialog {
 			config.startPunten[i] = 0;
 			config.startRating[i] = 0;
 		}
-		// private JTextField tfGrDoorschuivers;
 		updateTextConfig(config, "grAantalDoorschuivers", tfGrDoorschuivers.getText(), 2);
-		// private JCheckbox cbFyuzzyIndeling
 		config.fuzzyIndeling = cbFuzzyIndeling.isSelected();
-		// private JTextField tfGrSorteerRating;
 		updateTextConfig(config, "grSorteerOpRating", tfGrSorteerRating.getText(), 2);
-		// private JTextField tfGrBegintrio;
 		updateTextConfig(config, "grBeginTrio", tfGrBegintrio.getText(), 2);
-		// private JCheckBox cbLaatsteRondeDoorschuiven;
 		config.laasteRondeDoorschuivenAltijd = cbLaatsteRondeDoorschuiven.isSelected();
-		// private JCheckBox cbSpeciaalRonde1;
 		config.specialeIndelingEersteRonde = cbSpeciaalRonde1.isSelected();
-		// private JTextField tfMaxVerschil;
 		updateIntConfig(config, "indelingMaximumVerschil", tfMaxVerschil.getText(), 0, 99);
-		// private JCheckBox cbExportShort;
 		config.exportTextShort = cbExportShort.isSelected();
-		// private JCheckBox cbSaveLongformat;
 		config.exportTextLong = cbSaveLongformat.isSelected();
-		// private JCheckBox cbSaveDoorschuivers;
 		config.exportDoorschuivers = cbSaveDoorschuivers.isSelected();
-		// private JTextField tfHeaderDoor;
 		updateTextConfig(config, "exportDoorschuiversStart", tfHeaderDoor.getText(), 10);
-		// private JTextField tfFooterDoor
 		updateTextConfig(config, "exportDoorschuiversStop", tfFooterDoor.getText(), 10);
-		// private JCheckBox cbSaveKEI;
 		config.exportKEIlijst = cbSaveKEI.isSelected();
-		// private JCheckBox cbSaveInteken;
 		config.exportIntekenlijst = cbSaveInteken.isSelected();
-		// private JCheckBox cbSaveKNSB;
 		config.exportKNSBRating = cbSaveKNSB.isSelected();
-		// private JCheckBox cbSaveAdditionals;
 		config.saveAdditionalStates = cbSaveAdditionals.isSelected();
-		// private JTextField tfConfigfile;
 		updateTextConfig(config, "configuratieBestand", tfConfigfile.getText(), 5);
-		// private JTextField tfStatusfile;
 		updateTextConfig(config, "statusBestand", tfStatusfile.getText(), 5);
-		
-//		public double fuzzyWegingAndereTegenstander = 0.99;
 		updateDoubleConfig(config, "fuzzyWegingAndereTegenstander", tfFuzzyAndereTgn.getText(), 0.0, 1.0);
-//		public double fuzzyWegingAfstandRanglijst = 0.98;
 		updateDoubleConfig(config, "fuzzyWegingAfstandRanglijst", tfFuzzyRanglijst.getText(), 0.0, 1.0);
-//		public double fuzzyWegingZwartWitVerdeling = 0.97;
 		updateDoubleConfig(config, "fuzzyWegingZwartWitVerdeling", tfFuzzyZwartWit.getText(), 0.0, 1.0);
-//		public double fuzzyWegingDoorschuiverEigenGroep = 0.1;
 		updateDoubleConfig(config, "fuzzyWegingDoorschuiverEigenGroep", tfFuzzyDoorschuiver.getText(), 0.0, 1.0);
 
 	}
 
+	/**
+	 * Update een string veld in de configuratie
+	 * @param c Configuratie object
+	 * @param fieldname veldnaam in het configuratie object, moet type string hebben
+	 * @param value Waarde om op te slaan
+	 * @param minlengte Minimale lengte van de text
+	 */
 	private static void updateTextConfig(Configuratie c, String fieldname, String value, int minlengte) {
 		String msg = "Saving value \'" + value + "\' to field " + fieldname;
 		logger.log(Level.INFO, msg);
@@ -475,6 +447,15 @@ public class ConfigurationDialog extends JDialog {
 		}
 	}
 
+	/**
+	 * Update een integer veld in de configuratie. Indien nieuwe waarde niet tussen
+	 * min en max, dan wordt de huidige waarde gehandhaafd.
+	 * @param c Configuratie object
+	 * @param fieldname veldnaam in het configuratie object, moet type int hebben
+	 * @param value Waarde om op te slaan
+	 * @param min Minimale nieuwe waarde
+	 * @param max Maximale nieuwe waarde
+	 */
 	private static void updateIntConfig(Configuratie c, String fieldname, String value, int min, int max) {
 		try {
 			String msg = "Saving value \'" + value + "\' to field " + fieldname;
@@ -488,6 +469,15 @@ public class ConfigurationDialog extends JDialog {
 		}
 	}
 
+	/**
+	 * Update een double veld in de configuratie. Indien nieuwe waarde niet tussen
+	 * min en max, dan wordt de huidige waarde gehandhaafd.
+	 * @param c Configuratie object
+	 * @param fieldname veldnaam in het configuratie object, moet type double hebben
+	 * @param value Waarde om op te slaan
+	 * @param min Minimale nieuwe waarde
+	 * @param max Maximale nieuwe waarde
+	 */
 	private static void updateDoubleConfig(Configuratie c, String fieldname, String value, double min, double max) {
 		try {
 			logger.log(Level.INFO, "Saving value \'" + value + "\' to field " + fieldname);
