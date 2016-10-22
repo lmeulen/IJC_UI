@@ -117,8 +117,8 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			triagonal.setOrder(order);
 			triagonal.setIterations(groep.getAantalSpelers());
 			triagonal.Iterminimizetriagonal();
-			order = minimizetriagonal.getOrder();
-			int[][] tri = minimizetriagonal.getA();
+			order = triagonal.getOrder();
+			int[][] tri = triagonal.getA();
 			Utils.printMatrix(tri);
 			if (groep.getNaam().equals("Pionnengroep")) {
 				SpelersNamenopvolgorde(tri,indexrow, groep.getSpelers());
@@ -275,10 +275,10 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		int matrix3[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix4[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
-		double mf1 = 1;
-		double mf2 = 1;
-		double mf3 = 1;
-		double mf4 = 1;
+		double mf1 = 1;		// Niet tegen dezelfde tegenstander
+		double mf2 = 1;		// Verschil in positie op de ranglijst
+		double mf3 = 1;		// Zwart/wit verdeling
+		double mf4 = 1;		// Doorschuivers voorkeur voor eigen groep
 		int i, j, weging = 0;
 		int tegenstanders[] = new int[4];
 		// matrix1 : Niet tegen dezelfde tegenstander
@@ -365,7 +365,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			int witv1 = (int) wedstrijdgroep.getSpelerByID(i).getWitvoorkeur();
 			for (j = 1; j <= wedstrijdgroep.getAantalSpelers(); j++) {
 				int witv2 = (int) wedstrijdgroep.getSpelerByID(j).getWitvoorkeur();
-				if (/*i == j*/ true) {
+				if (i == j) {
 					matrix3[i - 1][j] = 0;
 				} else {
 					switch (witv1) {

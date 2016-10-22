@@ -21,50 +21,50 @@ import java.util.logging.Logger;
 
 public class minimizetriagonal {
 
-    private static int iterations;
-    private static int order[];
-    private static int swaps[][];
-	private static int A[][];
+    private  int iterations;
+    private int order[];
+    private int swaps[][];
+	private int A[][];
 	
 	private final static Logger logger = Logger.getLogger(minimizetriagonal.class.getName());
     
-    public static int getIterations() {
+    public  int getIterations() {
         return iterations;
     }
 
     public void setIterations(int iterations) {
-        minimizetriagonal.iterations = iterations;
+        this.iterations = iterations;
     }
 
-	public static int[] getOrder() {
+	public int[] getOrder() {
 		return order;
 	}
 
 	public void setOrder(int order[]) {
-		minimizetriagonal.order = order;
+		this.order = order;
 	}
 
-	public static int[][] getSwaps() {
+	public int[][] getSwaps() {
 		return swaps;
 	}
 
 	public void setSwaps(int swaps[][]) {
-		minimizetriagonal.swaps = swaps;
+		this.swaps = swaps;
 	}
 
-	public static int[][] getA() {
+	public int[][] getA() {
         return A;
     }
 
     public void setA(int A[][]) {
-        minimizetriagonal.A = A;
+        this.A = A;
     }
 
-    public static int getADimensionx() {
+    public int getADimensionx() {
         return A.length;
     }
 
-    public static int getADimensiony() {
+    public int getADimensiony() {
         return A[0].length;
     }
 
@@ -81,8 +81,8 @@ public class minimizetriagonal {
 		if (cont==0) {
 			System.out.printf("Iteration completed in %d iteration and in %d swaps.\n", i, contsum);
 		} else {
-			System.out.printf("Iteration failed. No convergence within maximum of %d iterations.\n", minimizetriagonal.getIterations());
-			logger.log(Level.SEVERE, "Iteration failed. No convergence within maximum of %d iterations.\n", minimizetriagonal.getIterations());    		
+			System.out.printf("Iteration failed. No convergence within maximum of %d iterations.\n", getIterations());
+			logger.log(Level.SEVERE, "Iteration failed. No convergence within maximum of %d iterations.\n", getIterations());    		
 		}
     	return;
     }
@@ -117,7 +117,7 @@ public class minimizetriagonal {
 		return trio;
 	}
 
-    public static int minimize ()
+    public int minimize ()
     // Solves best pairing by minimizing matrix triagonal 
     {
     	int i, j, k;

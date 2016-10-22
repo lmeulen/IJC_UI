@@ -73,11 +73,11 @@ public class OutputIntekenlijst {
 
 				if (IJCController.c().exportDoorschuivers) {
 					int ndoor = IJCController.c().bepaalAantalDoorschuivers(uitslag.getPeriode(), uitslag.getRonde());
-					if (i + 1 < uitslag.getAantalGroepen()) {
+					if (i - 1 >= 0) {
 						result = IJCController.c().exportDoorschuiversStart + "\n";
 						run.setText(result);
 						run.addBreak();
-						Groep lager = uitslag.getGroepById(i + 1);
+						Groep lager = uitslag.getGroepById(i - 1);
 						for (int j = 0; j < ndoor; j++) {
 							Speler s = lager.getSpelerByID(j + 1);
 							result = s.toPrintableString(false) + "\n";

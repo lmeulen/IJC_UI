@@ -139,7 +139,8 @@ public class GroepenIndeler implements GroepenIndelerInterface {
     	// Let op: iterator gaat op array index en NIET op groepID
         ArrayList<Groep> groepen = wedstrijdGroepen.getGroepen();
         for (int i = 0; i < groepen.size() - 1; ++i) {
-        	logger.log(Level.FINE, "Doorschuiven van groep "  + groepen.get(i+1).getNaam() + " naar " + groepen.get(i).getNaam());    		
+            aantal = bepaalAantalDoorschuiven(aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
+        	logger.log(Level.INFO, "Doorschuiven van groep "  + groepen.get(i+1).getNaam() + " naar " + groepen.get(i).getNaam());    		
             ArrayList<Speler> naarGroep = groepen.get(i).getSpelers();
             if (naarGroep == null) naarGroep = new ArrayList<>();
             ArrayList<Speler> vanGroep = groepen.get(i + 1).getSpelers();
@@ -153,7 +154,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
                 if ((s != null) && s.isAanwezig()) {
                     if ((j == aantal) && (aantal == 1)) {
                         // Alleen doorschuiven als speler 1 niet meer ingehaald kan worden
-                        Speler s2 = groepen.get(i + 1).getSpelerByID(j);
+                        Speler s2 = groepen.get(i + 1).getSpelerByID(j-1);
 						if (!IJCController.c().laasteRondeDoorschuivenAltijd) {
 							if (s.getPunten() > (s2.getPunten() + 5)) {
 								logger.log(Level.FINE, "Speler doorgeschoven, niet meer in te halen ");
@@ -359,7 +360,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 	        maxverschil = Math.min(minverschil + 3, groep.getAantalSpelers());
 			while ((serie == null) && (maxverschil <= groep.getAantalSpelers())) {
 				while ((serie == null) && (ignoreTgns <= 5)) {
-					serie = maakSerie(groep, gepland, aantalSpelers, minverschil, maxverschil, ignoreTgns, ronde);
+					serie = maakSerie(groep, gepland, aantalSpelers, minverschil, maxverschil, ignoreTgns, i);
 					ignoreTgns++;
 				}
 				maxverschil++;
@@ -376,11 +377,11 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 		return gws;
 	}
 
-    protected Serie maakSerie(Groep groep, boolean[] gepland, int aantalSpelers, int minverschil, int maxverschil, int ignoreTgn, int ronde) {
+    protected Serie maakSerie(Groep groep, boolean[] gepland, int aantalSpelers, int minverschil, int maxverschil, int ignoreTgn, int serienr) {
         Serie serie = new Serie();
         int mv = minverschil;
         while (mv >= 0) {
-            Serie s = planSerie(serie, groep.getSpelers(), gepland, aantalSpelers, minverschil, maxverschil, ignoreTgn, groep.getNiveau(), 1, ronde);
+            Serie s = planSerie(serie, groep.getSpelers(), gepland, aantalSpelers, minverschil, maxverschil, ignoreTgn, groep.getNiveau(), 1, serienr);
             if (s != null) {
                 return s;
             }
@@ -390,7 +391,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
     }
 
     protected Serie planSerie(Serie serie, ArrayList<Speler> spelers, boolean[] gepland,
-            int teplannen, int minverschil, int maxverschil, int ignoreTgn, int niveau, int diepte, int ronde) {
+            int teplannen, int minverschil, int maxverschil, int ignoreTgn, int niveau, int diepte, int serienr) {
         for (int i = 0; i < diepte; ++i) {
             System.out.print("  ");
         }
@@ -404,7 +405,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
         // Eerst doorgeschoven spelers inplannen
         // Maar deze speciale behandeling geldt alleen de eerste ronde
         int doorgeschovenID = laatsteOngeplandeDoorgeschovenspeler(spelers, gepland, niveau);
-        if ((doorgeschovenID >= 0) && (ronde == 1)) {
+        if ((doorgeschovenID >= 0) && (serienr == 1)) {
             int zoekId = doorgeschovenID - 1;
             while ((zoekId != -1) && ((Math.abs(zoekId - doorgeschovenID) <= maxverschil))) {
                 int partner = laatsteOngeplandeSpeler(gepland, zoekId);
@@ -416,9 +417,9 @@ public class GroepenIndeler implements GroepenIndelerInterface {
                 if (!s1.isGespeeldTegen(s2, ignoreTgn) && (s2.getGroep() != s1.getGroep())) {
                     gepland[doorgeschovenID] = true;
                     gepland[partner] = true;
-                    Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, maxverschil, ignoreTgn, niveau, diepte + 1, ronde);
+                    Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, maxverschil, ignoreTgn, niveau, diepte + 1, serienr);
                     if (s != null) {
-                        Wedstrijd w = new Wedstrijd(diepte, s1, s2, 0);
+                        Wedstrijd w = new Wedstrijd(s1.getId() * 100 + s2.getId(), s1, s2, 0);
                         s.addWestrijd(w, true);
                         return s;
                     }
@@ -441,7 +442,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
                 if (!s1.isGespeeldTegen(s2, ignoreTgn) && (Math.abs(s2.getId() - s1.getId()) <= maxverschil)) {
                     gepland[plannenID] = true;
                     gepland[partner] = true;
-                    Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, maxverschil, ignoreTgn, niveau, diepte + 1, ronde);
+                    Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, maxverschil, ignoreTgn, niveau, diepte + 1, serienr);
                     if (s != null) {
                         Wedstrijd w = new Wedstrijd(s1.getId() * 100 + s2.getId(), s1, s2, 0);
                         s.addWestrijd(w, true);
