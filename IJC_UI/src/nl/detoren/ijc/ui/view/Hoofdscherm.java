@@ -82,8 +82,8 @@ import nl.detoren.ijc.ui.util.Utils;
 public class Hoofdscherm extends JFrame {
 
 	//Colors and fonts
-	private static final Color light_green = new Color(240, 255, 240);
-	private static final Color light_red = new Color(250, 240, 230);
+	private static final Color light_green = new Color(200, 255, 200);
+	private static final Color light_red = new Color(255, 200, 200);
 	private static final Font courierFont = new Font("Courier", Font.PLAIN, 11);
 
 	private static final long serialVersionUID = -2154845989579570030L;
