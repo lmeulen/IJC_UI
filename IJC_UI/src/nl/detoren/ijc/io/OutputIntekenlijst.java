@@ -10,6 +10,8 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
+ * - FIXME Voor wel/niet doorschuivers tonen, naar nummer volgende ronde kijken, ipv huidige
+ * - FIXME Alleen in laatte ronde doorschuiver tonen als kampioen
  */
 package nl.detoren.ijc.io;
 

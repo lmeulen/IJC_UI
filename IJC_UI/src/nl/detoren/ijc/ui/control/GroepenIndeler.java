@@ -13,6 +13,7 @@
  * - TODO Bij oneven aantal spelers in de hoogste groep wordt er een volledig trio ingepland -> Handmatig aanpassen   
  * - MINOR Tijdens de 1e serie van 1e ronde van de 1e periode dient tijdens de 3e, 4e, 7e, 8e, 11e, 12e enz. wedstrijd
  * - MINOR Derde serie in de eerste ronde van de eerste periode
+ * - FIXME Alleen doorschuiven in laatste ronde als gegarandeerd kampioen
  */
 package nl.detoren.ijc.ui.control;
 

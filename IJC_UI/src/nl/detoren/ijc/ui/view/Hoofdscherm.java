@@ -10,6 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
+ * - TODO Inlezen csv bestand met groepen, spelers, knsbnummer, rating 
  * 
  */
 package nl.detoren.ijc.ui.view;

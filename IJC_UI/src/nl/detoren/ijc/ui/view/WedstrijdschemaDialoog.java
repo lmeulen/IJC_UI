@@ -10,6 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
+ * - FIXME Bewerken van triowedstrijden niet mogelijk 
  */
 package nl.detoren.ijc.ui.view;
 
