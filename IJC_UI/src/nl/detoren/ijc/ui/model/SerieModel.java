@@ -161,11 +161,17 @@ public class SerieModel extends AbstractTableModel {
 
     public void setSpeler(int wedstrijdID, int spelerID, boolean wit) {
         Groepswedstrijden gws = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID);
-        Serie serie = gws.getSerie(serieID);
-        Wedstrijd ws = serie.getWedstrijd(wedstrijdID);
-        if (ws == null) {
-            return;
-        }
+        Wedstrijd ws = null;
+		if (serieID == 3) {
+			ArrayList<Wedstrijd> trio = gws.getTriowedstrijden();
+			ws = trio.get(wedstrijdID);
+		} else {
+			Serie serie = gws.getSerie(serieID);
+			ws = serie.getWedstrijd(wedstrijdID);
+			if (ws == null) {
+				return;
+			}
+		}
         Groep groep = controller.getWedstrijdGroepByID(groepID);
         if (groep == null) {
             return;
