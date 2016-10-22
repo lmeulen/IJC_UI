@@ -60,7 +60,6 @@ public class ConfigurationDialog extends JDialog {
 	private JTextField[] tfStartPuntens;
 	private JTextField[] tfStartRatings;
 	private JTextField tfGrDoorschuivers;
-	private JCheckBox cbFuzzyIndeling;
 	private JTextField tfGrSorteerRating;
 	private JTextField tfGrBegintrio;
 	private JCheckBox cbLaatsteRondeDoorschuiven;
@@ -77,6 +76,11 @@ public class ConfigurationDialog extends JDialog {
 	private JCheckBox cbSaveAdditionals;
 	private JTextField tfConfigfile;
 	private JTextField tfStatusfile;
+	private JCheckBox cbFuzzyIndeling;
+	private JTextField tfFuzzyAndereTgn;
+	private JTextField tfFuzzyRanglijst;
+	private JTextField tfFuzzyZwartWit;
+	private JTextField tfFuzzyDoorschuiver;
 
 	public ConfigurationDialog(Frame frame, String title) {
 		super(frame, title);
@@ -153,15 +157,15 @@ public class ConfigurationDialog extends JDialog {
 		tabInstellingen.add(new JLabel("Contactpersoon - Naam"));
 		tfContactNaam = new JTextField(config.contactPersoonNaam, 20);
 		tabInstellingen.add(tfContactNaam);
-		
+
 		tabInstellingen.add(new JLabel("Contactpersoon - Email"));
-		tfContactEmail= new JTextField(config.contactPersoonEmail, 20);
+		tfContactEmail = new JTextField(config.contactPersoonEmail, 20);
 		tabInstellingen.add(tfContactEmail);
-		
+
 		tabInstellingen.add(new JLabel("Applicatie titel"));
 		tfAppnaam = new JTextField(config.appTitle, 20);
 		tabInstellingen.add(tfAppnaam);
-		
+
 		for (int i = 0; i < 14; i++) {
 			JLabel left = new JLabel(" ");
 			tabInstellingen.add(left);
@@ -180,14 +184,14 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(tfPerioden);
 		// public int rondes = 8
 		panel.add(new JLabel("Aantal rondes per periode"));
-		tfRondes = new JTextField((new Integer(config.rondes)).toString(),20);
+		tfRondes = new JTextField((new Integer(config.rondes)).toString(), 20);
 		panel.add(tfRondes);
 		// private String grAantalSeries =
 		// "if (x == 6) { if ((y == 1) && (z == 1)) { return 2 } else { return 1
 		// } }" +
 		// " else if ((y == 1) && (z == 1)) { return 3 } else { return 2 } ";
 		panel.add(new JLabel("Aantal series per ronde"));
-		tfGrSeries = new JTextField(config.grAantalSeries,20);
+		tfGrSeries = new JTextField(config.grAantalSeries, 20);
 		tfGrSeries.setCaretPosition(0);
 		tfGrSeries.setToolTipText("Groovy functie: x=groep, y=periode, z=ronde");
 		panel.add(tfGrSeries);
@@ -219,8 +223,8 @@ public class ConfigurationDialog extends JDialog {
 		for (int i = 0; i < 10; ++i) {
 			if (i < config.groepsnamen.length) {
 				tfGroepsnamens[i] = new JTextField(config.groepsnamen[i], 20);
-				tfStartPuntens[i] = new JTextField(new Integer(config.startPunten[i]).toString(),10);
-				tfStartRatings[i] = new JTextField(new Integer(config.startRating[i]).toString(),10);
+				tfStartPuntens[i] = new JTextField(new Integer(config.startPunten[i]).toString(), 10);
+				tfStartRatings[i] = new JTextField(new Integer(config.startRating[i]).toString(), 10);
 			} else {
 				tfGroepsnamens[i] = new JTextField("");
 				tfStartPuntens[i] = new JTextField("");
@@ -249,10 +253,6 @@ public class ConfigurationDialog extends JDialog {
 		tfGrDoorschuivers.setCaretPosition(0);
 		tfGrDoorschuivers.setToolTipText("Groovy functie: x=periode, y=ronde, resultaat 0 is geen doorschuivers");
 		panel.add(tfGrDoorschuivers);
-		// private boolean fuzzyIndeling
-		panel.add(new JLabel("Gebruik fuzzy algoritme (experimenteel)"));
-		cbFuzzyIndeling = new JCheckBox("", config.fuzzyIndeling);
-		panel.add(cbFuzzyIndeling);
 		// private String grSorteerOpRating = "if ((x == 6) && (z > 1) && (z <
 		// 7)) { true } else { false }";
 		panel.add(new JLabel("Sorteer op rating voor indelen"));
@@ -260,12 +260,6 @@ public class ConfigurationDialog extends JDialog {
 		tfGrSorteerRating.setCaretPosition(0);
 		tfGrSorteerRating.setToolTipText("Groovy functie: x=groep, y=periode, z=ronde");
 		panel.add(tfGrSorteerRating);
-		// private String grBeginTrio = "x / 2";
-		panel.add(new JLabel("Beginpunt trio"));
-		tfGrBegintrio = new JTextField(config.grBeginTrio);
-		tfGrBegintrio.setCaretPosition(0);
-		tfGrBegintrio.setToolTipText("Groovy functie: x=groepsgrootte");
-		panel.add(tfGrBegintrio);
 		// public boolean laasteRondeDoorschuivenAltijd = false;
 		panel.add(new JLabel("Laatste ronde altijd doorschuiven"));
 		cbLaatsteRondeDoorschuiven = new JCheckBox("", config.laasteRondeDoorschuivenAltijd);
@@ -274,11 +268,50 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Speciale indeling eerste ronde"));
 		cbSpeciaalRonde1 = new JCheckBox("", config.specialeIndelingEersteRonde);
 		panel.add(cbSpeciaalRonde1);
+		// private boolean fuzzyIndeling
+		panel.add(new JLabel("Gebruik fuzzy algoritme (experimenteel)"));
+		cbFuzzyIndeling = new JCheckBox("", config.fuzzyIndeling);
+		panel.add(cbFuzzyIndeling);
+
+		panel.add(new JLabel(" "));
+		panel.add(new JLabel(" "));
+		panel.add(new JLabel("Klasieke indeling:"));
+		panel.add(new JLabel(" "));
+
+		// private String grBeginTrio = "x / 2";
+		panel.add(new JLabel("Beginpunt trio"));
+		tfGrBegintrio = new JTextField(config.grBeginTrio);
+		tfGrBegintrio.setCaretPosition(0);
+		tfGrBegintrio.setToolTipText("Groovy functie: x=groepsgrootte");
+		panel.add(tfGrBegintrio);
 		// public int indelingMaximumVerschil = 3;
 		panel.add(new JLabel("Max verschil tussenspelers"));
 		tfMaxVerschil = new JTextField((new Integer(config.indelingMaximumVerschil)).toString());
 		panel.add(tfMaxVerschil);
-		for (int i = 0; i < 13; ++i) {
+
+		panel.add(new JLabel(" "));
+		panel.add(new JLabel(" "));
+		panel.add(new JLabel("Fuzzy indeling:"));
+		panel.add(new JLabel(" "));
+
+		// public double fuzzyWegingAndereTegenstander = 1.0;
+		panel.add(new JLabel("Weging nieuwe tegenstander"));
+		tfFuzzyAndereTgn = new JTextField((new Double(config.fuzzyWegingAndereTegenstander)).toString());
+		panel.add(tfFuzzyAndereTgn);
+		// public double fuzzyWegingAfstandRanglijst = 1.0;
+		panel.add(new JLabel("Weging Afstand op ranglijst"));
+		tfFuzzyRanglijst = new JTextField((new Double(config.fuzzyWegingAfstandRanglijst)).toString());
+		panel.add(tfFuzzyRanglijst);
+		// public double fuzzyWegingZwartWitVerdeling = 1.0;
+		panel.add(new JLabel("Weging Zwart/Wit verdeling"));
+		tfFuzzyZwartWit = new JTextField((new Double(config.fuzzyWegingZwartWitVerdeling)).toString());
+		panel.add(tfFuzzyZwartWit);
+		// public double fuzzyWegingDoorschuiverEigenGroep = 1.0;
+		panel.add(new JLabel("Weging doorschuiver tegen eigen groeper"));
+		tfFuzzyDoorschuiver = new JTextField((new Double(config.fuzzyWegingDoorschuiverEigenGroep)).toString());
+		panel.add(tfFuzzyDoorschuiver);
+
+		for (int i = 0; i < 3; ++i) {
 			panel.add(new JLabel(" "));
 			panel.add(new JLabel(" "));
 		}
@@ -315,7 +348,7 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Export KEI lijst"));
 		cbSaveKEI = new JCheckBox("", config.exportKEIlijst);
 		panel.add(cbSaveKEI);
-		//public boolean exportIntekenlijst = true;
+		// public boolean exportIntekenlijst = true;
 		panel.add(new JLabel("Export Intekenlijsten"));
 		cbSaveInteken = new JCheckBox("", config.exportIntekenlijst);
 		panel.add(cbSaveInteken);
@@ -363,7 +396,7 @@ public class ConfigurationDialog extends JDialog {
 		// private JTextField tfRondes;
 		updateIntConfig(config, "rondes", tfRondes.getText(), 1, 99);
 		// private JTextField tfGrSeries;
-		updateTextConfig(config,"grAantalSeries", tfGrSeries.getText(),2);
+		updateTextConfig(config, "grAantalSeries", tfGrSeries.getText(), 2);
 		// private JTextField tfSpeelgroepen;
 		updateIntConfig(config, "aantalGroepen", tfSpeelgroepen.getText(), 1, 10);
 		// private JTextField[] tfGroepsnamens;
@@ -383,13 +416,13 @@ public class ConfigurationDialog extends JDialog {
 			config.startRating[i] = 0;
 		}
 		// private JTextField tfGrDoorschuivers;
-		updateTextConfig(config,"grAantalDoorschuivers", tfGrDoorschuivers.getText(),2);
-		//private JCheckbox cbFyuzzyIndeling
+		updateTextConfig(config, "grAantalDoorschuivers", tfGrDoorschuivers.getText(), 2);
+		// private JCheckbox cbFyuzzyIndeling
 		config.fuzzyIndeling = cbFuzzyIndeling.isSelected();
 		// private JTextField tfGrSorteerRating;
-		updateTextConfig(config,"grSorteerOpRating", tfGrSorteerRating.getText(),2);
+		updateTextConfig(config, "grSorteerOpRating", tfGrSorteerRating.getText(), 2);
 		// private JTextField tfGrBegintrio;
-		updateTextConfig(config,"grBeginTrio", tfGrBegintrio.getText(),2);
+		updateTextConfig(config, "grBeginTrio", tfGrBegintrio.getText(), 2);
 		// private JCheckBox cbLaatsteRondeDoorschuiven;
 		config.laasteRondeDoorschuivenAltijd = cbLaatsteRondeDoorschuiven.isSelected();
 		// private JCheckBox cbSpeciaalRonde1;
@@ -403,23 +436,33 @@ public class ConfigurationDialog extends JDialog {
 		// private JCheckBox cbSaveDoorschuivers;
 		config.exportDoorschuivers = cbSaveDoorschuivers.isSelected();
 		// private JTextField tfHeaderDoor;
-		updateTextConfig(config,"exportDoorschuiversStart", tfHeaderDoor.getText(),10);
+		updateTextConfig(config, "exportDoorschuiversStart", tfHeaderDoor.getText(), 10);
 		// private JTextField tfFooterDoor
-		updateTextConfig(config,"exportDoorschuiversStop", tfFooterDoor.getText(),10);
+		updateTextConfig(config, "exportDoorschuiversStop", tfFooterDoor.getText(), 10);
 		// private JCheckBox cbSaveKEI;
 		config.exportKEIlijst = cbSaveKEI.isSelected();
-		//private JCheckBox cbSaveInteken;
+		// private JCheckBox cbSaveInteken;
 		config.exportIntekenlijst = cbSaveInteken.isSelected();
 		// private JCheckBox cbSaveKNSB;
 		config.exportKNSBRating = cbSaveKNSB.isSelected();
 		// private JCheckBox cbSaveAdditionals;
 		config.saveAdditionalStates = cbSaveAdditionals.isSelected();
 		// private JTextField tfConfigfile;
-		updateTextConfig(config,"configuratieBestand", tfConfigfile.getText(),5);
+		updateTextConfig(config, "configuratieBestand", tfConfigfile.getText(), 5);
 		// private JTextField tfStatusfile;
-		updateTextConfig(config,"statusBestand", tfStatusfile.getText(),5);
+		updateTextConfig(config, "statusBestand", tfStatusfile.getText(), 5);
+		
+//		public double fuzzyWegingAndereTegenstander = 0.99;
+		updateDoubleConfig(config, "fuzzyWegingAndereTegenstander", tfFuzzyAndereTgn.getText(), 0.0, 1.0);
+//		public double fuzzyWegingAfstandRanglijst = 0.98;
+		updateDoubleConfig(config, "fuzzyWegingAfstandRanglijst", tfFuzzyRanglijst.getText(), 0.0, 1.0);
+//		public double fuzzyWegingZwartWitVerdeling = 0.97;
+		updateDoubleConfig(config, "fuzzyWegingZwartWitVerdeling", tfFuzzyZwartWit.getText(), 0.0, 1.0);
+//		public double fuzzyWegingDoorschuiverEigenGroep = 0.1;
+		updateDoubleConfig(config, "fuzzyWegingDoorschuiverEigenGroep", tfFuzzyDoorschuiver.getText(), 0.0, 1.0);
+
 	}
-	
+
 	private static void updateTextConfig(Configuratie c, String fieldname, String value, int minlengte) {
 		String msg = "Saving value \'" + value + "\' to field " + fieldname;
 		logger.log(Level.INFO, msg);
@@ -437,6 +480,18 @@ public class ConfigurationDialog extends JDialog {
 			String msg = "Saving value \'" + value + "\' to field " + fieldname;
 			logger.log(Level.INFO, msg);
 			int nieuw = Integer.parseInt(value);
+			if ((nieuw >= min) && (nieuw <= max)) {
+				Field field = c.getClass().getField(fieldname);
+				field.set(c, nieuw);
+			}
+		} catch (Exception e) {
+		}
+	}
+
+	private static void updateDoubleConfig(Configuratie c, String fieldname, String value, double min, double max) {
+		try {
+			logger.log(Level.INFO, "Saving value \'" + value + "\' to field " + fieldname);
+			double nieuw = Double.parseDouble(value);
 			if ((nieuw >= min) && (nieuw <= max)) {
 				Field field = c.getClass().getField(fieldname);
 				field.set(c, nieuw);

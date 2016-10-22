@@ -277,4 +277,34 @@ public class Configuratie {
 	 * Anders old skool algoritme, aangestuurd door configuratie
 	 */
 	public boolean fuzzyIndeling = false;
+
+	/**
+	 * Wegingsfactor voor fuzzy algoritme. Waarde tussen 0.0 en 1.0
+	 * Deze parameter bepaald hoe zwaar het meeweegt dat er tegen een
+	 * nieuwe tegenstander wordt gespeeld
+	 */
+	public double fuzzyWegingAndereTegenstander = 0.99;
+
+	/**
+	 * Wegingsfactor voor fuzzy algoritme. Waarde tussen 0.0 en 1.0
+	 * Deze parameter bepaald hoe zwaar het meeweegt dat er tegen een
+	 * tegenstander wordt gespeeld die vlakbij op de ranglijst staat
+	 */
+	public double fuzzyWegingAfstandRanglijst = 0.98;
+
+	/**
+	 * Wegingsfactor voor fuzzy algoritme. Waarde tussen 0.0 en 1.0
+	 * Deze parameter bepaald hoe zwaar het meeweegt dat er tegen een
+	 * tegenstander met tegenovergestelde zwart/wit voorkeur. Hoe hoger,
+	 * hoe meer geprobeerd wordt de totale voorkeur van de groep neutraal
+	 * te krijgen
+	 */
+	public double fuzzyWegingZwartWitVerdeling = 0.97;
+
+	/**
+	 * Wegingsfactor voor fuzzy algoritme. Waarde tussen 0.0 en 1.0
+	 * Deze parameter bepaald hoe zwaar het meeweegt dat er tegen een
+	 * tegenstander wordt gespeeld die uit een hogere groep komt
+	 */
+	public double fuzzyWegingDoorschuiverEigenGroep = 0.1;
 }
