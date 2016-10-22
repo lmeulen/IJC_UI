@@ -34,6 +34,7 @@ import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.io.GroepenReader;
+import nl.detoren.ijc.io.ImportSpelers;
 import nl.detoren.ijc.io.OutputExcel;
 import nl.detoren.ijc.io.OutputIntekenlijst;
 import nl.detoren.ijc.io.OutputKEI;
@@ -704,6 +705,10 @@ public class IJCController {
 	 */
 	public GroepenIndelerInterface getIndeler() {
 		return new GroepenIndelerFactory().getIndeler();
+	}
+
+	public void importeerSpelers(String absolutePath) {
+		new ImportSpelers().importeerSpelers(absolutePath);
 	}
 
 }

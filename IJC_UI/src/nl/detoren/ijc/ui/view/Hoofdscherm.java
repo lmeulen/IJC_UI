@@ -364,7 +364,29 @@ public class Hoofdscherm extends JFrame {
 				hoofdPanel.repaint();
 			}
 		});
-		
+		spelermenu.add(item);
+		menubar.add(spelermenu);
+
+		item = new JMenuItem("Importeer spelers");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Open");
+				// Create a file chooser
+				final JFileChooser fc = new JFileChooser();
+				fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+				// In response to a button click:
+				int returnVal = fc.showOpenDialog(hs);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					System.out.println("Opening: " + file.getAbsolutePath() + ".");
+					controller.importeerSpelers(file.getAbsolutePath());
+					hs.repaint();
+				} else {
+					System.out.println("Openen bestand geannuleerd");
+				}
+			}
+		});
 		spelermenu.add(item);
 		menubar.add(spelermenu);
 
