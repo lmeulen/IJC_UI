@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *  
  * Problemen in deze code:
- * - MINOR Genereren OSBO rating bestand. Is deze nodig of is KNSB voldoende?
  */
 package nl.detoren.ijc.ui.control;
 

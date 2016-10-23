@@ -197,7 +197,6 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 
     /**
      * Bepaal het minimale verschil tussen twee spelers die tegen elkaar spelen
-     * TODO: Functie Minimaalverschil naar configuratie
      * @param groep De groep
      * @param periode Periode
      * @param ronde Ronde in de periode
