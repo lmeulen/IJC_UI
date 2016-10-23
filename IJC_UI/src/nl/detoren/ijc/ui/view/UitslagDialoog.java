@@ -17,8 +17,6 @@ package nl.detoren.ijc.ui.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -28,9 +26,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.event.ChangeListener;
-import javax.swing.text.Caret;
-import javax.swing.text.JTextComponent;
 
 import nl.detoren.ijc.ui.control.IJCController;
 

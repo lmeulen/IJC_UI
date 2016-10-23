@@ -43,7 +43,7 @@ public class Speler implements Cloneable {
     private static final DecimalFormat decimalFormat = new DecimalFormat("#");
 
     public Speler() {
-        this(0, "", "", 0, 0, 0, new String[4], 0, false, true, 1234567, 0, 0, "");
+        this(0, "", "", 0, 0, 0, new String[] {"-- ","-- ","-- ","-- "}, 0, false, true, 1234567, 0, 0, "");
     }
 
     public Speler(Speler speler) {

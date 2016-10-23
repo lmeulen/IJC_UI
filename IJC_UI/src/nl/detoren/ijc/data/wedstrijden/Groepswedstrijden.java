@@ -71,6 +71,11 @@ public class Groepswedstrijden {
         return null;
     }
 
+    /**
+     * Retourneer lijst met alle wedstrijden, waarin zowel de serie
+     * wedstrijden als de trio wedstrijden zijn opgenomen.
+     * @return
+     */
     public ArrayList<Wedstrijd> getWedstrijden() {
         ArrayList<Wedstrijd> lst = new ArrayList<>();
         for (Serie s : series) {

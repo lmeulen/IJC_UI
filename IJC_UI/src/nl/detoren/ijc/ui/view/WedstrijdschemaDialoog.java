@@ -334,7 +334,6 @@ public class WedstrijdschemaDialoog extends JDialog {
                     System.out.println("Paste failed: " + ex.toString());
                     return false;
                 }
-                //return super.importData(support);
             }
         });
 

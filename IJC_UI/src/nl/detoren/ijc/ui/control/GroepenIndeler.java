@@ -244,11 +244,6 @@ public class GroepenIndeler implements GroepenIndelerInterface {
     	int ronde = groepen.getRonde();
     	logger.log(Level.INFO, "Maken wedstrijden voor periode " + periode + " ronde " + ronde);    		
         Wedstrijden wedstrijden = new Wedstrijden();        
-        System.out.println("-------------------------------------------------------------");
-        for (Groep groep : groepen.getGroepen()) {
-            System.out.println(groep.toPrintableString());
-        }
-        System.out.println("-------------------------------------------------------------");
         for (Groep groepOrg : groepen.getGroepen()) {
         	logger.log(Level.INFO, "Maken wedstrijden voor groep " + groepOrg.getNaam());    		
             Groepswedstrijden gws = maakWedstrijdenVoorGroep(periode, ronde, groepOrg);

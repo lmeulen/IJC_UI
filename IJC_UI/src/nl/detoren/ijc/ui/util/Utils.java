@@ -97,7 +97,6 @@ public class Utils {
     	int sum = 0;
     	for (int i=0;i<A.length;i++) {
     		for (int j=Math.max(0, i-1);j<Math.min(i+2, A.length);j++) {
-    				// System.out.print("index1 = " + i + ", index2 = " + (j) + " = " + A[i][j] + "\n ");
     				sum += A[i][j];
     		}
     	}
@@ -109,7 +108,6 @@ public class Utils {
     	int sum = 0;
     	for (int i=0;i<A.length;i++) {
     		for (int j=Math.max(0, i-1);j<Math.min(i+2, A.length);j++) {
-    				 // System.out.print("index1 = " + i + ", index2 = " + (indexrow+j) + " = " + A[i][indexrow+j] + "\n ");
     				sum += A[i][indexrow+j];
     		}
     	}

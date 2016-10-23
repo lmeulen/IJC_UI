@@ -22,109 +22,111 @@ import nl.detoren.ijc.data.groepen.Speler;
  */
 public class Wedstrijd {
 
-    int id;
-    Speler wit;
-    Speler zwart;
-    /**
-     * Toto style 1 = wit wint, 2 = zwart wint, 3 = remise
-     */
-    int uitslag;
-    
-    public static int WIT_WINT = 1;
-    public static int ZWART_WINT = 2;
-    public static int GELIJKSPEL = 3; 
-    public static int ONBEKEND = 0;
+	int id;
+	Speler wit;
+	Speler zwart;
+	/**
+	 * Toto style 1 = wit wint, 2 = zwart wint, 3 = remise
+	 */
+	int uitslag;
 
-    public Wedstrijd() {
-        this(0, null, null, 0);
-    }
+	public static int WIT_WINT = 1;
+	public static int ZWART_WINT = 2;
+	public static int GELIJKSPEL = 3;
+	public static int ONBEKEND = 0;
 
-    public Wedstrijd(int id, Speler s1, Speler s2, int uitslag) {
-        this.id = id;
-        if ((s1 != null) && (s2 != null)) {
-            setSpelers(s1, s2);
-        } else {
-            this.wit = s1;
-            this.zwart = s2;
-        }
-        this.uitslag = uitslag;
-    }
+	public Wedstrijd() {
+		this(0, null, null, 0);
+	}
 
-    public int getId() {
-        return id;
-    }
+	public Wedstrijd(int id, Speler s1, Speler s2, int uitslag) {
+		this.id = id;
+		if ((s1 != null) && (s2 != null)) {
+			setSpelers(s1, s2);
+		} else {
+			this.wit = s1;
+			this.zwart = s2;
+		}
+		this.uitslag = uitslag;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public Speler getWit() {
-        return wit;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setWit(Speler wit) {
-        this.wit = wit;
-    }
+	public Speler getWit() {
+		return wit;
+	}
 
-    public Speler getZwart() {
-        return zwart;
-    }
+	public void setWit(Speler wit) {
+		this.wit = wit;
+	}
 
-    public void setZwart(Speler zwart) {
-        this.zwart = zwart;
-    }
+	public Speler getZwart() {
+		return zwart;
+	}
 
-    public final void setSpelers(Speler s1, Speler s2) {
-        if (s1.getWitvoorkeur() >= s2.getWitvoorkeur()) {
-            wit = s1;
-            zwart = s2;
-        } else {
-            wit = s2;
-            zwart = s1;
-        }
-    }
-    
-    public final void wisselSpelers() {
-    	Speler tmp = wit;
-    	wit = zwart;
-    	zwart = tmp;
-    }
+	public void setZwart(Speler zwart) {
+		this.zwart = zwart;
+	}
 
-    public int getUitslag() {
-        return uitslag;
-    }
+	public final void setSpelers(Speler s1, Speler s2) {
+		if (s1.getWitvoorkeur() >= s2.getWitvoorkeur()) {
+			wit = s1;
+			zwart = s2;
+		} else {
+			wit = s2;
+			zwart = s1;
+		}
+		if (id == 0)
+			id = wit.getId() * 100 + zwart.getId();
+	}
 
-    public void setUitslag(int Uitslag) {
-        this.uitslag = Uitslag;
-    }
+	public final void wisselSpelers() {
+		Speler tmp = wit;
+		wit = zwart;
+		zwart = tmp;
+	}
 
-    /**
-     * Geef uitslag niet in Toto stijl maar voor snelle invoer in 0/1/2
-     * 0 = 0-1    = 2 (Toto)
-     * 1 = 1-0    = 1 (Toto)
-     * 2 = remise = 3 (Toto)
-     * Deze variant is handig bij invoeren van veel resultaten doordat het
-     * eerste getal van de uitslag ingevuld kan worden (met 2 voor half). Dit
-     * versnelt invoeren en resultaten en voorkomt dat een vertaalslag in het
-     * hoofd nodig is van uitslag naar Toto stijl.
-     @param uitslag 
-     */
-    public void setUitslag012(int uitslag) {
-        this.uitslag = (uitslag == 0 ? 2 : (uitslag == 1 ? 1 : (uitslag == 2 ? 3 : 0)));
-    }
+	public int getUitslag() {
+		return uitslag;
+	}
 
-    @Override
-    public String toString() {
-        String result = wit.toString() + "- " + zwart.toString() + "-";
-        result += uitslag > 0 ? " " + uitslag : "";
-        return result;
-    }
+	public void setUitslag(int Uitslag) {
+		this.uitslag = Uitslag;
+	}
 
-    /**
-     * Geef afstand in de rankinglijst
-     * @return
-     */
-    public int getDistance() {
-    	return Math.abs(wit.getId() - zwart.getId());
-    }
+	/**
+	 * Geef uitslag niet in Toto stijl maar voor snelle invoer in 0/1/2 0 = 0-1
+	 * = 2 (Toto) 1 = 1-0 = 1 (Toto) 2 = remise = 3 (Toto) Deze variant is
+	 * handig bij invoeren van veel resultaten doordat het eerste getal van de
+	 * uitslag ingevuld kan worden (met 2 voor half). Dit versnelt invoeren en
+	 * resultaten en voorkomt dat een vertaalslag in het hoofd nodig is van
+	 * uitslag naar Toto stijl.
+	 * 
+	 * @param uitslag
+	 */
+	public void setUitslag012(int uitslag) {
+		this.uitslag = (uitslag == 0 ? 2 : (uitslag == 1 ? 1 : (uitslag == 2 ? 3 : 0)));
+	}
+
+	@Override
+	public String toString() {
+		String result = wit.toString() + "- " + zwart.toString() + "-";
+		result += uitslag > 0 ? " " + uitslag : "";
+		return result;
+	}
+
+	/**
+	 * Geef afstand in de rankinglijst
+	 * 
+	 * @return
+	 */
+	public int getDistance() {
+		return Math.abs(wit.getId() - zwart.getId());
+	}
 }

@@ -299,7 +299,6 @@ public class Hoofdscherm extends JFrame {
 		item.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Open");
 				// Create a file chooser
 				final JFileChooser fc = new JFileChooser();
 				fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
@@ -307,14 +306,12 @@ public class Hoofdscherm extends JFrame {
 				int returnVal = fc.showOpenDialog(hs);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
-					System.out.println("Opening: " + file.getAbsolutePath() + ".");
+					logger.log(Level.INFO, "Opening: " + file.getAbsolutePath() + ".");
 					controller.leesGroepen(file.getAbsolutePath());
 					updateAutomatisch(true);
 					controller.maakGroepsindeling();
 					updateRondeLabel();
 					hs.repaint();
-				} else {
-					System.out.println("Openen bestand geannuleerd");
 				}
 			}
 		});
@@ -324,7 +321,6 @@ public class Hoofdscherm extends JFrame {
 		item.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Save state");
 				controller.saveState(true, "save");
 			}
 		});
@@ -345,7 +341,6 @@ public class Hoofdscherm extends JFrame {
 		item.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Exit from meu");
 				controller.saveState(false, null);
 				System.exit(EXIT_ON_CLOSE);
 			}
@@ -370,7 +365,6 @@ public class Hoofdscherm extends JFrame {
 		item.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Open");
 				// Create a file chooser
 				final JFileChooser fc = new JFileChooser();
 				fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
@@ -378,11 +372,9 @@ public class Hoofdscherm extends JFrame {
 				int returnVal = fc.showOpenDialog(hs);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
-					System.out.println("Opening: " + file.getAbsolutePath() + ".");
+					logger.log(Level.INFO, "Opening: " + file.getAbsolutePath() + ".");
 					controller.importeerSpelers(file.getAbsolutePath());
 					hs.repaint();
-				} else {
-					System.out.println("Openen bestand geannuleerd");
 				}
 			}
 		});
@@ -911,32 +903,9 @@ public class Hoofdscherm extends JFrame {
 
 	}
 
-	public void printSizeStatistics() {
-//		 System.out.println("Frame : " + getSize().getWidth() + "," +
-//		 getSize().getHeight());
-//		 System.out.println(" Panel : " + hoofdPanel.getSize().getWidth() +
-//		 "," + hoofdPanel.getSize().getHeight());
-//		 System.out.println(" Tabs : " + tabs.getSize().getWidth() + "," +
-//		 tabs.getSize().getHeight());
-//		 System.out.println(" Panel1 : " +
-//		 leftScrollPane[1].getSize().getWidth() + "," +
-//		 leftScrollPane[1].getSize().getHeight());
-//		 System.out.println(" Panel2 : " +
-//		 centerLeftScrollPane[1].getSize().getWidth() + "," +
-//		 centerLeftScrollPane[1].getSize().getHeight());
-//		 System.out.println(" Panel3 : " +
-//		 centerRightScrollPane[1].getSize().getWidth() + "," +
-//		 centerRightScrollPane[1].getSize().getHeight());
-//		 System.out.println(" Panel4 : " +
-//		 rightScrollPane[1].getSize().getWidth() + "," +
-//		 rightScrollPane[1].getSize().getHeight());
-	}
-
 	@Override
 	protected void processWindowEvent(WindowEvent e) {
-		printSizeStatistics();
-		super.processWindowEvent(e); // To change body of generated methods,
-										// choose Tools | Templates.
+		super.processWindowEvent(e);
 	}
 
 	public void actieExport() {
@@ -975,10 +944,6 @@ public class Hoofdscherm extends JFrame {
 		int groepID = tabs.getSelectedIndex();
 		Speler nieuw = new Speler();
 		nieuw.setGroep(groepID);
-		String[] tgn = { "--", "--", "--", "--" };
-		nieuw.setTegenstanders(tgn);
-		nieuw.setKeikansen(0);
-		nieuw.setKeipunten(0);
 		nieuw.setSpeelgeschiedenis("-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- ");
 		if ((s != null) && (s2 != null)) {
 			nieuw.setPunten((s.getPunten() + s2.getPunten()) / 2);
@@ -994,10 +959,8 @@ public class Hoofdscherm extends JFrame {
 		rd.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
-				System.out.println("closing...");
 				controller.getGroepByID(groepID).renumber();
 				hoofdPanel.repaint();
-				// do something...
 			}
 
 		});

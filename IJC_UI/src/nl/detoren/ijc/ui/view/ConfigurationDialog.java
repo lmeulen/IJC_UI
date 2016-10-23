@@ -141,8 +141,6 @@ public class ConfigurationDialog extends JDialog {
 		JPanel tabInstellingen = new JPanel(false);
 		tabInstellingen.setLayout(new GridLayout2(20, 2));
 
-		// public String appTitle = "SV De Toren - Indeling Interne Jeugd
-		// Competitie";
 		tabInstellingen.add(new JLabel("Vereniging"));
 		tfVerenigingNaam = new JTextField(config.verenigingNaam, 20);
 		tabInstellingen.add(tfVerenigingNaam);
@@ -188,9 +186,6 @@ public class ConfigurationDialog extends JDialog {
 		tfRondes = new JTextField((new Integer(config.rondes)).toString(), 20);
 		panel.add(tfRondes);
 		// private String grAantalSeries =
-		// "if (x == 6) { if ((y == 1) && (z == 1)) { return 2 } else { return 1
-		// } }" +
-		// " else if ((y == 1) && (z == 1)) { return 3 } else { return 2 } ";
 		panel.add(new JLabel("Aantal series per ronde"));
 		tfGrSeries = new JTextField(config.grAantalSeries, 20);
 		tfGrSeries.setCaretPosition(0);
@@ -210,9 +205,7 @@ public class ConfigurationDialog extends JDialog {
 	public JPanel createPanelGroepen() {
 		JPanel panel = new JPanel(false);
 		panel.setLayout(new GridLayout2(20, 3));
-		// public String[] groepsnamen = { "Pionnengroep", "Paardengroep",
-		// "Lopergroep", "Torengroep",
-		// "Damegroep", "Koningsgroep", "Keizergroep" };
+		// public String[] groepsnamen = { "Pionnengroep", "Paardengroep",...
 		// public int[] startPunten = {0, 10, 20, 30, 40, 50, 60 };
 		// public int[] startRating = { 100, 150, 200, 300, 500, 800, 1400 };
 		panel.add(new JLabel("Groepsnaam"));
@@ -248,14 +241,12 @@ public class ConfigurationDialog extends JDialog {
 		panel.setLayout(new GridLayout2(20, 2));
 
 		// private String grAantalDoorschuivers = "if (y >= 4) { if (y < 8) {
-		// return 4 } else { return 1 } } else { return 0 }";
 		panel.add(new JLabel("Aantal doorschuivers"));
 		tfGrDoorschuivers = new JTextField(config.grAantalDoorschuivers, 30);
 		tfGrDoorschuivers.setCaretPosition(0);
 		tfGrDoorschuivers.setToolTipText("Groovy functie: x=periode, y=ronde, resultaat 0 is geen doorschuivers");
 		panel.add(tfGrDoorschuivers);
 		// private String grSorteerOpRating = "if ((x == 6) && (z > 1) && (z <
-		// 7)) { true } else { false }";
 		panel.add(new JLabel("Sorteer op rating voor indelen"));
 		tfGrSorteerRating = new JTextField(config.grSorteerOpRating);
 		tfGrSorteerRating.setCaretPosition(0);
@@ -336,13 +327,11 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Voeg doorschuivers toe aan uitslag"));
 		cbSaveDoorschuivers = new JCheckBox("", config.exportDoorschuivers);
 		panel.add(cbSaveDoorschuivers);
-		// public String exportDoorschuiversStart = "De volgende spelers spelen
-		// deze week mee in deze groep:";
+		// public String exportDoorschuiversStart
 		panel.add(new JLabel("Header doorschuivers"));
 		tfHeaderDoor = new JTextField(config.exportDoorschuiversStart, 30);
 		panel.add(tfHeaderDoor);
-		// public String exportDoorschuiversStop = "Spelers no 3 en 4 schuiven
-		// alleen door als de groep even wordt";
+		// public String exportDoorschuiversStop 
 		panel.add(new JLabel("Footer doorschuivers"));
 		tfFooterDoor = new JTextField(config.exportDoorschuiversStop, 30);
 		panel.add(tfFooterDoor);
@@ -448,12 +437,10 @@ public class ConfigurationDialog extends JDialog {
 	 * @param minlengte Minimale lengte van de text
 	 */
 	private static void updateTextConfig(Configuratie c, String fieldname, String value, int minlengte) {
-		String msg = "Saving value \'" + value + "\' to field " + fieldname;
-		logger.log(Level.INFO, msg);
+		logger.log(Level.INFO, "Saving value \'" + value + "\' to field " + fieldname);
 		if ((value != null) && (value.length() >= minlengte)) {
 			try {
-				Field field = c.getClass().getField(fieldname);
-				field.set(c, value);
+				c.getClass().getField(fieldname).set(c, value);
 			} catch (Exception e) {
 			}
 		}
@@ -470,12 +457,10 @@ public class ConfigurationDialog extends JDialog {
 	 */
 	private static void updateIntConfig(Configuratie c, String fieldname, String value, int min, int max) {
 		try {
-			String msg = "Saving value \'" + value + "\' to field " + fieldname;
-			logger.log(Level.INFO, msg);
+			logger.log(Level.INFO, "Saving value \'" + value + "\' to field " + fieldname);
 			int nieuw = Integer.parseInt(value);
 			if ((nieuw >= min) && (nieuw <= max)) {
-				Field field = c.getClass().getField(fieldname);
-				field.set(c, nieuw);
+				c.getClass().getField(fieldname).set(c, nieuw);
 			}
 		} catch (Exception e) {
 		}
@@ -495,8 +480,7 @@ public class ConfigurationDialog extends JDialog {
 			logger.log(Level.INFO, "Saving value \'" + value + "\' to field " + fieldname);
 			double nieuw = Double.parseDouble(value);
 			if ((nieuw >= min) && (nieuw <= max)) {
-				Field field = c.getClass().getField(fieldname);
-				field.set(c, nieuw);
+				c.getClass().getField(fieldname).set(c, nieuw);
 			}
 		} catch (Exception e) {
 		}

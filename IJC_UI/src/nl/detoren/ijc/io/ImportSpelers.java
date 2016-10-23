@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import nl.detoren.ijc.data.groepen.Groep;
-import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
 

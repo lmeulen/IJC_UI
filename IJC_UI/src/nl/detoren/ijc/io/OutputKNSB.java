@@ -30,8 +30,8 @@ public class OutputKNSB {
 	private final static Logger logger = Logger.getLogger(OutputKNSB.class.getName());
 
 	/**
-	 * Sla de nieuwe stand op in een R?-?KNSB.csv bestand en in een json
-	 * versie van resultaatVerwerkt
+	 * Sla de nieuwe stand op in een R?-?KNSB.csv bestand en in een json versie
+	 * van resultaatVerwerkt
 	 */
 	public void saveUitslag(Wedstrijden uitslag) {
 		try {
@@ -71,9 +71,7 @@ public class OutputKNSB {
 			result += "900;" + volgnummer + ";";
 			result += new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 			result += ";" + w.getWit().getKNSBnummer() + ";" + w.getZwart().getKNSBnummer() + ";";
-			result += w.getUitslag() + ";";
-			result += w.getWit().getNaam() + ";";
-			result += w.getZwart().getNaam() + ";";
+			result += w.getUitslag() + ";" + w.getWit().getNaam() + ";" + w.getZwart().getNaam() + ";";
 			logger.log(Level.INFO, result);
 			return result;
 		} else {
@@ -84,16 +82,12 @@ public class OutputKNSB {
 
 	private String getHeader(int periode, int ronde) {
 		String result = "";
-		result += "12;" + IJCController.c().competitieNaam + ", ronde " + ronde + ", periode " + periode
-				+ "\n";
-		result += "22;" + IJCController.c().competitieLocatie + "\n";
-		result += "32;NED\n";
+		result += "12;" + IJCController.c().competitieNaam + ", ronde " + ronde + ", periode " + periode + "\n";
+		result += "22;" + IJCController.c().competitieLocatie + "\n" + "32;NED\n";
 		String datum = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-		result += "42;" + datum + "\n";
-		result += "52;" + datum + "\n";
-		result += "102;" + IJCController.c().contactPersoonNaam + " " + IJCController.c().contactPersoonEmail +  "\n";
-		result += "122;15 tot 60 min pppp\n";
-		result += "\n";
+		result += "42;" + datum + "\n" + "52;" + datum + "\n";
+		result += "102;" + IJCController.c().contactPersoonNaam + " " + IJCController.c().contactPersoonEmail + "\n";
+		result += "122;15 tot 60 min pppp\n\n";
 		result += ";ronde_nr;ronde_dat;relnr_w;relnr_z;score;naam_w;naam_z\n";
 		return result;
 	}

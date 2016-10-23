@@ -33,18 +33,10 @@ public class OutputOSBO {
 
 	private final static Logger logger = Logger.getLogger(OutputOSBO.class.getName());
 	
-	DecimalFormat dbl3p1;
-	DecimalFormat int2p;
 	DecimalFormat int3p;
-	
-	
 	
 	public OutputOSBO() {
 		Locale loc = new Locale("de", "DE");
-		dbl3p1 = (DecimalFormat)NumberFormat.getNumberInstance(loc);
-		dbl3p1.applyPattern("000.0");
-		int2p = (DecimalFormat)NumberFormat.getNumberInstance(loc);
-		int2p.applyPattern("00");
 		int3p = (DecimalFormat)NumberFormat.getNumberInstance(loc);
 		int3p.applyPattern("000");
 
@@ -82,21 +74,14 @@ public class OutputOSBO {
 		String result = "";
 		result += "012 OSBO " + IJCController.c().competitieNaam + ", ronde " + ronde + ", periode " + periode + "\n";
 		result += "022 " + IJCController.c().competitieLocatie + "\n";
-		result += "032 NED\n";
-		result += "033 NED\n";
-		result += "034 \n";
+		result += "032 NED\n" + "033 OSBO\n" + "034 \n";
 		String datum = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-		result += "042 " + datum + "\n";
-		result += "052 " + datum + "\n";
-		result += "062 " + regels + "\n";
+		result += "042 " + datum + "\n" + "052 " + datum + "\n" + "062 " + regels + "\n";
 		result += "102 " + IJCController.c().contactPersoonNaam + " " + IJCController.c().contactPersoonEmail + "\n";
-		result += "122 15 tot 60 min pppp\n";
-		result += "\n";
+		result += "122 15 tot 60 min pppp\n" + "\n";
 		result += "132                                                                                        ";
 		String datum2 = new SimpleDateFormat("yy.MM.dd").format(Calendar.getInstance().getTime());
-		result += datum2 + "  " + datum2 + "\n";
-		result += "\n";
-		result += "\n";
+		result += datum2 + "  " + datum2 + "\n\n\n";
 		result += "DDD-SSSS sTTT NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN RRRR FFF IIIIIIIIIII yyyy/mm/dd PPPP RRRR  1111 1 1  2222 2 2  3333 3 3  4444 4 4  5555 5 5  6666 6 6  7777 7 7  8888 8 8  9999 9 9\n";
 		return result;
 	}
@@ -137,16 +122,11 @@ public class OutputOSBO {
 	 */
 	private String verwerkSpeler(OSBOSpeler speler) {
 		String result = "";
-		//                                                                                         ___iii_z_p___iii_z_p
 		//001   16      Piet Pietersen                         NED     8588318             0,0   16     5 z 0     8 w 0                                          
-		//12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-		//         1         2         3         4         5         6         7         8         9         0         1
-		//                                                                                                   1         1
 		result += "001  ";
 		result += int3p.format(speler.nr).replaceAll("\\G0", " ") + "      " + speler.naam;
 		while (result.length() < 53) result += " ";
 		result += "NED     " + speler.KNSB + "             ";
-		//result += dbl3p1.format(speler.getPunten()).replaceAll("\\G0", " ") + "  ";
 		result += String.format("%3.1f", speler.getPunten()) +  "  ";
 		result += int3p.format(speler.nr).replaceAll("\\G0", " ");
 		for (OSBOWedstrijd w : speler.wedstrijden) {

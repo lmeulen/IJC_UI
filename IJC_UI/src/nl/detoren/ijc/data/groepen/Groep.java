@@ -163,19 +163,6 @@ public class Groep {
     }
 
     /**
-     * Hernummer alle spelers, met uitzondering van de
-     * doorgeschoven spelers
-     */
-    public void renumber2() {
-        for (int i = 0; i < spelers.size(); ++i) {
-            Speler s = spelers.get(i);
-            if (s.getGroep() != this.niveau) {
-                s.setId(spelers.get(i-1).getId()+1);
-            }
-        }
-    }
-    
-    /**
      * Retourneert de naam van een specifieke groep
      * @param id ID van de groep welke naam wordt gezocht
      * @return

@@ -275,10 +275,10 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		int matrix3[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix4[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
-		double mf1 = 1;		// Niet tegen dezelfde tegenstander
-		double mf2 = 1;		// Verschil in positie op de ranglijst
-		double mf3 = 1;		// Zwart/wit verdeling
-		double mf4 = 1;		// Doorschuivers voorkeur voor eigen groep
+		double mf1 = IJCController.c().fuzzyWegingAndereTegenstander;		// Niet tegen dezelfde tegenstander
+		double mf2 = IJCController.c().fuzzyWegingAfstandRanglijst;			// Verschil in positie op de ranglijst
+		double mf3 = IJCController.c().fuzzyWegingZwartWitVerdeling;		// Zwart/wit verdeling
+		double mf4 = IJCController.c().fuzzyWegingDoorschuiverEigenGroep;	// Doorschuivers voorkeur voor eigen groep
 		int i, j, weging = 0;
 		int tegenstanders[] = new int[4];
 		// matrix1 : Niet tegen dezelfde tegenstander
@@ -286,10 +286,6 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		for (i = 1; i <= wedstrijdgroep.getAantalSpelers(); i++) {
 			matrix1[i-1][0] = wedstrijdgroep.getSpelerByID(i).getId();
 			for (j = 1; j <= wedstrijdgroep.getAantalSpelers(); j++) {
-				// logger.log(Level.INFO, "Speler 1 ID : " +
-				// wedstrijdgroep.getSpelerByID(i));
-				// logger.log(Level.INFO, "Speler 2 ID : " +
-				// wedstrijdgroep.getSpelerByID(j));
 				weging = 0;
 				if (i == j) {
 					weging = 0;
@@ -302,21 +298,12 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 					for (int k = 0; k < 4; k++) {
 						if (tegenstanders[k] == 1) {
 							weging += 140;
-							System.out.print(wedstrijdgroep.getSpelerByID(i).getNaam() + " heeft " + tegenstanders[k]
-									+ " ronden eerder al gespeeld tegen " + wedstrijdgroep.getSpelerByID(j).getNaam()
-									+ "\n");
 						}
 						if (tegenstanders[k] == 2) {
 							weging += 90;
-							System.out.print(wedstrijdgroep.getSpelerByID(i).getNaam() + " heeft " + tegenstanders[k]
-									+ " ronden eerder al gespeeld tegen " + wedstrijdgroep.getSpelerByID(j).getNaam()
-									+ "\n");
 						}
 						if ((tegenstanders[k] > 2) && (tegenstanders[k] < 5)) {
 							weging += 20;
-							System.out.print(wedstrijdgroep.getSpelerByID(i).getNaam() + " heeft " + tegenstanders[k]
-									+ " ronden eerder al gespeeld tegen " + wedstrijdgroep.getSpelerByID(j).getNaam()
-									+ "\n");
 						}
 					}
 				}

@@ -77,7 +77,6 @@ public class IJCController {
 
     public static IJCController getInstance() {
         if (instance == null) {
-        	logger.log(Level.INFO, "message to log");
             instance = new IJCController();
         }
         return instance;
@@ -279,7 +278,6 @@ public class IJCController {
      * Print wedstrijden op het scherm, opgedeeld per serie
      */
     public void printWedstrijden() {
-    	logger.log(Level.INFO, "Print wedstrijden");
         System.out.print("\nWedstrijden Periode " + status.wedstrijden.getPeriode());
         System.out.println(" Ronde " + status.wedstrijden.getRonde() + "\n-----------");
         for (Groepswedstrijden gw : status.wedstrijden.getGroepswedstrijden()) {

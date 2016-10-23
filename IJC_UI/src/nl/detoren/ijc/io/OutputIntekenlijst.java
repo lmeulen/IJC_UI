@@ -13,7 +13,6 @@
  */
 package nl.detoren.ijc.io;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -109,7 +108,7 @@ public class OutputIntekenlijst {
 			document.close();
 			outFile.close();
 			// And open it in the system editor
-			Desktop.getDesktop().open(new File(outputFile));
+			//Desktop.getDesktop().open(new File(outputFile));
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Export mislukt :" + e.getMessage());
 		}
