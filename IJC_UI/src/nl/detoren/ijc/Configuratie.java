@@ -169,6 +169,12 @@ public class Configuratie {
 	public boolean exportKNSBRating = true;
 
 	/**
+	 * Geef aan of er een bestand gegenereerd moet worden dat door de OSBO
+	 * gebruikt kan worden voor verwerking resultaten in de KNSB rating
+	 */
+	public boolean exportOSBORating = true;
+
+	/**
 	 * Geef aan of het simpele tekst bestand geexporteerd moet worden, kan o.a.
 	 * worden gebruikt voor publicatie op websites.
 	 */

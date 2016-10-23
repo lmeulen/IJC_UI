@@ -72,6 +72,7 @@ public class ConfigurationDialog extends JDialog {
 	private JTextField tfFooterDoor;
 	private JCheckBox cbSaveKEI;
 	private JCheckBox cbSaveKNSB;
+	private JCheckBox cbSaveOSBO;
 	private JCheckBox cbSaveInteken;
 	private JCheckBox cbSaveAdditionals;
 	private JTextField tfConfigfile;
@@ -345,6 +346,8 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Footer doorschuivers"));
 		tfFooterDoor = new JTextField(config.exportDoorschuiversStop, 30);
 		panel.add(tfFooterDoor);
+		panel.add(new JLabel(" "));
+		panel.add(new JLabel(" "));
 		// public boolean exportKEIlijst = true;
 		panel.add(new JLabel("Export KEI lijst"));
 		cbSaveKEI = new JCheckBox("", config.exportKEIlijst);
@@ -353,10 +356,18 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Export Intekenlijsten"));
 		cbSaveInteken = new JCheckBox("", config.exportIntekenlijst);
 		panel.add(cbSaveInteken);
+		panel.add(new JLabel(" "));
+		panel.add(new JLabel(" "));
 		// public boolean exportKNSBRating = true;
 		panel.add(new JLabel("Export KNSB rating bestand"));
 		cbSaveKNSB = new JCheckBox("", config.exportKNSBRating);
 		panel.add(cbSaveKNSB);
+		// public boolean exportOSBORating = true;
+		panel.add(new JLabel("Export OSBO rating bestand"));
+		cbSaveOSBO = new JCheckBox("", config.exportOSBORating);
+		panel.add(cbSaveOSBO);
+		panel.add(new JLabel(" "));
+		panel.add(new JLabel(" "));
 		// public boolean saveAdditionalStates = true;
 		panel.add(new JLabel("Sla additionale statusbestanden op"));
 		cbSaveAdditionals = new JCheckBox("", config.saveAdditionalStates);
@@ -371,7 +382,7 @@ public class ConfigurationDialog extends JDialog {
 		tfStatusfile = new JTextField(config.statusBestand, 30);
 		tfStatusfile.setCaretPosition(0);
 		panel.add(tfStatusfile);
-		for (int i = 0; i < 9; ++i) {
+		for (int i = 0; i < 4; ++i) {
 			panel.add(new JLabel(" "));
 			panel.add(new JLabel(" "));
 		}
@@ -418,6 +429,7 @@ public class ConfigurationDialog extends JDialog {
 		config.exportKEIlijst = cbSaveKEI.isSelected();
 		config.exportIntekenlijst = cbSaveInteken.isSelected();
 		config.exportKNSBRating = cbSaveKNSB.isSelected();
+		config.exportOSBORating = cbSaveOSBO.isSelected();
 		config.saveAdditionalStates = cbSaveAdditionals.isSelected();
 		updateTextConfig(config, "configuratieBestand", tfConfigfile.getText(), 5);
 		updateTextConfig(config, "statusBestand", tfStatusfile.getText(), 5);

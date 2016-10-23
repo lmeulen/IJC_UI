@@ -189,6 +189,17 @@ public class Speler implements Cloneable {
 			KNSBnummer = nieuwKNSBnr;
 		}
 	}
+	
+	/**
+	 * Is deze speler lid van de KNSB?
+	 * Dit is het geval als het lidnummer met een 2 of hoger
+	 * begint. Nummers beginnende met een 1 zijn hashnummers voor
+	 * binnen de vereniging
+	 * @return true, als KNSB lid
+	 */
+	public boolean isKNSBLid() {
+		return KNSBnummer > 2000000;
+	}
 
 	@Override
 	public int hashCode() {

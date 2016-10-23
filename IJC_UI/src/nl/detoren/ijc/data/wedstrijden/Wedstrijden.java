@@ -63,4 +63,12 @@ public class Wedstrijden {
         }
         return null;
     }
+    
+    public ArrayList<Wedstrijd> getAlleWedstrijden() {
+    	ArrayList<Wedstrijd> result = new ArrayList<>();
+    	for (Groepswedstrijden gws : groepswedstrijden) {
+    		result.addAll(gws.getWedstrijden());
+    	}
+    	return result;
+    }
 }

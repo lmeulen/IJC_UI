@@ -39,6 +39,7 @@ import nl.detoren.ijc.io.OutputExcel;
 import nl.detoren.ijc.io.OutputIntekenlijst;
 import nl.detoren.ijc.io.OutputKEI;
 import nl.detoren.ijc.io.OutputKNSB;
+import nl.detoren.ijc.io.OutputOSBO;
 import nl.detoren.ijc.io.OutputTekst;
 
 /**
@@ -396,6 +397,7 @@ public class IJCController {
     	logger.log(Level.INFO, "en sla uitslagen en status op");
     	new OutputTekst().saveUitslag(status.resultaatVerwerkt);
     	new OutputKNSB().saveUitslag(status.wedstrijden);
+    	new OutputOSBO().saveUitslag(status.wedstrijden);
     	new OutputKEI().exportKEIlijst(status.resultaatVerwerkt);
     	new OutputIntekenlijst().exportIntekenlijst(status.resultaatVerwerkt);
     	saveState(true, "uitslag");
