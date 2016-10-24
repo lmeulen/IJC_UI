@@ -36,7 +36,7 @@ public class SpelersModel extends AbstractTableModel {
     private IJCController controller;
     private JComponent component;
 
-    private String[] columnNames = {"Aanw", "Nr.", "Naam", "Rating", "Punten"};
+    private String[] columnNames = {"Aanw", "Nr.", "Naam", "Afk", "Rating", "Punten"};
 
     public SpelersModel() {
         this(0, null);
@@ -71,8 +71,10 @@ public class SpelersModel extends AbstractTableModel {
             case 2:
                 return String.class;
             case 3:
-                return Integer.class;
+                return String.class;
             case 4:
+                return Integer.class;
+            case 5:
                 return Integer.class;
             default:
                 return String.class;
@@ -109,8 +111,10 @@ public class SpelersModel extends AbstractTableModel {
             case 2:
                 return speler.getNaam();
             case 3:
-                return new Integer(speler.getRating());
+                return speler.getInitialen();
             case 4:
+                return new Integer(speler.getRating());
+            case 5:
                 return new Integer(speler.getPunten());
             default:
                 return "";

@@ -552,10 +552,11 @@ public class Hoofdscherm extends JFrame {
 			fixedComponentSize(updatedSpelersTabel[i], 230, 475);
 			// Fix the size of the displayed tables
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(0), 40);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(1), 30);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(2), 160);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(3), 43);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(4), 45);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(1), 25);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(2), 140);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(3), 25);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(4), 43);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(5), 45);
 
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(0), 17);
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(1), 138);
