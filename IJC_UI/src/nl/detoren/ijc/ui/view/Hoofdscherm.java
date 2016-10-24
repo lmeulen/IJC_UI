@@ -1060,6 +1060,7 @@ public class Hoofdscherm extends JFrame {
 		controller.volgendeRonde();
 		updateAutomatisch(true);
 		updateRondeLabel();
+		updateUpdateStandButton();
 		hoofdPanel.repaint();
 	}
 
