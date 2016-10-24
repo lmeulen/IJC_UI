@@ -154,6 +154,8 @@ public class Hoofdscherm extends JFrame {
 
 		hoofdPanel.add(tabs);
 		this.add(hoofdPanel);
+		
+		updateUpdateStandButton();
 
 		pack();
 
@@ -275,6 +277,15 @@ public class Hoofdscherm extends JFrame {
 			updatestandButton.setBackground(light_green);
 		} else {
 			updatestandButton.setBackground(hoofdPanel.getBackground());
+		}
+		if (tabs != null) {
+			for (int i = 0; i < tabs.getTabCount(); i++) {
+				if (IJCController.getI().getWedstrijden().getGroepswedstrijdenNiveau(i).isUitslagBekend()) {
+					tabs.setTitleAt(i, Groep.geefNaam(i) + "*");
+				} else {
+					tabs.setTitleAt(i, Groep.geefNaam(i));
+				}
+			}
 		}
 		hoofdPanel.repaint();
 	}
