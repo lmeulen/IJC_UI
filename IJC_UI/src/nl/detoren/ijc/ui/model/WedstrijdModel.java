@@ -36,7 +36,7 @@ public class WedstrijdModel extends AbstractTableModel {
     private JComponent component;
     private int groepID;
 
-    private String[] columnNames = {" ", "Wit", "", "Zwart", "Uitslag"};
+    private String[] columnNames = {"ID", "Wit", "", "Zwart", "Uitslag"};
 
     public WedstrijdModel() {
         this(0, null);

@@ -51,6 +51,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -145,6 +147,20 @@ public class Hoofdscherm extends JFrame {
 			fillGroupPanel(panels[i], i);
 			tabs.addTab(Groep.geefNaam(i), null, panels[i], "Gegevens van  " + Groep.geefNaam(i));
 		}
+		
+		tabs.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				int index = tabs.getSelectedIndex();
+				if (index == 0) {
+					//tabs.setBackground(Color.BLUE);
+				} else {
+					//tabs.setBackground(Color.GREEN);
+				}
+				
+			}
+		});
 
 		hoofdPanel.add(tabs);
 		this.add(hoofdPanel);
@@ -537,19 +553,21 @@ public class Hoofdscherm extends JFrame {
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(0), 40);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(1), 30);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(2), 160);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(3), 40);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(3), 43);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(4), 45);
 
-			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(0), 20);
-			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(1), 170);
-			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(2), 30);
-			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(3), 95);
+			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(0), 17);
+			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(1), 138);
+			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(2), 33);
+			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(3), 20);
+			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(4), 20);
+			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(5), 90);
 
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(0), 35);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(1), 120);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(2), 10);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(3), 120);
-			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(4), 30);
+			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(4), 33);
 
 			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(0), 20);
 			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(1), 160);

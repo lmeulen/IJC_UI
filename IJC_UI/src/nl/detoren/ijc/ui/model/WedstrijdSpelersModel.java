@@ -34,7 +34,7 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
     private IJCController controller = null;
     private JComponent component;
 
-    private String[] columnNames = {" ", "Naam", "Afkorting", "Tegenst."};
+    private String[] columnNames = {"#", "Naam", "R", "P", " ", "Tegenst."};
 
     public WedstrijdSpelersModel() {
         this(0, null);
@@ -63,8 +63,12 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
             case 1:
                 return String.class;
             case 2:
-                return String.class;
+                return Integer.class;
             case 3:
+                return Integer.class;
+            case 4:
+                return String.class;
+            case 5:
                 return String.class;
             default:
                 return String.class;
@@ -101,8 +105,12 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
             	boolean doorgeschoven = controller.getGroepByID(groepID).getNiveau() != speler.getGroep();
                 return speler.getNaam() + (doorgeschoven ? "*" : "");
             case 2:
-                return speler.getInitialen();
+            	return new Integer(speler.getRating());
             case 3:
+            	return new Integer(speler.getPunten());
+            case 4:
+                return speler.getInitialen();
+            case 5:
             	return speler.getTegenstandersString();
             default:
                 return "";
