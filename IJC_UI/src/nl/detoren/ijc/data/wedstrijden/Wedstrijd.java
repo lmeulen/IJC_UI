@@ -129,4 +129,8 @@ public class Wedstrijd {
 	public int getDistance() {
 		return Math.abs(wit.getId() - zwart.getId());
 	}
+	
+	public boolean isUitslagBekend() {
+		return (uitslag != ONBEKEND);
+	}
 }

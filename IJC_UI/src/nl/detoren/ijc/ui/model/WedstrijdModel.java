@@ -138,9 +138,9 @@ public class WedstrijdModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        fireTableCellUpdated(row, col);
         Wedstrijd ws = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getWedstrijden().get(row);
         ws.setUitslag012(Integer.valueOf((String)value));
+        fireTableCellUpdated(row, col);
         component.repaint();
     }
 

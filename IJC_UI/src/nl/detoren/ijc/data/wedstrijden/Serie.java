@@ -100,4 +100,13 @@ public class Serie {
 			w.setId(nummer++);
 		}
 	}
+	
+	public boolean isUitslagBekend() {
+		for (Wedstrijd w : wedstrijden) {
+			if (!w.isUitslagBekend())
+				return false;
+		}
+		return true;
+	}
+	
 }

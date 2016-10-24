@@ -84,4 +84,16 @@ public class Groepswedstrijden {
         lst.addAll(triowedstrijden);
         return lst;
     }
+    
+	public boolean isUitslagBekend() {
+		for (Serie s : series) {
+			if (!s.isUitslagBekend())
+				return false;
+		}
+		for (Wedstrijd w : triowedstrijden) {
+			if (!w.isUitslagBekend())
+				return false;
+		}
+		return true;
+	}
 }

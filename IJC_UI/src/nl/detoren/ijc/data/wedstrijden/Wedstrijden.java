@@ -71,4 +71,12 @@ public class Wedstrijden {
     	}
     	return result;
     }
+    
+    public boolean isUitslagBekend() {
+    	for (Groepswedstrijden gws : groepswedstrijden) {
+    		if (!gws.isUitslagBekend())
+    			return false;
+    	}
+    	return true;
+    }
 }

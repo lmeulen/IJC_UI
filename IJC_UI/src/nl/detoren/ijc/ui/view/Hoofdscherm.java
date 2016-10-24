@@ -51,8 +51,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -100,6 +100,10 @@ public class Hoofdscherm extends JFrame {
 	private JButton wedstrijdgroepButton; 
 	private JButton speelschemaButton;
 	private JButton bewerkspeelschemaButton; 
+	private JButton exportButton;
+	private JButton uitslagButton;
+	private JButton externenButton;
+	private JButton updatestandButton;
 	private JScrollPane[] leftScrollPane;
 	private JScrollPane[] centerLeftScrollPane;
 	private JScrollPane[] centerRightScrollPane;
@@ -147,20 +151,6 @@ public class Hoofdscherm extends JFrame {
 			fillGroupPanel(panels[i], i);
 			tabs.addTab(Groep.geefNaam(i), null, panels[i], "Gegevens van  " + Groep.geefNaam(i));
 		}
-		
-		tabs.addChangeListener(new ChangeListener() {
-			
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				int index = tabs.getSelectedIndex();
-				if (index == 0) {
-					//tabs.setBackground(Color.BLUE);
-				} else {
-					//tabs.setBackground(Color.GREEN);
-				}
-				
-			}
-		});
 
 		hoofdPanel.add(tabs);
 		this.add(hoofdPanel);
@@ -223,7 +213,7 @@ public class Hoofdscherm extends JFrame {
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 
-		final JButton exportButton = new JButton("2. Export");
+		exportButton = new JButton("2. Export");
 		exportButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -236,36 +226,38 @@ public class Hoofdscherm extends JFrame {
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 
-		final JButton guButton = new JButton("3a. Uitslagen");
-		guButton.addActionListener(new ActionListener() {
+		uitslagButton = new JButton("3a. Uitslagen");
+		uitslagButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				actieVoerUitslagenIn();
 			}
 		});
-		buttonPane.add(guButton);
+		buttonPane.add(uitslagButton);
 
-		final JButton geButton = new JButton("3b. Extern");
-		geButton.addActionListener(new ActionListener() {
+		externenButton = new JButton("3b. Extern");
+		externenButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				actieExterneSpelers();
 			}
 		});
-		buttonPane.add(geButton);
+		buttonPane.add(externenButton);
 
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
 
-		final JButton usButton = new JButton("4. Update stand");
-		usButton.addActionListener(new ActionListener() {
+		updatestandButton = new JButton("4. Update stand");
+		updatestandButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				actieUpdateStand();
 			}
 		});
-		buttonPane.add(usButton);
+		buttonPane.add(updatestandButton);		
+
+		updateUpdateStandButton();
 
 		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		buttonPane.setBackground(Color.white);
@@ -276,6 +268,15 @@ public class Hoofdscherm extends JFrame {
 		//hoofdPanel.add(new JLabel("IJC De Toren"));
 		hoofdPanel.add(buttonPane);
 		hoofdPanel.add(rondeLabel);
+	}
+
+	public void updateUpdateStandButton() {
+		if (controller.getWedstrijden().isUitslagBekend()) {
+			updatestandButton.setBackground(light_green);
+		} else {
+			updatestandButton.setBackground(hoofdPanel.getBackground());
+		}
+		hoofdPanel.repaint();
 	}
 
 	/**
@@ -870,6 +871,15 @@ public class Hoofdscherm extends JFrame {
 				return c;
 			}
 		};
+		wedstrijdenTabel[index].getModel().addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent arg0) {
+				updateUpdateStandButton();
+			}
+			
+		});
+		
 
 		leftScrollPane[index].setViewportView(aanwezigheidsTabel[index]);
 		centerLeftScrollPane[index].setViewportView(wedstrijdspelersTabel[index]);
@@ -877,7 +887,6 @@ public class Hoofdscherm extends JFrame {
 		rightScrollPane[index].setViewportView(updatedSpelersTabel[index]);
 
 		JPanel ibt = new JPanel();
-//		ibt.setBackground(Color.green);
 		JTextField jTFaanwezigheid = new JTextField("Aanwezigheid in de " + Groep.geefNaam(index));
 		jTFaanwezigheid.setBackground(ibt.getBackground());
 		jTFaanwezigheid.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -887,7 +896,6 @@ public class Hoofdscherm extends JFrame {
 		panel.add(ibt, BorderLayout.LINE_START);
 
 		JPanel ibt2 = new JPanel();
-//		ibt2.setBackground(Color.blue);
 		JTextField jTFwedstrijdgroep = new JTextField("Spelers die spelen in de " + Groep.geefNaam(index));
 		jTFwedstrijdgroep.setBackground(ibt2.getBackground());
 		jTFwedstrijdgroep.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -897,7 +905,6 @@ public class Hoofdscherm extends JFrame {
 		panel.add(ibt2, BorderLayout.LINE_START);
 
 		JPanel ibt3 = new JPanel();
-//		ibt3.setBackground(Color.yellow);
 		JTextField jTFwedstrijden = new JTextField("Wedstrijden in de " + Groep.geefNaam(index));
 		jTFwedstrijden.setBackground(ibt3.getBackground());
 		jTFwedstrijden.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -1008,8 +1015,8 @@ public class Hoofdscherm extends JFrame {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				System.out.println("closing...");
+				updateUpdateStandButton();
 				hoofdPanel.repaint();
-				// do something...
 			}
 
 		});
