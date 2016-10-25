@@ -465,6 +465,8 @@ public class IJCController {
 	}
     
     public void exportToExcel() {
+    	// TODO Exporteer ook tekstversie van de wedstrijden
+    	// TODO Tabblad namen uit instellingen ipv standaard namen
     	logger.log(Level.INFO, "Creeer Excel bestand met wedstrijden");
     	OutputExcel oe = new OutputExcel();
     	oe.updateExcel(status.wedstrijden);

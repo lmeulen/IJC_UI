@@ -8,9 +8,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
- * 
+ *
  */
 package nl.detoren.ijc.ui.view;
 
@@ -66,17 +66,17 @@ import nl.detoren.ijc.ui.model.WedstrijdSpelersModel;
 import nl.detoren.ijc.ui.util.Utils;
 
 /**
- * Structure of the GUI: 
+ * Structure of the GUI:
  * JFrame Hoofdscherm (this)
  * 		JPanel ButtonPane
- * 		JPanel hoofdPanel 
+ * 		JPanel hoofdPanel
  * 			JTabbedPane tabs
- * 				JPanel panels[i] 
- * 					JScrollPane leftScrollPane[i] 
- * 						JTable aanwezigheidsTabel[i] 
- * 					JScrollPane centerScrollPane[i] 
- * 						JTable centerScrollPane[i] 
- * 					JScrollPane rightScrollPane[i] 
+ * 				JPanel panels[i]
+ * 					JScrollPane leftScrollPane[i]
+ * 						JTable aanwezigheidsTabel[i]
+ * 					JScrollPane centerScrollPane[i]
+ * 						JTable centerScrollPane[i]
+ * 					JScrollPane rightScrollPane[i]
  * 						JTable rightScrollPane[i]
  *
  * @author Leo van der Meulen
@@ -91,15 +91,15 @@ public class Hoofdscherm extends JFrame {
 	private static final long serialVersionUID = -2154845989579570030L;
 	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());
 
-	
+
 	private JPanel hoofdPanel;
 	private JTabbedPane tabs;
 	private JPanel[] panels;
 	private JLabel rondeLabel;
 	private JButton automatischButton;
-	private JButton wedstrijdgroepButton; 
+	private JButton wedstrijdgroepButton;
 	private JButton speelschemaButton;
-	private JButton bewerkspeelschemaButton; 
+	private JButton bewerkspeelschemaButton;
 	private JButton exportButton;
 	private JButton uitslagButton;
 	private JButton externenButton;
@@ -154,7 +154,7 @@ public class Hoofdscherm extends JFrame {
 
 		hoofdPanel.add(tabs);
 		this.add(hoofdPanel);
-		
+
 		updateUpdateStandButton();
 
 		pack();
@@ -257,7 +257,7 @@ public class Hoofdscherm extends JFrame {
 				actieUpdateStand();
 			}
 		});
-		buttonPane.add(updatestandButton);		
+		buttonPane.add(updatestandButton);
 
 		updateUpdateStandButton();
 
@@ -291,7 +291,7 @@ public class Hoofdscherm extends JFrame {
 	}
 
 	/**
-	 * Update het label met ronde en periode informatie 
+	 * Update het label met ronde en periode informatie
 	 */
 	public void updateRondeLabel() {
 		String rondeText = "<html>Periode: " + controller.getGroepen().getPeriode() + "<BR>";
@@ -299,7 +299,7 @@ public class Hoofdscherm extends JFrame {
 
 		rondeLabel.setText(rondeText);
 	}
-	
+
 	public void updateAutomatisch(boolean newState) {
 		controller.setAutomatisch(newState);
 		if (controller.isAutomatisch()) {
@@ -307,7 +307,7 @@ public class Hoofdscherm extends JFrame {
 			bewerkspeelschemaButton.setBackground(light_green);
 			speelschemaButton.setBackground(light_green);
 			wedstrijdgroepButton.setBackground(light_green);
-			
+
 		} else {
 			automatischButton.setBackground(Color.RED);
 			bewerkspeelschemaButton.setBackground(light_red);
@@ -375,7 +375,7 @@ public class Hoofdscherm extends JFrame {
 		});
 		filemenu.add(item);
 		menubar.add(filemenu);
-		
+
 		JMenu spelermenu = new JMenu("Speler");
 
 		item = new JMenuItem("Nieuwe speler");
@@ -502,10 +502,10 @@ public class Hoofdscherm extends JFrame {
 				hoofdPanel.repaint();
 			}
 		});
-		
+
 		overigmenu.add(item);
 		menubar.add(overigmenu);
-		
+
 		this.setJMenuBar(menubar);
 	}
 
@@ -658,7 +658,7 @@ public class Hoofdscherm extends JFrame {
 		        }
 		    }
 		});
-		
+
 		aanwezigheidsTabel[index].addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -728,7 +728,7 @@ public class Hoofdscherm extends JFrame {
 							hoofdPanel.repaint();
 						}
 					});
-					
+
 					popup.addSeparator();
 					menuItem = new JMenuItem("Doorschuiven Speler");
 					popup.add(menuItem);
@@ -751,7 +751,7 @@ public class Hoofdscherm extends JFrame {
 							hoofdPanel.repaint();
 						}
 					});
-					
+
 					popup.show(e.getComponent(), e.getX(), e.getY());
 				}
 			}
@@ -759,7 +759,7 @@ public class Hoofdscherm extends JFrame {
 
 		wedstrijdspelersTabel[index] = new JTable(new WedstrijdSpelersModel(index, panel)) {
 			/**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -868,7 +868,7 @@ public class Hoofdscherm extends JFrame {
 
 		wedstrijdenTabel[index] = new JTable(new WedstrijdModel(index, panel)) {
 			/**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -884,14 +884,14 @@ public class Hoofdscherm extends JFrame {
 			}
 		};
 		wedstrijdenTabel[index].getModel().addTableModelListener(new TableModelListener() {
-			
+
 			@Override
 			public void tableChanged(TableModelEvent arg0) {
 				updateUpdateStandButton();
 			}
-			
+
 		});
-		
+
 
 		leftScrollPane[index].setViewportView(aanwezigheidsTabel[index]);
 		centerLeftScrollPane[index].setViewportView(wedstrijdspelersTabel[index]);
@@ -934,7 +934,7 @@ public class Hoofdscherm extends JFrame {
 //		ibt4.add(rightScrollPane[index], BorderLayout.SOUTH);
 //		ibt4.setBorder(new EmptyBorder(5, 5, 5, 5));
 //		panel.add(ibt4, BorderLayout.LINE_END);
-		
+
 		panel.setBorder(new EmptyBorder(1, 1, 1, 1));
 		pack();
 
@@ -1066,7 +1066,7 @@ public class Hoofdscherm extends JFrame {
 
 	public void actieInstellingen() {
 		hoofdPanel.repaint();
-		ConfigurationDialog dialoog = new ConfigurationDialog(new JFrame(), "Configuarie");
+		ConfigurationDialog dialoog = new ConfigurationDialog(new JFrame(), "Configuratie");
 		dialoog.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
