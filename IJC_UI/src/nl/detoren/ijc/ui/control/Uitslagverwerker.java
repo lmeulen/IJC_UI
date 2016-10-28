@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  */
 package nl.detoren.ijc.ui.control;
@@ -27,7 +27,7 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.io.GroepenReader;
 
 /**
- * 
+ *
  * Verwerk uitslagen in een nieuwe stand
  *
  */
@@ -37,7 +37,7 @@ public class Uitslagverwerker {
 
 	/**
 	 * Verwerk de wedstrijduitslagen en werk de standen bij
-	 * 
+	 *
 	 * @param spelersgroepen
 	 *            De spelersgroepen
 	 * @param wedstrijden
@@ -53,9 +53,8 @@ public class Uitslagverwerker {
 			Groep bijgewerkt = new Groep();
 			bijgewerkt.setNiveau(groep.getNiveau());
 			for (Speler speler : groep.getSpelers()) {
-				logger.log(Level.INFO, "Speler " + speler.getNaam());
 				boolean extern = heeftExternGespeeld(speler, externGespeeld);
-				logger.log(Level.INFO, "Extern ? " + extern);
+				logger.log(Level.INFO, "Speler " + speler.getNaam() + ", Extern ? " + extern);
 				Speler update = updateSpeler(speler, wedstrijden, extern);
 				bijgewerkt.addSpeler(update);
 			}
@@ -67,7 +66,7 @@ public class Uitslagverwerker {
 
 	/**
 	 * Bepaal of de gegeven speler extern heeft gespeeld
-	 * 
+	 *
 	 * @param speler
 	 *            De betreffende speler
 	 * @param hebbenExternGespeeld
@@ -87,7 +86,7 @@ public class Uitslagverwerker {
 	/**
 	 * Return een bijgewerkte versie van een speler. Bijgewerkt zijn aantal
 	 * punten en zijn rating
-	 * 
+	 *
 	 * @param speler
 	 *            Speler om bij te werken
 	 * @param wedstrijden
@@ -212,7 +211,7 @@ public class Uitslagverwerker {
 
 	/**
 	 * Stel vast of de meegegeven speler in een hogere groep heeft gespeeld
-	 * 
+	 *
 	 * @param speler
 	 *            Speler
 	 * @param wedstrijden
@@ -233,7 +232,7 @@ public class Uitslagverwerker {
 
 	/**
 	 * Geef voor een specifieke speler alle wedstrijden die hij gespeeld heeft
-	 * 
+	 *
 	 * @param speler
 	 *            De speler
 	 * @param wedstrijden
@@ -264,7 +263,7 @@ public class Uitslagverwerker {
 	/**
 	 * UPdate rating van alle spelers. Itereer hiervoor door alle wedstrijden en
 	 * pas per wedstrijd de rating van iedere speler aan.
-	 * 
+	 *
 	 * @param groepen
 	 * @param wedstrijden
 	 */
@@ -299,7 +298,7 @@ public class Uitslagverwerker {
 	/**
 	 * Bereken nieuwe rating conform de regels van de OSBO en zoals gebruikt bij
 	 * de interne competitie
-	 * 
+	 *
 	 * @param beginRating
 	 * @param tegenstanderRating
 	 * @param uitslag

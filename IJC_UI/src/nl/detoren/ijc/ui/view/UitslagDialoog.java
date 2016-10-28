@@ -8,9 +8,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
- * - ... 
+ * - ...
  * - ...
  */
 package nl.detoren.ijc.ui.view;
@@ -31,6 +31,7 @@ import nl.detoren.ijc.ui.control.IJCController;
 
 /**
  * Toont het uitslagbestand
+ *
  * @author Leo.vanderMeulen
  *
  */
@@ -39,7 +40,7 @@ public class UitslagDialoog {
 	public void createDialog() {
 		JDialog dialog = new JDialog();
 		dialog.setLocationByPlatform(true);
-		JTextArea txtArea = new JTextArea(40,150);
+		JTextArea txtArea = new JTextArea(40, 150);
 		txtArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		txtArea.setFont(new Font("courier new", Font.PLAIN, 12));
 		txtArea.setLineWrap(false);
@@ -51,7 +52,7 @@ public class UitslagDialoog {
 		String line = null;
 		StringBuilder fileContents = new StringBuilder();
 		try {
-			file = new File(			IJCController.getInstance().getLaatsteExport());
+			file = new File(IJCController.getInstance().getLaatsteExport());
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			while ((line = reader.readLine()) != null) {
 				fileContents.append(line + "\n");
@@ -62,7 +63,6 @@ public class UitslagDialoog {
 		}
 
 		txtArea.setText(fileContents.toString());
-		txtArea.setLocation(0, 0);
 		txtArea.setCaretPosition(0);
 		dialog.add(txtAreaScroll);
 		dialog.pack();

@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  */
 package nl.detoren.ijc.data.groepen;
@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 /**
  * Dit object bevat de gegevens van één speler
- * 
+ *
  * @author Leo van der Meulen
  */
 public class Speler implements Cloneable {
@@ -39,7 +39,7 @@ public class Speler implements Cloneable {
     private int keipunten;
     private int keikansen;
     private String speelgeschiedenis;
-    
+
     private static final DecimalFormat decimalFormat = new DecimalFormat("#");
 
     public Speler() {
@@ -155,7 +155,7 @@ public class Speler implements Cloneable {
         }
         return ronde;
     }
-    
+
     public String getTegenstandersString() {
         return tegenstanders[0] + tegenstanders[1] + tegenstanders[2] + tegenstanders[3];
     }
@@ -189,7 +189,7 @@ public class Speler implements Cloneable {
 			KNSBnummer = nieuwKNSBnr;
 		}
 	}
-	
+
 	/**
 	 * Is deze speler lid van de KNSB?
 	 * Dit is het geval als het lidnummer met een 2 of hoger
@@ -205,12 +205,12 @@ public class Speler implements Cloneable {
 	public int hashCode() {
 		String afk = getAfkorting6();
 		int hash = 1000000;
-		
-		int tmp = (afk.charAt(0) - 'a' + 1) + (afk.charAt(1) - 'a' + 1) + (afk.charAt(2) - 'a' + 1);  
+
+		int tmp = (afk.charAt(0) - 'a' + 1) + (afk.charAt(1) - 'a' + 1) + (afk.charAt(2) - 'a' + 1);
 		hash += tmp * 10000;
-		tmp = (afk.charAt(3) - 'a' + 1) + (afk.charAt(4) - 'a' + 1) + (afk.charAt(5) - 'a' + 1);  
+		tmp = (afk.charAt(3) - 'a' + 1) + (afk.charAt(4) - 'a' + 1) + (afk.charAt(5) - 'a' + 1);
 		hash += tmp * 100;
-		tmp = (afk.charAt(6) - 'a' + 1) + (afk.charAt(7) - 'a' + 1) + (afk.charAt(8) - 'a' + 1);  
+		tmp = (afk.charAt(6) - 'a' + 1) + (afk.charAt(7) - 'a' + 1) + (afk.charAt(8) - 'a' + 1);
 		hash += tmp;
 		return hash;
 	}
@@ -283,7 +283,7 @@ public class Speler implements Cloneable {
     /**
      * Wordt dezelfde speler gerepresenteerd door het andere object?
      * @param speler
-     * @return 
+     * @return
      */
     public boolean gelijkAan(Speler speler) {
         return (this.getNaam().equals(speler.getNaam())
@@ -376,14 +376,14 @@ public class Speler implements Cloneable {
     	tmp = Integer.toString(KNSBnummer);
         while (tmp.length() < 7) {
             tmp = " " + tmp;
-        }    	
+        }
         result += tmp + " ";
     	// speelgeschiedenis
         result += speelgeschiedenis;
         return result;
 
     }
-    
+
     private String verwijderAccenten(String naam) {
         String norm = Normalizer.normalize(naam, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
@@ -434,16 +434,16 @@ public class Speler implements Cloneable {
     }
 
     public static Speler dummySpeler(int groepID) {
-        return new Speler(99, "Dummy", "--", 0, groepID, (groepID + 1) * 100, new String[]{"--", "--", "--", "--"}, 
+        return new Speler(99, "Dummy", "--", 0, groepID, (groepID + 1) * 100, new String[]{"--", "--", "--", "--"},
         		0, false, true, 1234567,0,0, "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --");
 
     }
-    
+
     /**
      * Retourneert een 9 letterige afkorting van de naam.
-     * Deze is opgebouwd uit 
-     * 1. de eerste 3 van de eerste voornaam 
-     * 2. de eerste 3 van de eerste voornaam
+     * Deze is opgebouwd uit
+     * 1. de eerste 3 van de eerste voornaam
+     * 2. de eerste 3 van de achternaam
      * 3. de middelste drie letters van de volledige naam
      * Te korte naamsdelen worden aangevuld met 'z'.
      * Vooral bedoeld om semi-hash obv naam te realiseren
@@ -454,7 +454,7 @@ public class Speler implements Cloneable {
         String tmpnaam = naam;
         tmpnaam = tmpnaam.replaceAll("\\s+","");
         // Hele naam korter dan 9 karakters -> hele naam aanvullen met 'z'
-        if (tmpnaam.length() < 9) {
+        if (tmpnaam.length() <= 9) {
         	while (tmpnaam.length() < 9) {
         		tmpnaam += 'z';
         	}
@@ -482,7 +482,7 @@ public class Speler implements Cloneable {
         }
         // 3. middelste letters volledige naam
         afkorting += tmpnaam.substring((tmpnaam.length()/2) - 1, (tmpnaam.length()/2) + 2);
-        
+
         return verwijderAccenten(afkorting.toLowerCase());
     }
 
@@ -491,7 +491,7 @@ public class Speler implements Cloneable {
 		if (arg0 == null) return false;
 		return gelijkAan((Speler) arg0);
 	}
-    
-    
+
+
 
 }

@@ -714,4 +714,9 @@ public class IJCController {
 		new ImportSpelers().importeerSpelers(absolutePath);
 	}
 
+	public void start() {
+        if (!leesStatusBestand()) leesGroepen();
+        if (isAutomatisch()) maakGroepsindeling();
+	}
+
 }

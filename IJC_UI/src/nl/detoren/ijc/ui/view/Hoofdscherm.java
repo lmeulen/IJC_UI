@@ -59,7 +59,6 @@ import javax.swing.table.TableColumn;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
-import nl.detoren.ijc.ui.model.NieuweStandModel;
 import nl.detoren.ijc.ui.model.SpelersModel;
 import nl.detoren.ijc.ui.model.WedstrijdModel;
 import nl.detoren.ijc.ui.model.WedstrijdSpelersModel;
@@ -107,10 +106,8 @@ public class Hoofdscherm extends JFrame {
 	private JScrollPane[] leftScrollPane;
 	private JScrollPane[] centerLeftScrollPane;
 	private JScrollPane[] centerRightScrollPane;
-	private JScrollPane[] rightScrollPane;
 	private JTable[] aanwezigheidsTabel;
 	private JTable[] wedstrijdspelersTabel;
-	private JTable[] updatedSpelersTabel;
 	private JTable[] wedstrijdenTabel;
 	private int aantal;
 
@@ -121,6 +118,7 @@ public class Hoofdscherm extends JFrame {
 	 */
 	public Hoofdscherm() {
 		initComponents();
+        initSizes();
 	}
 
 	private void initComponents() {
@@ -140,10 +138,8 @@ public class Hoofdscherm extends JFrame {
 		leftScrollPane = new JScrollPane[aantal];
 		centerLeftScrollPane = new JScrollPane[aantal];
 		centerRightScrollPane = new JScrollPane[aantal];
-		rightScrollPane = new JScrollPane[aantal];
 		aanwezigheidsTabel = new JTable[aantal];
 		wedstrijdspelersTabel = new JTable[aantal];
-		updatedSpelersTabel = new JTable[aantal];
 		wedstrijdenTabel = new JTable[aantal];
 
 		for (int i = 0; i < aantal; ++i) {
@@ -556,11 +552,9 @@ public class Hoofdscherm extends JFrame {
 			fixedComponentSize(leftScrollPane[i], 320, 500);
 			fixedComponentSize(centerLeftScrollPane[i], 320, 500);
 			fixedComponentSize(centerRightScrollPane[i], 320, 500);
-			fixedComponentSize(rightScrollPane[i], 230, 500);
 			fixedComponentSize(aanwezigheidsTabel[i], 320, 475);
 			fixedComponentSize(wedstrijdspelersTabel[i], 320, 475);
 			fixedComponentSize(wedstrijdenTabel[i], 320, 475);
-			fixedComponentSize(updatedSpelersTabel[i], 230, 475);
 			// Fix the size of the displayed tables
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(0), 40);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(1), 25);
@@ -581,12 +575,6 @@ public class Hoofdscherm extends JFrame {
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(2), 10);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(3), 120);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(4), 33);
-
-			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(0), 20);
-			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(1), 160);
-			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(2), 0);
-			fixedColumSize(updatedSpelersTabel[i].getColumnModel().getColumn(3), 45);
-
 		}
 	}
 
@@ -608,7 +596,6 @@ public class Hoofdscherm extends JFrame {
 		leftScrollPane[index] = new javax.swing.JScrollPane();
 		centerLeftScrollPane[index] = new javax.swing.JScrollPane();
 		centerRightScrollPane[index] = new javax.swing.JScrollPane();
-		rightScrollPane[index] = new javax.swing.JScrollPane();
 
 		aanwezigheidsTabel[index] = new JTable(new SpelersModel(index, panel)) {
 			private static final long serialVersionUID = -8293073016982337108L;
@@ -851,21 +838,6 @@ public class Hoofdscherm extends JFrame {
 			}
 		});
 
-		updatedSpelersTabel[index] = new JTable(new NieuweStandModel(index, panel)) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-				Component c = super.prepareRenderer(renderer, row, column);
-
-				// Alternate row color
-				if (!isRowSelected(row)) {
-					c.setBackground(row % 2 == 0 ? Color.WHITE : Color.LIGHT_GRAY);
-				}
-				return c;
-			}
-		};
-
 		wedstrijdenTabel[index] = new JTable(new WedstrijdModel(index, panel)) {
 			/**
 			 *
@@ -896,7 +868,6 @@ public class Hoofdscherm extends JFrame {
 		leftScrollPane[index].setViewportView(aanwezigheidsTabel[index]);
 		centerLeftScrollPane[index].setViewportView(wedstrijdspelersTabel[index]);
 		centerRightScrollPane[index].setViewportView(wedstrijdenTabel[index]);
-		rightScrollPane[index].setViewportView(updatedSpelersTabel[index]);
 
 		JPanel ibt = new JPanel();
 		JTextField jTFaanwezigheid = new JTextField("Aanwezigheid in de " + Groep.geefNaam(index));

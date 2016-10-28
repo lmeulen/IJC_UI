@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  * - ...
  */
@@ -96,18 +96,22 @@ public class Wedstrijd {
 		return uitslag;
 	}
 
+	/**
+	 * Geef uitslag in Toto stijl, waarbij 1=winst wit, 2=winst zwart, 3=remise
+	 * @param Uitslag
+	 */
 	public void setUitslag(int Uitslag) {
 		this.uitslag = Uitslag;
 	}
 
 	/**
-	 * Geef uitslag niet in Toto stijl maar voor snelle invoer in 0/1/2 0 = 0-1
-	 * = 2 (Toto) 1 = 1-0 = 1 (Toto) 2 = remise = 3 (Toto) Deze variant is
-	 * handig bij invoeren van veel resultaten doordat het eerste getal van de
-	 * uitslag ingevuld kan worden (met 2 voor half). Dit versnelt invoeren en
-	 * resultaten en voorkomt dat een vertaalslag in het hoofd nodig is van
-	 * uitslag naar Toto stijl.
-	 * 
+	 * Geef uitslag niet in Toto stijl maar voor snelle invoer in 0/1/2
+	 * 0 = 0-1 => 2 (Toto)
+	 * 1 = 1-0 => 1 (Toto)
+	 * 2 = remise => 3 (Toto)
+	 * Deze variant is handig bij invoeren van veel resultaten doordat
+	 * het eerste getal van de uitslag ingevuld kan worden (met 2 voor half).
+	 *
 	 * @param uitslag
 	 */
 	public void setUitslag012(int uitslag) {
@@ -123,13 +127,13 @@ public class Wedstrijd {
 
 	/**
 	 * Geef afstand in de rankinglijst
-	 * 
+	 *
 	 * @return
 	 */
 	public int getDistance() {
 		return Math.abs(wit.getId() - zwart.getId());
 	}
-	
+
 	public boolean isUitslagBekend() {
 		return (uitslag != ONBEKEND);
 	}
