@@ -947,7 +947,7 @@ public class Hoofdscherm extends JFrame {
 
 	public void actieExport() {
 		updateAutomatisch(false);
-		controller.exportToExcel();
+		controller.exportWedstrijdschema();
 		controller.saveState(true, "export");
 		hoofdPanel.repaint();
 	}

@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  */
 package nl.detoren.ijc.io;
@@ -29,44 +29,43 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.ui.control.IJCController;
 
-public class OutputOSBO {
+public class OutputOSBO implements WedstrijdenExportInterface {
 
 	private final static Logger logger = Logger.getLogger(OutputOSBO.class.getName());
-	
+
 	DecimalFormat int3p;
-	
+
 	public OutputOSBO() {
 		Locale loc = new Locale("de", "DE");
-		int3p = (DecimalFormat)NumberFormat.getNumberInstance(loc);
+		int3p = (DecimalFormat) NumberFormat.getNumberInstance(loc);
 		int3p.applyPattern("000");
 
-	} 
+	}
 
 	/**
 	 * Sla de nieuwe stand op in een R?-?OSBO.txt bestand en in een json versie
 	 * van resultaatVerwerkt
 	 */
-	public void saveUitslag(Wedstrijden uitslag) {
+	public boolean export(Wedstrijden wedstrijden) {
 		try {
-			if (IJCController.c().exportOSBORating) { 
-				String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "OSBO.txt";
-				logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
+			String bestandsnaam = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde() + "OSBO.txt";
+			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
-				OSBOResultaat resultaat = maakOSBOData(uitslag);
+			OSBOResultaat resultaat = maakOSBOData(wedstrijden);
 
-				FileWriter writer = new FileWriter(bestandsnaam);
-				writer.write(getHeader(uitslag.getPeriode(), uitslag.getRonde(), resultaat.getAantalSpelers()));
-				for (OSBOSpeler speler : resultaat.spelers) {
-					String result = verwerkSpeler(speler);
-					if (result != null) {
-						writer.write(result);
-					}
+			FileWriter writer = new FileWriter(bestandsnaam);
+			writer.write(getHeader(wedstrijden.getPeriode(), wedstrijden.getRonde(), resultaat.getAantalSpelers()));
+			for (OSBOSpeler speler : resultaat.spelers) {
+				String result = verwerkSpeler(speler);
+				if (result != null) {
+					writer.write(result);
 				}
-				writer.close();
 			}
+			writer.close();
+			return true;
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Export mislukt : " + e.getMessage());
-			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -115,91 +114,96 @@ public class OutputOSBO {
 		}
 		return resultaat;
 	}
+
 	/**
 	 * Converter speler naar een export regel voor het OSBO bestand
+	 *
 	 * @param speler
 	 * @return
 	 */
 	private String verwerkSpeler(OSBOSpeler speler) {
 		String result = "";
-		//001   16      Piet Pietersen                         NED     8588318             0,0   16     5 z 0     8 w 0                                          
+		// 001 16 Piet Pietersen NED 8588318 0,0 16 5 z 0 8 w 0
 		result += "001  ";
 		result += int3p.format(speler.nr).replaceAll("\\G0", " ") + "      " + speler.naam;
-		while (result.length() < 53) result += " ";
+		while (result.length() < 53)
+			result += " ";
 		result += "NED     " + speler.KNSB + "             ";
-		result += String.format("%3.1f", speler.getPunten()) +  "  ";
+		result += String.format("%3.1f", speler.getPunten()) + "  ";
 		result += int3p.format(speler.nr).replaceAll("\\G0", " ");
 		for (OSBOWedstrijd w : speler.wedstrijden) {
-			if (w != null) result += "   " + int3p.format(w.tegenstander).replaceAll("\\G0", " ") + " " + w.kleur + " " + w.strResultaat;
+			if (w != null)
+				result += "   " + int3p.format(w.tegenstander).replaceAll("\\G0", " ") + " " + w.kleur + " "
+						+ w.strResultaat;
 		}
 		return result + "\n";
 	}
-}
 
-class OSBOResultaat {
-	public ArrayList<OSBOSpeler> spelers;
+	class OSBOResultaat {
+		public ArrayList<OSBOSpeler> spelers;
 
-	OSBOResultaat() {
-		spelers = new ArrayList<>();
-	}
-
-	public int addSpeler(OSBOSpeler s) {
-		spelers.add(s);
-		s.nr = spelers.size();
-		return s.nr;
-	}
-
-	public int getSpelerIDfromKNSB(int KNSB) {
-		for (OSBOSpeler s : spelers) {
-			if (s.KNSB == KNSB)
-				return s.nr;
+		OSBOResultaat() {
+			spelers = new ArrayList<>();
 		}
-		return -1;
+
+		public int addSpeler(OSBOSpeler s) {
+			spelers.add(s);
+			s.nr = spelers.size();
+			return s.nr;
+		}
+
+		public int getSpelerIDfromKNSB(int KNSB) {
+			for (OSBOSpeler s : spelers) {
+				if (s.KNSB == KNSB)
+					return s.nr;
+			}
+			return -1;
+		}
+
+		public OSBOSpeler getSpeler(int id) {
+			return spelers.get(id - 1);
+		}
+
+		public int getAantalSpelers() {
+			return spelers.size();
+		}
 	}
 
-	public OSBOSpeler getSpeler(int id) {
-		return spelers.get(id - 1);
-	}
+	class OSBOSpeler {
+		public int nr;
+		public int KNSB;
+		public String naam;
+		public OSBOWedstrijd[] wedstrijden = new OSBOWedstrijd[10];
 
-	public int getAantalSpelers() {
-		return spelers.size();
-	}
-}
+		public OSBOSpeler(int knsb, String naam) {
+			KNSB = knsb;
+			this.naam = naam;
+		}
 
-class OSBOSpeler {
-	public int nr;
-	public int KNSB;
-	public String naam;
-	public OSBOWedstrijd[] wedstrijden = new OSBOWedstrijd[10];
-
-	public OSBOSpeler(int knsb, String naam) {
-		KNSB = knsb;
-		this.naam = naam;
-	}
-
-	public void addWedstrijd(OSBOWedstrijd w) {
-		for (int i = 0; i < 10; i++) {
-			if (wedstrijden[i] == null) {
-				wedstrijden[i] = w;
-				return;
+		public void addWedstrijd(OSBOWedstrijd w) {
+			for (int i = 0; i < 10; i++) {
+				if (wedstrijden[i] == null) {
+					wedstrijden[i] = w;
+					return;
+				}
 			}
 		}
-	}
 
-	public double getPunten() {
-		double punten = 0;
-		for (int i = 0; i < 10; i++) {
-			if (wedstrijden[i] != null) {
-				punten += wedstrijden[i].dblResultaat;
+		public double getPunten() {
+			double punten = 0;
+			for (int i = 0; i < 10; i++) {
+				if (wedstrijden[i] != null) {
+					punten += wedstrijden[i].dblResultaat;
+				}
 			}
+			return punten;
 		}
-		return punten;
 	}
-}
 
-class OSBOWedstrijd {
-	public int tegenstander;
-	public String kleur;
-	public String strResultaat; // '0'=verlies, '1'=winst, '='=gelijk
-	public double dblResultaat; // 0 = veriies, 1 = winst, 0.5 = gelijk
+	class OSBOWedstrijd {
+		public int tegenstander;
+		public String kleur;
+		public String strResultaat; // '0'=verlies, '1'=winst, '='=gelijk
+		public double dblResultaat; // 0 = veriies, 1 = winst, 0.5 = gelijk
+	}
 }

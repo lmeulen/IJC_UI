@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  */
 package nl.detoren.ijc.ui.control;
@@ -40,6 +40,7 @@ import nl.detoren.ijc.io.OutputIntekenlijst;
 import nl.detoren.ijc.io.OutputKEI;
 import nl.detoren.ijc.io.OutputKNSB;
 import nl.detoren.ijc.io.OutputOSBO;
+import nl.detoren.ijc.io.OutputSpeelschema;
 import nl.detoren.ijc.io.OutputTekst;
 
 /**
@@ -50,7 +51,7 @@ public class IJCController {
     private static volatile IJCController instance = null;
 
     private final static Logger logger = Logger.getLogger(IJCController.class.getName());
-    
+
     private static final String defaultInputfile = "uitslag.txt";
 
     private class Status {
@@ -63,9 +64,9 @@ public class IJCController {
     }
     private Status status;
     private Configuratie c;
-    
+
     private String laatsteExport;
-    
+
     protected IJCController() {
     	status = new Status();
     	status.groepen = null;
@@ -81,7 +82,7 @@ public class IJCController {
         }
         return instance;
     }
-    
+
     /**
      * Alias voor getInstance, korter voor beter leesbare code
      * @return
@@ -143,7 +144,7 @@ public class IJCController {
 				resetAanwezigheidspunt();
 		}
 	}
-	
+
 	/**
 	 * Zet voor alle spelers het aanwezigheidspunt op onwaar.
 	 */
@@ -154,7 +155,7 @@ public class IJCController {
 				s.setAanwezig(false);
 			}
 		}
-		
+
 	}
 
 	/**
@@ -204,7 +205,7 @@ public class IJCController {
     public Groep getWedstrijdGroepByID(int id) {
         return status.wedstrijdgroepen.getGroepById(id);
     }
-    
+
     public Groep getResultaatGroepByID(int id) {
     	if (status.resultaatVerwerkt != null) {
     		return status.resultaatVerwerkt.getGroepById(id);
@@ -240,11 +241,11 @@ public class IJCController {
             }
         }
     }
-    
+
     /**
      * Maak de groepsindeling voor een wedstrijdgroep voor alleen de geselecteerde
      * groep. Indelingen andere groepen blijven ongewijzigd
-     * 
+     *
      */
     public void maakGroepsindeling(int groepID) {
     	//synchronized (this) {
@@ -324,7 +325,7 @@ public class IJCController {
 	}
 
     /**
-     * Meld een speler aan/afwezig 
+     * Meld een speler aan/afwezig
      * @param groep Betreffende groep
      * @param index Betreffende speler
      * @param waarde true, als aanwezig melden
@@ -345,7 +346,7 @@ public class IJCController {
 
     }
 
-    /** 
+    /**
      * Voeg een speler toe aan een groep
      * @param groepID Groep waaraan toe te voegen
      * @param sp Gedefinieerde speler die toegevoegd moet worden
@@ -363,7 +364,7 @@ public class IJCController {
             maakGroepsindeling();
         }
     }
-    
+
     public void verwijderSpeler(int groepID, Speler sp, int locatie) {
     	logger.log(Level.INFO, "Verwijder speler " + sp.getInitialen() + " uit groep " + groepID + ", locatie " + locatie);
         Groep gr = status.groepen.getGroepById(groepID);
@@ -393,14 +394,14 @@ public class IJCController {
     	status.resultaatVerwerkt.sorteerGroepen();
     	System.out.println(status.resultaatVerwerkt.toPrintableString());
     	logger.log(Level.INFO, "en sla uitslagen en status op");
-    	new OutputTekst().saveUitslag(status.resultaatVerwerkt);
-    	new OutputKNSB().saveUitslag(status.wedstrijden);
-    	new OutputOSBO().saveUitslag(status.wedstrijden);
-    	new OutputKEI().exportKEIlijst(status.resultaatVerwerkt);
-    	new OutputIntekenlijst().exportIntekenlijst(status.resultaatVerwerkt);
+    	new OutputTekst().export(status.resultaatVerwerkt);
+    	if (c.exportKNSBRating) new OutputKNSB().export(status.wedstrijden);
+    	if (c.exportOSBORating) new OutputOSBO().export(status.wedstrijden);
+    	if (c.exportKEIlijst) new OutputKEI().export(status.resultaatVerwerkt);
+    	if (c.exportIntekenlijst) new OutputIntekenlijst().export(status.resultaatVerwerkt);
     	saveState(true, "uitslag");
     }
-    
+
 	/**
      * Save state of the application to disk
 	 * @param unique if true, a unique file is created with timestamp in filename
@@ -408,7 +409,7 @@ public class IJCController {
 	 */
     public void saveState(boolean unique, String postfix) {
 		try {
-			String bestandsnaam = c.statusBestand + ".json"; 
+			String bestandsnaam = c.statusBestand + ".json";
 			logger.log(Level.INFO, "Sla status op in bestand " + bestandsnaam);
 			Gson gson = new Gson();
 			String jsonString = gson.toJson(status);
@@ -438,7 +439,7 @@ public class IJCController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void leesStatus() {
 		try {
 			String bestandsnaam = c.statusBestand + ".json";
@@ -463,21 +464,21 @@ public class IJCController {
 			// Could not read status
 		}
 	}
-    
-    public void exportToExcel() {
+
+    public void exportWedstrijdschema() {
     	// TODO Exporteer ook tekstversie van de wedstrijden
     	// TODO Tabblad namen uit instellingen ipv standaard namen
-    	logger.log(Level.INFO, "Creeer Excel bestand met wedstrijden");
-    	OutputExcel oe = new OutputExcel();
-    	oe.updateExcel(status.wedstrijden);
+    	logger.log(Level.INFO, "Creeer bestanden met wedstrijden");
+    	new OutputExcel().export(status.wedstrijden);
+    	new OutputSpeelschema().export(status.wedstrijden);
     }
-    
+
     public ArrayList<Speler> getExterneSpelers() {
     	return status.externGespeeld;
     }
-    
+
     /**
-     * Voeg externe speler toe 
+     * Voeg externe speler toe
      * @param naam Naam of initialen
      * @return De toegeveogde speler
      */
@@ -496,7 +497,7 @@ public class IJCController {
     		return null;
     	}
     }
-    
+
     /**
      * Wis lijst met exterene spelers
      */
@@ -521,7 +522,7 @@ public class IJCController {
     	}
     	return null;
     }
-    
+
     /**
      * Vind speler in alle groepen op initialen
      * @param naam
@@ -539,7 +540,7 @@ public class IJCController {
     	}
     	return null;
     }
-    
+
     /**
      * Ga over naar de volgende ronde.
      * Uitslag van deze ronde wordt de start van de volgende
@@ -660,9 +661,9 @@ public class IJCController {
 			groep.renumber();
 		}
 	}
-	
+
 	/**
-	 * Reset de punten in alle aanwezigheidsgroepen 
+	 * Reset de punten in alle aanwezigheidsgroepen
 	 */
 	public void resetPunten() {
 		status.groepen.resetPunten();
@@ -699,7 +700,7 @@ public class IJCController {
 			logger.log(Level.INFO, "Speler " + s.getNaam() + " teruggeschoven naar groep " + Groep.geefNaam(groepID+1));
 		}
 	}
-	
+
 	/**
 	 * Geen een groepen indeler. Type is afhankelijk van de settings
 	 * in Configuratie. Dynamisch wisselen tussen indelers is mogelijk.

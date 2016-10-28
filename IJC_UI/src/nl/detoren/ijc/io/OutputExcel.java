@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  * - MINOR Excel: Bij verwijderen tweede serie verdwijnt onderste streep speellijst
  */
@@ -36,11 +36,11 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 
 /**
  * Sla het wedstrijdschema op in Excel
- * 
+ *
  * @author Leo van der Meulen
  *
  */
-public class OutputExcel {
+public class OutputExcel implements WedstrijdenExportInterface {
 
 	private final static Logger logger = Logger.getLogger(OutputExcel.class.getName());
 
@@ -50,12 +50,12 @@ public class OutputExcel {
 	 * Create version with round matches is stored in Indeling.xlsx
 	 * @param wedstrijden The round to store in the Excel file
 	 */
-	public void updateExcel(Wedstrijden wedstrijden) {
+	public boolean export(Wedstrijden wedstrijden) {
 		try {
 			logger.log(Level.INFO, "Wedstrijden wegschrijven naar Excel");
 			int[] rowOffset = { 6, 28 }; // starting row for each serie
 			int rowOffsetTrio = 50; // starting row for trio matches
-			
+
 			int periode = wedstrijden.getPeriode();
 			int ronde = wedstrijden.getRonde();
 			String rpString = "Periode " + periode + ", Ronde " + ronde;
@@ -115,7 +115,7 @@ public class OutputExcel {
 						sheet.removeRow(row);
 						sheet.shiftRows(rowid+2, lastRowNum, -1, true, false);
 					}
-					
+
 				}
 				if (nrSeries == 1) {
 					// Eén serie gespeeld dus tweede serie volledig verwijderen
@@ -142,8 +142,10 @@ public class OutputExcel {
 			outFile.close();
 			// And open it in the system editor
 			Desktop.getDesktop().open(new File(outputFile));
+			return true;
 		} catch (Exception e) {
-			System.out.println("Error writing output: " + e.toString());
+			logger.log(Level.WARNING, "Error writing output: " + e.toString());
+			return false;
 		}
 	}
 

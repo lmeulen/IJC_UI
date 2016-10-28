@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  */
 package nl.detoren.ijc.io;
@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.ui.control.IJCController;
 
-public class OutputTekst {
+public class OutputTekst implements GroepenExportInterface {
 
 	private final static Logger logger = Logger.getLogger(OutputTekst.class.getName());
 
@@ -31,9 +31,9 @@ public class OutputTekst {
      * Sla de nieuwe stand op in een uitslag?-?.txt bestand en
      * in een json versie van resultaatVerwerkt
      */
-    public void saveUitslag(Groepen uitslag) {
+    public boolean export(Groepen uitslag) {
 		try {
-			String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "Uitslag"; 
+			String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "Uitslag";
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
 			// Short variant
@@ -56,10 +56,12 @@ public class OutputTekst {
 			FileWriter writer = new FileWriter(bestandsnaam + ".json");
 			writer.write(gson.toJson(uitslag));
 			writer.close();
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
-    	
+
     }
 
 

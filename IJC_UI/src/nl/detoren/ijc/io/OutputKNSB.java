@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  */
 package nl.detoren.ijc.io;
@@ -25,7 +25,7 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.ui.control.IJCController;
 
-public class OutputKNSB {
+public class OutputKNSB implements WedstrijdenExportInterface {
 
 	private final static Logger logger = Logger.getLogger(OutputKNSB.class.getName());
 
@@ -33,33 +33,32 @@ public class OutputKNSB {
 	 * Sla de nieuwe stand op in een R?-?KNSB.csv bestand en in een json versie
 	 * van resultaatVerwerkt
 	 */
-	public void saveUitslag(Wedstrijden uitslag) {
+	public boolean export(Wedstrijden wedstrijden) {
 		try {
-			if (IJCController.c().exportKNSBRating) {
-				String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "KNSB";
-				logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
-				FileWriter writer = new FileWriter(bestandsnaam + ".csv");
-				writer.write(getHeader(uitslag.getPeriode(), uitslag.getRonde()));
-				int i = 1;
-				for (Groepswedstrijden gws : uitslag.getGroepswedstrijden()) {
-					for (Wedstrijd w : gws.getWedstrijden()) {
-						String result = verwerkWedstrijd(w, i++);
-						if (result != null) {
-							writer.write(result + "\n");
-						}
+			String bestandsnaam = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde() + "KNSB";
+			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
+			FileWriter writer = new FileWriter(bestandsnaam + ".csv");
+			writer.write(getHeader(wedstrijden.getPeriode(), wedstrijden.getRonde()));
+			int i = 1;
+			for (Groepswedstrijden gws : wedstrijden.getGroepswedstrijden()) {
+				for (Wedstrijd w : gws.getWedstrijden()) {
+					String result = verwerkWedstrijd(w, i++);
+					if (result != null) {
+						writer.write(result + "\n");
 					}
 				}
-				writer.close();
 			}
+			writer.close();
+			return true;
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Export mislukt : " + e.getMessage());
-			e.printStackTrace();
+			return false;
 		}
 	}
 
 	/**
 	 * Zet één wedstrijd om naar KNSB file formaat
-	 * 
+	 *
 	 * @param w
 	 *            Wedstrijd
 	 * @return regel voor KNSB bestand

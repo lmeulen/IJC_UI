@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  */
 package nl.detoren.ijc.io;
@@ -33,13 +33,11 @@ import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
 
-public class OutputIntekenlijst {
+public class OutputIntekenlijst implements GroepenExportInterface {
 
 	private final static Logger logger = Logger.getLogger(OutputIntekenlijst.class.getName());
 
-	public void exportIntekenlijst(Groepen uitslag) {
-		if (!IJCController.c().exportIntekenlijst)
-			return;
+	public boolean export(Groepen groepen) {
 		try {
 			logger.log(Level.INFO, "Wedstrijden wegschrijven naar Excel");
 			FileInputStream file = new FileInputStream("Leeg.docx");
@@ -50,11 +48,11 @@ public class OutputIntekenlijst {
 			run.setFontFamily("Courier New");
 			run.setFontSize(12);
 			String result;
-			for (int i = 0; i < uitslag.getAantalGroepen(); ++i) {
+			for (int i = 0; i < groepen.getAantalGroepen(); ++i) {
 				if (i >= 1)
 					run.addBreak();
-				Groep groep = uitslag.getGroepById(i);
-				result = "Stand na " + uitslag.getRonde() + "e ronde, " + uitslag.getPeriode();
+				Groep groep = groepen.getGroepById(i);
+				result = "Stand na " + groepen.getRonde() + "e ronde, " + groepen.getPeriode();
 				result += "e periode                " + groep.getNaam() + " (" + groep.getSpelers().size() + ")\n";
 				run.setText(result);
 				run.addBreak();
@@ -71,11 +69,11 @@ public class OutputIntekenlijst {
 				}
 
 				if (IJCController.c().exportDoorschuivers) {
-					int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(uitslag.getPeriode(), uitslag.getRonde());
+					int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(groepen.getPeriode(), groepen.getRonde());
 					if (i - 1 >= 0) {
 						run.setText(IJCController.c().exportDoorschuiversStart + "\n");
 						run.addBreak();
-						Groep lager = uitslag.getGroepById(i - 1);
+						Groep lager = groepen.getGroepById(i - 1);
 						if (ndoor > 1) {
 						for (int j = 0; j < ndoor; j++) {
 							Speler s = lager.getSpelerByID(j + 1);
@@ -91,7 +89,7 @@ public class OutputIntekenlijst {
 								run.setText(s1.toPrintableString(false) + "\n");
 								run.addBreak();
 							}
-							
+
 						}
 					}
 				}
@@ -101,7 +99,7 @@ public class OutputIntekenlijst {
 			// Close input file
 			file.close();
 			// Store Excel to new file
-			String outputFile = "IntekenlijstR" + uitslag.getPeriode() + "-" + uitslag.getRonde() + ".docx";
+			String outputFile = "IntekenlijstR" + groepen.getPeriode() + "-" + groepen.getRonde() + ".docx";
 			FileOutputStream outFile = new FileOutputStream(new File(outputFile));
 			document.write(outFile);
 			// Close output file
@@ -109,17 +107,19 @@ public class OutputIntekenlijst {
 			outFile.close();
 			// And open it in the system editor
 			//Desktop.getDesktop().open(new File(outputFile));
+			return true;
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Export mislukt :" + e.getMessage());
+			return false;
 		}
 	}
 
 	/**
 	 * Set spacing to double
-	 * 
+	 *
 	 * @param para
 	 */
-	public void setDoubleLineSpacing(XWPFParagraph para) {
+	private void setDoubleLineSpacing(XWPFParagraph para) {
 		CTPPr ppr = para.getCTP().getPPr();
 		if (ppr == null)
 			ppr = para.getCTP().addNewPPr();
