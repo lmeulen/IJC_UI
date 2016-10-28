@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  */
 package nl.detoren.ijc.ui.control;
@@ -27,19 +27,19 @@ import nl.detoren.ijc.ui.util.minimizetriagonal;
 
 /**
  * Fuzzy implementatie voor bepalen wedstrijdschema
- * Groepsindeling fucntionaliteit wordt overgenomen van GroepenIndeler. 
+ * Groepsindeling fucntionaliteit wordt overgenomen van GroepenIndeler.
  * @author Leo.vanderMeulen
  *
  */
 public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndelerInterface {
-	
+
 	private final static Logger logger = Logger.getLogger(GroepenIndelerFuzzy.class.getName());
 
 	private int fuzzymatrix[][];
-	
+
 	/**
 	 * Bepaal voor een groep de te spelen wedstrijden
-	 * 
+	 *
 	 * @param periode
 	 * @param ronde
 	 * @param wedstrijdgroep
@@ -216,21 +216,21 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		return gws;
 	}
 
-	public int[][] MaakFuzzyMatrix(Groep wedstrijdgroep, int serie) {
+	private int[][] MaakFuzzyMatrix(Groep wedstrijdgroep, int serie) {
 		/**
 		 * FuzzyMatrix wordt gebruik voor het snel vaststellen van beste match
 		 * als tegenstander door middel van Fuzzy Logic. Hiertoe worden per
 		 * voorwaarde waaraan voldaan moet worden een matrix opgesteld. Per
 		 * voorwaarde wordt bepaald hoe zwaar het weegt als niet aan de
 		 * voorwaarde wordt voldaan.
-		 * 
+		 *
 		 * Voorwaarde 1: Niet tegen dezelfde tegenstander speler als in de
 		 * laatste 4 partijen. Hiertoe wordt vastgesteld dat een tegenstander in
 		 * laatste ronde 140 weegt. Een tegenstander waar al tegen gestreden is
 		 * in de een-na-laatste partij weegt 90. Een tegenstander waar al tegen
 		 * gestreden is in de twee-na-laatste of drie-na-laatste partij weegt
 		 * 20. Een partij langer geleden is gewenst en weegt 0.
-		 * 
+		 *
 		 * Voorwaarde 2: Geen speler die een veel hogere of lagere ranking
 		 * heeft. Hiertoe wordt vastgesteld dat een tegenstander 1 ranking
 		 * hoger/lager 0 weegt. Een tegenstander 2 rankings hoger/lager weegt
@@ -239,34 +239,34 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		 * rankings hoger/lager weegt 50. Een tegenstander 6 rankings
 		 * hoger/lager weegt 80. Een tegenstander 7 of meer rankings hoger/lager
 		 * weegt 100.
-		 * 
+		 *
 		 * Voorwaarde 3: Iedere tegenstander moet zoveel mogelijk evenveel met
 		 * wit als zwart spelen Hiertoe wordt een weging vastgesteld volgens het
 		 * volgens matrix.
-		 * 
+		 *
 		 * 0 z1 z2 w1 w2 0 -50 -100 50 100 0 0 20 35 50 35 50 z1 -50 35 60 75 10
 		 * 25 z2 -100 50 75 100 25 0 w1 50 35 10 25 60 75 w2 100 50 25 0 75 100
-		 * 
+		 *
 		 * Indien het om doorschuiven gaat en het om de eerste serie gaat is er
 		 * nog een 4e voorwaarde. De doorschuivende speler moet tegen iemand van
 		 * de hogere groep zijn.
-		 * 
+		 *
 		 * Een speler van de eigen groep weegt 100 Een speler van de hogere
 		 * groep weegt 0
-		 * 
+		 *
 		 * Indien het om doorschuiven gaat en het om de tweede serie gaat is er
 		 * een andere 4e voorwaarde. De doorschuivende speler speelt bij
 		 * voorkeur tegen iemand van zijn eigen groep.
-		 * 
+		 *
 		 * Een speler van de eigen groep weegt 0 Een speler van de hogere groep
 		 * weegt 80
-		 * 
+		 *
 		 * De vierkante matrices met dimensie (aantal spelers,aantal spelers)
 		 * worden bij elkaar opgesteld. Dit genereert een matrix met integers.
 		 * Deze wordt hierna geoptimaliseerd door de diagonaal (is al nul) en de
 		 * sub- en superdiagonaal te minimaliseren. Hiertoe wordt een iteratie
 		 * uitgevoerd van algorithme minimizetrigonal
-		 * 
+		 *
 		 * Het is nog mogelijk de verhoudingen in zwaarte van de voorwaarden aan
 		 * te passen met de volgende parameters. mf1 mf2 mf3 mf4
 		 */
@@ -527,8 +527,8 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		//Utils.printMatrix(matrix);
 		return matrix;
 	}
-	
-	public void SpelersNamenopvolgorde(int[][] tri, int indexrow, ArrayList<Speler> spelers) {    	
+
+	private void SpelersNamenopvolgorde(int[][] tri, int indexrow, ArrayList<Speler> spelers) {
     	for (int i=0;i<tri.length;i++) {
     		System.out.print("Speler ID " + spelers.get(tri[i][indexrow-1]-1).getId() + " met naam " + spelers.get(tri[i][indexrow-1]-1).getNaam() + " staat op plaats " + i + ".\n");
     	}

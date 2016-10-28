@@ -138,7 +138,7 @@ public class ConfigurationDialog extends JDialog {
 
 	public JPanel createPanelAlgemeen() {
 		JPanel tabInstellingen = new JPanel(false);
-		tabInstellingen.setLayout(new GridLayout2(20, 2));
+		tabInstellingen.setLayout(new ExtendedGridLayout(20, 2));
 
 		tabInstellingen.add(new JLabel("Vereniging"));
 		tfVerenigingNaam = new JTextField(config.verenigingNaam, 20);
@@ -175,7 +175,7 @@ public class ConfigurationDialog extends JDialog {
 
 	public JPanel createPanelCompetitie() {
 		JPanel panel = new JPanel(false);
-		panel.setLayout(new GridLayout2(20, 2));
+		panel.setLayout(new ExtendedGridLayout(20, 2));
 		// public int perioden = 4;
 		panel.add(new JLabel("Aantal periodes"));
 		tfPerioden = new JTextField((new Integer(config.perioden)).toString());
@@ -203,7 +203,7 @@ public class ConfigurationDialog extends JDialog {
 
 	public JPanel createPanelGroepen() {
 		JPanel panel = new JPanel(false);
-		panel.setLayout(new GridLayout2(20, 3));
+		panel.setLayout(new ExtendedGridLayout(20, 3));
 		// public String[] groepsnamen = { "Pionnengroep", "Paardengroep",...
 		// public int[] startPunten = {0, 10, 20, 30, 40, 50, 60 };
 		// public int[] startRating = { 100, 150, 200, 300, 500, 800, 1400 };
@@ -237,7 +237,7 @@ public class ConfigurationDialog extends JDialog {
 
 	public JPanel createPanelIndeling() {
 		JPanel panel = new JPanel(false);
-		panel.setLayout(new GridLayout2(20, 2));
+		panel.setLayout(new ExtendedGridLayout(20, 2));
 
 		// private String grAantalDoorschuivers = "if (y >= 4) { if (y < 8) {
 		panel.add(new JLabel("Aantal doorschuivers"));
@@ -312,7 +312,7 @@ public class ConfigurationDialog extends JDialog {
 
 	public JPanel createPanelExport() {
 		JPanel panel = new JPanel(false);
-		panel.setLayout(new GridLayout2(20, 2));
+		panel.setLayout(new ExtendedGridLayout(20, 2));
 
 		// public boolean exportTextShort = true;
 		panel.add(new JLabel("Exporteer uitslag kort formaat"));

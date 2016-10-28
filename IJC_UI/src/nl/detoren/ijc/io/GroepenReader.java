@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  */
 package nl.detoren.ijc.io;
@@ -35,7 +35,6 @@ import nl.detoren.ijc.ui.control.IJCController;
 public class GroepenReader {
 
 	private final static Logger logger = Logger.getLogger(GroepenReader.class.getName());
-	//logger.log(Level.INFO, "Logbericht");
 
     public GroepenReader() {
 
@@ -48,7 +47,7 @@ public class GroepenReader {
     public Groepen leesGroepen() {
         return leesGroepen("uitslag.txt");
     }
-    
+
     /**
      * Lees groepen uit het gespecificeerde textbestand
      * @param bestandsnaam Naam van het bestand dat ingelezen moet worden
@@ -60,7 +59,6 @@ public class GroepenReader {
 			Gson gson = new Gson();
 			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
 			Groepen groepen = gson.fromJson(br, Groepen.class);
-			logger.log(Level.INFO, "Groepen gelezen met periode " +  groepen.getPeriode() + " en ronde " + groepen.getRonde());
 	        groepen.setRonde(groepen.getRonde()+1);
 	        if (groepen.getRonde() > IJCController.c().rondes) {
 	        	groepen.setRonde(1);
@@ -74,7 +72,7 @@ public class GroepenReader {
 		}
 		return null;
     }
-    
+
     /**
      * Lees groepen uit het gespecificeerde textbestand
      * @param bestandsnaam Naam van het bestand dat ingelezen moet worden
@@ -82,8 +80,6 @@ public class GroepenReader {
      */
     public Groepen leesGroepen(String bestandsnaam) {
 		logger.log(Level.INFO, "Lezen groepen in TXT formaat uit : " + bestandsnaam);
-
-        // Lees het volledige bestand in naar een String array
         String[] stringArr = leesBestand(bestandsnaam);
 
         // Lees iedere groep in en voeg deze toe aan de verzameling groepen
@@ -103,14 +99,6 @@ public class GroepenReader {
         for (int i = IJCController.c().aantalGroepen - 1; i >= 0; i--) {
             groepen.addGroep(leesGroep(stringArr, IJCController.c().groepsnamen[i].toUpperCase(), i));
         }
-//        groepen.addGroep(leesGroep(stringArr, "KEIZERGROEP", Groep.KEIZERGROEP));
-//        groepen.addGroep(leesGroep(stringArr, "KONINGSGROEP", Groep.KONINGSGROEP));
-//        groepen.addGroep(leesGroep(stringArr, "DAMEGROEP", Groep.DAMEGROEP));
-//        groepen.addGroep(leesGroep(stringArr, "TORENGROEP", Groep.TORENGROEP));
-//        groepen.addGroep(leesGroep(stringArr, "LOPERGROEP", Groep.LOPERGROEP));
-//        groepen.addGroep(leesGroep(stringArr, "PAARDENGROEP", Groep.PAARDENGROEP));
-//        groepen.addGroep(leesGroep(stringArr, "PIONNENGROEP", Groep.PIONNENGROEP));
-		logger.log(Level.INFO, "Groepen gelezen, speel periode " +  groepen.getPeriode() + " en ronde " + groepen.getRonde());
         if (ronde == 1) groepen.resetPunten();
 		return groepen;
     }
@@ -215,18 +203,13 @@ public class GroepenReader {
         speler.setKNSBnummer(getIntegerDeel(desc, 76, 9));
         // Speehistorie
         speler.setSpeelgeschiedenis(getStringDeel(desc, 85));
-        
-        // 1. Elmar Roothaan                 (ER)#    (1686)   TH+## FW+MR=   76  0/ 0 8560057 Im+## -- -- LE=-- BA=-- IW+## -- jA+-- -- -- -- 
-        //01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
-        //          1         2         3         4         5         6         7         8         9         0         1         2         3
-        //                                                                                                    1         1         1         1
         // Eigen groep
         speler.setGroep(groep);
         return speler;
     }
-    
+
     /**
-     * Lees ronde uit bestand. Deze staat op positie 8 of 9 in de regel met 
+     * Lees ronde uit bestand. Deze staat op positie 8 of 9 in de regel met
      * de tekst STAND NA (case incensitive)
      * @param data
      * @param token
@@ -243,9 +226,9 @@ public class GroepenReader {
         index -= 1; 										// index is na doorlopen loop 1 te hoog
         return getIntegerDeel(data[index], 8, 2);			// Ronde staat in kolom 8,9 van deze regel
     }
-    
+
     /**
-     * Lees periode uit bestand. Deze staat op positie 18 of 19 in de regel met 
+     * Lees periode uit bestand. Deze staat op positie 18 of 19 in de regel met
      * de tekst STAND NA (case incensitive)
      * @param data
      * @param token

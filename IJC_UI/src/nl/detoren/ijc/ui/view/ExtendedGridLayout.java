@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  * - ...
  */
@@ -16,19 +16,19 @@ package nl.detoren.ijc.ui.view;
 
 import java.awt.*;
 
-//Grid Layout which allows components of differrent sizes
-public class GridLayout2 extends GridLayout {
+//Grid Layout which allows components of different sizes
+public class ExtendedGridLayout extends GridLayout {
 	private static final long serialVersionUID = -8955988731671279921L;
 
-	public GridLayout2() {
+	public ExtendedGridLayout() {
 		this(1, 0, 0, 0);
 	}
 
-	public GridLayout2(int rows, int cols) {
+	public ExtendedGridLayout(int rows, int cols) {
 		this(rows, cols, 0, 0);
 	}
 
-	public GridLayout2(int rows, int cols, int hgap, int vgap) {
+	public ExtendedGridLayout(int rows, int cols, int hgap, int vgap) {
 		super(rows, cols, hgap, vgap);
 	}
 
