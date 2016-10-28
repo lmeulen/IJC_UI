@@ -10,7 +10,6 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *
  * Problemen in deze code:
- * - MINOR Derde serie in de eerste ronde van de eerste periode
  */
 package nl.detoren.ijc.ui.control;
 

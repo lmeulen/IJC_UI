@@ -315,9 +315,9 @@ public class Hoofdscherm extends JFrame {
 	private void addMenubar() {
 		// Menu bar met 1 niveau
 		JMenuBar menubar = new JMenuBar();
-		JMenu filemenu = new JMenu("File");
+		JMenu filemenu = new JMenu("Bestand");
 		// File menu
-		JMenuItem item = new JMenuItem("Open");
+		JMenuItem item = new JMenuItem("Openen...");
 		item.setAccelerator(KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 		Hoofdscherm hs = this;
 		item.addActionListener(new ActionListener() {
@@ -340,7 +340,7 @@ public class Hoofdscherm extends JFrame {
 			}
 		});
 		filemenu.add(item);
-		item = new JMenuItem("Save");
+		item = new JMenuItem("Opslaan");
 		item.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 		item.addActionListener(new ActionListener() {
 			@Override
@@ -360,7 +360,7 @@ public class Hoofdscherm extends JFrame {
 		item.setAccelerator(KeyStroke.getKeyStroke('I', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 		filemenu.add(item);
 		filemenu.addSeparator();
-		item = new JMenuItem("Exit        ");
+		item = new JMenuItem("Afsluiten");
 		item.setAccelerator(KeyStroke.getKeyStroke('Q', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 		item.addActionListener(new ActionListener() {
 			@Override
@@ -542,12 +542,9 @@ public class Hoofdscherm extends JFrame {
 		// Fix the layout of the components on the screen.
 //		fixedComponentSize(this, 1320, 670);
 		fixedComponentSize(this, 1150, 670);
-//		fixedComponentSize(hoofdPanel, 1310, 580);
 		fixedComponentSize(hoofdPanel, 1040, 580);
-//		fixedComponentSize(tabs, 1290, 560);
 		fixedComponentSize(tabs, 1020, 560);
 		for (int i = 0; i < aantal; ++i) {
-//			fixedComponentSize(panels[i], 1290, 500);
 			fixedComponentSize(panels[i], 1020, 500);
 			fixedComponentSize(leftScrollPane[i], 320, 500);
 			fixedComponentSize(centerLeftScrollPane[i], 320, 500);
@@ -895,16 +892,6 @@ public class Hoofdscherm extends JFrame {
 		ibt3.add(centerRightScrollPane[index], BorderLayout.SOUTH);
 		ibt3.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(ibt3, BorderLayout.LINE_START);
-
-//		JPanel ibt4 = new JPanel();
-//		ibt4.setBackground(Color.cyan);
-//		JTextField jTFresultaat = new JTextField("Groepstand na wedstrijden");
-//		jTFresultaat.setBackground(ibt4.getBackground());
-//		jTFresultaat.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-//		ibt4.add(jTFresultaat, BorderLayout.NORTH);
-//		ibt4.add(rightScrollPane[index], BorderLayout.SOUTH);
-//		ibt4.setBorder(new EmptyBorder(5, 5, 5, 5));
-//		panel.add(ibt4, BorderLayout.LINE_END);
 
 		panel.setBorder(new EmptyBorder(1, 1, 1, 1));
 		pack();
