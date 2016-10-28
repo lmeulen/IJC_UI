@@ -48,16 +48,16 @@ public class OutputSpeelschema implements WedstrijdenExportInterface {
 			String datum = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(Calendar.getInstance().getTime());
 
 			String bestandsnaam = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde() + "Wedstrijden.txt";
-			FileWriter writer = new FileWriter(bestandsnaam + ".txt");
+			FileWriter writer = new FileWriter(bestandsnaam);
 
 			for (Groepswedstrijden gws: wedstrijden.getGroepswedstrijden()) {
 				writer.write("\n");
 				writer.write(Groep.geefNaam(gws.getNiveau()).toUpperCase());
-				writer.write(" " + rpString + " " + datum + "\n\n");
+				writer.write(" " + rpString + " (" + datum + ")\n\n");
 
-				int i = 0;
+				int i = 1;
 				for (Serie s: gws.getSeries()) {
-					writer.write("Serie " + i + ":\n\n");
+					writer.write("Serie " + i++ + ":\n\n");
 					for (Wedstrijd w : s.getWedstrijden()) {
 						writer.write(w.toString() + "\n\n");
 					}

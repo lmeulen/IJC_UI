@@ -466,8 +466,6 @@ public class IJCController {
 	}
 
     public void exportWedstrijdschema() {
-    	// TODO Exporteer ook tekstversie van de wedstrijden
-    	// TODO Tabblad namen uit instellingen ipv standaard namen
     	logger.log(Level.INFO, "Creeer bestanden met wedstrijden");
     	new OutputExcel().export(status.wedstrijden);
     	new OutputSpeelschema().export(status.wedstrijden);

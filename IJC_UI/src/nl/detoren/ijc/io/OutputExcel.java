@@ -29,6 +29,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
 import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
@@ -72,6 +73,7 @@ public class OutputExcel implements WedstrijdenExportInterface {
 				int nrSeries = gw.getSeries().size();
 				// Open sheet voor deze groep
 				XSSFSheet sheet = workbook.getSheetAt(groepID);
+				workbook.setSheetName(groepID, Groep.geefNaam(groepID));
 				updateCell(sheet, 2, 8, rpString);
 				updateCell(sheet, 2, 4, datum);
 				// Export Series
