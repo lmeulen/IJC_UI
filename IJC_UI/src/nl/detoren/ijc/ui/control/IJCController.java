@@ -710,6 +710,8 @@ public class IJCController {
 
 	public void importeerSpelers(String absolutePath) {
 		new ImportSpelers().importeerSpelers(absolutePath);
+		status.groepen.hernummerGroepen();
+
 	}
 
 	public void start() {

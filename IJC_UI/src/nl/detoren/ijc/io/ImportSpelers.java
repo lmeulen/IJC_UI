@@ -18,15 +18,16 @@ import nl.detoren.ijc.ui.control.IJCController;
  * - groepnummer
  * - naam speler
  * - afkorting (2 karakters)
+ * - rating
  * - KNSBnummer (1234567 indien onbekend)
- * 
+ *
  * @author Leo.vanderMeulen
  *
  */
 public class ImportSpelers {
 
 	private final static Logger logger = Logger.getLogger(ImportSpelers.class.getName());
-    
+
     /**
      * Lees groepen uit het gespecificeerde textbestand
      * @param bestandsnaam Naam van het bestand dat ingelezen moet worden
@@ -42,12 +43,14 @@ public class ImportSpelers {
         	List<String> items = Arrays.asList(regel.split("\\s*,\\s*"));
         	int groepID = Integer.parseInt(items.get(0));
         	String naam = items.get(1);
-        	String afk = items.get(2).substring(0, 1);
-        	int knsb = Integer.parseInt(items.get(3));
+        	String afk = items.get(2).substring(0, 2);
+        	int rating = Integer.parseInt(items.get(3));
+        	int knsb = Integer.parseInt(items.get(4));
         	Speler s = new Speler();
         	s.setGroep(groepID);
         	s.setNaam(naam);
         	s.setInitialen(afk);
+        	s.setRating(rating);
         	s.setKNSBnummer(knsb);
             s.setTegenstanders(new String[]{"-- ","-- ","-- ","-- "});
             s.setSpeelgeschiedenis("-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- ");

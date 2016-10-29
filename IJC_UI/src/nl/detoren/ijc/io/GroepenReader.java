@@ -224,7 +224,7 @@ public class GroepenReader {
             index++;
         }
         index -= 1; 										// index is na doorlopen loop 1 te hoog
-        return getIntegerDeel(data[index], 8, 2);			// Ronde staat in kolom 8,9 van deze regel
+        return getIntegerDeel(data[index], 5, 8);			// Ronde staat ergens in de buurt van kolom 8
     }
 
     /**
@@ -243,7 +243,7 @@ public class GroepenReader {
             index++;
         }
         index -= 1;
-        return getIntegerDeel(data[index], 19, 2);		// Ronde staat in kolom 19,19 van deze regel
+        return getIntegerDeel(data[index], 16, 8);		// Ronde staat ergens in de buurt van kolom 16 -24
     }
 
     /**
@@ -285,7 +285,7 @@ public class GroepenReader {
      * @return de deelstring
      */
     private int getIntegerDeel(String input, int offset, int length) {
-        String str = getStringDeel(input, offset, length);
+        String str = getStringDeel(input, offset, length).replaceAll("\\D+","");
         str = str.trim();
         str = (str.startsWith("0")) ? str.substring(1) : str;
         return !str.equals("") ? Integer.decode(str) : 0;
