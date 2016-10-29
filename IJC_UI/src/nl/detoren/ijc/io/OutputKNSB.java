@@ -40,12 +40,10 @@ public class OutputKNSB implements WedstrijdenExportInterface {
 			FileWriter writer = new FileWriter(bestandsnaam + ".csv");
 			writer.write(getHeader(wedstrijden.getPeriode(), wedstrijden.getRonde()));
 			int i = 1;
-			for (Groepswedstrijden gws : wedstrijden.getGroepswedstrijden()) {
-				for (Wedstrijd w : gws.getWedstrijden()) {
-					String result = verwerkWedstrijd(w, i++);
-					if (result != null) {
-						writer.write(result + "\n");
-					}
+			for (Wedstrijd w : wedstrijden.getAlleWedstrijden()) {
+				String result = verwerkWedstrijd(w, i++);
+				if (result != null) {
+					writer.write(result + "\n");
 				}
 			}
 			writer.close();

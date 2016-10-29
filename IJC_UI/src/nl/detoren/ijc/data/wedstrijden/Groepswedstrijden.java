@@ -8,9 +8,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
- * - ... 
+ * - ...
  * - ...
  */
 package nl.detoren.ijc.data.wedstrijden;
@@ -78,13 +78,12 @@ public class Groepswedstrijden {
      */
     public ArrayList<Wedstrijd> getWedstrijden() {
         ArrayList<Wedstrijd> lst = new ArrayList<>();
-        for (Serie s : series) {
+        for (Serie s : series)
             lst.addAll(s.getWedstrijden());
-        }
         lst.addAll(triowedstrijden);
         return lst;
     }
-    
+
 	public boolean isUitslagBekend() {
 		for (Serie s : series) {
 			if (!s.isUitslagBekend())

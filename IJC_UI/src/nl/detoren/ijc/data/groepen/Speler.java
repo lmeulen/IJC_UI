@@ -42,9 +42,10 @@ public class Speler implements Cloneable {
 
     private static final DecimalFormat decimalFormat = new DecimalFormat("#");
 
-    public Speler() {
-        this(0, "", "", 0, 0, 0, new String[] {"-- ","-- ","-- ","-- "}, 0, false, true, 1234567, 0, 0, "");
-    }
+	public Speler() {
+		this(0, "", "", 0, 0, 0, new String[] { "-- ", "-- ", "-- ", "-- " }, 0, false, true, 1234567, 0, 0,
+				"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- ");
+	}
 
     public Speler(Speler speler) {
         this.id = speler.id;
@@ -361,10 +362,13 @@ public class Speler implements Cloneable {
 
     }
 
+
+    /**
+     * Retourneer additionele velden voor lange speler text
+     * Bestaat uit keipunten/keikansen knsbnummer speelgeschiedenis
+     * @return
+     */
     public String printExtensie() {
-    	//   0/ 0 8560057 Im+## -- -- LE=-- BA=-- IW+## -- jA+-- -- -- --
-    	//1234567890123456789012345678901234567890123456789012345678901234567890
-    	//         1         2         3         4         5         6         7
     	String result = " ";
     	// Keipunten
     	String tmp = Integer.toString(keipunten);
@@ -384,6 +388,11 @@ public class Speler implements Cloneable {
 
     }
 
+    /**
+     * Verwijder accent tekens uit een string
+     * @param naam
+     * @return
+     */
     private String verwijderAccenten(String naam) {
         String norm = Normalizer.normalize(naam, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
@@ -425,8 +434,7 @@ public class Speler implements Cloneable {
     }
 
     public void addTegenstander(String tgn) {
-    	speelgeschiedenis += tegenstanders[0];
-    	speelgeschiedenis = speelgeschiedenis.substring(3);
+    	speelgeschiedenis = (speelgeschiedenis + tegenstanders[0]).substring(3);
         tegenstanders[0] = tegenstanders[1];
         tegenstanders[1] = tegenstanders[2];
         tegenstanders[2] = tegenstanders[3];

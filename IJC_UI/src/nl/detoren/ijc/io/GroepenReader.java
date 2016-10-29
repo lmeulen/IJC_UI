@@ -84,8 +84,8 @@ public class GroepenReader {
 
         // Lees iedere groep in en voeg deze toe aan de verzameling groepen
         Groepen groepen = new Groepen();
-        int ronde = leesRonde(stringArr, "STAND NA");
-        int periode = leesPeriode(stringArr, "STAND NA");
+        int ronde = leesGetal(stringArr, "STAND NA", 5, 8);
+        int periode = leesGetal(stringArr, "STAND NA", 16, 8);
         ronde += 1;
         if (ronde > IJCController.c().rondes) {
         	ronde = 1;
@@ -208,33 +208,18 @@ public class GroepenReader {
         return speler;
     }
 
-    /**
-     * Lees ronde uit bestand. Deze staat op positie 8 of 9 in de regel met
-     * de tekst STAND NA (case incensitive)
-     * @param data
-     * @param token
-     * @return
-     */
-    private int leesRonde(String[] data, String token) {
-        // Zoek regel met token
-        boolean found = false;
-        int index = 0;
-        while (!found && index < data.length) {
-            found = (data[index].length() > 40) && (data[index].toUpperCase().contains(token));
-            index++;
-        }
-        index -= 1; 										// index is na doorlopen loop 1 te hoog
-        return getIntegerDeel(data[index], 5, 8);			// Ronde staat ergens in de buurt van kolom 8
-    }
 
-    /**
-     * Lees periode uit bestand. Deze staat op positie 18 of 19 in de regel met
-     * de tekst STAND NA (case incensitive)
-     * @param data
-     * @param token
-     * @return
-     */
-    private int leesPeriode(String[] data, String token) {
+/**
+ * Lees getal uit de string array. Het getal staat in de regel waarin de
+ * tekst uit token voorkomt. Getal bevind zich ergens tussen <start> en
+ * <start + length>.
+ * @param data String array met tekst
+ * @param token TOken dat de juiste regel specificeert
+ * @param start start positie voor zoeken getal
+ * @param length lengte vanaf start waar wordt gezocht
+ * @return
+ */
+    private int leesGetal(String[] data, String token, int start, int length) {
         // Zoek regel met token
         boolean found = false;
         int index = 0;
@@ -243,7 +228,7 @@ public class GroepenReader {
             index++;
         }
         index -= 1;
-        return getIntegerDeel(data[index], 16, 8);		// Ronde staat ergens in de buurt van kolom 16 -24
+        return getIntegerDeel(data[index], start, length);
     }
 
     /**

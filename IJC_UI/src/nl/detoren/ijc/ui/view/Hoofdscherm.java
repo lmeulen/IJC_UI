@@ -268,12 +268,13 @@ public class Hoofdscherm extends JFrame {
 		hoofdPanel.add(rondeLabel);
 	}
 
+	/**
+	 * Bepaal de kleur van de Update Stand button.
+	 * Deze is groen als alle wedstrijden een uitslag hebben.
+	 * Geef tevens de groepen een * in hun tabnaam die alle uitslagen ingevoerd hebben.
+	 */
 	public void updateUpdateStandButton() {
-		if (controller.getWedstrijden().isUitslagBekend()) {
-			updatestandButton.setBackground(light_green);
-		} else {
-			updatestandButton.setBackground(hoofdPanel.getBackground());
-		}
+		updatestandButton.setBackground(controller.getWedstrijden().isUitslagBekend()?light_green:hoofdPanel.getBackground());
 		if (tabs != null) {
 			for (int i = 0; i < tabs.getTabCount(); i++) {
 				if (IJCController.getI().getWedstrijden().getGroepswedstrijdenNiveau(i).isUitslagBekend()) {
@@ -393,8 +394,7 @@ public class Hoofdscherm extends JFrame {
 				final JFileChooser fc = new JFileChooser();
 				fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
 				// In response to a button click:
-				int returnVal = fc.showOpenDialog(hs);
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
+				if (fc.showOpenDialog(hs) == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					logger.log(Level.INFO, "Opening: " + file.getAbsolutePath() + ".");
 					controller.importeerSpelers(file.getAbsolutePath());
@@ -939,7 +939,6 @@ public class Hoofdscherm extends JFrame {
 		int groepID = tabs.getSelectedIndex();
 		Speler nieuw = new Speler();
 		nieuw.setGroep(groepID);
-		nieuw.setSpeelgeschiedenis("-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- ");
 		if ((s != null) && (s2 != null)) {
 			nieuw.setPunten((s.getPunten() + s2.getPunten()) / 2);
 			nieuw.setRating((s.getRating() + s2.getRating()) / 2);
@@ -964,27 +963,24 @@ public class Hoofdscherm extends JFrame {
 
 	public void actieMaakWedstrijdgroep() {
 		controller.setAutomatisch(false);
-		int groep = tabs.getSelectedIndex();
-		controller.maakGroepsindeling(groep);
+		controller.maakGroepsindeling(tabs.getSelectedIndex());
 		hoofdPanel.repaint();
 	}
 
 	public void actieMaakSpeelschema() {
 		updateAutomatisch(false);
-		int groep = tabs.getSelectedIndex();
-		controller.maakWedstrijden(groep);
+		controller.maakWedstrijden(tabs.getSelectedIndex());
 		hoofdPanel.repaint();
 	}
 
 	public void actieVoerUitslagenIn() {
 		hoofdPanel.repaint();
 		updateAutomatisch(false);
-		int groep = tabs.getSelectedIndex();
-		ResultaatDialoog rd = new ResultaatDialoog(new JFrame(), "Wedstrijdresultaten: 1=wit wint, 0=zwart wint, 2=remise", groep);
+		ResultaatDialoog rd = new ResultaatDialoog(new JFrame(),
+				"Wedstrijdresultaten: 1=wit wint, 0=zwart wint, 2=remise", tabs.getSelectedIndex());
 		rd.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
-				System.out.println("closing...");
 				updateUpdateStandButton();
 				hoofdPanel.repaint();
 			}
