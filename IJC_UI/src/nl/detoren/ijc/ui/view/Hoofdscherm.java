@@ -376,6 +376,7 @@ public class Hoofdscherm extends JFrame {
 		JMenu spelermenu = new JMenu("Speler");
 
 		item = new JMenuItem("Nieuwe speler");
+		item.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 		item.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
