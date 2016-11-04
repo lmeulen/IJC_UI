@@ -132,7 +132,12 @@ public class IJCController {
 				}
 			} catch (Exception e) {
 				logger.log(Level.WARNING, "Geens statusbestand gelezen");
+				status.groepen = null;
+			}
+			if (status.groepen == null) {
 				status.groepen = new Groepen();
+				for (int i = 0; i < c.aantalGroepen; ++i)
+					status.groepen.addGroep(new Groep(i));
 				status.groepen.setPeriode(1);
 				status.groepen.setRonde(1);
 			}
