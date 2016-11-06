@@ -45,8 +45,11 @@ import javax.swing.table.TableCellRenderer;
 
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
+import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
+import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.io.GroepenReader;
+import nl.detoren.ijc.ui.control.IJCController;
 import nl.detoren.ijc.ui.model.SerieModel;
 import nl.detoren.ijc.ui.model.SpelersIndelenModel;
 import nl.detoren.ijc.ui.util.GBC;
@@ -69,6 +72,7 @@ public class WedstrijdschemaDialoog extends JDialog {
     private JScrollPane[] centerScrollPane;
     private JPanel centerPanel;
     private JPanel rightPanel;
+    private JPanel topPanel;
 
     WedstrijdschemaDialoog(Frame frame, String title, int groepID) {
     	groep = groepID;
@@ -149,18 +153,35 @@ public class WedstrijdschemaDialoog extends JDialog {
         centerPanel = new JPanel();
 
         centerPanel.setLayout(new GridBagLayout());
-        //centerPanel.add(new JLabel("Serie 1"), new GBC(0, 0).setFill(GridBagConstraints.VERTICAL));
-        JPanel topPanel = new JPanel();
+        topPanel = new JPanel();
         topPanel.add(new JLabel("Serie 1"));
-        topPanel.add(new JButton("Create"));	// TODO Add functionality to Create button
-        topPanel.add(new JButton("Wis"));		// TODO Add functionality to Wis button
+
+        JButton wisButton = new JButton("Wis");
+		wisButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				model.wisSerie(0);
+				model.forceRepaint();
+			}
+		});
+		topPanel.add(wisButton);
+
         centerPanel.add(topPanel, new GBC(0, 0).setFill(GridBagConstraints.VERTICAL));
         centerPanel.add(centerScrollPane[0], new GBC(1, 0).setFill(GridBagConstraints.VERTICAL));
 
         topPanel = new JPanel();
         topPanel.add(new JLabel("Serie 2"));
-        topPanel.add(new JButton("Create")); // TODO Add functionality to Create button
-        topPanel.add(new JButton("Wis"));	 // TODO Add functionality to Wis button
+        wisButton = new JButton("Wis");
+		wisButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				model.wisSerie(1);
+				model.forceRepaint();
+			}
+		});
+		topPanel.add(wisButton);
         centerPanel.add(topPanel, new GBC(2, 0).setFill(GridBagConstraints.VERTICAL));
 
         centerPanel.add(centerScrollPane[1], new GBC(3, 0).setFill(GridBagConstraints.VERTICAL));
@@ -171,15 +192,32 @@ public class WedstrijdschemaDialoog extends JDialog {
 
         topPanel = new JPanel();
         topPanel.add(new JLabel("Serie 3"));
-        topPanel.add(new JButton("Create"));  	// TODO Implement create button
-        topPanel.add(new JButton("Wis"));		// TODO Implement Wis button
+        wisButton = new JButton("Wis");
+		wisButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				model.wisSerie(2);
+				model.forceRepaint();
+			}
+		});
+		topPanel.add(wisButton);
+
         rightPanel.add(topPanel, new GBC(0, 0).setFill(GridBagConstraints.VERTICAL));
         rightPanel.add(centerScrollPane[2], new GBC(1, 0).setFill(GridBagConstraints.VERTICAL));
 
         topPanel = new JPanel();
         topPanel.add(new JLabel("Triowedstrijden"));
-        topPanel.add(new JButton("Create"));
-        topPanel.add(new JButton("Wis"));
+        wisButton = new JButton("Wis");
+		wisButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				model.wisSerie(3);
+				model.forceRepaint();
+			}
+		});
+		topPanel.add(wisButton);
         rightPanel.add(topPanel, new GBC(2, 0).setFill(GridBagConstraints.VERTICAL));
         rightPanel.add(centerScrollPane[3], new GBC(3, 0).setFill(GridBagConstraints.VERTICAL));
 

@@ -8,9 +8,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
- * - ... 
+ * - ...
  * - ...
  */
 package nl.detoren.ijc.ui.model;
@@ -33,7 +33,7 @@ import nl.detoren.ijc.ui.control.IJCController;
 public class SerieModel extends AbstractTableModel {
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private IJCController controller = null;
@@ -85,9 +85,7 @@ public class SerieModel extends AbstractTableModel {
             ArrayList<Wedstrijd> tw = ws.getGroepswedstrijdenNiveau(groepID).getTriowedstrijden();
             count = tw == null ? 0 : tw.size();
         }
-        //System.out.println("Aantal rows voor serie " + serieID + " is " + count);
         return count;
-        //return controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getWedstrijden().size();
     }
 
     @Override
@@ -188,6 +186,15 @@ public class SerieModel extends AbstractTableModel {
         component.repaint();
     }
 
+    public void wisSerie(int serieID) {
+    	Groepswedstrijden gws = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID);
+        if (serieID == 3) {
+            gws.setTriowedstrijden(new ArrayList<Wedstrijd>());
+        }else {
+        	gws.getSerie(serieID).wis();
+        }
+    }
+
     public void insertWedstrijd(int id) {
         Serie serie = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getSerie(serieID);
         Wedstrijd w = new Wedstrijd(0, Speler.dummySpeler(groepID), Speler.dummySpeler(groepID), 0);
@@ -225,7 +232,7 @@ public class SerieModel extends AbstractTableModel {
         Serie serie = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getSerie(serieID);
         serie.getWedstrijden().remove(idx);
     }
-    
+
     public void forceRepaint() {
         component.repaint();
     }
