@@ -123,9 +123,13 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				//groep.SpelersNamenopvolgorde(ordertest);
 			}
 			System.out.print("Deze groep " + groep.getNaam() + " heeft " + tri.length + " spelers.\n");
-			trioloc = minimizetriagonal.gettrio(tri,1);
-			if (i==0) {
-				System.out.print("Geen trio in deze groep.\n");
+			if (speelrondes >1) {
+				trioloc = minimizetriagonal.gettrio(tri,1);
+			} else {
+				trioloc = 0;
+			}
+			if (trioloc==0) {
+				// System.out.print("Geen trio in deze groep.\n");
 			}
 			if (!(trioloc == 0)) {
 				trio[0]=tri[trioloc-1][0];
