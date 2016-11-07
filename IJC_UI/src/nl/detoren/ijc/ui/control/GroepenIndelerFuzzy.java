@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Leo van der Meulen
+ * Copyright (C) 2016 Leo van der Meulen, Lars Dam
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation version 3.0
@@ -29,6 +29,7 @@ import nl.detoren.ijc.ui.util.minimizetriagonal;
  * Fuzzy implementatie voor bepalen wedstrijdschema
  * Groepsindeling fucntionaliteit wordt overgenomen van GroepenIndeler.
  * @author Leo.vanderMeulen
+ * @author Lars.Dam
  *
  */
 public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndelerInterface {
@@ -84,7 +85,6 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		int trioloc = 0;
 		int[] trio = {0,1,2};
 		int indexrow = 1;
-		int order[] = new int[groep.getAantalSpelers()];
 		for (int i = 0; i < speelrondes; i++) {
 			System.out.print(
 					"Creating serie " + Integer.toString(i + 1) + " voor groep " + groep.getNaam() + "\n");
@@ -114,10 +114,8 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			System.out.print("Trigonalization of Matrix\n");
 			minimizetriagonal triagonal = new minimizetriagonal();
 			triagonal.setA(fuzzymatrix);
-			triagonal.setOrder(order);
 			triagonal.setIterations(groep.getAantalSpelers());
 			triagonal.Iterminimizetriagonal();
-			order = triagonal.getOrder();
 			int[][] tri = triagonal.getA();
 			Utils.printMatrix(tri);
 			if (groep.getNaam().equals("Pionnengroep")) {
