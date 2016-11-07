@@ -127,6 +127,10 @@ public class IJCController {
 				} else if (bestandsnaam.endsWith(".json")) {
 					logger.log(Level.INFO, "Lees groepen in JSON uit bestand " + bestandsnaam);
 					status.groepen = new GroepenReader().leesGroepenJSON(bestandsnaam);
+					// check for old groepen in status.
+					for (int i=c.aantalGroepen; i<11 ; i++) {
+					//	status.groepen.removeGroep(status.groepen.getGroepById(i));
+					}
 				} else {
 					return;
 				}
@@ -141,6 +145,7 @@ public class IJCController {
 				status.groepen.setPeriode(1);
 				status.groepen.setRonde(1);
 			}
+
 			status.wedstrijdgroepen = new Groepen();
 			status.wedstrijden = new Wedstrijden();
 			status.resultaatVerwerkt = new Groepen();

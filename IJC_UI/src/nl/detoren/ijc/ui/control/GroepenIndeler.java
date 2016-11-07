@@ -135,7 +135,8 @@ public class GroepenIndeler implements GroepenIndelerInterface {
         // kunnen geen spelers inschuiven
     	// Let op: iterator gaat op array index en NIET op groepID
         ArrayList<Groep> groepen = wedstrijdGroepen.getGroepen();
-        for (int i = 0; i < groepen.size() - 1; ++i) {
+//        for (int i = 0; i < groepen.size() - 1; ++i) {
+        for (int i = 0; i < wedstrijdGroepen.getAantalGroepen() - 1; ++i) {
             aantal = bepaalAantalDoorschuiven(aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
         	logger.log(Level.INFO, "Doorschuiven van groep "  + groepen.get(i+1).getNaam() + " naar " + groepen.get(i).getNaam());
             ArrayList<Speler> naarGroep = groepen.get(i).getSpelers();

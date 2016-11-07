@@ -55,7 +55,11 @@ public class minimizetriagonal {
 	}
 
 	public int getADimensiony() {
-		return A[0].length;
+		if (A.length==0) {
+			return 0;
+		} else {
+			return A[0].length;
+		}
 	}
 
 	public void Iterminimizetriagonal() {

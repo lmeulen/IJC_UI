@@ -40,7 +40,11 @@ public class Groepen {
     public void addGroep(Groep groep) {
         groepen.add(groep);
     }
-    
+
+    public void removeGroep(Groep groep) {
+        groepen.remove(groep);
+    }
+
     public void updateGroep(Groep groep, int id) {
     	for (int i =0; i < groepen.size(); i++) {
     		if (groepen.get(i).getNiveau() == id)

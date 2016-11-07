@@ -65,6 +65,7 @@ public class GroepenReader {
 	        	groepen.setPeriode(groepen.getPeriode()+1);
 	        	if (groepen.getPeriode() > IJCController.c().perioden) groepen.setPeriode(1);
 	        }
+	        
 			logger.log(Level.INFO, "Volgende periode " +  groepen.getPeriode() + " en ronde " + groepen.getRonde());
 	        return groepen;
 		} catch (IOException e) {
