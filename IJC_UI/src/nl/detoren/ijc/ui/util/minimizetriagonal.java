@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 public class minimizetriagonal {
 
 	private int iterations;
-	private int order[];
 	private int swaps[][];
 	private int A[][];
 
@@ -33,14 +32,6 @@ public class minimizetriagonal {
 
 	public void setIterations(int iterations) {
 		this.iterations = iterations;
-	}
-
-	public int[] getOrder() {
-		return order;
-	}
-
-	public void setOrder(int order[]) {
-		this.order = order;
 	}
 
 	public int[][] getSwaps() {
