@@ -45,11 +45,8 @@ import javax.swing.table.TableCellRenderer;
 
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
-import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
-import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.io.GroepenReader;
-import nl.detoren.ijc.ui.control.IJCController;
 import nl.detoren.ijc.ui.model.SerieModel;
 import nl.detoren.ijc.ui.model.SpelersIndelenModel;
 import nl.detoren.ijc.ui.util.GBC;

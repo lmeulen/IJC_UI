@@ -1,4 +1,4 @@
-/**
+	/**
  * Copyright (C) 2016 Leo van der Meulen
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,7 +129,7 @@ public class IJCController {
 					status.groepen = new GroepenReader().leesGroepenJSON(bestandsnaam);
 					// check for old groepen in status.
 					for (int i=c.aantalGroepen; i<11 ; i++) {
-					//	status.groepen.removeGroep(status.groepen.getGroepById(i));
+						status.groepen.removeGroep(status.groepen.getGroepById(i));
 					}
 				} else {
 					return;
