@@ -48,6 +48,9 @@ public class OutputIntekenlijst implements GroepenExportInterface {
 			run.setFontFamily("Courier New");
 			run.setFontSize(12);
 			String result;
+            result = "Intekenlijst aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam;
+			run.setText(result);
+			run.addCarriageReturn(); // separate previous text from break
 			for (int i = 0; i < groepen.getAantalGroepen(); ++i) {
 				if (i >= 1)
 					run.addBreak();

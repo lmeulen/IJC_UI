@@ -130,6 +130,7 @@ public class Groepen {
 				}
             }
             result += "\n";
+            result += "Stand aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam;
         }
         return result;
     }
