@@ -213,7 +213,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
     	} else {
             resultaat = serie;
     	}
-        String log = groep.getNaam() + "in periode "+ periode + ", ronde " + ronde;
+        String log = groep.getNaam() + " in periode "+ periode + ", ronde " + ronde;
         log += ", serie " + serie + "-> minimaal verschil = " + resultaat;
     	logger.log(Level.INFO, log);
         return resultaat;
@@ -360,6 +360,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 					ignoreTgns++;
 				}
 				maxverschil++;
+				if (minverschil > 1) minverschil--;
 				ignoreTgns = 0;
 			}
 
