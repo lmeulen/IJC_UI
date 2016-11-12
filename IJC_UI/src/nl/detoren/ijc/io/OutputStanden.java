@@ -23,9 +23,9 @@ import com.google.gson.Gson;
 import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.ui.control.IJCController;
 
-public class OutputTekst implements GroepenExportInterface {
+public class OutputStanden implements GroepenExportInterface {
 
-	private final static Logger logger = Logger.getLogger(OutputTekst.class.getName());
+	private final static Logger logger = Logger.getLogger(OutputStanden.class.getName());
     private static String ls = System.lineSeparator();
 
 	/**
@@ -34,7 +34,7 @@ public class OutputTekst implements GroepenExportInterface {
      */
     public boolean export(Groepen uitslag) {
 		try {
-			String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "Uitslag";
+			String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "Stand";
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
 			// Short variant

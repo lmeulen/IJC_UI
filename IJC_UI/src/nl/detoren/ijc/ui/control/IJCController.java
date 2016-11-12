@@ -41,7 +41,8 @@ import nl.detoren.ijc.io.OutputKEI;
 import nl.detoren.ijc.io.OutputKNSB;
 import nl.detoren.ijc.io.OutputOSBO;
 import nl.detoren.ijc.io.OutputSpeelschema;
-import nl.detoren.ijc.io.OutputTekst;
+import nl.detoren.ijc.io.OutputStanden;
+import nl.detoren.ijc.io.OutputUitslagen;
 
 /**
  * Main controller class voor afhandeling van de groepen en wedstrijden
@@ -405,7 +406,8 @@ public class IJCController {
     	status.resultaatVerwerkt.sorteerGroepen();
     	System.out.println(status.resultaatVerwerkt.toPrintableString());
     	logger.log(Level.INFO, "en sla uitslagen en status op");
-    	new OutputTekst().export(status.resultaatVerwerkt);
+    	new OutputStanden().export(status.resultaatVerwerkt);
+    	new OutputUitslagen().export(status.wedstrijden);
     	if (c.exportKNSBRating) new OutputKNSB().export(status.wedstrijden);
     	if (c.exportOSBORating) new OutputOSBO().export(status.wedstrijden);
     	if (c.exportKEIlijst) new OutputKEI().export(status.resultaatVerwerkt);

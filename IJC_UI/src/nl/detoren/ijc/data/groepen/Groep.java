@@ -147,7 +147,7 @@ public class Groep {
         String result = "";
         for (Speler s : getSpelers()) {
             result += s.toPrintableString(lang);
-            result += "\n";
+            result += System.lineSeparator();
         }
         return result;
     }
