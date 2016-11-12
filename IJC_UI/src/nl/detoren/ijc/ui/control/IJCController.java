@@ -191,6 +191,7 @@ public class IJCController {
 		return true;
 	}
 
+
     /**
      * Groepen zoals ingelezen met aanwezigheid bijgewerkt.
      *
@@ -450,17 +451,31 @@ public class IJCController {
 		}
 	}
 
-	public void leesStatus() {
+	public boolean leesStatus() {
+		return leesStatus(c.statusBestand + ".json");
+	}
+
+	public boolean leesStatus(String bestandsnaam) {
 		try {
-			String bestandsnaam = c.statusBestand + ".json";
 	    	logger.log(Level.INFO, "Lees status uit bestand " + bestandsnaam);
 			Gson gson = new Gson();
 			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
-			status = gson.fromJson(br, Status.class);
+			Status nieuw = gson.fromJson(br, Status.class);
+			status = nieuw;	// assure excpetion is thrown when things go wrong
+			return true;
 		} catch (IOException e) {
 			// Could not read status
+			return false;
 		}
 	}
+
+
+	public void leesBestand(String bestandsnaam) {
+		if (!leesStatus(bestandsnaam))
+			leesGroepen(bestandsnaam);
+
+	}
+
 
 	public void leesConfiguratie() {
 		try {
