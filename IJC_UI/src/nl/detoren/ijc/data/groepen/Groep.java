@@ -99,6 +99,7 @@ public class Groep {
         if (spelers == null) {
             spelers = new ArrayList<>();
         }
+        speler.setGroep(niveau);
         spelers.add(speler);
     }
 	/**
