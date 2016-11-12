@@ -703,7 +703,9 @@ public class IJCController {
 		if (huidigeGroep != null && hogereGroep != null) {
 			Speler s = huidigeGroep.getSpelerByID(spelerID+1);
 			huidigeGroep.removeSpeler(s, spelerID);
-			hogereGroep.addSpeler(new Speler(s));
+			Speler nieuweSpeler = new Speler(s);
+			nieuweSpeler.setPunten(IJCController.c().startPunten[groepID+1]);
+			hogereGroep.addSpeler(nieuweSpeler);
 			huidigeGroep.renumber();
 			hogereGroep.renumber();
 			logger.log(Level.INFO, "Speler " + s.getNaam() + " doorgeschoven naar groep " + Groep.geefNaam(groepID+1));
@@ -721,7 +723,9 @@ public class IJCController {
 		if (huidigeGroep != null && lagereGroep != null) {
 			Speler s = huidigeGroep.getSpelerByID(spelerID+1);
 			huidigeGroep.removeSpeler(s, spelerID);
-			lagereGroep.addSpeler(new Speler(s));
+			Speler nieuweSpeler = new Speler(s);
+			nieuweSpeler.setPunten(IJCController.c().startPunten[groepID-1]);
+			lagereGroep.addSpeler(nieuweSpeler);
 			huidigeGroep.renumber();
 			lagereGroep.renumber();
 			logger.log(Level.INFO, "Speler " + s.getNaam() + " teruggeschoven naar groep " + Groep.geefNaam(groepID+1));

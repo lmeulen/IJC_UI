@@ -332,7 +332,7 @@ public class Hoofdscherm extends JFrame {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					logger.log(Level.INFO, "Opening: " + file.getAbsolutePath() + ".");
-					controller.leesGroepen(file.getAbsolutePath());
+					controller.leesBestand(file.getAbsolutePath());
 					updateAutomatisch(true);
 					controller.maakGroepsindeling();
 					updateRondeLabel();
