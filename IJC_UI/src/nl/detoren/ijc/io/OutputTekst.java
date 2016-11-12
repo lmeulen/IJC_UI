@@ -26,6 +26,7 @@ import nl.detoren.ijc.ui.control.IJCController;
 public class OutputTekst implements GroepenExportInterface {
 
 	private final static Logger logger = Logger.getLogger(OutputTekst.class.getName());
+    private static String ls = System.lineSeparator();
 
 	/**
      * Sla de nieuwe stand op in een uitslag?-?.txt bestand en
@@ -40,6 +41,7 @@ public class OutputTekst implements GroepenExportInterface {
 			if (IJCController.c().exportTextLong) {
 				FileWriter writer = new FileWriter(bestandsnaam + ".txt");
 				writer.write(uitslag.toPrintableString(false));
+				writer.write(ls + "Stand aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam + ls);
 				writer.close();
 				IJCController.getInstance().setLaatsteExport(bestandsnaam + ".txt");
 			}
@@ -48,6 +50,7 @@ public class OutputTekst implements GroepenExportInterface {
 			if (IJCController.c().exportTextLong) {
 				FileWriter writer = new FileWriter(bestandsnaam + "-long.txt");
 				writer.write(uitslag.toPrintableString(true));
+				writer.write(ls + "Stand aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam + ls);
 				writer.close();
 				IJCController.getInstance().setLaatsteExport(bestandsnaam + "-long.txt");
 			}

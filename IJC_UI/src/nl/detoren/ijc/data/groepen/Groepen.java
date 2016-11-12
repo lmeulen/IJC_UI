@@ -33,6 +33,8 @@ public class Groepen {
     private int periode;
     private int ronde;
 
+    private static String ls = System.lineSeparator();
+
     public Groepen() {
         groepen = new ArrayList<>();
     }
@@ -102,35 +104,33 @@ public class Groepen {
             //pos naam                           ini   zw rating  gespeeld tegen  punt
             //------------------------------------------------------------------------
             result += "Stand na " + ronde + "e ronde, " + periode;
-            result += "e periode                " + groep.getNaam() + " (" + groep.getSpelers().size() + ")\n";
-            result += "    Naam                           ini   zw rating  gespeeld tegen  pnt\n";
-            result += "-----------------------------------------------------------------------\n";
+            result += "e periode                " + groep.getNaam() + " (" + groep.getSpelers().size() + ")" + ls;
+            result += "    Naam                           ini   zw rating  gespeeld tegen  pnt" + ls;
+            result += "-----------------------------------------------------------------------" + ls;
 
-            result += groep.toPrintableString(lang) + "\n";
+            result += groep.toPrintableString(lang) + ls;
 
 			if (IJCController.c().exportDoorschuivers) {
 				int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(periode, ronde);
 				if (i + 1 < groepen.size()) {
 					Groep lager = groepen.get(i + 1);
 					if (ndoor > 1) {
-						result += IJCController.c().exportDoorschuiversStart + "\n";
+						result += IJCController.c().exportDoorschuiversStart + ls;
 						for (int j = 0; j < ndoor; j++) {
 							Speler s = lager.getSpelerByID(j + 1);
-							result += s.toPrintableString(lang) + "\n";
+							result += s.toPrintableString(lang) + ls;
 						}
-						result += IJCController.c().exportDoorschuiversStop + "\n" + "\n";
+						result += IJCController.c().exportDoorschuiversStop + ls + ls;
 					} else {
 						// Bij één doorschuiver, alleen doorschuiVen als kampioen
 						Speler s1 = lager.getSpelerByID(1);
 						Speler s2 = lager.getSpelerByID(2);
 						if ((s2 != null) && ((s1.getPunten() - s2.getPunten()) > 4)) {
-							result += s1.toPrintableString(lang) + "\n";
+							result += s1.toPrintableString(lang) + ls;
 						}
 					}
 				}
             }
-            result += "\n";
-            result += "Stand aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam;
         }
         return result;
     }

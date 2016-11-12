@@ -89,7 +89,7 @@ public class OutputKEI implements GroepenExportInterface {
 				if (p.length() < 2)
 					p = " " + p;
 				res += p;
-				writer.write(res + "\n");
+				writer.write(res + System.lineSeparator());
 
 			}
 			writer.close();
@@ -102,9 +102,9 @@ public class OutputKEI implements GroepenExportInterface {
 
 	private String getHeader(int periode, int ronde) {
 		String res = "";
-		res += "Klassement KEI-punten: ronde: " + ronde + "  periode: " + periode + "\n";
-		res += "\nPos Naam               KEIpunten/kansen\n";
-		res += "---------------------------------------\n";
+		res += "Klassement KEI-punten: ronde: " + ronde + "  periode: " + periode + System.lineSeparator();
+		res += "\nPos Naam               KEIpunten/kansen" + System.lineSeparator();
+		res += "---------------------------------------" + System.lineSeparator();
 		return res;
 	}
 }
