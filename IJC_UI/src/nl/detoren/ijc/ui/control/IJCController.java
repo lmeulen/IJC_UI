@@ -14,6 +14,7 @@
 package nl.detoren.ijc.ui.control;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,10 +40,13 @@ import nl.detoren.ijc.io.OutputExcel;
 import nl.detoren.ijc.io.OutputIntekenlijst;
 import nl.detoren.ijc.io.OutputKEI;
 import nl.detoren.ijc.io.OutputKNSB;
+import nl.detoren.ijc.io.OutputNeuralData;
 import nl.detoren.ijc.io.OutputOSBO;
 import nl.detoren.ijc.io.OutputSpeelschema;
 import nl.detoren.ijc.io.OutputStanden;
 import nl.detoren.ijc.io.OutputUitslagen;
+import nl.detoren.ijc.neural.NeuralHelper;
+import nl.detoren.ijc.neural.Voorspeller;
 
 /**
  * Main controller class voor afhandeling van de groepen en wedstrijden
@@ -412,6 +416,9 @@ public class IJCController {
     	if (c.exportOSBORating) new OutputOSBO().export(status.wedstrijden);
     	if (c.exportKEIlijst) new OutputKEI().export(status.resultaatVerwerkt);
     	if (c.exportIntekenlijst) new OutputIntekenlijst().export(status.resultaatVerwerkt);
+
+    	new OutputNeuralData().export(status.wedstrijden);
+
     	saveState(true, "uitslag");
     }
 
@@ -465,7 +472,7 @@ public class IJCController {
 			Status nieuw = gson.fromJson(br, Status.class);
 			status = nieuw;	// assure excpetion is thrown when things go wrong
 			return true;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// Could not read status
 			return false;
 		}
@@ -496,6 +503,7 @@ public class IJCController {
     	logger.log(Level.INFO, "Creeer bestanden met wedstrijden");
     	new OutputExcel().export(status.wedstrijden);
     	new OutputSpeelschema().export(status.wedstrijden);
+        voorspelUitslagen();
     }
 
     public ArrayList<Speler> getExterneSpelers() {
@@ -754,4 +762,21 @@ public class IJCController {
         if (isAutomatisch()) maakGroepsindeling();
 	}
 
+	public void voorspelUitslagen() {
+		Voorspeller v = new Voorspeller();
+		v.initialiseer();
+		new OutputNeuralData().export(status.wedstrijden, "huidige_ronde.arff");
+		try {
+			v.voorspel("huidige_ronde.arff");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

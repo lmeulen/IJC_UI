@@ -442,7 +442,7 @@ public class Speler implements Cloneable {
     }
 
     public static Speler dummySpeler(int groepID) {
-        return new Speler(99, "Dummy", "--", 0, groepID, (groepID + 1) * 100, new String[]{"--", "--", "--", "--"},
+        return new Speler(99, "Dummy", "--", 0, groepID, (groepID + 1) * 100, new String[]{"-- ", "-- ", "-- ", "-- "},
         		0, false, true, 1234567,0,0, "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --");
 
     }

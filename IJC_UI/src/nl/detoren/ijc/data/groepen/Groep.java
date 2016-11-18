@@ -194,6 +194,18 @@ public class Groep {
     }
 
     /**
+     * Geef speler met specifieke initialen
+     * @param afk afkorting
+     * @return betreffende speler
+     */
+    public Speler getSpelerByInitialen(String afk) {
+        for (Speler s : spelers) {
+            if (s.getInitialen().equals(afk)) return s;
+        }
+        return null;
+    }
+
+    /**
      * Retourneer de spelers in deze groep die een andere groep als niveau
      * hebben staan
      * @return

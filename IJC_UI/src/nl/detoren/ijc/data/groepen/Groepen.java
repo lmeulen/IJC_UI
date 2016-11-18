@@ -155,13 +155,28 @@ public class Groepen {
     }
 
     /**
-     * Zoek speler in alle groepen
+     * Zoek speler in alle groepen met het
+     * opgegeven KNSB nummer
      *
      */
     public Speler getSpelerByKNSB(int knsb) {
     	for (Groep g: groepen) {
     		for (Speler s: g.getSpelers()) {
     			if (s.getKNSBnummer() == knsb) return s;
+    		}
+    	}
+    	return null;
+    }
+
+    /**
+     * Zoek speler in alle groepen naar speler met de
+     * opgegeven initialen
+     *
+     */
+    public Speler getSpelerByInitialen(String initialen) {
+    	for (Groep g: groepen) {
+    		for (Speler s: g.getSpelers()) {
+    			if (s.getInitialen().equals(initialen)) return s;
     		}
     	}
     	return null;

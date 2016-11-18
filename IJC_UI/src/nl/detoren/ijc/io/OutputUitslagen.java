@@ -11,33 +11,34 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.ui.control.IJCController;
 
-public class OutputUitslagen {
+public class OutputUitslagen implements WedstrijdenExportInterface{
 
     private final static Logger logger = Logger.getLogger(IJCController.class.getName());
     private final static String ls = System.lineSeparator();
     private int periode;
     private int ronde;
 
-    public void export(Wedstrijden wedstrijden) {
-    	try {
-    	periode = wedstrijden.getPeriode();
-    	ronde = wedstrijden.getRonde();
-		String bestandsnaam = "R" + periode + "-" + ronde + "Uitslag";
-		logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
-    	String result = "";
-        result += "Wedstrijden Periode " + periode;
-        result += " Ronde " + periode + ls + "-----------" + ls;
-        for (Groepswedstrijden gw : wedstrijden.getGroepswedstrijden()) {
-        	result += printGroepsWedstrijden(gw) + ls;
-        }
-		FileWriter writer = new FileWriter(bestandsnaam + ".txt");
-		writer.write(result);
-		writer.write(ls + "Aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam + ls);
-		writer.close();
-    	} catch (Exception e) {
-
-    	}
-
+	public boolean export(Wedstrijden wedstrijden) {
+		try {
+			periode = wedstrijden.getPeriode();
+			ronde = wedstrijden.getRonde();
+			String bestandsnaam = "R" + periode + "-" + ronde + "Uitslag";
+			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
+			String result = "";
+			result += "Wedstrijden Periode " + periode;
+			result += " Ronde " + periode + ls + "-----------" + ls;
+			for (Groepswedstrijden gw : wedstrijden.getGroepswedstrijden()) {
+				result += printGroepsWedstrijden(gw) + ls;
+			}
+			FileWriter writer = new FileWriter(bestandsnaam + ".txt");
+			writer.write(result);
+			writer.write(ls + "Aangemaakt met " + IJCController.c().appTitle + " voor "
+					+ IJCController.c().verenigingNaam + ls);
+			writer.close();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
