@@ -241,6 +241,7 @@ public class Groep {
 		int punten = IJCController.c().startPunten[niveau];
 		for (Speler s : spelers) {
 			s.setPunten(punten);
+			s.setAfwezigheidspunt(false);
 		}
 	}
 }
