@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  * - ...
  */
@@ -148,6 +148,8 @@ public class BewerkSpelerDialoog extends JDialog {
                 // Punten
                 int punten = Integer.parseInt(tfPunten.getText());
                 speler.setPunten(punten);
+                // Wit voorkeur
+                speler.setWitvoorkeur(Integer.parseInt(tfWit.getText()));
                 // KEI Punten
                 int keipunten = Integer.parseInt(tfKeiPunten.getText());
                 speler.setKeipunten(keipunten);

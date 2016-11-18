@@ -332,9 +332,9 @@ public class Hoofdscherm extends JFrame {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					logger.log(Level.INFO, "Opening: " + file.getAbsolutePath() + ".");
-					controller.leesGroepen(file.getAbsolutePath());
-					updateAutomatisch(true);
-					controller.maakGroepsindeling();
+					controller.leesBestand(file.getAbsolutePath());
+					//updateAutomatisch(true);
+					//controller.maakGroepsindeling();
 					updateRondeLabel();
 					hs.repaint();
 				}
@@ -376,6 +376,7 @@ public class Hoofdscherm extends JFrame {
 		JMenu spelermenu = new JMenu("Speler");
 
 		item = new JMenuItem("Nieuwe speler");
+		item.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 		item.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

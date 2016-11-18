@@ -24,6 +24,7 @@ import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
 import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
+import nl.detoren.ijc.ui.control.IJCController;
 
 /**
  * Sla het wedstrijdschema op in Excel
@@ -49,7 +50,7 @@ public class OutputSpeelschema implements WedstrijdenExportInterface {
 
 			String bestandsnaam = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde() + "Wedstrijden.txt";
 			FileWriter writer = new FileWriter(bestandsnaam);
-
+            writer.write("Speelschema aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam + "\n\n");
 			for (Groepswedstrijden gws: wedstrijden.getGroepswedstrijden()) {
 				writer.write("\n");
 				writer.write(Groep.geefNaam(gws.getNiveau()).toUpperCase());
@@ -72,7 +73,6 @@ public class OutputSpeelschema implements WedstrijdenExportInterface {
 					}
 				}
 			}
-
 			writer.close();
 			return true;
 	} catch (Exception e) {

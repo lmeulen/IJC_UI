@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  */
 package nl.detoren.ijc.ui.view;
@@ -69,6 +69,7 @@ public class WedstrijdschemaDialoog extends JDialog {
     private JScrollPane[] centerScrollPane;
     private JPanel centerPanel;
     private JPanel rightPanel;
+    private JPanel topPanel;
 
     WedstrijdschemaDialoog(Frame frame, String title, int groepID) {
     	groep = groepID;
@@ -104,7 +105,7 @@ public class WedstrijdschemaDialoog extends JDialog {
         spelersTabel.setDropMode(DropMode.USE_SELECTION);
         spelersTabel.setTransferHandler(new TransferHandler() {
             /**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -149,45 +150,71 @@ public class WedstrijdschemaDialoog extends JDialog {
         centerPanel = new JPanel();
 
         centerPanel.setLayout(new GridBagLayout());
-        //centerPanel.add(new JLabel("Serie 1"), new GBC(0, 0).setFill(GridBagConstraints.VERTICAL));
-        JPanel topPanel = new JPanel();
-
+        topPanel = new JPanel();
         topPanel.add(new JLabel("Serie 1"));
-        topPanel.add(new JButton("Create"));
-        topPanel.add(new JButton("Wis"));
+
+        JButton wisButton = new JButton("Wis");
+		wisButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				model.wisSerie(0);
+				model.forceRepaint();
+			}
+		});
+		topPanel.add(wisButton);
+
         centerPanel.add(topPanel, new GBC(0, 0).setFill(GridBagConstraints.VERTICAL));
         centerPanel.add(centerScrollPane[0], new GBC(1, 0).setFill(GridBagConstraints.VERTICAL));
 
-        //centerPanel.add(new JLabel("Serie 2"), new GBC(2, 0).setFill(GridBagConstraints.VERTICAL));
         topPanel = new JPanel();
-
         topPanel.add(new JLabel("Serie 2"));
-        topPanel.add(new JButton("Create"));
-        topPanel.add(new JButton("Wis"));
+        wisButton = new JButton("Wis");
+		wisButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				model.wisSerie(1);
+				model.forceRepaint();
+			}
+		});
+		topPanel.add(wisButton);
         centerPanel.add(topPanel, new GBC(2, 0).setFill(GridBagConstraints.VERTICAL));
 
         centerPanel.add(centerScrollPane[1], new GBC(3, 0).setFill(GridBagConstraints.VERTICAL));
         panel.add(centerPanel, BorderLayout.LINE_END);
 
         rightPanel = new JPanel();
-
         rightPanel.setLayout(new GridBagLayout());
 
-        //rightPanel.add(new JLabel("Serie 3"), new GBC(0, 0).setFill(GridBagConstraints.VERTICAL));
         topPanel = new JPanel();
-
         topPanel.add(new JLabel("Serie 3"));
-        topPanel.add(new JButton("Create"));
-        topPanel.add(new JButton("Wis"));
+        wisButton = new JButton("Wis");
+		wisButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				model.wisSerie(2);
+				model.forceRepaint();
+			}
+		});
+		topPanel.add(wisButton);
+
         rightPanel.add(topPanel, new GBC(0, 0).setFill(GridBagConstraints.VERTICAL));
         rightPanel.add(centerScrollPane[2], new GBC(1, 0).setFill(GridBagConstraints.VERTICAL));
 
-        //rightPanel.add(new JLabel("Triowedstrijden"), new GBC(2, 0).setFill(GridBagConstraints.VERTICAL));
         topPanel = new JPanel();
-
         topPanel.add(new JLabel("Triowedstrijden"));
-        topPanel.add(new JButton("Create"));
-        topPanel.add(new JButton("Wis"));
+        wisButton = new JButton("Wis");
+		wisButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				model.wisSerie(3);
+				model.forceRepaint();
+			}
+		});
+		topPanel.add(wisButton);
         rightPanel.add(topPanel, new GBC(2, 0).setFill(GridBagConstraints.VERTICAL));
         rightPanel.add(centerScrollPane[3], new GBC(3, 0).setFill(GridBagConstraints.VERTICAL));
 
@@ -195,14 +222,12 @@ public class WedstrijdschemaDialoog extends JDialog {
 
         getContentPane().add(panel);
         setSize(1100, 700);
-        //setLocationRelativeTo(frame);
-
     }
 
     private void createSerieTabel(final int index, JPanel panel) {
         serieTabel[index] = new JTable(new SerieModel(groep, index, panel)) {
             /**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 1L;
 
@@ -279,7 +304,7 @@ public class WedstrijdschemaDialoog extends JDialog {
         serieTabel[index].setFillsViewportHeight(true);
         serieTabel[index].setTransferHandler(new TransferHandler() {
             /**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = 1L;
 

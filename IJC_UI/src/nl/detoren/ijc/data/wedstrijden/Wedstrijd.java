@@ -120,8 +120,20 @@ public class Wedstrijd {
 
 	@Override
 	public String toString() {
-		String result = wit.toString() + "- " + zwart.toString() + "-";
-		result += uitslag > 0 ? " " + uitslag : "";
+		String result = wit.toString() + "- " + zwart.toString() + "- ";
+		switch (uitslag) {
+		case 1:
+			result += " 1  -  0";
+			break;
+		case 2:
+			result += " 0  -  1";
+			break;
+		case 3:
+			result += "1/2 - 1/2";
+			break;
+		default:
+			result += "";
+		}
 		return result;
 	}
 

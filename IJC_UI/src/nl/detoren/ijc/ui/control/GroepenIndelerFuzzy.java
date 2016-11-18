@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Leo van der Meulen
+ * Copyright (C) 2016 Leo van der Meulen, Lars Dam
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation version 3.0
@@ -29,6 +29,7 @@ import nl.detoren.ijc.ui.util.minimizetriagonal;
  * Fuzzy implementatie voor bepalen wedstrijdschema
  * Groepsindeling fucntionaliteit wordt overgenomen van GroepenIndeler.
  * @author Leo.vanderMeulen
+ * @author Lars.Dam
  *
  */
 public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndelerInterface {
@@ -84,7 +85,6 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		int trioloc = 0;
 		int[] trio = {0,1,2};
 		int indexrow = 1;
-		int order[] = new int[groep.getAantalSpelers()];
 		for (int i = 0; i < speelrondes; i++) {
 			System.out.print(
 					"Creating serie " + Integer.toString(i + 1) + " voor groep " + groep.getNaam() + "\n");
@@ -114,10 +114,8 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			System.out.print("Trigonalization of Matrix\n");
 			minimizetriagonal triagonal = new minimizetriagonal();
 			triagonal.setA(fuzzymatrix);
-			triagonal.setOrder(order);
 			triagonal.setIterations(groep.getAantalSpelers());
 			triagonal.Iterminimizetriagonal();
-			order = triagonal.getOrder();
 			int[][] tri = triagonal.getA();
 			Utils.printMatrix(tri);
 			if (groep.getNaam().equals("Pionnengroep")) {
@@ -125,9 +123,13 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				//groep.SpelersNamenopvolgorde(ordertest);
 			}
 			System.out.print("Deze groep " + groep.getNaam() + " heeft " + tri.length + " spelers.\n");
-			trioloc = minimizetriagonal.gettrio(tri,1);
-			if (i==0) {
-				System.out.print("Geen trio in deze groep.\n");
+			if (speelrondes >1) {
+				trioloc = minimizetriagonal.gettrio(tri,1);
+			} else {
+				trioloc = 0;
+			}
+			if (trioloc==0) {
+				// System.out.print("Geen trio in deze groep.\n");
 			}
 			if (!(trioloc == 0)) {
 				trio[0]=tri[trioloc-1][0];
@@ -180,26 +182,26 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				// trio
 				if (i == 0) {
 					gws.addTrioWedstrijd(new Wedstrijd(2 * (wedstrijdnr - 1) + 1,
-							groep.getSpelerByID(tri[trioloc - 1][0]),
-							groep.getSpelerByID(tri[trioloc][0]), 0));
-					System.out.printf("Wedstrijd uit trio tussen"
-							+ groep.getSpelerByID(tri[trioloc - 1][0]).getNaam() + " (wit) met index " + tri[i][0]
-									+ " en "	+ groep.getSpelerByID(tri[trioloc][0]).getNaam() + " (zwart) met index "
-									+ tri[i+1][0] + "\n");
+							groep.getSpelerByID(trio[0]),
+							groep.getSpelerByID(trio[1]), 0));
+					System.out.printf("Wedstrijd uit trio tussen "
+							+ groep.getSpelerByID(trio[0]).getNaam() + " (wit) met index " + trio[0]
+									+ " en "	+ groep.getSpelerByID(trio[1]).getNaam() + " (zwart) met index "
+									+ trio[1] + "\n");
 					gws.addTrioWedstrijd(
-							new Wedstrijd(2 * (wedstrijdnr - 1) + 2, groep.getSpelerByID(tri[trioloc][0]),
-									groep.getSpelerByID(tri[trioloc + 1][0]), 0));
-					System.out.printf("Wedstrijd uit trio tussen"
-							+ groep.getSpelerByID(tri[trioloc][0]).getNaam() + " (wit) met index " + tri[i][0]
-									+ " en " + groep.getSpelerByID(tri[trioloc + 1][0]).getNaam() + " (zwart) met index "
-									+  tri[i+1][0] + "\n");
+							new Wedstrijd(2 * (wedstrijdnr - 1) + 2, groep.getSpelerByID(trio[1]),
+									groep.getSpelerByID(trio[2]), 0));
+					System.out.printf("Wedstrijd uit trio tussen "
+							+ groep.getSpelerByID(trio[1]).getNaam() + " (wit) met index " + trio[1]
+									+ " en " + groep.getSpelerByID(trio[2]).getNaam() + " (zwart) met index "
+									+  trio[2] + "\n");
 					gws.addTrioWedstrijd(new Wedstrijd(2 * (wedstrijdnr - 1) + 3,
-							groep.getSpelerByID(tri[trioloc - 1][0]),
-							groep.getSpelerByID(tri[trioloc + 1][0]), 0));
-					System.out.printf("Wedstrijd uit trio tussen"
-							+ groep.getSpelerByID(tri[trioloc + 1][0]).getNaam() + " (wit) met index " + tri[i][0]
-									+ " en " + groep.getSpelerByID(tri[trioloc - 1][0]).getNaam() + " (zwart) met index"
-									+ tri[i+1][0] + "\n");
+							groep.getSpelerByID(trio[2]),
+							groep.getSpelerByID(trio[0]), 0));
+					System.out.printf("Wedstrijd uit trio tussen "
+							+ groep.getSpelerByID(trio[2]).getNaam() + " (wit) met index " + trio[2]
+									+ " en " + groep.getSpelerByID(trio[0]).getNaam() + " (zwart) met index"
+									+ trio[0] + "\n");
 				}
 				// Einde trio
 			}

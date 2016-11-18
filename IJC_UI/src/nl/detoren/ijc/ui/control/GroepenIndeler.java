@@ -135,7 +135,8 @@ public class GroepenIndeler implements GroepenIndelerInterface {
         // kunnen geen spelers inschuiven
     	// Let op: iterator gaat op array index en NIET op groepID
         ArrayList<Groep> groepen = wedstrijdGroepen.getGroepen();
-        for (int i = 0; i < groepen.size() - 1; ++i) {
+//        for (int i = 0; i < groepen.size() - 1; ++i) {
+        for (int i = 0; i < wedstrijdGroepen.getAantalGroepen() - 1; ++i) {
             aantal = bepaalAantalDoorschuiven(aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
         	logger.log(Level.INFO, "Doorschuiven van groep "  + groepen.get(i+1).getNaam() + " naar " + groepen.get(i).getNaam());
             ArrayList<Speler> naarGroep = groepen.get(i).getSpelers();
@@ -212,7 +213,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
     	} else {
             resultaat = serie;
     	}
-        String log = groep.getNaam() + "in periode "+ periode + ", ronde " + ronde;
+        String log = groep.getNaam() + " in periode "+ periode + ", ronde " + ronde;
         log += ", serie " + serie + "-> minimaal verschil = " + resultaat;
     	logger.log(Level.INFO, log);
         return resultaat;
@@ -359,6 +360,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 					ignoreTgns++;
 				}
 				maxverschil++;
+				if (minverschil > 1) minverschil--;
 				ignoreTgns = 0;
 			}
 

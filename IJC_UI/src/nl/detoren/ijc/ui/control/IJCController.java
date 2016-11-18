@@ -1,4 +1,4 @@
-/**
+	/**
  * Copyright (C) 2016 Leo van der Meulen
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@
 package nl.detoren.ijc.ui.control;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,9 +40,13 @@ import nl.detoren.ijc.io.OutputExcel;
 import nl.detoren.ijc.io.OutputIntekenlijst;
 import nl.detoren.ijc.io.OutputKEI;
 import nl.detoren.ijc.io.OutputKNSB;
+import nl.detoren.ijc.io.OutputNeuralData;
 import nl.detoren.ijc.io.OutputOSBO;
 import nl.detoren.ijc.io.OutputSpeelschema;
-import nl.detoren.ijc.io.OutputTekst;
+import nl.detoren.ijc.io.OutputStanden;
+import nl.detoren.ijc.io.OutputUitslagen;
+import nl.detoren.ijc.neural.NeuralHelper;
+import nl.detoren.ijc.neural.Voorspeller;
 
 /**
  * Main controller class voor afhandeling van de groepen en wedstrijden
@@ -127,15 +132,25 @@ public class IJCController {
 				} else if (bestandsnaam.endsWith(".json")) {
 					logger.log(Level.INFO, "Lees groepen in JSON uit bestand " + bestandsnaam);
 					status.groepen = new GroepenReader().leesGroepenJSON(bestandsnaam);
+					// check for old groepen in status.
+					for (int i=c.aantalGroepen; i<11 ; i++) {
+						status.groepen.removeGroep(status.groepen.getGroepById(i));
+					}
 				} else {
 					return;
 				}
 			} catch (Exception e) {
 				logger.log(Level.WARNING, "Geens statusbestand gelezen");
+				status.groepen = null;
+			}
+			if (status.groepen == null) {
 				status.groepen = new Groepen();
+				for (int i = 0; i < c.aantalGroepen; ++i)
+					status.groepen.addGroep(new Groep(i));
 				status.groepen.setPeriode(1);
 				status.groepen.setRonde(1);
 			}
+
 			status.wedstrijdgroepen = new Groepen();
 			status.wedstrijden = new Wedstrijden();
 			status.resultaatVerwerkt = new Groepen();
@@ -180,6 +195,7 @@ public class IJCController {
     	logger.log(Level.INFO, "Statusbestand ingelezen");
 		return true;
 	}
+
 
     /**
      * Groepen zoals ingelezen met aanwezigheid bijgewerkt.
@@ -394,11 +410,15 @@ public class IJCController {
     	status.resultaatVerwerkt.sorteerGroepen();
     	System.out.println(status.resultaatVerwerkt.toPrintableString());
     	logger.log(Level.INFO, "en sla uitslagen en status op");
-    	new OutputTekst().export(status.resultaatVerwerkt);
+    	new OutputStanden().export(status.resultaatVerwerkt);
+    	new OutputUitslagen().export(status.wedstrijden);
     	if (c.exportKNSBRating) new OutputKNSB().export(status.wedstrijden);
     	if (c.exportOSBORating) new OutputOSBO().export(status.wedstrijden);
     	if (c.exportKEIlijst) new OutputKEI().export(status.resultaatVerwerkt);
     	if (c.exportIntekenlijst) new OutputIntekenlijst().export(status.resultaatVerwerkt);
+
+    	new OutputNeuralData().export(status.wedstrijden);
+
     	saveState(true, "uitslag");
     }
 
@@ -440,17 +460,31 @@ public class IJCController {
 		}
 	}
 
-	public void leesStatus() {
+	public boolean leesStatus() {
+		return leesStatus(c.statusBestand + ".json");
+	}
+
+	public boolean leesStatus(String bestandsnaam) {
 		try {
-			String bestandsnaam = c.statusBestand + ".json";
 	    	logger.log(Level.INFO, "Lees status uit bestand " + bestandsnaam);
 			Gson gson = new Gson();
 			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
-			status = gson.fromJson(br, Status.class);
-		} catch (IOException e) {
+			Status nieuw = gson.fromJson(br, Status.class);
+			status = nieuw;	// assure excpetion is thrown when things go wrong
+			return true;
+		} catch (Exception e) {
 			// Could not read status
+			return false;
 		}
 	}
+
+
+	public void leesBestand(String bestandsnaam) {
+		if (!leesStatus(bestandsnaam))
+			leesGroepen(bestandsnaam);
+
+	}
+
 
 	public void leesConfiguratie() {
 		try {
@@ -469,6 +503,7 @@ public class IJCController {
     	logger.log(Level.INFO, "Creeer bestanden met wedstrijden");
     	new OutputExcel().export(status.wedstrijden);
     	new OutputSpeelschema().export(status.wedstrijden);
+        voorspelUitslagen();
     }
 
     public ArrayList<Speler> getExterneSpelers() {
@@ -678,7 +713,11 @@ public class IJCController {
 		if (huidigeGroep != null && hogereGroep != null) {
 			Speler s = huidigeGroep.getSpelerByID(spelerID+1);
 			huidigeGroep.removeSpeler(s, spelerID);
-			hogereGroep.addSpeler(new Speler(s));
+			Speler nieuweSpeler = new Speler(s);
+			nieuweSpeler.setPunten(IJCController.c().startPunten[groepID+1]);
+			hogereGroep.addSpeler(nieuweSpeler);
+			huidigeGroep.renumber();
+			hogereGroep.renumber();
 			logger.log(Level.INFO, "Speler " + s.getNaam() + " doorgeschoven naar groep " + Groep.geefNaam(groepID+1));
 		}
 	}
@@ -694,7 +733,11 @@ public class IJCController {
 		if (huidigeGroep != null && lagereGroep != null) {
 			Speler s = huidigeGroep.getSpelerByID(spelerID+1);
 			huidigeGroep.removeSpeler(s, spelerID);
-			lagereGroep.addSpeler(new Speler(s));
+			Speler nieuweSpeler = new Speler(s);
+			nieuweSpeler.setPunten(IJCController.c().startPunten[groepID-1]);
+			lagereGroep.addSpeler(nieuweSpeler);
+			huidigeGroep.renumber();
+			lagereGroep.renumber();
 			logger.log(Level.INFO, "Speler " + s.getNaam() + " teruggeschoven naar groep " + Groep.geefNaam(groepID+1));
 		}
 	}
@@ -719,4 +762,21 @@ public class IJCController {
         if (isAutomatisch()) maakGroepsindeling();
 	}
 
+	public void voorspelUitslagen() {
+		Voorspeller v = new Voorspeller();
+		v.initialiseer();
+		new OutputNeuralData().export(status.wedstrijden, "huidige_ronde.arff");
+		try {
+			v.voorspel("huidige_ronde.arff");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

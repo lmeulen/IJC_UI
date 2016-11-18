@@ -8,9 +8,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
- * - ... 
+ * - ...
  * - ...
  */
 package nl.detoren.ijc.data.groepen;
@@ -73,7 +73,7 @@ public class Groep {
     public ArrayList<Speler> getSpelers() {
         return spelers;
     }
-    
+
     /**
      * Retourneert hoeveel spelers er in deze groep zitten
      * @return
@@ -99,6 +99,7 @@ public class Groep {
         if (spelers == null) {
             spelers = new ArrayList<>();
         }
+        speler.setGroep(niveau);
         spelers.add(speler);
     }
 	/**
@@ -110,7 +111,7 @@ public class Groep {
         spelers.add(loc, speler);
         renumber();
     }
-    
+
     /**
      * Verwijder speler op de opgegeven locatie
      * @param loc Locatie van de te verwijderen speler
@@ -120,7 +121,7 @@ public class Groep {
         renumber();
     }
 
-    /** 
+    /**
      * Geef naam van deze groep
      * @return GRoepsnaam
      */
@@ -129,16 +130,16 @@ public class Groep {
     }
 
     /**
-     * Retourneer een lijst van spelers als printvare string 
+     * Retourneer een lijst van spelers als printvare string
      * @return String met alle spelers
      */
     public String toPrintableString() {
     	return toPrintableString(false);
     }
-    
+
     /**
      * Retourneer een lijst van spelers. Vorm:
-     * 
+     *
      * @param lang Als waar, lange notatoe
      * @return
      */
@@ -146,7 +147,7 @@ public class Groep {
         String result = "";
         for (Speler s : getSpelers()) {
             result += s.toPrintableString(lang);
-            result += "\n";
+            result += System.lineSeparator();
         }
         return result;
     }
@@ -167,11 +168,11 @@ public class Groep {
      * @param id ID van de groep welke naam wordt gezocht
      * @return
      */
-    public static String geefNaam(int id) { 
+    public static String geefNaam(int id) {
     	String[] namen = IJCController.c().groepsnamen;
     	return id < namen.length ? namen[id] : "";
-    } 
-    
+    }
+
     /**
      * Geef het totaal aantal groepen
      * @return
@@ -179,7 +180,7 @@ public class Groep {
     public static int getAantalGroepen() {
     	return IJCController.c().aantalGroepen;
     }
-    
+
     /**
      * Geef speler met specifiek id (positie in de lijst)
      * @param id ID
@@ -191,7 +192,19 @@ public class Groep {
         }
         return null;
     }
-    
+
+    /**
+     * Geef speler met specifieke initialen
+     * @param afk afkorting
+     * @return betreffende speler
+     */
+    public Speler getSpelerByInitialen(String afk) {
+        for (Speler s : spelers) {
+            if (s.getInitialen().equals(afk)) return s;
+        }
+        return null;
+    }
+
     /**
      * Retourneer de spelers in deze groep die een andere groep als niveau
      * hebben staan
@@ -204,7 +217,7 @@ public class Groep {
     	}
     	return result;
     }
-    
+
     /**
      * Sorteer de spelers in deze groep op punten. Bij hetzelfde aantal
      * punten wordt gesorteerd op rating
@@ -215,7 +228,7 @@ public class Groep {
     	    public int compare(Speler o1, Speler o2) {
     	    	int result = o2.getPunten() - o1.getPunten();
     	    	if (result == 0) {
-    	    		result = o2.getRating() - o1.getRating(); 
+    	    		result = o2.getRating() - o1.getRating();
     	    	}
     	    	return result;
     	    }
@@ -235,7 +248,7 @@ public class Groep {
     }
 
     /**
-     * Reset de punten van alle spelers in deze groep
+     * Reset de punten en afwezigheidspunten van alle spelers in deze groep
      */
 	public void resetPunten() {
 		int punten = IJCController.c().startPunten[niveau];

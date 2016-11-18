@@ -48,6 +48,13 @@ public class ImportSpelers {
         	s.setInitialen(items.get(2).substring(0, 2));
         	s.setRating(Integer.parseInt(items.get(3)));
         	s.setKNSBnummer(Integer.parseInt(items.get(4)));
+        	// Optioneel aantal punten
+        	if (items.size() >= 6) {
+        		String strPunten = items.get(5);
+        		if ((strPunten != null) && (strPunten.length() > 0)) {
+        			s.setPunten(Integer.parseInt(strPunten));
+        		}
+        	}
         	Groep groep = IJCController.getInstance().getGroepByID(groepID);
         	groep.addSpeler(s);
     		logger.log(Level.INFO, "toegevoegd aan : " + groep.getNaam());
