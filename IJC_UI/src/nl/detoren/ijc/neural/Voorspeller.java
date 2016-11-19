@@ -38,8 +38,8 @@ public class Voorspeller {
 		// Setting Parameters
 		mlp.setLearningRate(0.1);
 		mlp.setMomentum(0.1);
-		mlp.setTrainingTime(4096);
-		mlp.setHiddenLayers("t");
+		mlp.setTrainingTime(8192);
+		mlp.setHiddenLayers("30,15");
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class Voorspeller {
 		mlp.buildClassifier(data);
 		Evaluation eval = new Evaluation(data);
 		eval.evaluateModel(mlp, data);
-		logger.log(Level.INFO, "num attributes : " + eval.toSummaryString(true));
+		logger.log(Level.INFO, eval.toSummaryString(true));
 		return eval;
 	}
 
