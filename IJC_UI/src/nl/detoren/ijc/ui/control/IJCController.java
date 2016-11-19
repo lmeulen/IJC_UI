@@ -303,7 +303,7 @@ public class IJCController {
     }
 
     /**
-     * Print wedstrijden voor één groep op het scherm, opgedeeld per serie
+     * Print wedstrijden voor ï¿½ï¿½n groep op het scherm, opgedeeld per serie
      */
 	public void printWedstrijden(int groep) {
 		logger.log(Level.INFO, "Print wedstrijden");
@@ -763,6 +763,7 @@ public class IJCController {
 	}
 
 	public void voorspelUitslagen() {
+		logger.log(Level.INFO, "Voorspel uitslagen");
 		Voorspeller v = new Voorspeller();
 		v.initialiseer();
 		new OutputNeuralData().export(status.wedstrijden, "huidige_ronde.arff");

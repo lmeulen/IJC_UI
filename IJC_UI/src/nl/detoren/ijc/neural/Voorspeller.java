@@ -137,6 +137,7 @@ public class Voorspeller {
 		train.setClassIndex(train.numAttributes() - 1);
 		logger.log(Level.INFO, "num attributes : " + train.numAttributes());
 		logger.log(Level.INFO, "num classes    : " + train.numClasses());
+		logger.log(Level.INFO, "num data items : " + train.numInstances());
 		return train;
 	}
 
@@ -152,6 +153,7 @@ public class Voorspeller {
 			double clsLabel = mlp.classifyInstance(datapredict.instance(i));
 			predicteddata.instance(i).setClassValue(clsLabel);
 		}
+		logger.log(Level.INFO,predicteddata.toString());
 		// Save instances
 		String outputBestand = bestandsnaam.substring(0,bestandsnaam.length() - 5) + "_solved.arff";
 		BufferedWriter writer = new BufferedWriter(new FileWriter(outputBestand));
