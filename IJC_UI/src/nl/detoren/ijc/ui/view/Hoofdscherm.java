@@ -336,6 +336,8 @@ public class Hoofdscherm extends JFrame {
 					//updateAutomatisch(true);
 					//controller.maakGroepsindeling();
 					updateRondeLabel();
+					updateUpdateStandButton();
+					updateAutomatisch(controller.isAutomatisch());
 					hs.repaint();
 				}
 			}
