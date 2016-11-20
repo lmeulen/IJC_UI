@@ -20,12 +20,14 @@ public class NeuralHelper {
 	 * @RELATION chess_result
 	 * @ATTRIBUTE wit_rating NUMERIC
 	 * @ATTRIBUTE wit_punten NUMERIC
+	 * @ATTRIBUTE wit_groep NUMERIC                         *
 	 * @ATTRIBUTE wit_resultaat_1 NUMERIC
 	 * @ATTRIBUTE wit_resultaat_2 NUMERIC
 	 * @ATTRIBUTE wit_resultaat_3 NUMERIC
 	 * @ATTRIBUTE wit_resultaat_4 NUMERIC
 	 * @ATTRIBUTE zwart_rating NUMERIC
 	 * @ATTRIBUTE zwart_punten NUMERIC
+	 * @ATTRIBUTE zwart_groep NUMERIC                       *
 	 * @ATTRIBUTE zwart_resultaat_1 NUMERIC
 	 * @ATTRIBUTE zwart_resultaat_2 NUMERIC
 	 * @ATTRIBUTE zwart_resultaat_3 NUMERIC
@@ -41,12 +43,14 @@ public class NeuralHelper {
 		String result = "";
 		result += String.format(Locale.US, intFormats[4], w.getWit().getRating()) + sep;
 		result += String.format(Locale.US, intFormats[3], w.getWit().getPunten()) + sep;
+		result += String.format(Locale.US, intFormats[1], w.getWit().getGroep()) + sep;
 		result += tegenstander(w.getWit().getTegenstanders()[3]) + sep;
 		result += tegenstander(w.getWit().getTegenstanders()[2]) + sep;
 		result += tegenstander(w.getWit().getTegenstanders()[1]) + sep;
 		result += tegenstander(w.getWit().getTegenstanders()[0]) + sep;
 		result += String.format(Locale.US, intFormats[4], w.getZwart().getRating()) + sep;
 		result += String.format(Locale.US, intFormats[3], w.getZwart().getPunten()) + sep;
+		result += String.format(Locale.US, intFormats[1], w.getZwart().getGroep()) + sep;
 		result += tegenstander(w.getZwart().getTegenstanders()[3]) + sep;
 		result += tegenstander(w.getZwart().getTegenstanders()[2]) + sep;
 		result += tegenstander(w.getZwart().getTegenstanders()[1]) + sep;

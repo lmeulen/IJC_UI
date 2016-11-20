@@ -38,8 +38,8 @@ public class Voorspeller {
 		// Setting Parameters
 		mlp.setLearningRate(0.1);
 		mlp.setMomentum(0.1);
-		mlp.setTrainingTime(8192);
-		mlp.setHiddenLayers("30,15");
+		mlp.setTrainingTime(4096);
+		mlp.setHiddenLayers("t");
 	}
 
 	/**
