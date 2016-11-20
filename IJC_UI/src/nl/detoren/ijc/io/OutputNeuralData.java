@@ -1,5 +1,6 @@
 package nl.detoren.ijc.io;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +51,10 @@ public class OutputNeuralData implements WedstrijdenExportInterface {
 
 				}
 			}
-			FileWriter writer = new FileWriter(bestandsnaam);
+			String dirName = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde();
+			new File(dirName).mkdirs();
+
+			FileWriter writer = new FileWriter(dirName + File.separator + bestandsnaam);
 			writer.write(result);
 			writer.close();
 		} catch (Exception e) {
@@ -64,6 +68,7 @@ public class OutputNeuralData implements WedstrijdenExportInterface {
 		result += "@RELATION chess_result" + ls;
 		result += "@ATTRIBUTE wit_rating NUMERIC" + ls;
 		result += "@ATTRIBUTE wit_stand NUMERIC" + ls;
+		result += "@ATTRIBUTE wit_groep NUMERIC" + ls;
 		result += "@ATTRIBUTE wit_resultaat_1 NUMERIC" + ls;
 		result += "@ATTRIBUTE wit_rating_1 NUMERIC" + ls;
 		result += "@ATTRIBUTE wit_resultaat_2 NUMERIC" + ls;
@@ -74,6 +79,7 @@ public class OutputNeuralData implements WedstrijdenExportInterface {
 		result += "@ATTRIBUTE wit_rating_4 NUMERIC" + ls;
 		result += "@ATTRIBUTE zwart_rating NUMERIC" + ls;
 		result += "@ATTRIBUTE zwart_stand NUMERIC" + ls;
+		result += "@ATTRIBUTE zwart_groep NUMERIC" + ls;
 		result += "@ATTRIBUTE zwart_resultaat_1 NUMERIC" + ls;
 		result += "@ATTRIBUTE zwart_rating_1 NUMERIC" + ls;
 		result += "@ATTRIBUTE zwart_resultaat_2 NUMERIC" + ls;

@@ -135,14 +135,17 @@ public class OutputExcel implements WedstrijdenExportInterface {
 			// Close input file
 			file.close();
 			// Store Excel to new file
-			String outputFile = "Indeling " + periode + "-" + ronde + ".xlsx";
-			FileOutputStream outFile = new FileOutputStream(new File(outputFile));
+			String dirName = "R" + periode + "-" + ronde;
+			new File(dirName).mkdirs();
+			String filename =  dirName + File.separator + "Indeling " + periode + "-" + ronde + ".xlsx";
+			File outputFile = new File(filename);
+			FileOutputStream outFile = new FileOutputStream(outputFile);
 			workbook.write(outFile);
 			// Close output file
 			workbook.close();
 			outFile.close();
 			// And open it in the system editor
-			Desktop.getDesktop().open(new File(outputFile));
+			Desktop.getDesktop().open(outputFile);
 			return true;
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Error writing output: " + e.toString());

@@ -13,6 +13,7 @@
  */
 package nl.detoren.ijc.io;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,8 +49,11 @@ public class OutputSpeelschema implements WedstrijdenExportInterface {
 			String rpString = "Periode " + periode + ", Ronde " + ronde;
 			String datum = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(Calendar.getInstance().getTime());
 
+			String dirName = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde();
+			new File(dirName).mkdirs();
+
 			String bestandsnaam = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde() + "Wedstrijden.txt";
-			FileWriter writer = new FileWriter(bestandsnaam);
+			FileWriter writer = new FileWriter( dirName + File.separator + bestandsnaam);
             writer.write("Speelschema aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam + "\n\n");
 			for (Groepswedstrijden gws: wedstrijden.getGroepswedstrijden()) {
 				writer.write("\n");

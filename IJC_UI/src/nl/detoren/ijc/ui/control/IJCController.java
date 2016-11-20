@@ -14,6 +14,7 @@
 package nl.detoren.ijc.ui.control;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -117,7 +118,7 @@ public class IJCController {
             leesGroepen(defaultInputfile);
         }
     }
-    
+
     public Status getStatus() {
     	return status;
     }
@@ -447,7 +448,9 @@ public class IJCController {
 				bestandsnaam = c.statusBestand + s + "-" + postfix + ".json";
 				logger.log(Level.INFO, "Sla status op in bestand " + bestandsnaam);
 				// write converted json data to a file
-				writer = new FileWriter(bestandsnaam);
+				String dirName = "R" + status.wedstrijdgroepen.getPeriode() + "-" + status.wedstrijdgroepen.getRonde();
+				new File(dirName).mkdirs();
+				writer = new FileWriter(dirName + File.separator + bestandsnaam);
 				writer.write(jsonString);
 				writer.close();
 			}
@@ -770,10 +773,11 @@ public class IJCController {
 		logger.log(Level.INFO, "Voorspel uitslagen");
 		Voorspeller v = new Voorspeller();
 		v.initialiseer();
+		String directory = "R" + status.wedstrijden.getPeriode() + "-" + status.wedstrijden.getRonde();
 		String bestand =  "R" + status.wedstrijden.getPeriode() + "-" + status.wedstrijden.getRonde() + ".arff";
 		new OutputNeuralData().export(status.wedstrijden, bestand);
 		try {
-			v.voorspel(bestand);
+			v.voorspel(directory + File.separator + bestand);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
