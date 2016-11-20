@@ -1,3 +1,16 @@
+/**
+ * Copyright (C) 2016 Leo van der Meulen
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation version 3.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * Problemen in deze code:
+ */
 package nl.detoren.ijc.neural;
 
 import java.util.Locale;
@@ -20,14 +33,14 @@ public class NeuralHelper {
 	 * @RELATION chess_result
 	 * @ATTRIBUTE wit_rating NUMERIC
 	 * @ATTRIBUTE wit_punten NUMERIC
-	 * @ATTRIBUTE wit_groep NUMERIC                         *
+	 * @ATTRIBUTE wit_groep NUMERIC
 	 * @ATTRIBUTE wit_resultaat_1 NUMERIC
 	 * @ATTRIBUTE wit_resultaat_2 NUMERIC
 	 * @ATTRIBUTE wit_resultaat_3 NUMERIC
 	 * @ATTRIBUTE wit_resultaat_4 NUMERIC
 	 * @ATTRIBUTE zwart_rating NUMERIC
 	 * @ATTRIBUTE zwart_punten NUMERIC
-	 * @ATTRIBUTE zwart_groep NUMERIC                       *
+	 * @ATTRIBUTE zwart_groep NUMERIC
 	 * @ATTRIBUTE zwart_resultaat_1 NUMERIC
 	 * @ATTRIBUTE zwart_resultaat_2 NUMERIC
 	 * @ATTRIBUTE zwart_resultaat_3 NUMERIC
