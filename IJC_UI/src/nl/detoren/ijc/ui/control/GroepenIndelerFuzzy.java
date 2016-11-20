@@ -76,6 +76,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			logger.log(Level.INFO, "Vijf spelers met 2 rondes dus spelers verdubbelen en maar één serie");
 			for (Speler s : wedstrijdgroep.getSpelers()) {
 				groep.addSpeler(new Speler(s));
+				groep.renumber();
 			}
 			// plan 1 round and duplicate players
 		}
