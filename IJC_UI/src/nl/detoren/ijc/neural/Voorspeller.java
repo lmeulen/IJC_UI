@@ -114,7 +114,7 @@ public class Voorspeller {
 	 * @return
 	 * @throws Exception
 	 */
-	public Evaluation evaluateTrainingData(Instances data) throws Exception {
+	private Evaluation evaluateTrainingData(Instances data) throws Exception {
 		mlp.buildClassifier(data);
 		Evaluation eval = new Evaluation(data);
 		eval.evaluateModel(mlp, data);
@@ -130,7 +130,7 @@ public class Voorspeller {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public Instances readTrainingData(String trainingfile) throws FileNotFoundException, IOException {
+	private Instances readTrainingData(String trainingfile) throws FileNotFoundException, IOException {
 		// Reading training arff file
 		FileReader trainreader = new FileReader(trainingfile);
 		Instances train = new Instances(trainreader);

@@ -117,6 +117,10 @@ public class IJCController {
             leesGroepen(defaultInputfile);
         }
     }
+    
+    public Status getStatus() {
+    	return status;
+    }
 
     /**
      * Lees groepen bestand in
@@ -766,9 +770,10 @@ public class IJCController {
 		logger.log(Level.INFO, "Voorspel uitslagen");
 		Voorspeller v = new Voorspeller();
 		v.initialiseer();
-		new OutputNeuralData().export(status.wedstrijden, "huidige_ronde.arff");
+		String bestand =  "R" + status.wedstrijden.getPeriode() + "-" + status.wedstrijden.getRonde() + ".arff";
+		new OutputNeuralData().export(status.wedstrijden, bestand);
 		try {
-			v.voorspel("huidige_ronde.arff");
+			v.voorspel(bestand);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

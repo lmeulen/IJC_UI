@@ -57,7 +57,7 @@ public class OutputStanden implements GroepenExportInterface {
 			// GSON variant
 			Gson gson = new Gson();
 			FileWriter writer = new FileWriter(bestandsnaam + ".json");
-			writer.write(gson.toJson(uitslag));
+			writer.write(gson.toJson(IJCController.getI().getStatus()));
 			writer.close();
 			return true;
 		} catch (IOException e) {

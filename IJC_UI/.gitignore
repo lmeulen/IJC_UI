@@ -2,6 +2,8 @@
 /status.json
 /Indeling*.xlsx
 /*.json
+/R*.arff
+/R?-?NeuralData*
 /Uitslag*.txt
 /bin/
 /python/
