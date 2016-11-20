@@ -27,7 +27,7 @@ public class OutputNeuralData implements WedstrijdenExportInterface {
 	public boolean export(Wedstrijden wedstrijden) {
 		periode = wedstrijden.getPeriode();
 		ronde = wedstrijden.getRonde();
-		String bestandsnaam = "R" + periode + "-" + ronde + "NeuralData";
+		String bestandsnaam = "R" + periode + "-" + ronde + "NeuralData.arff";
 		return export(wedstrijden, bestandsnaam);
 	}
 
