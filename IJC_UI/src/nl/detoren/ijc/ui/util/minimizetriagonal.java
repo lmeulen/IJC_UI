@@ -72,10 +72,10 @@ public class minimizetriagonal {
 			System.out.printf("Iteration nr. %d with %d swaps\n", i, cont);
 		} while (cont > 0 && i < getIterations());
 		if (cont == 0) {
-			logger.log(Level.INFO, "Iteration completed in %d iteration", i);
-			logger.log(Level.INFO, "Required %d swaps", contsum);
+			logger.log(Level.INFO, "Iteration completed in " + i + " iterations");
+			logger.log(Level.INFO, "Required " + contsum + " swaps");
 		} else {
-			logger.log(Level.SEVERE, "Iteration failed. No convergence within maximum of %d iterations.", getIterations());
+			logger.log(Level.SEVERE, "Iteration failed. No convergence within maximum of " + getIterations() + " iterations.");
 		}
 		return;
 	}
@@ -108,10 +108,9 @@ public class minimizetriagonal {
 			}
 		}
 		if (trio == 0) {
-			logger.log(Level.INFO, String.format("Trio gevonden op %d, %d en %d \n", trio - 1, trio, trio + 1));
-		} else {
 			logger.log(Level.INFO, "Geen Trio");
-			}
+		} else {
+			logger.log(Level.INFO, String.format("Trio gevonden op %d, %d en %d \n", trio - 1, trio, trio + 1));			}
 		return trio;
 	}
 
