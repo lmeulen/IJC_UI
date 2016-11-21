@@ -244,10 +244,14 @@ public class GroepenIndeler implements GroepenIndelerInterface {
     	logger.log(Level.INFO, "Maken wedstrijden voor periode " + periode + " ronde " + ronde);
         Wedstrijden wedstrijden = new Wedstrijden();
         for (Groep groepOrg : groepen.getGroepen()) {
-        	logger.log(Level.INFO, "Maken wedstrijden voor groep " + groepOrg.getNaam());
-            Groepswedstrijden gws = maakWedstrijdenVoorGroep(periode, ronde, groepOrg);
-            wedstrijden.addGroepswedstrijden(gws);
-        	logger.log(Level.INFO, "Aantal wedstrijden " + gws.getWedstrijden().size());
+        	if (groepOrg.getAantalSpelers() == 1) {
+    			logger.log(Level.WARNING, "Maar één speler. Kan geen wedstrijden maken. ");
+        	} else {
+        		logger.log(Level.INFO, "Maken wedstrijden voor groep " + groepOrg.getNaam());
+        		Groepswedstrijden gws = maakWedstrijdenVoorGroep(periode, ronde, groepOrg);
+        		wedstrijden.addGroepswedstrijden(gws);
+        		logger.log(Level.INFO, "Aantal wedstrijden " + gws.getWedstrijden().size());
+        	}
         }
         wedstrijden.setPeriode(periode);
         wedstrijden.setRonde(ronde);
@@ -416,7 +420,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
                     Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, maxverschil, ignoreTgn, niveau, diepte + 1, serienr);
                     if (s != null) {
                         Wedstrijd w = new Wedstrijd(s1.getId() * 100 + s2.getId(), s1, s2, 0);
-                        s.addWestrijd(w, true);
+                        s.addWedstrijd(w, true);
                         return s;
                     }
                     gepland[doorgeschovenID] = false;
@@ -441,7 +445,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
                     Serie s = planSerie(serie, spelers, gepland, teplannen - 2, minverschil, maxverschil, ignoreTgn, niveau, diepte + 1, serienr);
                     if (s != null) {
                         Wedstrijd w = new Wedstrijd(s1.getId() * 100 + s2.getId(), s1, s2, 0);
-                        s.addWestrijd(w, true);
+                        s.addWedstrijd(w, true);
                         return s;
                     }
                     gepland[plannenID] = false;

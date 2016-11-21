@@ -209,10 +209,10 @@ public class SerieModel extends AbstractTableModel {
                 s.setNummer(serieID);
                 s.setWedstrijden(legeLijst);
                 gws.addSerie(s);
-                s.addWestrijd(w);
+                s.addWedstrijd(w);
             }
         } else {
-            serie.addWestrijd(w, id);
+            serie.addWedstrijd(w, id);
         }
         component.repaint();
     }

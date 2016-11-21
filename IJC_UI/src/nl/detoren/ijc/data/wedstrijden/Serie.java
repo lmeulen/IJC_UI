@@ -48,11 +48,11 @@ public class Serie {
         this.wedstrijden = wedstrijden;
     }
 
-    public void addWestrijd(Wedstrijd w) {
+    public void addWedstrijd(Wedstrijd w) {
         wedstrijden.add(w);
     }
 
-    public void addWestrijd(Wedstrijd w, boolean vooraan) {
+    public void addWedstrijd(Wedstrijd w, boolean vooraan) {
         if (vooraan) {
             wedstrijden.add(0, w);
         } else {
@@ -60,7 +60,7 @@ public class Serie {
         }
     }
 
-    public void addWestrijd(Wedstrijd w, int locatie) {
+    public void addWedstrijd(Wedstrijd w, int locatie) {
         wedstrijden.add(locatie, w);
     }
 

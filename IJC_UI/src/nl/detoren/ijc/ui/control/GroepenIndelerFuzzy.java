@@ -51,13 +51,14 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		// Maak clone van de Groep om ongewenste updates te voorkomen
 		Groep groep = new Groep();
 		// ZW is absoluut aantal in onbalans zwart/wit
-		int ZW = 0;
+		double ZW = 0;
 		groep.setNiveau(wedstrijdgroep.getNiveau());
 		for (Speler s : wedstrijdgroep.getSpelers()) {
 			logger.log(Level.FINE, "Toevoegen van speler " + s.getNaam());
 			ZW += Math.abs(s.getWitvoorkeur());
 			groep.addSpeler(new Speler(s));
 		}
+		logger.log(Level.INFO, "ZW balans voor groep " + groep.getNaam() + " voor deze ronde is " + ZW);
 		if ((groep.getNiveau() == (IJCController.c().aantalGroepen-1)) && (ronde < 7) && (ronde > 1)) {
 			// Sorteer keizergroep op rating voor indeling indien ronde =
 			// 2,3,4,5 of 6
@@ -159,7 +160,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 					Speler s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
 																				// zwart
 					Wedstrijd w = new Wedstrijd(wedstrijdnr, s1, s2, 0);
-					s.addWestrijd(w, true);
+					s.addWedstrijd(w, true);
 					wedstrijdnr++;
 					System.out.printf("Wedstrijd tussen " + groep.getSpelerByID(tri[k][0]).getNaam()
 							+ " (wit) met index " + tri[k][0] + " en " + groep.getSpelerByID(tri[k + 1][0]).getNaam() + " (zwart)"
@@ -172,7 +173,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 					Speler s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
 																				// zwart
 					Wedstrijd w = new Wedstrijd(wedstrijdnr, s1, s2, 0);
-					s.addWestrijd(w, true);
+					s.addWedstrijd(w, true);
 					wedstrijdnr++;
 					System.out.printf("Wedstrijd tussen " + groep.getSpelerByID(tri[k][0]).getNaam()
 							+ " (wit) met index " + tri[k][0] + " en " + groep.getSpelerByID(tri[k + 1][0]).getNaam() + " (zwart)"
@@ -184,7 +185,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 					Speler s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
 																				// zwart
 					Wedstrijd w = new Wedstrijd(wedstrijdnr, s1, s2, 0);
-					s.addWestrijd(w, true);
+					s.addWedstrijd(w, true);
 					System.out.printf("Wedstrijd tussen " + groep.getSpelerByID(tri[k][0]).getNaam()
 							+ " (wit) met index " +  tri[k][0] +  " en " + groep.getSpelerByID(tri[k + 1][0]).getNaam() + " (zwart)"
 									+ " met index " + tri[k+1][0] + "\n");
@@ -225,12 +226,11 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				// update gegevens tegenstanders en witvoorkeur
 			}
 		}
-		logger.log(Level.INFO, "ZW balans voor deze ronde is " + ZW);
 		ZW =0;
-		for (Speler s : groep.getSpelers()) {
-			ZW += Math.abs(s.getWitvoorkeur());
+		for (Speler s1 : groep.getSpelers()) {
+			ZW += Math.abs(s1.getWitvoorkeur());
 		}
-		logger.log(Level.INFO, "ZW balans na deze ronde is " + ZW);
+		logger.log(Level.INFO, "ZW balans voor groep " + groep.getNaam() + " na deze ronde is " + ZW);
 		return gws;
 	}
 
