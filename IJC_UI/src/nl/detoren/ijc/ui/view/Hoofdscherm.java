@@ -277,10 +277,12 @@ public class Hoofdscherm extends JFrame {
 		updatestandButton.setBackground(controller.getWedstrijden().isUitslagBekend()?light_green:hoofdPanel.getBackground());
 		if (tabs != null) {
 			for (int i = 0; i < tabs.getTabCount(); i++) {
-				if (IJCController.getI().getWedstrijden().getGroepswedstrijdenNiveau(i).isUitslagBekend()) {
-					tabs.setTitleAt(i, Groep.geefNaam(i) + "*");
-				} else {
-					tabs.setTitleAt(i, Groep.geefNaam(i));
+				if (!(IJCController.getI().getWedstrijden().getGroepswedstrijdenNiveau(i) ==null)) {
+					if (IJCController.getI().getWedstrijden().getGroepswedstrijdenNiveau(i).isUitslagBekend()) {
+						tabs.setTitleAt(i, Groep.geefNaam(i) + "*");
+					} else {
+						tabs.setTitleAt(i, Groep.geefNaam(i));
+					}
 				}
 			}
 		}
