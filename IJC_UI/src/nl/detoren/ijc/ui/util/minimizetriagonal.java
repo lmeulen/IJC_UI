@@ -107,7 +107,11 @@ public class minimizetriagonal {
 				}
 			}
 		}
-		logger.log(Level.INFO, String.format("Trio gevonden op %d, %d en %d \n", trio - 1, trio, trio + 1));
+		if (trio == 0) {
+			logger.log(Level.INFO, String.format("Trio gevonden op %d, %d en %d \n", trio - 1, trio, trio + 1));
+		} else {
+			logger.log(Level.INFO, "Geen Trio");
+			}
 		return trio;
 	}
 
