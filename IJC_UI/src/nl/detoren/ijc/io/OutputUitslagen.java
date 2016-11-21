@@ -2,6 +2,8 @@ package nl.detoren.ijc.io;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,8 +28,13 @@ public class OutputUitslagen implements WedstrijdenExportInterface{
 			String bestandsnaam = "R" + periode + "-" + ronde + "Uitslag.txt";
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 			String result = "";
-			result += "Wedstrijden Periode " + periode;
-			result += " Ronde " + periode + ls + "-----------" + ls;
+			result += "Wedstrijden Periode " + periode + " Ronde " + ronde;
+			if (wedstrijden.getSpeeldatum() != null) {
+				result += ", datum " + (new SimpleDateFormat("dd-MM-yyyy")).format(wedstrijden.getSpeeldatum());
+				result += ls + "-----------------------------------------------" + ls + ls;
+			} else {
+				result += ls + "-----------------------------" + ls + ls;
+			}
 			for (Groepswedstrijden gw : wedstrijden.getGroepswedstrijden()) {
 				result += printGroepsWedstrijden(gw) + ls;
 			}

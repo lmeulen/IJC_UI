@@ -368,7 +368,6 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 				gws.addSerie(serie);
 				groep = updateSpelers(groep, serie);
 				// update gegevens tegenstanders en witvoorkeur
-				System.out.println("Bijgewerkt");
 			}
 		}
 		return gws;
