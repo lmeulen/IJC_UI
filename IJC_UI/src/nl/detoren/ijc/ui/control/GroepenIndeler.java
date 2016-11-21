@@ -525,10 +525,13 @@ public class GroepenIndeler implements GroepenIndelerInterface {
                     // Speler speelde met wit
                     speler.addTegenstander(wedstrijd.getZwart().getInitialen());
                     speler.setWitvoorkeur(speler.getWitvoorkeur() - 1.1);
+                
                 } else if (wedstrijd.getZwart().gelijkAan(speler)) {
                     // Speler speelde met zwart
                     speler.addTegenstander(wedstrijd.getWit().getInitialen());
+
                     speler.setWitvoorkeur(speler.getWitvoorkeur() + 1.1);
+                
                 } else {
                     System.out.println("Hmmm, speler niet gevonden....");
                 }
