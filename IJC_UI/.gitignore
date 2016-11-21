@@ -1,7 +1,6 @@
 /*.log
 /status.json
 /Indeling*.xlsx
-/*.json
 /R*.arff
 /R?-?NeuralData*
 /Uitslag*.txt
@@ -16,3 +15,4 @@ Inteken*docx
 /app/
 /Resultaten/
 /~*
+/R?-?/

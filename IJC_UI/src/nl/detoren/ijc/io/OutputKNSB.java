@@ -13,6 +13,7 @@
  */
 package nl.detoren.ijc.io;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -34,9 +35,13 @@ public class OutputKNSB implements WedstrijdenExportInterface {
 	 */
 	public boolean export(Wedstrijden wedstrijden) {
 		try {
-			String bestandsnaam = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde() + "KNSB";
+			String bestandsnaam = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde() + "KNSB.csv";
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
-			FileWriter writer = new FileWriter(bestandsnaam + ".csv");
+
+			String dirName = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde();
+			new File(dirName).mkdirs();
+
+			FileWriter writer = new FileWriter( dirName + File.separator + bestandsnaam);
 			writer.write(getHeader(wedstrijden.getPeriode(), wedstrijden.getRonde()));
 			int i = 1;
 			for (Wedstrijd w : wedstrijden.getAlleWedstrijden()) {

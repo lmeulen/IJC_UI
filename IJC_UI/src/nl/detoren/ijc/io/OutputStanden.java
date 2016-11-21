@@ -13,6 +13,7 @@
  */
 package nl.detoren.ijc.io;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -39,24 +40,31 @@ public class OutputStanden implements GroepenExportInterface {
 
 			// Short variant
 			if (IJCController.c().exportTextLong) {
-				FileWriter writer = new FileWriter(bestandsnaam + ".txt");
+				String dirName = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde();
+				new File(dirName).mkdirs();
+
+				FileWriter writer = new FileWriter(dirName + File.separator + bestandsnaam + ".txt");
 				writer.write(uitslag.toPrintableString(false));
 				writer.write(ls + "Stand aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam + ls);
 				writer.close();
-				IJCController.getInstance().setLaatsteExport(bestandsnaam + ".txt");
+				IJCController.getInstance().setLaatsteExport(dirName + File.separator + bestandsnaam + ".txt");
 			}
 
 			// Long variant
 			if (IJCController.c().exportTextLong) {
-				FileWriter writer = new FileWriter(bestandsnaam + "-long.txt");
+				String dirName = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde();
+				new File(dirName).mkdirs();
+				FileWriter writer = new FileWriter(dirName + File.separator + bestandsnaam + "-long.txt");
 				writer.write(uitslag.toPrintableString(true));
 				writer.write(ls + "Stand aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam + ls);
 				writer.close();
-				IJCController.getInstance().setLaatsteExport(bestandsnaam + "-long.txt");
+				IJCController.getInstance().setLaatsteExport(dirName + File.separator + bestandsnaam + "-long.txt");
 			}
 			// GSON variant
 			Gson gson = new Gson();
-			FileWriter writer = new FileWriter(bestandsnaam + ".json");
+			String dirName = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde();
+			new File(dirName).mkdirs();
+			FileWriter writer = new FileWriter( dirName + File.separator + bestandsnaam + ".json");
 			writer.write(gson.toJson(IJCController.getI().getStatus()));
 			writer.close();
 			return true;

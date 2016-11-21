@@ -13,6 +13,7 @@
  */
 package nl.detoren.ijc.io;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -52,8 +53,10 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
 			OSBOResultaat resultaat = maakOSBOData(wedstrijden);
+			String dirName = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde();
+			new File(dirName).mkdirs();
 
-			FileWriter writer = new FileWriter(bestandsnaam);
+			FileWriter writer = new FileWriter( dirName + File.separator + bestandsnaam);
 			writer.write(getHeader(wedstrijden.getPeriode(), wedstrijden.getRonde(), resultaat.getAantalSpelers()));
 			for (OSBOSpeler speler : resultaat.spelers) {
 				String result = verwerkSpeler(speler);

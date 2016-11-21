@@ -13,6 +13,7 @@
  */
 package nl.detoren.ijc.io;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,10 +46,13 @@ public class OutputKEI implements GroepenExportInterface {
 	 */
 	public boolean export(Groepen groepen) {
 		try {
-			String bestandsnaam = "R" + groepen.getPeriode() + "-" + groepen.getRonde() + "KEIpuntenS";
+			String bestandsnaam = "R" + groepen.getPeriode() + "-" + groepen.getRonde() + "KEIpuntenS.txt";
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
-			FileWriter writer = new FileWriter(bestandsnaam + ".txt");
+			String dirName = "R" + groepen.getPeriode() + "-" + groepen.getRonde();
+			new File(dirName).mkdirs();
+
+			FileWriter writer = new FileWriter(dirName + File.separator + bestandsnaam);
 			writer.write(getHeader(groepen.getPeriode(), groepen.getRonde()));
 
 			// Vind spelers met KEI punten

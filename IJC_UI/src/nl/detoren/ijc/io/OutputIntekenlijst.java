@@ -102,8 +102,11 @@ public class OutputIntekenlijst implements GroepenExportInterface {
 			// Close input file
 			file.close();
 			// Store Excel to new file
-			String outputFile = "IntekenlijstR" + groepen.getPeriode() + "-" + groepen.getRonde() + ".docx";
-			FileOutputStream outFile = new FileOutputStream(new File(outputFile));
+			String dirName = "R" + groepen.getPeriode() + "-" + groepen.getRonde();
+			new File(dirName).mkdirs();
+			String filename =  dirName + File.separator + "IntekenlijstR" + groepen.getPeriode() + "-" + groepen.getRonde() + ".docx";
+			File outputFile = new File(filename);
+			FileOutputStream outFile = new FileOutputStream(outputFile);
 			document.write(outFile);
 			// Close output file
 			document.close();
