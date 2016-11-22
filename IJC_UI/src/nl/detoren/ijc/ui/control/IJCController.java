@@ -59,14 +59,6 @@ public class IJCController {
 
     private static final String defaultInputfile = "uitslag.txt";
 
-    private class Status {
-        private boolean automatisch = true;
-        private Groepen groepen;
-        private Groepen wedstrijdgroepen;
-        private Wedstrijden wedstrijden;
-        private Groepen resultaatVerwerkt;
-        private ArrayList<Speler> externGespeeld;
-    }
     private Status status;
     private Configuratie c;
 
