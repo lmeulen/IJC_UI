@@ -71,7 +71,6 @@ public class Voorspeller {
 		try {
 			mlp = (MultilayerPerceptron) weka.core.SerializationHelper.read(networkfile);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Speler {
+public class DBSpeler {
 
 	@Id
 	@GeneratedValue
@@ -21,19 +21,26 @@ public class Speler {
 	private int knsbnummer;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "speler")
-	List<SpelerHistoriePunt> historie;
-	
-	public Speler() {
-		historie = new ArrayList<>(); 
+	List<DBHistorie> historie;
+
+	public DBSpeler() {
+		historie = new ArrayList<>();
 	}
 
-	public List<SpelerHistoriePunt> getHistorie() {
+	public DBSpeler(String naam, String afkorting, int knsbnummer) {
+		this();
+		this.afkorting = afkorting;
+		this.knsbnummer = knsbnummer;
+		this.naam = naam;
+	}
+
+	public List<DBHistorie> getHistorie() {
 		return historie;
 	}
-	
-	public void addHistorie(SpelerHistoriePunt punt) {
+
+	public void addHistorie(DBHistorie punt) {
 		this.historie.add(punt);
-		if (punt.speler != this) {
+		if (punt.getSpeler() != this) {
 			punt.setSpeler(this);
 		}
 	}
