@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.MultilayerPerceptron;
-import weka.core.DenseInstance;
 import weka.core.Instances;
 
 public class Voorspeller {

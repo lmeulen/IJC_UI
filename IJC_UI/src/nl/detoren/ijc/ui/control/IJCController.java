@@ -46,7 +46,6 @@ import nl.detoren.ijc.io.OutputOSBO;
 import nl.detoren.ijc.io.OutputSpeelschema;
 import nl.detoren.ijc.io.OutputStanden;
 import nl.detoren.ijc.io.OutputUitslagen;
-import nl.detoren.ijc.neural.NeuralHelper;
 import nl.detoren.ijc.neural.Voorspeller;
 
 /**
