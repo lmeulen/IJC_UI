@@ -46,7 +46,6 @@ import nl.detoren.ijc.io.OutputOSBO;
 import nl.detoren.ijc.io.OutputSpeelschema;
 import nl.detoren.ijc.io.OutputStanden;
 import nl.detoren.ijc.io.OutputUitslagen;
-import nl.detoren.ijc.neural.NeuralHelper;
 import nl.detoren.ijc.neural.Voorspeller;
 
 /**
@@ -60,14 +59,6 @@ public class IJCController {
 
     private static final String defaultInputfile = "uitslag.txt";
 
-    private class Status {
-        private boolean automatisch = true;
-        private Groepen groepen;
-        private Groepen wedstrijdgroepen;
-        private Wedstrijden wedstrijden;
-        private Groepen resultaatVerwerkt;
-        private ArrayList<Speler> externGespeeld;
-    }
     private Status status;
     private Configuratie c;
 
@@ -780,13 +771,10 @@ public class IJCController {
 		try {
 			v.voorspel(directory + File.separator + bestand);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
