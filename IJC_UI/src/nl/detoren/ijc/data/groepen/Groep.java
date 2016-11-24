@@ -18,6 +18,7 @@ package nl.detoren.ijc.data.groepen;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Level;
 
 import nl.detoren.ijc.ui.control.IJCController;
 
@@ -30,6 +31,8 @@ import nl.detoren.ijc.ui.control.IJCController;
 public class Groep {
 
     private int niveau;
+    private double ZWbalansvoor;
+    private double ZWbalansna;
     private ArrayList<Speler> spelers;
 
     /**
@@ -64,6 +67,53 @@ public class Groep {
      */
     public void setNiveau(int niveau) {
         this.niveau = niveau;
+    }
+
+    /**
+     * Retourneert ZWbalans van deze groep
+     * @return
+     */
+    public double getZWbalansvoor() {
+        return this.ZWbalansvoor;
+    }
+
+    /**
+     * Bepaal ZWbalans van deze groep
+     */
+    public void setZWbalansvoor(Groep groep) {
+    	double ZW = 0;
+		for (Speler s : groep.getSpelers()) {
+			ZW += Math.abs(s.getWitvoorkeur());
+		}
+		groep.ZWbalansvoor = ZW;
+
+    }
+    
+    /**
+     * Retourneert ZWbalans van deze groep op basis van ingeplande wedstrijden
+     * @return
+     */
+    public double getZWbalansna() {
+        return this.ZWbalansna;
+    }
+
+    /**
+     * Bepaal ZWbalans van deze groep op basis van ingeplande wedstrijden
+     */
+    public void setZWbalansna(Groep groep) {
+    	double ZW = 0;
+		for (Speler s : groep.getSpelers()) {
+			ZW += Math.abs(s.getWitvoorkeur());
+		}
+		groep.ZWbalansna = ZW;
+
+    }
+
+    /**
+     * Bepaal ZWbalans van deze groep op basis van waarde
+     */
+    public void setZWbalansna(double ZW) {
+		this.ZWbalansna = ZW;
     }
 
     /**

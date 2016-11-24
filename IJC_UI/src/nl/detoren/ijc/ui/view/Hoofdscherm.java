@@ -103,6 +103,8 @@ public class Hoofdscherm extends JFrame {
 	private JButton uitslagButton;
 	private JButton externenButton;
 	private JButton updatestandButton;
+	private JTextField[] jTFZWbalansvoor;
+	private JTextField[] jTFZWbalansna;
 	private JScrollPane[] leftScrollPane;
 	private JScrollPane[] centerLeftScrollPane;
 	private JScrollPane[] centerRightScrollPane;
@@ -136,6 +138,8 @@ public class Hoofdscherm extends JFrame {
 
 		panels = new JPanel[aantal];
 		leftScrollPane = new JScrollPane[aantal];
+		jTFZWbalansvoor = new JTextField[aantal];
+		jTFZWbalansna = new JTextField[aantal];
 		centerLeftScrollPane = new JScrollPane[aantal];
 		centerRightScrollPane = new JScrollPane[aantal];
 		aanwezigheidsTabel = new JTable[aantal];
@@ -295,11 +299,39 @@ public class Hoofdscherm extends JFrame {
 	public void updateRondeLabel() {
 		String rondeText = "<html>Periode: " + controller.getGroepen().getPeriode() + "<BR>";
 		rondeText += "Ronde: " + controller.getGroepen().getRonde() + "</HTML>";
-
 		rondeLabel.setText(rondeText);
 	}
+	
+	/**
+	 * Update textfield met ZW balans voor spelen ronde
+	 */
+	public void updateZWbalansvoor(int index) {
+		String ZWbalansText = "ZW Balans voor deze ronde is " + controller.getWedstrijdGroepByID(index).getZWbalansvoor() + "";
+		jTFZWbalansvoor[index].setText(ZWbalansText);
+		this.repaint();
+	}	
+	
+	/**
+	 * Update textfield met ZW balans voor spelen ronde
+	 */
+	public void updateZWbalansvoor() {
+		for (int index=0;index<aantal;index++) {
+			updateZWbalansvoor(index);
+		}
+	}	
 
-	public void updateAutomatisch(boolean newState) {
+	public void updateZWbalansna(int index) {
+		String ZWbalansText = "ZW Balans na deze ronde is " + controller.getWedstrijdGroepByID(index).getZWbalansna() + "";
+		jTFZWbalansna[index].setText(ZWbalansText);
+	}	
+
+	public void updateZWbalansna() {
+		for (int index=0;index<aantal;index++) {
+			updateZWbalansna(index);
+		}
+	}	
+
+		public void updateAutomatisch(boolean newState) {
 		controller.setAutomatisch(newState);
 		if (controller.isAutomatisch()) {
 			automatischButton.setBackground(Color.GREEN);
@@ -597,6 +629,7 @@ public class Hoofdscherm extends JFrame {
 	protected void fillGroupPanel(JPanel panel, final int index) {
 		leftScrollPane[index] = new javax.swing.JScrollPane();
 		centerLeftScrollPane[index] = new javax.swing.JScrollPane();
+		jTFZWbalansvoor[index] = new JTextField();
 		centerRightScrollPane[index] = new javax.swing.JScrollPane();
 
 		aanwezigheidsTabel[index] = new JTable(new SpelersModel(index, panel)) {
@@ -634,6 +667,8 @@ public class Hoofdscherm extends JFrame {
 		        	if (controller.isAutomatisch()) {
 		        		controller.maakGroepsindeling();
 		        	}
+		        	updateZWbalansvoor();
+		        	updateZWbalansna();
 		        	repaint();
 		        	break;
 		        case 3:
@@ -743,6 +778,9 @@ public class Hoofdscherm extends JFrame {
 
 					popup.show(e.getComponent(), e.getX(), e.getY());
 				}
+				updateZWbalansvoor();
+				updateZWbalansna();
+				hoofdPanel.repaint();
 			}
 		});
 
@@ -812,6 +850,8 @@ public class Hoofdscherm extends JFrame {
 							if (response == JOptionPane.YES_OPTION) {
 								controller.verwijderWedstrijdSpeler(groepID, s, s.getId() - 1);
 							}
+							updateZWbalansvoor(index);
+							updateZWbalansna(index);
 							hoofdPanel.repaint();
 						}
 					});
@@ -822,6 +862,8 @@ public class Hoofdscherm extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							controller.spelerNaarHogereGroep(groepID, s, s.getId() - 1);
+							updateZWbalansvoor(index);
+							updateZWbalansna(index);
 							hoofdPanel.repaint();
 						}
 					});
@@ -832,6 +874,8 @@ public class Hoofdscherm extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							controller.spelerNaarLagereGroep(groepID, s, s.getId() - 1);
+							updateZWbalansvoor(index);
+							updateZWbalansna(index);
 							hoofdPanel.repaint();
 						}
 					});
@@ -862,6 +906,9 @@ public class Hoofdscherm extends JFrame {
 			@Override
 			public void tableChanged(TableModelEvent arg0) {
 				updateUpdateStandButton();
+				updateZWbalansvoor(index);
+				updateZWbalansna(index);
+				hoofdPanel.repaint();
 			}
 
 		});
@@ -872,31 +919,48 @@ public class Hoofdscherm extends JFrame {
 		centerRightScrollPane[index].setViewportView(wedstrijdenTabel[index]);
 
 		JPanel ibt = new JPanel();
+		ibt.setLayout(new BoxLayout(ibt, BoxLayout.PAGE_AXIS));
 		JTextField jTFaanwezigheid = new JTextField("Aanwezigheid in de " + Groep.geefNaam(index));
 		jTFaanwezigheid.setBackground(ibt.getBackground());
 		jTFaanwezigheid.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		ibt.add(jTFaanwezigheid, BorderLayout.NORTH);
+		jTFZWbalansvoor[index] = new JTextField("ZW Balans");
+		jTFZWbalansvoor[index].setBackground(ibt.getBackground());
+		jTFZWbalansvoor[index].setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+		ibt.add(jTFZWbalansvoor[index], BorderLayout.NORTH);
 		ibt.add(leftScrollPane[index], BorderLayout.SOUTH);
 		ibt.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(ibt, BorderLayout.LINE_START);
+		updateZWbalansvoor(index);
 
 		JPanel ibt2 = new JPanel();
+		ibt2.setLayout(new BoxLayout(ibt2, BoxLayout.PAGE_AXIS));
 		JTextField jTFwedstrijdgroep = new JTextField("Spelers die spelen in de " + Groep.geefNaam(index));
 		jTFwedstrijdgroep.setBackground(ibt2.getBackground());
 		jTFwedstrijdgroep.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		ibt2.add(jTFwedstrijdgroep, BorderLayout.NORTH);
+		JTextField jTFdummy = new JTextField("");
+		jTFdummy.setBackground(ibt2.getBackground());
+		jTFdummy.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+		ibt2.add(jTFdummy, BorderLayout.NORTH);
 		ibt2.add(centerLeftScrollPane[index], BorderLayout.SOUTH);
 		ibt2.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(ibt2, BorderLayout.LINE_START);
 
 		JPanel ibt3 = new JPanel();
+		ibt3.setLayout(new BoxLayout(ibt3, BoxLayout.PAGE_AXIS));
 		JTextField jTFwedstrijden = new JTextField("Wedstrijden in de " + Groep.geefNaam(index));
 		jTFwedstrijden.setBackground(ibt3.getBackground());
 		jTFwedstrijden.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		ibt3.add(jTFwedstrijden, BorderLayout.NORTH);
+		jTFZWbalansna[index] = new JTextField("ZW Balans");
+		jTFZWbalansna[index].setBackground(ibt3.getBackground());
+		jTFZWbalansna[index].setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+		ibt3.add(jTFZWbalansna[index], BorderLayout.NORTH);
 		ibt3.add(centerRightScrollPane[index], BorderLayout.SOUTH);
 		ibt3.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panel.add(ibt3, BorderLayout.LINE_START);
+		updateZWbalansna(index);
 
 		panel.setBorder(new EmptyBorder(1, 1, 1, 1));
 		pack();
@@ -975,6 +1039,8 @@ public class Hoofdscherm extends JFrame {
 	public void actieMaakSpeelschema() {
 		updateAutomatisch(false);
 		controller.maakWedstrijden(tabs.getSelectedIndex());
+		updateZWbalansvoor(tabs.getSelectedIndex());
+		updateZWbalansna(tabs.getSelectedIndex());
 		hoofdPanel.repaint();
 	}
 
@@ -1019,6 +1085,8 @@ public class Hoofdscherm extends JFrame {
 		controller.volgendeRonde();
 		updateAutomatisch(true);
 		updateRondeLabel();
+		updateZWbalansvoor();
+		updateZWbalansna();
 		updateUpdateStandButton();
 		hoofdPanel.repaint();
 	}

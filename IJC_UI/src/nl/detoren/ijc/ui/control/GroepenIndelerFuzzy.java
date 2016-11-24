@@ -24,6 +24,8 @@ import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.ui.util.Utils;
 import nl.detoren.ijc.ui.util.minimizetriagonal;
+import nl.detoren.ijc.ui.view.Hoofdscherm;
+import nl.detoren.ijc.ui.view.WedstrijdschemaDialoog;
 
 /**
  * Fuzzy implementatie voor bepalen wedstrijdschema
@@ -48,16 +50,17 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	 */
 	@Override
 	public  Groepswedstrijden maakWedstrijdenVoorGroep(int periode, int ronde, Groep wedstrijdgroep) {
+		// ZW is absoluut aantal in onbalans zwart/wit
+		wedstrijdgroep.setZWbalansvoor(wedstrijdgroep);
+		// 
 		// Maak clone van de Groep om ongewenste updates te voorkomen
 		Groep groep = new Groep();
-		// ZW is absoluut aantal in onbalans zwart/wit
-		double ZW = 0;
 		groep.setNiveau(wedstrijdgroep.getNiveau());
 		for (Speler s : wedstrijdgroep.getSpelers()) {
 			logger.log(Level.FINE, "Toevoegen van speler " + s.getNaam());
-			ZW += Math.abs(s.getWitvoorkeur());
 			groep.addSpeler(new Speler(s));
 		}
+		
 		if ((groep.getNiveau() == (IJCController.c().aantalGroepen-1)) && (ronde < 7) && (ronde > 1)) {
 			// Sorteer keizergroep op rating voor indeling indien ronde =
 			// 2,3,4,5 of 6
@@ -211,6 +214,9 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 					System.out.printf("Wedstrijd tussen " + w.getWit().getNaam()
 							+ " (wit) en " + w.getZwart().getNaam() + " (zwart)"
 									+ "\n");
+					groep = updateSpelers(groep, gws.getTriowedstrijden());
+					logger.log(Level.INFO, "Update Spelers triowedstrijden");
+					// update gegevens tegenstanders en witvoorkeur
 				}
 				// Einde trio
 			}
@@ -219,16 +225,15 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				gws.addSerie(s);
 				logger.log(Level.INFO, "Voeg Serie toe");
 				groep = updateSpelers(groep, s);
-				logger.log(Level.INFO, "Update Spelers");
+				logger.log(Level.INFO, "Update Spelers gewone wedstrijden");
 				// update gegevens tegenstanders en witvoorkeur
 			}
 		}
-		logger.log(Level.INFO, "ZW balans voor groep " + groep.getNaam() + " voor deze ronde is " + ZW);
-		ZW =0;
-		for (Speler s1 : groep.getSpelers()) {
-			ZW += Math.abs(s1.getWitvoorkeur());
-		}
-		logger.log(Level.INFO, "ZW balans voor groep " + groep.getNaam() + " na deze ronde is " + ZW);
+		logger.log(Level.INFO, "ZW balans voor groep " + wedstrijdgroep.getNaam() + " voor deze ronde is " +wedstrijdgroep.getZWbalansvoor());
+		groep.setZWbalansna(groep);
+		// Overdragen tijdelijke data naar regliere data voor deze waarde.
+		wedstrijdgroep.setZWbalansna(groep.getZWbalansna());
+		logger.log(Level.INFO, "ZW balans voor groep " + wedstrijdgroep.getNaam() + " na deze ronde is " + wedstrijdgroep.getZWbalansna());
 		return gws;
 	}
 
@@ -556,8 +561,9 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
     }
 
     protected Groep updateSpelers(Groep groep, Serie serie) {
-
+    	double wv;
         for (Speler speler : groep.getSpelers()) {
+        	wv = speler.getWitvoorkeur();
             Wedstrijd wedstrijd = serie.getWedstrijdVoorSpeler(speler);
             if (wedstrijd != null) {
                 if (wedstrijd.getWit().gelijkAan(speler)) {
@@ -574,10 +580,28 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
                 } else {
                     System.out.println("Hmmm, speler niet gevonden....");
                 }
+                logger.log(Level.INFO, "witvoorkeur voor speler " + speler.getNaam() + " aangepast van " + wv + " naar "+ speler.getWitvoorkeur());
             }
         }
         return groep;
     }
-	
+
+    protected Groep updateSpelers(Groep groep, ArrayList<Wedstrijd> triowedstrijden) {
+    	double wv;
+        for (Wedstrijd W: triowedstrijden) {
+            if (W != null) {
+            	wv = W.getWit().getWitvoorkeur();
+            	groep.getSpelerByID(W.getWit().getId()).setWitvoorkeur(W.getWit().getWitvoorkeur() - 1);
+            	groep.getSpelerByID(W.getWit().getId()).addTegenstander(W.getZwart().getInitialen());
+                logger.log(Level.INFO, "witvoorkeur voor speler " + W.getWit().getNaam() + " aangepast van " + wv + " naar "+ W.getWit().getWitvoorkeur());
+            	wv = W.getZwart().getWitvoorkeur();
+            	groep.getSpelerByID(W.getZwart().getId()).setWitvoorkeur(W.getZwart().getWitvoorkeur() + 1);
+            	groep.getSpelerByID(W.getZwart().getId()).addTegenstander(W.getWit().getInitialen());
+                logger.log(Level.INFO, "witvoorkeur voor speler " + W.getZwart().getNaam() + " aangepast van " + wv + " naar "+ W.getZwart().getWitvoorkeur());
+            }
+        }
+        return groep;
+    }
+
 }
 
