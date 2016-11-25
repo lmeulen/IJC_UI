@@ -51,7 +51,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	@Override
 	public  Groepswedstrijden maakWedstrijdenVoorGroep(int periode, int ronde, Groep wedstrijdgroep) {
 		// ZW is absoluut aantal in onbalans zwart/wit
-		wedstrijdgroep.setZWbalansvoor(wedstrijdgroep);
+		wedstrijdgroep.setZWbalansvoor();
 		// 
 		// Maak clone van de Groep om ongewenste updates te voorkomen
 		Groep groep = new Groep();
@@ -230,7 +230,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			}
 		}
 		logger.log(Level.INFO, "ZW balans voor groep " + wedstrijdgroep.getNaam() + " voor deze ronde is " +wedstrijdgroep.getZWbalansvoor());
-		groep.setZWbalansna(groep);
+		groep.setZWbalansna();
 		// Overdragen tijdelijke data naar regliere data voor deze waarde.
 		wedstrijdgroep.setZWbalansna(groep.getZWbalansna());
 		logger.log(Level.INFO, "ZW balans voor groep " + wedstrijdgroep.getNaam() + " na deze ronde is " + wedstrijdgroep.getZWbalansna());

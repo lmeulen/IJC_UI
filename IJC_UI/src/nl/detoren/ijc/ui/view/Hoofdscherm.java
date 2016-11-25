@@ -27,6 +27,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -306,7 +307,8 @@ public class Hoofdscherm extends JFrame {
 	 * Update textfield met ZW balans voor spelen ronde
 	 */
 	public void updateZWbalansvoor(int index) {
-		String ZWbalansText = "ZW Balans voor deze ronde is " + controller.getWedstrijdGroepByID(index).getZWbalansvoor() + "";
+		String bal = String.format(Locale.US, "%.0f", controller.getWedstrijdGroepByID(index).getZWbalansvoor());
+		String ZWbalansText = "ZW Balans voor deze ronde is " + bal;
 		jTFZWbalansvoor[index].setText(ZWbalansText);
 		this.repaint();
 	}	
@@ -321,7 +323,8 @@ public class Hoofdscherm extends JFrame {
 	}	
 
 	public void updateZWbalansna(int index) {
-		String ZWbalansText = "ZW Balans na deze ronde is " + controller.getWedstrijdGroepByID(index).getZWbalansna() + "";
+		String bal = String.format(Locale.US, "%.0f", controller.getWedstrijdGroepByID(index).getZWbalansna());
+		String ZWbalansText = "ZW Balans na deze ronde is " + bal + "";
 		jTFZWbalansna[index].setText(ZWbalansText);
 	}	
 

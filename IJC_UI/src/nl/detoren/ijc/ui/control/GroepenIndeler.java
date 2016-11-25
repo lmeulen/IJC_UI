@@ -131,7 +131,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
     protected void doorschuiven(Groepen wedstrijdGroepen, Groepen aanwezigheidsGroepen) {
         int aantal = bepaalAantalDoorschuiven(aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
     	logger.log(Level.INFO, "Aantal door te schuiven spelers "  + aantal);
-        // Doorloop hoogste groep tot één na laagste groep. In de laagste groep
+        // Doorloop hoogste groep tot ï¿½ï¿½n na laagste groep. In de laagste groep
         // kunnen geen spelers inschuiven
     	// Let op: iterator gaat op array index en NIET op groepID
         ArrayList<Groep> groepen = wedstrijdGroepen.getGroepen();
@@ -142,7 +142,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
             ArrayList<Speler> naarGroep = groepen.get(i).getSpelers();
             if (naarGroep == null) naarGroep = new ArrayList<>();
             ArrayList<Speler> vanGroep = groepen.get(i + 1).getSpelers();
-            // ALs laatste speler niet aanwezig, dan één minder doorschuiven
+            // ALs laatste speler niet aanwezig, dan ï¿½ï¿½n minder doorschuiven
             Speler laatste = groepen.get(i + 1).getSpelerByID(aantal);
             if (laatste == null) aantal--;
 
@@ -245,7 +245,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
         Wedstrijden wedstrijden = new Wedstrijden();
         for (Groep groepOrg : groepen.getGroepen()) {
         	if (groepOrg.getAantalSpelers() == 1) {
-    			logger.log(Level.WARNING, "Maar één speler. Kan geen wedstrijden maken. ");
+    			logger.log(Level.WARNING, "Maar ï¿½ï¿½n speler. Kan geen wedstrijden maken. ");
         	} else {
         		logger.log(Level.INFO, "Maken wedstrijden voor groep " + groepOrg.getNaam());
         		Groepswedstrijden gws = maakWedstrijdenVoorGroep(periode, ronde, groepOrg);
@@ -290,7 +290,8 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      */
 	public Groepswedstrijden maakWedstrijdenVoorGroep(int periode, int ronde, Groep wedstrijdgroep) {
     	logger.log(Level.INFO, "Bepalen wedstrijden voor groep " + wedstrijdgroep.getNaam() + " periode " + periode + " ronde " + ronde);
-		// Maak clone van de Groep om ongewenste updates te voorkomen
+		wedstrijdgroep.setZWbalansvoor();
+    	// Maak clone van de Groep om ongewenste updates te voorkomen
 		Groep groep = new Groep();
 		groep.setNiveau(wedstrijdgroep.getNiveau());
 		for (Speler s : wedstrijdgroep.getSpelers()) {
@@ -313,7 +314,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 		// maar 1 ronde in. Dit heeft het juiste aantal wedstrijden tot gevolg
 		if (groep.getAantalSpelers() == 5 && speelrondes == 2 ) {
 			speelrondes = 1;
-	    	logger.log(Level.INFO, "Vijf spelers met 2 rondes dus spelers verdubbelen en maar één serie");
+	    	logger.log(Level.INFO, "Vijf spelers met 2 rondes dus spelers verdubbelen en maar ï¿½ï¿½n serie");
 		    for (Speler s : wedstrijdgroep.getSpelers()) {
 		        groep.addSpeler(new Speler(s));
 		    }
@@ -350,7 +351,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 		        gepland[j] = false;
 		    }
 		    for (Integer sid : trio) {
-		        // -1 omdat speler ID één versprongen is tov array nummer
+		        // -1 omdat speler ID ï¿½ï¿½n versprongen is tov array nummer
 		        gepland[sid.intValue() - 1] = true;
 		    }
 
@@ -374,6 +375,11 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 				// update gegevens tegenstanders en witvoorkeur
 			}
 		}
+		logger.log(Level.INFO, "ZW balans voor groep " + wedstrijdgroep.getNaam() + " voor deze ronde is " +wedstrijdgroep.getZWbalansvoor());
+		groep.setZWbalansna();
+		// Overdragen tijdelijke data naar regliere data voor deze waarde.
+		wedstrijdgroep.setZWbalansna(groep.getZWbalansna());
+		logger.log(Level.INFO, "ZW balans voor groep " + wedstrijdgroep.getNaam() + " na deze ronde is " + wedstrijdgroep.getZWbalansna());
 		return gws;
 	}
 

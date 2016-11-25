@@ -80,12 +80,12 @@ public class Groep {
     /**
      * Bepaal ZWbalans van deze groep
      */
-    public void setZWbalansvoor(Groep groep) {
+    public void setZWbalansvoor() {
     	double ZW = 0;
-		for (Speler s : groep.getSpelers()) {
+		for (Speler s : getSpelers()) {
 			ZW += Math.abs(s.getWitvoorkeur());
 		}
-		groep.ZWbalansvoor = ZW;
+		ZWbalansvoor = ZW;
 
     }
     
@@ -100,12 +100,12 @@ public class Groep {
     /**
      * Bepaal ZWbalans van deze groep op basis van ingeplande wedstrijden
      */
-    public void setZWbalansna(Groep groep) {
+    public void setZWbalansna() {
     	double ZW = 0;
-		for (Speler s : groep.getSpelers()) {
+		for (Speler s : getSpelers()) {
 			ZW += Math.abs(s.getWitvoorkeur());
 		}
-		groep.ZWbalansna = ZW;
+		ZWbalansna = ZW;
 
     }
 
@@ -278,7 +278,9 @@ public class Groep {
     	    public int compare(Speler o1, Speler o2) {
     	    	int result = o2.getPunten() - o1.getPunten();
     	    	if (result == 0) {
-    	    		result = o2.getRating() - o1.getRating();
+					int r1 = o1.isKNSBLid() ? o1.getRating() * 10 : o1.getRating();
+					int r2 = o2.isKNSBLid() ? o2.getRating() * 10 : o2.getRating();
+					result = r2 - r1;
     	    	}
     	    	return result;
     	    }
