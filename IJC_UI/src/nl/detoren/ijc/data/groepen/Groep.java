@@ -88,7 +88,7 @@ public class Groep {
 		ZWbalansvoor = ZW;
 
     }
-    
+
     /**
      * Retourneert ZWbalans van deze groep op basis van ingeplande wedstrijden
      * @return
@@ -278,8 +278,12 @@ public class Groep {
     	    public int compare(Speler o1, Speler o2) {
     	    	int result = o2.getPunten() - o1.getPunten();
     	    	if (result == 0) {
-					int r1 = o1.isKNSBLid() ? o1.getRating() * 10 : o1.getRating();
-					int r2 = o2.isKNSBLid() ? o2.getRating() * 10 : o2.getRating();
+    	    		int r1 = o1.getRating();
+    	    		int r2 = o2.getRating();
+    	    		if (niveau == (IJCController.c().aantalGroepen-1)) {
+    	    			r1 = o1.isKNSBLid() ? o1.getRating() * 10 : o1.getRating();
+    	    			r2 = o2.isKNSBLid() ? o2.getRating() * 10 : o2.getRating();
+    	    		}
 					result = r2 - r1;
     	    	}
     	    	return result;
