@@ -30,10 +30,13 @@ import nl.detoren.ijc.ui.control.IJCController;
  */
 public class Groep {
 
+	enum Sortering {RANKING_ASC, RANKING_DESC, PUNTEN_ASC, PUNTEN_DESC};
+
     private int niveau;
     private double ZWbalansvoor;
     private double ZWbalansna;
     private ArrayList<Speler> spelers;
+    private Sortering sortering;
 
     /**
      * Default constructor.
@@ -273,6 +276,7 @@ public class Groep {
      * punten wordt gesorteerd op rating
      */
     public void sorteerPunten() {
+    	sortering = sortering != Sortering.PUNTEN_ASC? Sortering.PUNTEN_ASC : Sortering.PUNTEN_DESC;
     	Collections.sort(spelers, new Comparator<Speler>() {
     	    @Override
     	    public int compare(Speler o1, Speler o2) {
@@ -286,7 +290,7 @@ public class Groep {
     	    		}
 					result = r2 - r1;
     	    	}
-    	    	return result;
+    	    	return (sortering == Sortering.PUNTEN_ASC) ? result : -result;
     	    }
     	});
     }
@@ -295,10 +299,15 @@ public class Groep {
      * Sorteer de spelers in deze groep op rating
      */
     public void sorteerRating() {
+    	sortering = sortering != Sortering.RANKING_ASC ? Sortering.RANKING_ASC : Sortering.RANKING_DESC;
     	Collections.sort(spelers, new Comparator<Speler>() {
     	    @Override
     	    public int compare(Speler o1, Speler o2) {
-    	        return o2.getRating() - o1.getRating();
+    	    	if (sortering == Sortering.RANKING_ASC) {
+    	    		return o2.getRating() - o1.getRating();
+    	    	} else {
+    	    		return o1.getRating() - o2.getRating();
+    	    	}
     	    }
     	});
     }
