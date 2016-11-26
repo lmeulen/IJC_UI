@@ -108,7 +108,7 @@ public class WedstrijdModel extends AbstractTableModel {
                     case 2:
                         return "0-1";
                     case 3:
-                        return "½-½";
+                        return "\u00BD-\u00BD";
                     default:
                         return "0-0";
                 }
