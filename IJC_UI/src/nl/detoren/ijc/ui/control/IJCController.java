@@ -594,16 +594,24 @@ public class IJCController {
 	        	if (periode > c.perioden) periode = 1;
 	        	resetPunten();
 	        }
+	        // Altijd ronde en periode instellen
 	        status.groepen.setRonde(ronde);
 	        status.groepen.setPeriode(periode);
-			if (ronde == 1)
+	        // Als nieuwe periode, aanwezigheidspunten resetten en sorteren op rating
+			if (ronde == 1) {
 				resetAanwezigheidspunt();
+				for (Groep groep : status.groepen.getGroepen()) {
+					// sorteer aflopend op rating
+					groep.sorteerRating(false);
+				}
+			}
 			// Iedereen aanwezig zetten
 			for (Groep groep : status.groepen.getGroepen()) {
 				for (Speler s : groep.getSpelers()) {
 					s.setAanwezig(true);
 				}
 			}
+			// Automatisch verder
 			setAutomatisch(true);
 			maakGroepsindeling();
     	}

@@ -30,10 +30,13 @@ import nl.detoren.ijc.ui.control.IJCController;
  */
 public class Groep {
 
+	enum Sortering {RATING_ASC, RATING_DESC, PUNTEN_ASC, PUNTEN_DESC};
+
     private int niveau;
     private double ZWbalansvoor;
     private double ZWbalansna;
     private ArrayList<Speler> spelers;
+    private Sortering sortering;
 
     /**
      * Default constructor.
@@ -88,7 +91,7 @@ public class Groep {
 		ZWbalansvoor = ZW;
 
     }
-    
+
     /**
      * Retourneert ZWbalans van deze groep op basis van ingeplande wedstrijden
      * @return
@@ -273,16 +276,21 @@ public class Groep {
      * punten wordt gesorteerd op rating
      */
     public void sorteerPunten() {
+    	sortering = sortering != Sortering.PUNTEN_ASC? Sortering.PUNTEN_ASC : Sortering.PUNTEN_DESC;
     	Collections.sort(spelers, new Comparator<Speler>() {
     	    @Override
     	    public int compare(Speler o1, Speler o2) {
     	    	int result = o2.getPunten() - o1.getPunten();
     	    	if (result == 0) {
-					int r1 = o1.isKNSBLid() ? o1.getRating() * 10 : o1.getRating();
-					int r2 = o2.isKNSBLid() ? o2.getRating() * 10 : o2.getRating();
+    	    		int r1 = o1.getRating();
+    	    		int r2 = o2.getRating();
+    	    		if (niveau == (IJCController.c().aantalGroepen-1)) {
+    	    			r1 = o1.isKNSBLid() ? o1.getRating() * 10 : o1.getRating();
+    	    			r2 = o2.isKNSBLid() ? o2.getRating() * 10 : o2.getRating();
+    	    		}
 					result = r2 - r1;
     	    	}
-    	    	return result;
+    	    	return (sortering == Sortering.PUNTEN_ASC) ? result : -result;
     	    }
     	});
     }
@@ -291,12 +299,27 @@ public class Groep {
      * Sorteer de spelers in deze groep op rating
      */
     public void sorteerRating() {
+    	sortering = sortering != Sortering.RATING_ASC ? Sortering.RATING_ASC : Sortering.RATING_DESC;
     	Collections.sort(spelers, new Comparator<Speler>() {
     	    @Override
     	    public int compare(Speler o1, Speler o2) {
-    	        return o2.getRating() - o1.getRating();
+    	    	if (sortering == Sortering.RATING_ASC) {
+    	    		return o2.getRating() - o1.getRating();
+    	    	} else {
+    	    		return o1.getRating() - o2.getRating();
+    	    	}
     	    }
     	});
+    }
+
+    /**
+     * Sorteer op rating en specifeer of dit ASC of DESC moet zijn
+     * @param s
+     */
+    public void sorteerRating(boolean asc) {
+    	// inverteer rating en roep standaard sorteer routine aan
+    	// inverteren is nodig omdat de algemene sorteer routine dit ook doet.
+    	sortering = asc ? Sortering.RATING_DESC : Sortering.RATING_ASC;
     }
 
     /**

@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  * - ...
  */
@@ -27,7 +27,7 @@ import nl.detoren.ijc.ui.control.IJCController;
 public class WedstrijdSpelersModel extends AbstractTableModel {
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private int groepID;
@@ -140,15 +140,14 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
             tt += "<TR><TD>Rating</TD><TD>" + speler.getRating() + "</TD></TR>";
             tt += "<TR><TD>Initialen</TD><TD>" + speler.getInitialen() + " - " + speler.getAfkorting3() + "</TD></TR>";
             tt += "<TR><TD>Witvoorkeur</TD><TD>" + speler.getWitvoorkeur() + "</TD></TR>";
-            tt += "<TR><TD>Tegenstanders</TD><TD>";
-            tt += "</TD></TR>";
+            tt += "<TR><TD>Tegenstanders</TD><TD>" + speler.getTegenstandersString() + "</TD></TR>";
             tt += "</TABLE></HTML>";
             return tt;
         } else {
             return "";
         }
     }
-    
+
     public boolean isDoorgeschoven(int row) {
         if (row < controller.getWedstrijdGroepByID(groepID).getSpelers().size()) {
             Speler speler = controller.getWedstrijdGroepByID(groepID).getSpelers().get(row);

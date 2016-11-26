@@ -302,7 +302,7 @@ public class Hoofdscherm extends JFrame {
 		rondeText += "Ronde: " + controller.getGroepen().getRonde() + "</HTML>";
 		rondeLabel.setText(rondeText);
 	}
-	
+
 	/**
 	 * Update textfield met ZW balans voor spelen ronde
 	 */
@@ -311,8 +311,8 @@ public class Hoofdscherm extends JFrame {
 		String ZWbalansText = "ZW Balans voor deze ronde is " + bal;
 		jTFZWbalansvoor[index].setText(ZWbalansText);
 		this.repaint();
-	}	
-	
+	}
+
 	/**
 	 * Update textfield met ZW balans voor spelen ronde
 	 */
@@ -320,19 +320,19 @@ public class Hoofdscherm extends JFrame {
 		for (int index=0;index<aantal;index++) {
 			updateZWbalansvoor(index);
 		}
-	}	
+	}
 
 	public void updateZWbalansna(int index) {
 		String bal = String.format(Locale.US, "%.0f", controller.getWedstrijdGroepByID(index).getZWbalansna());
 		String ZWbalansText = "ZW Balans na deze ronde is " + bal + "";
 		jTFZWbalansna[index].setText(ZWbalansText);
-	}	
+	}
 
 	public void updateZWbalansna() {
 		for (int index=0;index<aantal;index++) {
 			updateZWbalansna(index);
 		}
-	}	
+	}
 
 		public void updateAutomatisch(boolean newState) {
 		controller.setAutomatisch(newState);
@@ -674,11 +674,11 @@ public class Hoofdscherm extends JFrame {
 		        	updateZWbalansna();
 		        	repaint();
 		        	break;
-		        case 3:
+		        case 4:
 		        	logger.log(Level.INFO, "Sorteer op rating in de groep");
 		        	controller.sorteerGroepOpRating(groepID);
 		        	break;
-		        case 4:
+		        case 5:
 		        	logger.log(Level.INFO, "Sorteer op punte in de groep");
 		        	controller.sorteerGroepOpPunten(groepID);
 		        	break;
