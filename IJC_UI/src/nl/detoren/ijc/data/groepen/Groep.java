@@ -30,7 +30,7 @@ import nl.detoren.ijc.ui.control.IJCController;
  */
 public class Groep {
 
-	enum Sortering {RANKING_ASC, RANKING_DESC, PUNTEN_ASC, PUNTEN_DESC};
+	enum Sortering {RATING_ASC, RATING_DESC, PUNTEN_ASC, PUNTEN_DESC};
 
     private int niveau;
     private double ZWbalansvoor;
@@ -299,17 +299,27 @@ public class Groep {
      * Sorteer de spelers in deze groep op rating
      */
     public void sorteerRating() {
-    	sortering = sortering != Sortering.RANKING_ASC ? Sortering.RANKING_ASC : Sortering.RANKING_DESC;
+    	sortering = sortering != Sortering.RATING_ASC ? Sortering.RATING_ASC : Sortering.RATING_DESC;
     	Collections.sort(spelers, new Comparator<Speler>() {
     	    @Override
     	    public int compare(Speler o1, Speler o2) {
-    	    	if (sortering == Sortering.RANKING_ASC) {
+    	    	if (sortering == Sortering.RATING_ASC) {
     	    		return o2.getRating() - o1.getRating();
     	    	} else {
     	    		return o1.getRating() - o2.getRating();
     	    	}
     	    }
     	});
+    }
+
+    /**
+     * Sorteer op rating en specifeer of dit ASC of DESC moet zijn
+     * @param s
+     */
+    public void sorteerRating(boolean asc) {
+    	// inverteer rating en roep standaard sorteer routine aan
+    	// inverteren is nodig omdat de algemene sorteer routine dit ook doet.
+    	sortering = asc ? Sortering.RATING_DESC : Sortering.RATING_ASC;
     }
 
     /**
