@@ -345,23 +345,23 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 						matrix2[i - 1][j] = 0;
 						break;
 					case 2:
-						matrix2[i - 1][j] = 10;
+						matrix2[i - 1][j] = 15;
 						break;
 					case 3:
-						matrix2[i - 1][j] = 20;
+						matrix2[i - 1][j] = 40;
 						break;
 					case 4:
-						matrix2[i - 1][j] = 30;
+						matrix2[i - 1][j] = 60;
 						break;
 					case 5:
-						matrix2[i - 1][j] = 50;
+						matrix2[i - 1][j] = 90;
 						break;
-					case 6:
-						matrix2[i - 1][j] = 80;
-						break;
+//					case 6:
+//						matrix2[i - 1][j] = 80;
+//						break;
 					default:
-						//matrix2[i - 1][j] = 200;
-						matrix2[i - 1][j] = 100;
+						matrix2[i - 1][j] = 200;
+///						matrix2[i - 1][j] = 100;
 						break;
 					}
 				} else {
