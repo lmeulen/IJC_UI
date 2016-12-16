@@ -18,7 +18,6 @@ package nl.detoren.ijc.data.groepen;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.logging.Level;
 
 import nl.detoren.ijc.ui.control.IJCController;
 
