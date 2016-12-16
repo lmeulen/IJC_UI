@@ -24,8 +24,6 @@ import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.ui.util.Utils;
 import nl.detoren.ijc.ui.util.minimizetriagonal;
-import nl.detoren.ijc.ui.view.Hoofdscherm;
-import nl.detoren.ijc.ui.view.WedstrijdschemaDialoog;
 
 /**
  * Fuzzy implementatie voor bepalen wedstrijdschema
@@ -295,7 +293,6 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		int matrix2[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix3[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix4[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
-		int matrix5[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		double mf1 = IJCController.c().fuzzyWegingAndereTegenstander;		// Niet tegen dezelfde tegenstander
 		double mf2 = IJCController.c().fuzzyWegingAfstandRanglijst;			// Verschil in positie op de ranglijst
