@@ -86,7 +86,7 @@ public class Hoofdscherm extends JFrame {
 	//Colors and fonts
 	private static final Color light_green = new Color(200, 255, 200);
 	private static final Color light_red = new Color(255, 200, 200);
-	private static final Font courierFont = new Font("Courier", Font.PLAIN, 11);
+	private static final Font courierFont = new Font("Courier New", Font.PLAIN, 11);
 
 	private static final long serialVersionUID = -2154845989579570030L;
 	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());

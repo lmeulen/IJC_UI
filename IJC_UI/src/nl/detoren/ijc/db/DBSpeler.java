@@ -20,7 +20,7 @@ public class DBSpeler {
 	private String afkorting;
 	private int knsbnummer;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "speler")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false, mappedBy = "speler")
 	List<DBHistorie> historie;
 
 	public DBSpeler() {
@@ -34,15 +34,17 @@ public class DBSpeler {
 		this.naam = naam;
 	}
 
+	public String toString() {
+		return afkorting + " - " + knsbnummer + " - " + naam + ", hist.points : " + historie.size();
+	}
+
 	public List<DBHistorie> getHistorie() {
 		return historie;
 	}
 
 	public void addHistorie(DBHistorie punt) {
 		this.historie.add(punt);
-		if (punt.getSpeler() != this) {
-			punt.setSpeler(this);
-		}
+		punt.setSpeler(this);
 	}
 
 	public String getNaam() {

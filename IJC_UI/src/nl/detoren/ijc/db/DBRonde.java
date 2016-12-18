@@ -86,4 +86,11 @@ public class DBRonde {
 		this.ronde = ronde;
 	}
 
+	public int rondeIdentifier() {
+		return (seizoen*100) + (periode*10) + ronde;
+	}
+
+	public String getRondeNaam() {
+		return "" + seizoen + "-P" + periode + "R" + ronde;
+	}
 }

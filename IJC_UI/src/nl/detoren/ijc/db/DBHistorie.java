@@ -15,10 +15,10 @@ public class DBHistorie {
 	private long id;
 
 	@ManyToOne
-	@JoinColumn(name = "SPELER_ID", nullable = false)
+	@JoinColumn(name = "SPELER_ID", nullable = true)
 	private DBSpeler speler;
 
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private DBRonde ronde;
 
 	private int rating;
@@ -41,7 +41,7 @@ public class DBHistorie {
 
 	public void setSpeler(DBSpeler s) {
 		this.speler = s;
-		if (!s.getHistorie().contains(this)) {
+		if (s != null && !s.getHistorie().contains(this)) {
 			s.getHistorie().add(this);
 		}
 	}
