@@ -19,7 +19,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 /**
- * Dit object bevat de gegevens van één speler
+ * Dit object bevat de gegevens van ï¿½ï¿½n speler
  *
  * @author Leo van der Meulen
  */
@@ -138,7 +138,7 @@ public class Speler implements Cloneable {
      * Is er eerder tegen meegegeven speler gespeeld en hoeveel partijen geleden?
      *
      * @param speler2 Speler die gecontroleerd word
-     * @return 0 als er niet in één van de laatste vier wedstrijden tegen deze speler gespeeld is,
+     * @return 0 als er niet in ï¿½ï¿½n van de laatste vier wedstrijden tegen deze speler gespeeld is,
      *         anders 1 voor vorige partij, 2 voor de partij daarvoor, etc
      */
     public int[] getGespeeldTegen(Speler speler2) {
@@ -289,7 +289,7 @@ public class Speler implements Cloneable {
     public boolean gelijkAan(Speler speler) {
         return (this.getNaam().equals(speler.getNaam())
                 && this.getInitialen().equals(speler.getInitialen())
-                && this.getGroep() == speler.getGroep()
+//                && this.getGroep() == speler.getGroep()
                 && this.getKNSBnummer() == speler.getKNSBnummer());
     }
 

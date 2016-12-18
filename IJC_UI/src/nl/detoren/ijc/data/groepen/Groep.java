@@ -154,6 +154,17 @@ public class Groep {
         speler.setGroep(niveau);
         spelers.add(speler);
     }
+
+    /**
+     * Voeg een speler toe aan de spelerslijst
+     * @param speler Toe te voegen speler
+     */
+    public void addSpelerHoudNiveau(Speler speler) {
+        if (spelers == null) {
+            spelers = new ArrayList<>();
+        }
+        spelers.add(speler);
+    }
 	/**
 	 * Voeg een speler toe aan de lijst op de aangegeven locatie
 	 * @param speler Toe te voegen speler

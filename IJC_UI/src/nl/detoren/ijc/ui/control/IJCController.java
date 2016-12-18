@@ -647,7 +647,7 @@ public class IJCController {
 		Groep hogereGroep = status.wedstrijdgroepen.getGroepById(groepID+1);
 		if (huidigeGroep == null || hogereGroep == null) return;
 		logger.log(Level.INFO, "Verplaats " + speler.getNaam() + " van " + huidigeGroep.getNaam() + " naar " + hogereGroep.getNaam());
-		hogereGroep.addSpeler(speler);
+		hogereGroep.addSpelerHoudNiveau(speler);
 		hogereGroep.renumber();
 		huidigeGroep.removeSpeler(speler, locatie);
 		huidigeGroep.renumber();
