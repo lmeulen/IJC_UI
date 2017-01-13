@@ -170,6 +170,17 @@ public class SpelerDatabase extends ObjectDatabase {
 	}
 
 	/**
+	 * Retourneer een lijst met alle opgeslagen rondes
+	 * @return
+	 */
+	public List<DBRonde> getRondes(boolean asc) {
+		String query = "SELECT r FROM DBRonde r ORDER BY r.seizoen, r.periode, r.ronde";
+		if (!asc)
+			query = "SELECT r FROM DBRonde r ORDER BY r.seizoen DESC, r.periode DESC, r.ronde DESC";
+		return query(query, DBRonde.class);
+	}
+
+	/**
 	 * Check of deze ronde al reeds in de database is opgeslagen
 	 *
 	 * @param ronde

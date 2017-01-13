@@ -56,7 +56,7 @@ public class DBRondeModel extends AbstractTableModel {
      * Reset model en lees alle spelers in de database in
      */
     public final void init() {
-        rondes = database.getRondes();
+        rondes = database.getRondes(false);
     }
 
     @Override
