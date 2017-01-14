@@ -63,6 +63,10 @@ public class Groepswedstrijden {
     public void addSerie(Serie serie) {
         series.add(serie);
     }
+    
+    public void removeSerie(Serie serie) {
+    	series.remove(serie);
+    }
 
     public Serie getSerie(int index) {
         if (index < series.size()) {
@@ -85,6 +89,9 @@ public class Groepswedstrijden {
     }
 
 	public boolean isUitslagBekend() {
+		if (getWedstrijden().isEmpty() && getTriowedstrijden().isEmpty()) {
+			return true;
+		}
 		for (Serie s : series) {
 			if (!s.isUitslagBekend())
 				return false;

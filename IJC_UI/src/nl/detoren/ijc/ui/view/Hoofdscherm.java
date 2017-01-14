@@ -288,6 +288,8 @@ public class Hoofdscherm extends JFrame {
 					} else {
 						tabs.setTitleAt(i, Groep.geefNaam(i));
 					}
+				} else {
+					tabs.setTitleAt(i, Groep.geefNaam(i) + "*");
 				}
 			}
 		}
