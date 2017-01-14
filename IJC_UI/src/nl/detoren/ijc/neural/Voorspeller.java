@@ -39,7 +39,9 @@ public class Voorspeller {
 
 	/**
 	 * Create a multi layer perceptron network, with the following parameters -
-	 * learning rate = 0.1 - momentum = 0.1 - training iterations = 4096 -
+	 * learning rate = 0.1
+	 * momentum = 0.1
+	 * training iterations = 4096
 	 * hidden layers = t (equals number of attributes + number of classes)
 	 *
 	 * @return

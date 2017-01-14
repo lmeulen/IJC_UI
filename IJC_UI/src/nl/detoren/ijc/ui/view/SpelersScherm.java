@@ -205,16 +205,16 @@ public class SpelersScherm extends JFrame {
 		fixedComponentSize(this, 1200, 670);
 		fixedComponentSize(hoofdPanel, 1190, 660);
 		fixedComponentSize(dataPanel, 1190, 650);
-		fixedComponentSize(rondesPane, 80, 200);
+		fixedComponentSize(rondesPane, 90, 200);
 		fixedComponentSize(spelersPane, 280, 600);
 		fixedComponentSize(wedstrijdenPane, 560, 200);
 		fixedComponentSize(graphPanel, 710, 400);
 
 		// Fix the size of the displayed tables
-		fixedColumSize(rondesTabel.getColumnModel().getColumn(0), 75);
+		fixedColumSize(rondesTabel.getColumnModel().getColumn(0), 95);
 
 		fixedColumSize(spelersTabel.getColumnModel().getColumn(0), 30);
-		fixedColumSize(spelersTabel.getColumnModel().getColumn(1), 170);
+		fixedColumSize(spelersTabel.getColumnModel().getColumn(1), 160);
 		fixedColumSize(spelersTabel.getColumnModel().getColumn(2), 70);
 		// {"Seizoen", "Periode", "Ronde", "Speler", "Kleur", "Tegenstander",
 		// "Resultaat"};

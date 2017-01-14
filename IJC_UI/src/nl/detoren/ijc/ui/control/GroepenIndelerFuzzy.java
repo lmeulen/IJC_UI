@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import groovyjarjarantlr.collections.List;
+import javafx.scene.chart.XYChart.Series;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
@@ -24,6 +26,8 @@ import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.ui.util.Utils;
 import nl.detoren.ijc.ui.util.minimizetriagonal;
+import nl.detoren.ijc.ui.view.Hoofdscherm;
+import nl.detoren.ijc.ui.view.WedstrijdschemaDialoog;
 
 /**
  * Fuzzy implementatie voor bepalen wedstrijdschema
@@ -37,6 +41,11 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	private final static Logger logger = Logger.getLogger(GroepenIndelerFuzzy.class.getName());
 
 	private int fuzzymatrix[][];
+
+	int[] vijf1 = {0,0,0,0};
+	int[] vijf2 = {0};
+
+	int wedstrijdnr = 1;
 
 	/**
 	 * Bepaal voor een groep de te spelen wedstrijden
@@ -76,23 +85,18 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		logger.log(Level.INFO, "Aantal speelrondes " + speelrondes);
 
 		// Trucje voor 5 speler in een wedstrijdgroep:
-		// ALS 5 spelers in 2 ronden, serie 1 is beste twee wedstrijden.
-		// Serie 2 is beste wedstrijd voor 5e speler en serie 3 is de resterende 2 wedtrijden.
+		// Oud trucje voor 5 spelers in traditionele indeling werkt niet bij Fuzzy.
+		// Nieuwe routine moet bestaan uit:
+		// Serie 1 is beste twee wedstrijden.
+		// Serie 2 is beste wedstrijd voor 5e speler
+		// Serie 3 is de resterende 2 wedtrijden.
 		// 
 		if (groep.getAantalSpelers() == 5 && speelrondes == 2) {
-//			speelrondes = 3;
+			speelrondes = 3;
 			logger.log(Level.INFO, "Vijf spelers met 2 rondes dus maak 3 series");
-//			groep.renumber();
-//			for (Speler s : wedstrijdgroep.getSpelers()) {
-//				groep.addSpeler(new Speler(s));
-//			}
-//			groep.renumber();
-//			// plan 1 round and duplicate players
-//
 		} 
 		// Introductie Fuzzy Logic
 		//
-		int wedstrijdnr = 1;
 		int trioloc = 0;
 		int[] trio = {0,1,2};
 		int indexrow = 1;
@@ -116,6 +120,13 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			} else {
 				fuzzymatrix = matrix;
 			}
+			if (groep.getAantalSpelers() == 5) {
+				switch (i) { 
+				case 2:
+					fuzzymatrix = Utils.removerowandcolumnfrom2D(matrix, vijf2, indexrow);
+					break;
+				}
+			}
 			int[][] fmatrix = fuzzymatrix;
 
 			logger.log(Level.INFO, "FuzzyMatrix created.");
@@ -131,7 +142,8 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				//groep.SpelersNamenopvolgorde(ordertest);
 			}
 			System.out.print("Deze groep " + groep.getNaam() + " heeft " + tri.length + " spelers.\n");
-			if (speelrondes >1) {
+//			if (speelrondes >1) {
+			if (!(groep.getAantalSpelers() == 5)) {
 				trioloc = minimizetriagonal.gettrio(tri,1);
 			} else {
 				trioloc = 0;
@@ -150,9 +162,8 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			// Utils.printMatrix(order);
 			Serie s = new Serie();
 			if (groep.getAantalSpelers() == 5) {
-				// Bepaal de twee wedstrijden voor serie 1.
-				
-			}
+				s = this.Indeling5Spelers(s, groep, tri, i);
+			} else 
 			if ((trioloc == 0) || (i > 0)) {
 				for (int k = 0; k <= fmatrix.length - 1; k += 2) {
 					Speler s1 = groep.getSpelerByID(tri[k][0]); // Speler
@@ -227,14 +238,123 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				// update gegevens tegenstanders en witvoorkeur
 			}
 		}
+		// Samenvoegen 3 series naar 1 voor aantalspelers is 5
+		if (wedstrijdgroep.getAantalSpelers() == 5) {
+			gws=Samenvoegenseries(gws);
+		} else 
+
 		logger.log(Level.INFO, "ZW balans voor groep " + wedstrijdgroep.getNaam() + " voor deze ronde is " +wedstrijdgroep.getZWbalansvoor());
 		groep.setZWbalansna();
-		// Overdragen tijdelijke data naar regliere data voor deze waarde.
+		// Overdragen tijdelijke data naar reguliere data voor deze waarde.
 		wedstrijdgroep.setZWbalansna(groep.getZWbalansna());
 		logger.log(Level.INFO, "ZW balans voor groep " + wedstrijdgroep.getNaam() + " na deze ronde is " + wedstrijdgroep.getZWbalansna());
 		return gws;
 	}
 
+	private Groepswedstrijden Samenvoegenseries(Groepswedstrijden gws) {
+		int i=0;
+		for (Serie s : gws.getSeries()){
+			if (i > 0) {
+				for (Wedstrijd w : s.getWedstrijden()) {
+					w.setId(gws.getSerie(0).getWedstrijden().size()+1);
+					gws.getSerie(0).addWedstrijd(w);	
+				}
+			}
+			i++;
+		}
+		i=0;
+		ArrayList<Serie> ss = new ArrayList<Serie>();
+		for (Serie s : gws.getSeries()){
+			if (i > 0) {
+				ss.add(s);
+			}
+			i++;
+		}
+		for (Serie s : ss) {
+			gws.removeSerie(s);
+		}
+		return gws;
+	}
+	
+	private Serie Indeling5Spelers(Serie s, Groep groep, int[][] tri, int i) {
+	// Bepaal de twee wedstrijden voor serie 1.
+	Speler s1 = new Speler();
+	Speler s2 = new Speler();
+	Wedstrijd w;
+	switch (i) {
+	case 0:
+		for (int k = 0; k <= 3; k += 2) {
+			s1 = groep.getSpelerByID(tri[k][0]); // Speler
+																	// wit
+			s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
+																		// zwart
+			// Onthoud welke spelers in serie 1 hebben gespeeld.
+			vijf1[k] = tri[k][0];
+			vijf1[k+1] = tri[k+1][0];
+			w = new Wedstrijd(wedstrijdnr, s1, s2, 0);
+			s.addWedstrijd(w, true);
+			wedstrijdnr++;
+			System.out.printf("5 Spelers- Serie 1. Wedstrijd tussen " + w.getWit().getNaam()
+					+ " (wit) en " + w.getZwart().getNaam() + " (zwart)"
+							+ "\n");
+							}
+		break;
+	case 1:
+		boolean found = false;
+		for (int k = 0; k <= 3; k += 2) {
+			if (!(Utils.containing(vijf1,(tri[k][0]))) && !(Utils.containing(vijf1,(tri[k + 1][0])))) {
+				s1 = groep.getSpelerByID(tri[k][0]); // Speler
+															// wit
+				s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
+															// zwart
+				found = true;
+			}
+		}
+		if (!found) {
+			s1 = groep.getSpelerByID(tri[3][0]); // Speler
+														// wit
+			s2 = groep.getSpelerByID(tri[4][0]); // Speler
+														// zwart
+			
+		}
+		// Onthoud welke speler nu al 2 wedstrijden heeft gespeeld.
+			
+			if (Utils.containing(vijf1,s1.getId())) {
+				vijf2[0] = s1.getId();	
+			} else {
+				if (Utils.containing(vijf1,s2.getId())) {
+					vijf2[0] = s2.getId();		
+				} else {
+					logger.log(Level.SEVERE, "Geen speler voor twee westrijden ingedeeld gevonden. Probleem met indeling voor 5 spelers.");
+				}
+			}
+			w = new Wedstrijd(wedstrijdnr, s1, s2, 0);
+			s.addWedstrijd(w, true);
+			wedstrijdnr++;
+			System.out.printf("5 Spelers- Serie 2. Wedstrijd tussen " + w.getWit().getNaam()
+					+ " (wit) en " + w.getZwart().getNaam() + " (zwart)"
+							+ "\n");
+		break;
+	case 2:
+		for (int k = 0; k <= 3; k += 2) {
+			s1 = groep.getSpelerByID(tri[k][0]); // Speler
+																	// wit
+			s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
+																		// zwart
+			
+			w = new Wedstrijd(wedstrijdnr, s1, s2, 0);
+			s.addWedstrijd(w, true);
+			wedstrijdnr++;
+			System.out.printf("5 Spelers- Serie 3. Wedstrijd tussen " + w.getWit().getNaam()
+					+ " (wit) en " + w.getZwart().getNaam() + " (zwart)"
+							+ "\n");
+							}
+		break;
+	}
+	return s;
+}
+	
+	
 	private int[][] MaakFuzzyMatrix(Groep wedstrijdgroep, int serie, int speelronde, int doorschuivers) {
 		/**
 		 * FuzzyMatrix wordt gebruik voor het snel vaststellen van beste match
@@ -293,6 +413,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		int matrix2[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix3[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix4[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
+		int matrix5[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		double mf1 = IJCController.c().fuzzyWegingAndereTegenstander;		// Niet tegen dezelfde tegenstander
 		double mf2 = IJCController.c().fuzzyWegingAfstandRanglijst;			// Verschil in positie op de ranglijst
@@ -354,11 +475,11 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 						matrix2[i - 1][j] = 90;
 						break;
 //					case 6:
-//						matrix2[i - 1][j] = 90;
+//						matrix2[i - 1][j] = 80;
 //						break;
 					default:
 						matrix2[i - 1][j] = 200;
-						//matrix2[i - 1][j] = 100;
+///						matrix2[i - 1][j] = 100;
 						break;
 					}
 				} else {

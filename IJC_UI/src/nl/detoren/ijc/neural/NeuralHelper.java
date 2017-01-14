@@ -45,6 +45,8 @@ public class NeuralHelper {
 	 * @ATTRIBUTE zwart_resultaat_2 NUMERIC
 	 * @ATTRIBUTE zwart_resultaat_3 NUMERIC
 	 * @ATTRIBUTE zwart_resultaat_4 NUMERIC
+	 * @ATTRIBUTE verschil_rating NUMERIC
+	 * @ATTRIBUTE verschil_stand NUMERIC
 	 * @ATTRIBUTE resultaat {wit,remise,zwart}
 	 *
 	 *            retourneer data voor één wedstrijd
@@ -68,6 +70,8 @@ public class NeuralHelper {
 		result += tegenstander(w.getZwart().getTegenstanders()[2]) + sep;
 		result += tegenstander(w.getZwart().getTegenstanders()[1]) + sep;
 		result += tegenstander(w.getZwart().getTegenstanders()[0]) + sep;
+		result += String.format(Locale.US, intFormats[4], w.getWit().getRating()-w.getZwart().getRating()) + sep;
+		result += String.format(Locale.US, intFormats[4], w.getWit().getPunten()-w.getZwart().getPunten()) + sep;
 		result += uitslag2description(w.getUitslag());
 		logger.log(Level.FINE, result);
 		return result;
