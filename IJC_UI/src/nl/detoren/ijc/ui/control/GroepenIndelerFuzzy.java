@@ -207,20 +207,20 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 							groep.getSpelerByID(trio[0]),
 							groep.getSpelerByID(trio[1]), 0);
 					gws.addTrioWedstrijd(w);
-					System.out.printf("Wedstrijd tussen " + w.getWit().getNaam()
+					System.out.printf("Triowedstrijd tussen " + w.getWit().getNaam()
 							+ " (wit) en " + w.getZwart().getNaam() + " (zwart)"
 									+ "\n");
 					w = new Wedstrijd(2 * (wedstrijdnr - 1) + 2, groep.getSpelerByID(trio[1]),
 									groep.getSpelerByID(trio[2]), 0);
 					gws.addTrioWedstrijd(w);
-					System.out.printf("Wedstrijd tussen " + w.getWit().getNaam()
+					System.out.printf("Triowedstrijd tussen " + w.getWit().getNaam()
 							+ " (wit) en " + w.getZwart().getNaam() + " (zwart)"
 									+ "\n");
 					w = new Wedstrijd(2 * (wedstrijdnr - 1) + 3,
 							groep.getSpelerByID(trio[2]),
 							groep.getSpelerByID(trio[0]), 0);
 					gws.addTrioWedstrijd(w);
-					System.out.printf("Wedstrijd tussen " + w.getWit().getNaam()
+					System.out.printf("Triowedstrijd tussen " + w.getWit().getNaam()
 							+ " (wit) en " + w.getZwart().getNaam() + " (zwart)"
 									+ "\n");
 					groep = updateSpelers(groep, gws.getTriowedstrijden());
