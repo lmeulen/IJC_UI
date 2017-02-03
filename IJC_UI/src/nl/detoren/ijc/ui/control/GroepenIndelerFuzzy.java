@@ -302,7 +302,8 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	case 1:
 		boolean found = false;
 		for (int k = 0; k <= 3; k += 2) {
-			if (!(Utils.containing(vijf1,(tri[k][0]))) && !(Utils.containing(vijf1,(tri[k + 1][0])))) {
+			// Als één van beide spelers de nog niet gespeelde 
+			if (!(Utils.containing(vijf1,(tri[k][0]))) && (Utils.containing(vijf1,(tri[k + 1][0])))) {
 				s1 = groep.getSpelerByID(tri[k][0]); // Speler
 															// wit
 				s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
