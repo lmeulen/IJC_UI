@@ -437,7 +437,7 @@ public class Speler implements Cloneable {
     }
 
     public void addTegenstander(String tgn) {
-    	speelgeschiedenis = (speelgeschiedenis + tegenstanders[0].substring(0,2));
+    	speelgeschiedenis = (speelgeschiedenis + tegenstanders[0].substring(0,3));
         tegenstanders[0] = tegenstanders[1];
         tegenstanders[1] = tegenstanders[2];
         tegenstanders[2] = tegenstanders[3];
