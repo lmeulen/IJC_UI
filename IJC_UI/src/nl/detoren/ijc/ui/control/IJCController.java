@@ -469,7 +469,13 @@ public class IJCController {
 			Gson gson = new Gson();
 			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
 			Status nieuw = gson.fromJson(br, Status.class);
-			status = nieuw;	// assure excpetion is thrown when things go wrong
+			status = nieuw;	// assure exception is thrown when things go wrong
+			// Check for wrong KNSBnumbers; this is vital!!!
+			for (Groep g: status.groepen.getGroepen()) {
+				for (Speler s: g.getSpelers()) {
+					s.setKNSBnummer(s.getKNSBnummer());
+				}
+			}
 			return true;
 		} catch (Exception e) {
 			// Could not read status

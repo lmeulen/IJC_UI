@@ -126,7 +126,7 @@ public class GroepenReader {
 
     /**
      * Lees alle spelers van een groep in
-     * Op de start regel meot de groepsnaam staan vanaf kolom 30 (of hoger)
+     * Op de start regel moet de groepsnaam staan vanaf kolom 30 (of hoger)
      * De eerste speler staat twee regels verder
      * @param data String array met invoerbestand
      * @param token Tekst om te zoeken waar de specifieke groep begint
@@ -202,7 +202,7 @@ public class GroepenReader {
         speler.setKeikansen(getIntegerDeel(desc, 74, 2));
         // KNSB nummer
         speler.setKNSBnummer(getIntegerDeel(desc, 76, 9));
-        // Speehistorie
+        // Speelhistorie
         speler.setSpeelgeschiedenis(getStringDeel(desc, 85));
         // Eigen groep
         speler.setGroep(groep);

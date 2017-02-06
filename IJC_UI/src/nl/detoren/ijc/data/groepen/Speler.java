@@ -58,7 +58,7 @@ public class Speler implements Cloneable {
         this.punten = speler.punten;
         this.afwezigheidspunt = speler.afwezigheidspunt;
         this.aanwezig = speler.aanwezig;
-        this.KNSBnummer = speler.KNSBnummer;
+        setKNSBnummer(speler.KNSBnummer);
         this.keipunten = speler.keipunten;
         this.keikansen = speler.keikansen;
         this.speelgeschiedenis = speler.speelgeschiedenis;
@@ -184,7 +184,7 @@ public class Speler implements Cloneable {
      * @param nieuwKNSBnr
      */
 	public void setKNSBnummer(int nieuwKNSBnr) {
-		if ((nieuwKNSBnr == 1234567) && (naam.length() > 3)) {
+		if (((nieuwKNSBnr == 1234567) || (nieuwKNSBnr == 0)) && (naam.length() > 3)) {
 			KNSBnummer = hashCode();
 		} else {
 			KNSBnummer = nieuwKNSBnr;
@@ -434,7 +434,7 @@ public class Speler implements Cloneable {
     }
 
     public void addTegenstander(String tgn) {
-    	speelgeschiedenis = (speelgeschiedenis + tegenstanders[0]).substring(3);
+    	speelgeschiedenis = (speelgeschiedenis + tegenstanders[0].substring(0,2));
         tegenstanders[0] = tegenstanders[1];
         tegenstanders[1] = tegenstanders[2];
         tegenstanders[2] = tegenstanders[3];

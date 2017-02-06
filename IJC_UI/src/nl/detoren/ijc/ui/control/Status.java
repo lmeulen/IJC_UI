@@ -8,7 +8,7 @@ import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 
 public class Status {
     public boolean automatisch = true;
-    public  Groepen groepen;
+    public Groepen groepen;
     public Groepen wedstrijdgroepen;
     public Wedstrijden wedstrijden;
     public Groepen resultaatVerwerkt;
