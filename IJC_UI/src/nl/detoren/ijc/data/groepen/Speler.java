@@ -19,7 +19,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 /**
- * Dit object bevat de gegevens van ï¿½ï¿½n speler
+ * Dit object bevat de gegevens van één speler
  *
  * @author Leo van der Meulen
  */
@@ -437,7 +437,7 @@ public class Speler implements Cloneable {
     }
 
     public void addTegenstander(String tgn) {
-    	speelgeschiedenis = (speelgeschiedenis + tegenstanders[0].substring(0,3));
+    	speelgeschiedenis = (speelgeschiedenis.substring(0, Math.min(speelgeschiedenis.length(), 48 - tegenstanders[0].length())) + tegenstanders[0].substring(0,3));
         tegenstanders[0] = tegenstanders[1];
         tegenstanders[1] = tegenstanders[2];
         tegenstanders[2] = tegenstanders[3];
