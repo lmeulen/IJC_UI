@@ -256,7 +256,7 @@ public class Uitslagverwerker {
 				}
 			}
 		}
-		logger.log(Level.INFO, "" + result.size() + "wedstrijden gevonden voor " + speler.toString());
+		logger.log(Level.INFO, "" + result.size() + " wedstrijden gevonden voor " + speler.toString());
 		return result;
 	}
 
@@ -354,6 +354,7 @@ public class Uitslagverwerker {
 			deltaRating = (ratingHogerDanTegenstander ? (-1 * index) : (+1 * index));
 			return beginRating + deltaRating;
 		default: // Geen uitstal
+			logger.log(Level.SEVERE , "Rating update: Uitslag is geen winst, geen verlies en geen remise.");
 			return beginRating;
 		}
 	}

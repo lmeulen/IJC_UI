@@ -174,6 +174,9 @@ public class Speler implements Cloneable {
     }
 
     public int getKNSBnummer() {
+		if (((KNSBnummer == 1234567) || (KNSBnummer == 0)) && (naam.length() > 3)) {
+			KNSBnummer = hashCode();
+		}
 		return KNSBnummer;
 	}
 
