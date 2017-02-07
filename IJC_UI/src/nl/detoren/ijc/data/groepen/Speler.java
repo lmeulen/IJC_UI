@@ -17,6 +17,7 @@ import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
+import java.util.UUID;
 
 /**
  * Dit object bevat de gegevens van één speler
@@ -26,6 +27,7 @@ import java.util.regex.Pattern;
 public class Speler implements Cloneable {
 
     private int id;
+    private UUID uid = UUID.randomUUID();
     private String naam;
     private String initialen;
     private double witvoorkeur;			// > 0 is witvoorkeur, kleinder dan 0 zwart
@@ -43,12 +45,13 @@ public class Speler implements Cloneable {
     private static final DecimalFormat decimalFormat = new DecimalFormat("#");
 
 	public Speler() {
-		this(0, "", "", 0, 0, 0, new String[] { "-- ", "-- ", "-- ", "-- " }, 0, false, true, 1234567, 0, 0,
+		this(0, UUID.randomUUID(), "", "", 0, 0, 0, new String[] { "-- ", "-- ", "-- ", "-- " }, 0, false, true, 1234567, 0, 0,
 				"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- ");
 	}
 
     public Speler(Speler speler) {
         this.id = speler.id;
+        this.uid = speler.uid;
         this.naam = speler.naam;
         this.initialen = speler.initialen;
         this.witvoorkeur = speler.witvoorkeur;
@@ -64,9 +67,10 @@ public class Speler implements Cloneable {
         this.speelgeschiedenis = speler.speelgeschiedenis;
     }
 
-    public Speler(int id, String naam, String initialen, int witvk, int groep, int rating, String[] tgs, int punten,
+    public Speler(int id, UUID uid, String naam, String initialen, int witvk, int groep, int rating, String[] tgs, int punten,
             boolean ap, boolean aanw, int knsbnr, int keipunten, int keikansen, String geschiedenis) {
         this.id = id;
+        this.uid = uid;
         this.naam = naam.trim();
         this.initialen = initialen;
         this.witvoorkeur = witvk;
@@ -82,6 +86,25 @@ public class Speler implements Cloneable {
         this.speelgeschiedenis = geschiedenis;
     }
 
+    public Speler(int id, String naam, String initialen, int witvk, int groep, int rating, String[] tgs, int punten,
+            boolean ap, boolean aanw, int knsbnr, int keipunten, int keikansen, String geschiedenis) {
+        this.id = id;
+        this.uid = UUID.randomUUID();
+        this.naam = naam.trim();
+        this.initialen = initialen;
+        this.witvoorkeur = witvk;
+        this.groep = groep;
+        this.rating = rating;
+        this.tegenstanders = tgs;
+        this.punten = punten;
+        this.afwezigheidspunt = ap;
+        this.aanwezig = aanw;
+        setKNSBnummer(knsbnr);
+        this.keipunten = keipunten;
+        this.keikansen = keikansen;
+        this.speelgeschiedenis = geschiedenis;
+    }
+    
     public int getId() {
         return id;
     }
