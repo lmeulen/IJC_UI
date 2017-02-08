@@ -89,7 +89,6 @@ public class Speler implements Cloneable {
     public Speler(int id, String naam, String initialen, int witvk, int groep, int rating, String[] tgs, int punten,
             boolean ap, boolean aanw, int knsbnr, int keipunten, int keikansen, String geschiedenis) {
         this.id = id;
-        this.uid = UUID.randomUUID();
         this.naam = naam.trim();
         this.initialen = initialen;
         this.witvoorkeur = witvk;
@@ -111,6 +110,10 @@ public class Speler implements Cloneable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public UUID getUid() {
+        return uid;
     }
 
     public String getNaam() {

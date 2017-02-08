@@ -356,6 +356,10 @@ public class SpelersScherm extends JFrame {
 		for (DBSpeler speler : spelers) {
 			List result = db.query("select (ronde.periode*10+ronde.ronde), h.rating "
 					+ "from DBHistorie h where speler.id = " + speler.getId());
+			// Remark bij L.P.Dam 8-2-2017 - Voorstel :
+			// List result = db.query("select (ronde.periode*10+ronde.ronde), h.rating "
+			//		+ "from DBHistorie h where speler.uid = " + speler.getUid());
+			//
 			XYSeries serie = new XYSeries(speler.getAfkorting());
 			for (int i = 0; i < result.size(); ++i) {
 				Object o[] = (Object[]) result.get(i);
@@ -372,6 +376,10 @@ public class SpelersScherm extends JFrame {
 		for (DBSpeler speler : spelers) {
 			List result = db.query("select (ronde.periode*10+ronde.ronde), h.rating "
 					+ "from DBHistorie h where speler.id = " + speler.getId());
+			// Remark bij L.P.Dam 8-2-2017 - Voorstel :
+			// List result = db.query("select (ronde.periode*10+ronde.ronde), h.rating "
+			//		+ "from DBHistorie h where speler.uid = " + speler.getUid());
+			//
 			for (int i = 0; i < result.size(); ++i) {
 				Object o[] = (Object[]) result.get(i);
 				Double val = new Double(((Integer) o[1]).intValue());

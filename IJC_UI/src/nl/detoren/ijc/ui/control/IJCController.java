@@ -537,7 +537,7 @@ public class IJCController {
     }
 
     /**
-     * Wis lijst met exterene spelers
+     * Wis lijst met externe spelers
      */
     public void wisExterneSpelers() {
     	status.externGespeeld = new ArrayList<>();

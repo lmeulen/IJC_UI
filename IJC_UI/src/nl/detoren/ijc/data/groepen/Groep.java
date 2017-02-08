@@ -18,6 +18,7 @@ package nl.detoren.ijc.data.groepen;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.UUID;
 
 import nl.detoren.ijc.ui.control.IJCController;
 
@@ -252,6 +253,18 @@ public class Groep {
     public Speler getSpelerByID(int id) {
         for (Speler s : spelers) {
             if (s.getId() == id) return s;
+        }
+        return null;
+    }
+
+    /**
+     * Geef speler op basis van uniek UUID
+     * @param uid ID
+     * @return betreffende speler
+     */
+    public Speler getSpelerByUID(UUID uid) {
+        for (Speler s : spelers) {
+            if (s.getUid() == uid) return s;
         }
         return null;
     }

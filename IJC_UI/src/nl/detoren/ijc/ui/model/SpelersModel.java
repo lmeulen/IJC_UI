@@ -138,6 +138,7 @@ public class SpelersModel extends AbstractTableModel {
         String tt = "<HTML><TABLE><TR><TD BORDER=1 COLSPAN=2 ALIGN=CENTER>";
         tt += speler.toString();
         tt += "</TD></TR>";
+        tt += "<TR><TD>UUID</TD><TD>" + speler.getUid() + "</TD></TR>";
         tt += "<TR><TD>KNSB nr</TD><TD>" + speler.getKNSBnummer() + "</TD></TR>";
         tt += "<TR><TD>Punten</TD><TD>" + speler.getPunten() + "</TD></TR>";
         tt += "<TR><TD>KEI Punten</TD><TD>" + speler.getKeipunten() + "/" + speler.getKeikansen()+"</TD></TR>";
