@@ -188,4 +188,14 @@ public class Groepen {
     	}
     }
 
+    public ArrayList<Speler>getAllSpelers() {
+    	ArrayList<Speler> lijst=new ArrayList<>();
+     	for (Groep g: groepen) {
+    		for (Speler s: g.getSpelers()) {
+    			lijst.add(s);
+    		}
+    	}
+		return lijst;
+    	
+     }
 }

@@ -74,9 +74,9 @@ public class BewerkSpelerDialoog extends JDialog {
         final JTextField tfNaam = new JTextField(speler.getNaam());
         panel.add(tfNaam);
         // Initialen
-        panel.add(new JLabel("Initialen"));
-        final JTextField tfInit = new JTextField(speler.getInitialen());
-        panel.add(tfInit);
+//        panel.add(new JLabel("Initialen"));
+//        final JTextField tfInit = new JTextField(speler.getInitialen());
+//        panel.add(tfInit);
         // Wit voorkeur
         panel.add(new JLabel("Witvoorkeur"));
         final JTextField tfWit = new JTextField((new Integer((int)speler.getWitvoorkeur())).toString());
@@ -141,7 +141,10 @@ public class BewerkSpelerDialoog extends JDialog {
                 // Naam
                 speler.setNaam(tfNaam.getText());
                 // Initialen
-                speler.setInitialen(tfInit.getText());
+                if (speler.getInitialen()=="") {
+                	speler.setInitialen();
+                }
+                 // OUD: speler.setInitialen(tfInit.getText());
                 // Rating
                 int rating = Integer.parseInt(tfRating.getText());
                 speler.setRating(rating);

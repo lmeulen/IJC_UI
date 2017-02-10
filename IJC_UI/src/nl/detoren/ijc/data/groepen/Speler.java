@@ -17,6 +17,10 @@ import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
+
+import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.control.Status;
+
 import java.util.UUID;
 
 /**
@@ -132,6 +136,50 @@ public class Speler implements Cloneable {
         initialen = init;
     }
 
+    public void setInitialen() {
+    	String [] splitted = naam.split(" ");
+        String first = splitted[0];
+        String last = splitted[splitted.length-1];
+        String init = "" + first.charAt(0) + last.charAt(0);
+        while (checkInit(init)) {
+        	init=toggleCase(init);
+        }
+        initialen = init;
+    }
+
+    private boolean checkInit(String init) { 
+        boolean exists = false;
+		for (Speler s : IJCController.getI().getStatus().groepen.getAllSpelers()) {
+			if (init.equals(s.getInitialen())) {
+				exists = true; 
+			}
+		}
+		return exists;   
+    }
+      
+    private String toggleCase(String init) {
+			if (init.charAt(0) == init.toUpperCase().charAt(0)) {
+				if (init.charAt(1) == init.toUpperCase().charAt(1)) {
+					init = "" + init.toLowerCase().charAt(0) + init.toUpperCase().charAt(1);
+				} else {
+					init = "" + init.toLowerCase().charAt(0) + init.toLowerCase().charAt(1);
+				}
+			} else {
+				if (init.charAt(1) == init.toUpperCase().charAt(1)) {
+					int charValue = init.toUpperCase().charAt(0);
+					if (charValue == 90) {
+						init = "" + init.toUpperCase().charAt(0) + String.valueOf( (char) (65));	
+					} else {
+						init = "" + init.toUpperCase().charAt(0) + String.valueOf( (char) (charValue + 1));
+					}
+					
+				} else {
+					init = "" + init.toUpperCase().charAt(0) + init.toLowerCase().charAt(1);
+				}				
+			}
+    	return init;
+    }
+    
     public double getWitvoorkeur() {
         return witvoorkeur;
     }
