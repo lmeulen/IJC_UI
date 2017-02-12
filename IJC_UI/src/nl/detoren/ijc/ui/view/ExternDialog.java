@@ -48,7 +48,7 @@ public class ExternDialog extends JDialog {
 
     	ArrayList<Speler> spelers = controller.getExterneSpelers();
     	if (spelers == null) spelers = new ArrayList<>(); 
-    	int aantal = 12;
+    	int aantal = 20;
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(aantal/2+1, 2));
         spelerVelden = new JTextField[aantal];
