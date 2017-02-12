@@ -121,7 +121,15 @@ public class Utils {
     	}
     	return false;
     }
-    
+
+    public static boolean containing(ArrayList<Integer> haystack, int needle) {
+    	for(int hay: haystack){
+    		if(hay == needle)
+    			return true;
+    	}
+    	return false;
+    }
+
     public static int[][] removerowandcolumnfrom2D(int A[][], int[] B, int indexrow) {
     	// Just for cubic equal size arrays!
     	int C[][] = new int[A.length-B.length][A[0].length-B.length];
@@ -142,4 +150,26 @@ public class Utils {
     	}
     	return C;
     }
+
+    public static int[][] removerowandcolumnfrom2D(int A[][], ArrayList<Integer> B, int indexrow) {
+    	// Just for cubic equal size arrays!
+    	int C[][] = new int[A.length-B.size()][A[0].length-B.size()];
+    	int p = 0;
+    	for (int i=0;i<A.length;i++) {
+    		int q = 0;
+			if (!(Utils.containing(B,A[i][indexrow-1]))) {
+				C[p][q]=A[i][0];
+				q++;
+				for (int j=1;j<A[0].length;j++) {
+					if (!(Utils.containing(B,A[j-1][indexrow-1]))) {
+						C[p][q]=A[i][j];
+						q++;
+					}
+   				}
+				p++;
+   			}
+    	}
+    	return C;
+    }
+
 }

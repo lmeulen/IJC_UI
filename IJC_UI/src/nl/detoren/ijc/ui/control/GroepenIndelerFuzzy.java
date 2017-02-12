@@ -44,7 +44,10 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 
 	int[] vijf1 = {0,0,0,0};
 	int[] vijf2 = {0};
-
+	
+	ArrayList<Integer> oneven1 = new ArrayList<>();
+	ArrayList<Integer> oneven2 = new ArrayList<>();
+	
 	int wedstrijdnr = 1;
 
 	/**
@@ -91,6 +94,11 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		// Serie 2 is beste wedstrijd voor 5e speler
 		// Serie 3 is de resterende 2 wedtrijden.
 		// 
+		
+		if (IJCController.c().fuzzyOneven && (!((groep.getAantalSpelers() & 1) == 0)) && speelrondes == 2) {
+			speelrondes = 3;
+			logger.log(Level.INFO, "Oneven spelers met 2 rondes dus maak 3 series");
+		} 
 		if (groep.getAantalSpelers() == 5 && speelrondes == 2) {
 			speelrondes = 3;
 			logger.log(Level.INFO, "Vijf spelers met 2 rondes dus maak 3 series");
@@ -103,16 +111,8 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		for (int i = 0; i < speelrondes; i++) {
 			System.out.print(
 					"Creating serie " + Integer.toString(i + 1) + " voor groep " + groep.getNaam() + "\n");
-			int[][] matrix;
 			if (i > 0) {
 				if (!(trioloc == 0)) {
-					// Stap 2 Trio spelers verwijderen uit matrix
-					//
-					//Orig:
-					//int[][] matrix2 = Utils.removerowandcolumnfrom2D(matrix, trio, indexrow);
-					//New Alternative:
-					//reduced groep en dan MaakFuzzy
-					//
 					Groep reducedgroep = new Groep();
 					reducedgroep.setNiveau(groep.getNiveau());
 					for (Speler s : groep.getSpelers()) {
@@ -136,7 +136,16 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				fuzzymatrix = MaakFuzzyMatrix(groep, i, speelrondes, doorschuivers);
 				Utils.printMatrix(fuzzymatrix);
 			}
-			if (groep.getAantalSpelers() == 5) {
+			if (IJCController.c().fuzzyOneven && (!((groep.getAantalSpelers() & 1) == 0))) {
+				switch (i) { 
+				case 2:
+					fuzzymatrix = Utils.removerowandcolumnfrom2D(fuzzymatrix, oneven2, indexrow);
+					break;
+				}				
+			}
+			if (!IJCController.c().fuzzyOneven && groep.getAantalSpelers() == 5) {
+				// Als gebruik gemaakt wordt van trio bij oneven aantallen, dan niet voor 5 omdat dit niet kan.
+				// Je houdt dat 2 spelers over die twee series tegen elkaar spelen.
 				switch (i) { 
 				case 2:
 					fuzzymatrix = Utils.removerowandcolumnfrom2D(fuzzymatrix, vijf2, indexrow);
@@ -159,13 +168,10 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			}
 			System.out.print("Deze groep " + groep.getNaam() + " heeft " + tri.length + " spelers.\n");
 //			if (speelrondes >1) {
-			if (!(groep.getAantalSpelers() == 5)) {
+			if (!IJCController.c().fuzzyOneven && !(groep.getAantalSpelers() == 5)) {
 				trioloc = minimizetriagonal.gettrio(tri,1);
 			} else {
 				trioloc = 0;
-			}
-			if (trioloc==0) {
-				// System.out.print("Geen trio in deze groep.\n");
 			}
 			if (!(trioloc == 0)) {
 				trio[0]=tri[trioloc-1][0];
@@ -177,7 +183,10 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			// System.out.print("Order vector is\n");
 			// Utils.printMatrix(order);
 			Serie s = new Serie();
-			if (groep.getAantalSpelers() == 5) {
+			if (IJCController.c().fuzzyOneven && (!((groep.getAantalSpelers() & 1) == 0))) {
+				s = this.IndelingOnevenSpelers(s, groep, tri, i);
+			} else 
+			if (!IJCController.c().fuzzyOneven && groep.getAantalSpelers() == 5) {
 				s = this.Indeling5Spelers(s, groep, tri, i);
 			} else 
 			if ((trioloc == 0) || (i > 0)) {
@@ -254,8 +263,12 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				// update gegevens tegenstanders en witvoorkeur
 			}
 		}
-		// Samenvoegen 3 series naar 1 voor aantalspelers is 5
-		if (wedstrijdgroep.getAantalSpelers() == 5) {
+		// Samenvoegen 3 series naar 1 voor nieuwe oneven indeling
+		if (IJCController.c().fuzzyOneven && (!((groep.getAantalSpelers() & 1) == 0))) {
+			gws=Samenvoegenseries(gws);
+		} else 
+		// Samenvoegen 3 series naar 1 voor originele trioindeling en aantalspelers is 5
+		if (!IJCController.c().fuzzyOneven && groep.getAantalSpelers() == 5) {
 			gws=Samenvoegenseries(gws);
 		} else 
 
@@ -319,7 +332,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		boolean found = false;
 		for (int k = 0; k <= 3; k += 2) {
 			// Als één van beide spelers de nog niet gespeelde 
-			if (!(Utils.containing(vijf1,(tri[k][0]))) && (Utils.containing(vijf1,(tri[k + 1][0])))) {
+			if (!(Utils.containing(vijf1,(tri[k][0]))) || (!(Utils.containing(vijf1,(tri[k + 1][0]))))) {
 				s1 = groep.getSpelerByID(tri[k][0]); // Speler
 															// wit
 				s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
@@ -371,6 +384,85 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	return s;
 }
 	
+	private Serie IndelingOnevenSpelers(Serie s, Groep groep, int[][] tri, int i) {
+	// Bepaal de twee wedstrijden voor serie 1.
+	Speler s1 = new Speler();
+	Speler s2 = new Speler();
+	Wedstrijd w;
+	switch (i) {
+	case 0:
+		for (int k = 0; k <= groep.getAantalSpelers()-2; k += 2) {
+			s1 = groep.getSpelerByID(tri[k][0]); // Speler
+																	// wit
+			s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
+																		// zwart
+			// Onthoud welke spelers in serie 1 hebben gespeeld.
+			oneven1.add(k, tri[k][0]);
+			oneven1.add(k+1,tri[k+1][0]);
+			w = new Wedstrijd(wedstrijdnr, s1, s2, 0);
+			s.addWedstrijd(w, true);
+			wedstrijdnr++;
+			System.out.printf("Oneven Spelers- Serie 1. Wedstrijd tussen " + w.getWit().getNaam()
+					+ " (wit) en " + w.getZwart().getNaam() + " (zwart)"
+							+ "\n");
+							}
+		break;
+	case 1:
+		boolean found = false;
+		for (int k = 0; k <= groep.getAantalSpelers()-2; k += 2) {
+			// Als één van beide spelers de nog niet gespeelde 
+			if (!(Utils.containing(oneven1,(tri[k][0]))) || (!(Utils.containing(oneven1,(tri[k + 1][0]))))) {
+				s1 = groep.getSpelerByID(tri[k][0]); // Speler
+															// wit
+				s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
+															// zwart
+				found = true;
+			}
+		}
+		if (!found) {
+			// Als niet gevonden, dan de laatste twee spelers uit de groep.
+			s1 = groep.getSpelerByID(tri[groep.getAantalSpelers()-2][0]); // Speler
+														// wit
+			s2 = groep.getSpelerByID(tri[groep.getAantalSpelers()-1][0]); // Speler
+														// zwart
+			
+		}
+		// Onthoud welke speler nu al 2 wedstrijden heeft gespeeld.
+			
+			if (Utils.containing(oneven1,s1.getId())) {
+				oneven2.add(0,s1.getId());	
+			} else {
+				if (Utils.containing(oneven1,s2.getId())) {
+					oneven2.add(0,s2.getId());		
+				} else {
+					logger.log(Level.SEVERE, "Geen speler voor twee westrijden ingedeeld gevonden. Probleem met indeling voor oneven spelers.");
+				}
+			}
+			w = new Wedstrijd(wedstrijdnr, s1, s2, 0);
+			s.addWedstrijd(w, true);
+			wedstrijdnr++;
+			System.out.printf("Oneven Spelers- Serie 2. Wedstrijd tussen " + w.getWit().getNaam()
+					+ " (wit) en " + w.getZwart().getNaam() + " (zwart)"
+							+ "\n");
+		break;
+	case 2:
+		for (int k = 0; k <= groep.getAantalSpelers()-2; k += 2) {
+			s1 = groep.getSpelerByID(tri[k][0]); // Speler
+																	// wit
+			s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
+																		// zwart
+			
+			w = new Wedstrijd(wedstrijdnr, s1, s2, 0);
+			s.addWedstrijd(w, true);
+			wedstrijdnr++;
+			System.out.printf("Oneven Spelers- Serie 3. Wedstrijd tussen " + w.getWit().getNaam()
+					+ " (wit) en " + w.getZwart().getNaam() + " (zwart)"
+							+ "\n");
+							}
+		break;
+	}
+	return s;
+}
 	
 	private int[][] MaakFuzzyMatrix(Groep wedstrijdgroep, int serie, int speelronde, int doorschuivers) {
 		/**

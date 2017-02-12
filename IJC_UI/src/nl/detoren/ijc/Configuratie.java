@@ -284,6 +284,12 @@ public class Configuratie {
 	public boolean fuzzyIndeling = false;
 
 	/**
+	 * Fuzzy oneven wordt gebruikt indien waarde 'true'.
+	 * Anders wordt bij oneven spelers een ouderwetse trio gespeeld.
+	 */
+	public boolean fuzzyOneven = false;
+
+	/**
 	 * Wegingsfactor voor fuzzy algoritme. Waarde tussen 0.0 en 1.0
 	 * Deze parameter bepaald hoe zwaar het meeweegt dat er tegen een
 	 * nieuwe tegenstander wordt gespeeld
