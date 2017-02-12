@@ -62,7 +62,10 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	public  Groepswedstrijden maakWedstrijdenVoorGroep(int periode, int ronde, Groep wedstrijdgroep) {
 		//
 		int doorschuivers = IJCController.c().bepaalAantalDoorschuivers(periode, ronde);		// Aantal doorschuivers
-
+		vijf1=null;
+		vijf2=null;
+		oneven1.clear();
+		oneven2.clear();
 		// ZW is absoluut aantal in onbalans zwart/wit
 		wedstrijdgroep.setZWbalansvoor();
 		// 
@@ -446,7 +449,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 							+ "\n");
 		break;
 	case 2:
-		for (int k = 0; k <= groep.getAantalSpelers()-2; k += 2) {
+ 		for (int k = 0; k <= groep.getAantalSpelers()-2; k += 2) {
 			s1 = groep.getSpelerByID(tri[k][0]); // Speler
 																	// wit
 			s2 = groep.getSpelerByID(tri[k + 1][0]); // Speler
