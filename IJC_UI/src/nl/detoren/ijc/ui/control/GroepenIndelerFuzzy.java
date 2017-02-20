@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import groovyjarjarantlr.collections.List;
-import javafx.scene.chart.XYChart.Series;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
@@ -26,8 +24,6 @@ import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.ui.util.Utils;
 import nl.detoren.ijc.ui.util.minimizetriagonal;
-import nl.detoren.ijc.ui.view.Hoofdscherm;
-import nl.detoren.ijc.ui.view.WedstrijdschemaDialoog;
 
 /**
  * Fuzzy implementatie voor bepalen wedstrijdschema
