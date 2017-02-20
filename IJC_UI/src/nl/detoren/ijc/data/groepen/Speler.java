@@ -222,7 +222,9 @@ public class Speler implements Cloneable {
         	return ronde;
         }
         for (int i = 0; i < 4; i++) {
-            if (tegenstanders[i].length() > 2 && tegenstanders[i].substring(0, 2).equals(ini)) {
+        	// Check length to see if tegenstander[i] is not a code like ## or X3 but a real tegenstander.
+        	// And check if tegenstander is equal to ini
+            if (tegenstanders[i].length() >= 2 && tegenstanders[i].substring(0, 2).equals(ini)) {
             	ronde[i]=4-i;
             }
         }

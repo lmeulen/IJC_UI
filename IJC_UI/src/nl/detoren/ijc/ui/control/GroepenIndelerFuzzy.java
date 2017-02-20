@@ -885,24 +885,27 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 
     protected Groep updateSpelers(Groep groep, Serie serie) {
     	double wv;
+    	String ts;
         for (Speler speler : groep.getSpelers()) {
         	wv = speler.getWitvoorkeur();
+        	ts = speler.getTegenstandersString();
             Wedstrijd wedstrijd = serie.getWedstrijdVoorSpeler(speler);
             if (wedstrijd != null) {
                 if (wedstrijd.getWit().gelijkAan(speler)) {
                     // Speler speelde met wit
-                    speler.addTegenstander(wedstrijd.getZwart().getInitialen());
+                    speler.addTegenstander(wedstrijd.getZwart().getInitialen() + "!");
                     speler.setWitvoorkeur(speler.getWitvoorkeur() - 1);
                 
                 } else if (wedstrijd.getZwart().gelijkAan(speler)) {
                     // Speler speelde met zwart
-                    speler.addTegenstander(wedstrijd.getWit().getInitialen());
+                    speler.addTegenstander(wedstrijd.getWit().getInitialen() + "!");
 
                     speler.setWitvoorkeur(speler.getWitvoorkeur() + 1);
                 
                 } else {
                     System.out.println("Hmmm, speler niet gevonden....");
                 }
+                logger.log(Level.INFO, "tegenstanders voor speler " + speler.getNaam() + " aangepast van " + wv + " naar "+ speler.getTegenstandersString());
                 logger.log(Level.INFO, "witvoorkeur voor speler " + speler.getNaam() + " aangepast van " + wv + " naar "+ speler.getWitvoorkeur());
             }
         }
