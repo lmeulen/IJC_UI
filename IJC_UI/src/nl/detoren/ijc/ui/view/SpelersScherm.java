@@ -28,9 +28,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -80,11 +77,9 @@ public class SpelersScherm extends JFrame {
 	private final static Logger logger = Logger.getLogger(SpelersScherm.class.getName());
 
 	private JPanel hoofdPanel;
-	private JPanel buttonPanel;
 	private JPanel gegevensPanel;
 	private JPanel dataPanel;
 	private JPanel graphPanel;
-	private JButton resetButton;
 	private JScrollPane rondesPane;
 	private JScrollPane spelersPane;
 	private JScrollPane wedstrijdenPane;
@@ -151,26 +146,6 @@ public class SpelersScherm extends JFrame {
 			}
 		});
 
-	}
-
-	private void addButtons() {
-		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
-
-		// Button voor automatisch doorvoeren wijzigingen ja/nee
-		resetButton = new JButton("Auto");
-		resetButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				actieTemplate();
-			}
-		});
-		buttonPanel.add(resetButton);
-
-		buttonPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		buttonPanel.setBackground(Color.white);
-
-		hoofdPanel.add(buttonPanel);
 	}
 
 	private void addMenubar() {
@@ -291,6 +266,7 @@ public class SpelersScherm extends JFrame {
 				wedstrijdenModel.setSpelers(selectectSpelers);
 				if (selectectSpelers != null && selectectSpelers.size() > 0) {
 					LineGraph g2 = new LineGraph("", "Ronde", "Rating", true);
+					g2.initialize(createXYDataset(selectectSpelers));
 					g2.initialize(createCategoryDataset(selectectSpelers));
 					fixedComponentSize(g2, 700,380);
 					logger.log(Level.INFO, "Adding graph");

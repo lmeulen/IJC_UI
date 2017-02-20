@@ -15,10 +15,10 @@
 package nl.detoren.ijc.ui.model;
 
 import java.util.ArrayList;
+
 import javax.swing.JComponent;
 import javax.swing.table.AbstractTableModel;
 
-import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
