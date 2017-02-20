@@ -125,20 +125,24 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 					}
 					fuzzymatrix = MaakFuzzyMatrix(reducedgroep, i, speelrondes, doorschuivers);
 					//
-					// System.out.print("Reduced Matrix\n");
+					System.out.print("Reduced Matrix\n");
 					Utils.printMatrix(fuzzymatrix);
 				} else {
 					fuzzymatrix = MaakFuzzyMatrix(groep, i, speelrondes, doorschuivers);
-					Utils.printMatrix(fuzzymatrix);
+					//System.out.print("Matrix\n");
+					//Utils.printMatrix(fuzzymatrix);
 				}
 			} else {
 				fuzzymatrix = MaakFuzzyMatrix(groep, i, speelrondes, doorschuivers);
-				Utils.printMatrix(fuzzymatrix);
+				//System.out.print("Matrix\n");
+				//Utils.printMatrix(fuzzymatrix);
 			}
 			if (IJCController.c().fuzzyOneven && (!((groep.getAantalSpelers() & 1) == 0))) {
 				switch (i) { 
 				case 2:
 					fuzzymatrix = Utils.removerowandcolumnfrom2D(fuzzymatrix, oneven2, indexrow);
+					System.out.print("Reduced Matrix\n");
+					Utils.printMatrix(fuzzymatrix);
 					break;
 				}				
 			}
@@ -148,6 +152,8 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				switch (i) { 
 				case 2:
 					fuzzymatrix = Utils.removerowandcolumnfrom2D(fuzzymatrix, vijf2, indexrow);
+					System.out.print("Reduced Matrix\n");
+					Utils.printMatrix(fuzzymatrix);
 					break;
 				}
 			}
@@ -463,7 +469,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	return s;
 }
 	
-	private int[][] MaakFuzzyMatrix(Groep wedstrijdgroep, int serie, int speelronde, int doorschuivers) {
+	private int[][] MaakFuzzyMatrix(Groep wedstrijdgroep, int serie, int speelrondes, int doorschuivers) {
 		/**
 		 * FuzzyMatrix wordt gebruik voor het snel vaststellen van beste match
 		 * als tegenstander door middel van Fuzzy Logic. Hiertoe worden per
@@ -489,10 +495,14 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		 *
 		 * Voorwaarde 3: Iedere tegenstander moet zoveel mogelijk evenveel met
 		 * wit als zwart spelen Hiertoe wordt een weging vastgesteld volgens het
-		 * volgens matrix.
+		 * volgens matrix. Bij een waarde x/y is de waarde afhankelijk als er een even aantal series per ronde is.
 		 *
-		 * 0 z1 z2 w1 w2 0 -50 -100 50 100 0 0 20 35 50 35 50 z1 -50 35 60 75 10
-		 * 25 z2 -100 50 75 100 25 0 w1 50 35 10 25 60 75 w2 100 50 25 0 75 100
+		 * 		z2		z1	0		w1		w2
+		 * z2	100		85		50/40	20/10	0
+		 * z1	85		70		35		10/20	20/10
+		 * 0	50/40	35		20		35		50/40
+		 * w1	20/10	10/20	35		70		85
+		 * w2	0		20/10	50/40	85		100
 		 *
 		 * Indien het om doorschuiven gaat en het om de eerste serie gaat is er
 		 * nog een 4e voorwaarde. De doorschuivende speler moet tegen iemand van
@@ -541,14 +551,22 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				} else {
 					if (serie == 0) {
 						// Als eerste serie dan ? ...
+						// Originele tegenstanders
 						tegenstanders = s1.getGespeeldTegen(s2);
 					} else {
 						// Als niet eerste serie dan ? ...
+						// Tegenstanders inclusief de tegenstanders uit voorgaande serie(s)
 						tegenstanders = s1.getGespeeldTegen(s2);
 					}
 					for (int k = 0; k < 4; k++) {
-						if (tegenstanders[k] == 1) {
-							weging += 140;
+						if (serie > 0) {
+							if (tegenstanders[k] == 1) {
+								weging += 200;
+							}
+						} else {
+							if (tegenstanders[k] == 1) {
+								weging += 140;
+							}
 						}
 						if (tegenstanders[k] == 2) {
 							weging += 90;
@@ -563,13 +581,15 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			}
 			i++;
 		}		
-		// Utils.printMatrix(matrix1);
+		Utils.printMatrix(matrix1);
 		// matrix2 : Geen speler die een veel hogere of lagere ranking heeft.
 		System.out.print("Initializing Matrix2\n");
 		for (i = 1; i <= wedstrijdgroep.getAantalSpelers(); i++) {
-			matrix2[i-1][0] = 0;
+			// This next line has no actual function
+			// It's just to debug matrices on their index.
+			matrix2[i-1][0] = matrix1[i-1][0];
 			for (j = 1; j <= wedstrijdgroep.getAantalSpelers(); j++) {
-				if ((i>=wedstrijdgroep.getAantalSpelers()-(2*doorschuivers)) || (j>=wedstrijdgroep.getAantalSpelers()-(2*doorschuivers))) {
+//				if ((i>wedstrijdgroep.getAantalSpelers()-(2*doorschuivers)) || (j>wedstrijdgroep.getAantalSpelers()-(2*doorschuivers))) {
 					switch (Math.max(0,Math.abs(j - i)-doorschuivers)) {
 					case 0:
 					case 1:
@@ -595,42 +615,42 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 ///						matrix2[i - 1][j] = 100;
 						break;
 					}
-				} else {
-					switch (Math.abs(j - i)) {
-					case 0:
-					case 1:
-						matrix2[i - 1][j] = 0;
-						break;
-					case 2:
-						matrix2[i - 1][j] = 10;
-						break;
-					case 3:
-						matrix2[i - 1][j] = 20;
-						break;
-					case 4:
-						matrix2[i - 1][j] = 30;
-						break;
-					case 5:
-						matrix2[i - 1][j] = 50;
-						break;
-					case 6:
-						matrix2[i - 1][j] = 80;
-						break;
-					default:
-						//matrix2[i - 1][j] = 200;
-						matrix2[i - 1][j] = 100;
-						break;
-					}
-				}	
+//				} else {
+//					switch (Math.abs(j - i)) {
+//					case 0:
+//					case 1:
+//						matrix2[i - 1][j] = 0;
+//						break;
+//					case 2:
+//						matrix2[i - 1][j] = 10;
+//						break;
+//					case 3:
+//						matrix2[i - 1][j] = 20;
+//						break;
+//					case 4:
+//						matrix2[i - 1][j] = 30;
+//						break;
+//					case 5:
+//						matrix2[i - 1][j] = 50;
+//						break;
+//					case 6:
+//						matrix2[i - 1][j] = 80;
+//						break;
+//					default:
+//						//matrix2[i - 1][j] = 200;
+//						matrix2[i - 1][j] = 100;
+//						break;
+//					}
+//				}	
 			}
 		}
-		//Utils.printMatrix(matrix2);
+		Utils.printMatrix(matrix2);
 		// matrix 3 : Iedere tegenstander moet zoveel mogelijk evenveel met wit
 		// als zwart spelen
 		System.out.print("Initializing Matrix3\n");
 		i = 1;
 		for (Speler s1 : wedstrijdgroep.getSpelers()) {
-			matrix3[i-1][0] = 0;
+			matrix3[i-1][0] = s1.getId();
 			int witv1 = (int) s1.getWitvoorkeur();
 			j = 1;
 			for (Speler s2 : wedstrijdgroep.getSpelers()) {
@@ -645,13 +665,21 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 							matrix3[i - 1][j] = 100;
 							break;
 						case -1:
-							matrix3[i - 1][j] = 75;
+							matrix3[i - 1][j] = 85;
 							break;
 						case 0:
-							matrix3[i - 1][j] = 50;
+							if ((speelrondes % 2) == 0) {
+								matrix3[i - 1][j] = 40;
+							} else {
+								matrix3[i - 1][j] = 50;
+							}
 							break;
 						case 1:
-							matrix3[i - 1][j] = 25;
+							if ((speelrondes % 2) == 0) {
+								matrix3[i - 1][j] = 10;
+							} else {
+								matrix3[i - 1][j] = 20;
+							}
 							break;
 						case 2:
 							matrix3[i - 1][j] = 0;
@@ -661,29 +689,41 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 					case -1:
 						switch (witv2) {
 						case -2:
-							matrix3[i - 1][j] = 75;
+							matrix3[i - 1][j] = 85;
 							break;
 						case -1:
-							matrix3[i - 1][j] = 60;
+							matrix3[i - 1][j] = 70;
 							break;
 						case 0:
 							matrix3[i - 1][j] = 35;
 							break;
 						case 1:
-							matrix3[i - 1][j] = 10;
+							if ((speelrondes % 2) == 0) {
+								matrix3[i - 1][j] = 20;
+							} else {
+								matrix3[i - 1][j] = 10;
+							}
 							break;
 						case 2:
-							matrix3[i - 1][j] = 25;
+							if ((speelrondes % 2) == 0) {
+								matrix3[i - 1][j] = 10;
+							} else {
+								matrix3[i - 1][j] = 20;
+							}
 							break;
 						}
 						break;
 					case 0:
 						switch (witv2) {
 						case -2:
-							matrix3[i - 1][j] = 50;
+							if ((speelrondes % 2) == 0) {
+								matrix3[i - 1][j] = 40;
+							} else {
+								matrix3[i - 1][j] = 50;
+							}
 							break;
 						case -1:
-							matrix3[i - 1][j] = 25;
+							matrix3[i - 1][j] = 35;
 							break;
 						case 0:
 							matrix3[i - 1][j] = 20;
@@ -692,26 +732,38 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 							matrix3[i - 1][j] = 35;
 							break;
 						case 2:
-							matrix3[i - 1][j] = 50;
+							if ((speelrondes % 2) == 0) {
+								matrix3[i - 1][j] = 40;
+							} else {
+								matrix3[i - 1][j] = 50;
+							}
 							break;
 						}
 						break;
 					case 1:
 						switch (witv2) {
 						case -2:
-							matrix3[i - 1][j] = 25;
+							if ((speelrondes % 2) == 0) {
+								matrix3[i - 1][j] = 10;
+							} else {
+								matrix3[i - 1][j] = 20;
+							}
 							break;
 						case -1:
-							matrix3[i - 1][j] = 10;
+							if ((speelrondes % 2) == 0) {
+								matrix3[i - 1][j] = 20;
+							} else {
+								matrix3[i - 1][j] = 10;
+							}
 							break;
 						case 0:
 							matrix3[i - 1][j] = 35;
 							break;
 						case 1:
-							matrix3[i - 1][j] = 60;
+							matrix3[i - 1][j] = 70;
 							break;
 						case 2:
-							matrix3[i - 1][j] = 75;
+							matrix3[i - 1][j] = 85;
 							break;
 						}
 						break;
@@ -721,13 +773,20 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 							matrix3[i - 1][j] = 0;
 							break;
 						case -1:
-							matrix3[i - 1][j] = 25;
+							if ((speelrondes % 2) == 0) {
+								matrix3[i - 1][j] = 10;
+							} else {
+								matrix3[i - 1][j] = 20;}
 							break;
 						case 0:
-							matrix3[i - 1][j] = 50;
+							if ((speelrondes % 2) == 0) {
+								matrix3[i - 1][j] = 40;
+							} else {
+								matrix3[i - 1][j] = 50;
+							}
 							break;
 						case 1:
-							matrix3[i - 1][j] = 75;
+							matrix3[i - 1][j] = 85;
 							break;
 						case 2:
 							matrix3[i - 1][j] = 100;
@@ -740,13 +799,13 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			}
 			i++;
 		}
-		//Utils.printMatrix(matrix3);
+		Utils.printMatrix(matrix3);
 		// matrix 4 : De doorschuivende speler speelt bij voorkeur tegen iemand
 		// van zijn de hogere groep in eerste serie en in de tweede serie juist tegen iemand van zijn eigen groep.
 		System.out.print("Initializing Matrix4\n");
 		i = 1;
 		for (Speler s1 : wedstrijdgroep.getSpelers()) {
-			matrix4[i-1][0] = 0;
+			matrix4[i-1][0] = s1.getId();
 			j = 1;
 			for (Speler s2 : wedstrijdgroep.getSpelers()) {
 				if (i == j) {
@@ -807,14 +866,14 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			}
 			i++;
 		}
-		//Utils.printMatrix(matrix4);
+		Utils.printMatrix(matrix4);
 		//
 
 		matrix = Utils.add2DArrays(mf1, matrix1, mf2, matrix2);
 		matrix = Utils.add2DArrays(1, matrix, mf3, matrix3);
 		matrix = Utils.add2DArrays(1, matrix, mf4, matrix4);
-		//System.out.print("Output Matrix\n");
-		//Utils.printMatrix(matrix);
+		System.out.print("Output Matrix\n");
+		Utils.printMatrix(matrix);
 		return matrix;
 	}
 
