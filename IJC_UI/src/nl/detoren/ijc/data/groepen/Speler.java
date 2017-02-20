@@ -107,7 +107,7 @@ public class Speler implements Cloneable {
         this.keikansen = keikansen;
         this.speelgeschiedenis = geschiedenis;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -147,16 +147,16 @@ public class Speler implements Cloneable {
         initialen = init;
     }
 
-    private boolean checkInit(String init) { 
+    private boolean checkInit(String init) {
         boolean exists = false;
 		for (Speler s : IJCController.getI().getStatus().groepen.getAllSpelers()) {
 			if (init.equals(s.getInitialen())) {
-				exists = true; 
+				exists = true;
 			}
 		}
-		return exists;   
+		return exists;
     }
-      
+
     private String toggleCase(String init) {
 			if (init.charAt(0) == init.toUpperCase().charAt(0)) {
 				if (init.charAt(1) == init.toUpperCase().charAt(1)) {
@@ -168,18 +168,18 @@ public class Speler implements Cloneable {
 				if (init.charAt(1) == init.toUpperCase().charAt(1)) {
 					int charValue = init.toUpperCase().charAt(0);
 					if (charValue == 90) {
-						init = "" + init.toUpperCase().charAt(0) + String.valueOf( (char) (65));	
+						init = "" + init.toUpperCase().charAt(0) + String.valueOf( (char) (65));
 					} else {
 						init = "" + init.toUpperCase().charAt(0) + String.valueOf( (char) (charValue + 1));
 					}
-					
+
 				} else {
 					init = "" + init.toUpperCase().charAt(0) + init.toLowerCase().charAt(1);
-				}				
+				}
 			}
     	return init;
     }
-    
+
     public double getWitvoorkeur() {
         return witvoorkeur;
     }
@@ -224,7 +224,7 @@ public class Speler implements Cloneable {
         	return ronde;
         }
         for (int i = 0; i < 4; i++) {
-            if (tegenstanders[i].substring(0, 2).equals(ini)) {
+            if (tegenstanders[i].length() > 2 && tegenstanders[i].substring(0, 2).equals(ini)) {
             	ronde[i]=4-i;
             }
         }
@@ -503,7 +503,7 @@ public class Speler implements Cloneable {
         // ff checken dat het niet de speler zelf is ;-)
         if (initialen.equals(ini)) return true;
         for (int i = 0 + negeerNspelers; i < tegenstanders.length; ++i) {
-            if (tegenstanders[i].substring(0, 2).equals(ini)) {
+            if (tegenstanders[i].length() >= 2 && tegenstanders[i].substring(0, 2).equals(ini)) {
                 return true;
             }
         }

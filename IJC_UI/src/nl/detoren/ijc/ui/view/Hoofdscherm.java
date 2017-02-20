@@ -898,10 +898,16 @@ public class Hoofdscherm extends JFrame {
 			@Override
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
-
+				WedstrijdModel model = (WedstrijdModel) getModel();
 				// Alternate row color
 				if (!isRowSelected(row)) {
 					c.setBackground(row % 2 == 0 ? Color.WHITE : Color.LIGHT_GRAY);
+				}
+				// Alternatief font bij dubbele wedstrijden
+				if (model.isDubbeleWedstrijd(row)) {
+					c.setForeground(Color.RED);
+				} else {
+					c.setForeground(Color.BLACK);
 				}
 				return c;
 			}

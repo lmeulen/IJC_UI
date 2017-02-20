@@ -149,4 +149,12 @@ public class Wedstrijd {
 	public boolean isUitslagBekend() {
 		return (uitslag != ONBEKEND);
 	}
+	
+	public int getWedstrijdnummer() {
+		int result = 0;
+		result = Math.min(wit.getGroep(), zwart.getGroep()) * 10000;
+		result += Math.min(wit.getId(), zwart.getId()) * 100;
+		result += Math.max(wit.getId(), zwart.getId()) * 1;
+		return result;
+	}
 }

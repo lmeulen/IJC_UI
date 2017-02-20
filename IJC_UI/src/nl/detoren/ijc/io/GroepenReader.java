@@ -134,7 +134,7 @@ public class GroepenReader {
      * @return Groep van het gespecificeerde niveau met al zijn spelers
      */
     private Groep leesGroep(String[] data, String token, int type) {
-		logger.log(Level.INFO, "Zoeken naar tolen \'" +  token + "\' en type " + type);
+		logger.log(Level.INFO, "Zoeken naar token \'" +  token + "\' en type " + type);
         Groep groep = new Groep(type);
         // Zoek regel met token
         boolean found = false;

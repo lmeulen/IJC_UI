@@ -17,6 +17,8 @@ package nl.detoren.ijc.ui.model;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.table.AbstractTableModel;
+
+import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
@@ -144,4 +146,20 @@ public class WedstrijdModel extends AbstractTableModel {
         component.repaint();
     }
 
+    public boolean isDubbeleWedstrijd(int row) {
+        ArrayList<Wedstrijd> wedstrijden = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getWedstrijden();
+		if (row < wedstrijden.size()) {
+            Wedstrijd wedstrijd = wedstrijden.get(row);
+            if (wedstrijd != null) {
+            	int wedstrijdnummer = wedstrijd.getWedstrijdnummer();
+            	for (int i = 0; i < wedstrijden.size(); ++i) {
+            		Wedstrijd wedstrijd2 = wedstrijden.get(i);
+            		if ((i != row) && (wedstrijdnummer == wedstrijd2.getWedstrijdnummer())) {
+            			return true;
+            		}
+            	} 
+            }
+        }
+        return false;
+    }
 }

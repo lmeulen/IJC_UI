@@ -245,7 +245,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
         Wedstrijden wedstrijden = new Wedstrijden();
         for (Groep groepOrg : groepen.getGroepen()) {
         	if (groepOrg.getAantalSpelers() == 1) {
-    			logger.log(Level.WARNING, "Maar ��n speler. Kan geen wedstrijden maken. ");
+    			logger.log(Level.WARNING, "Maar een speler. Kan geen wedstrijden maken. ");
         	} else {
         		logger.log(Level.INFO, "Maken wedstrijden voor groep " + groepOrg.getNaam());
         		Groepswedstrijden gws = maakWedstrijdenVoorGroep(periode, ronde, groepOrg);
@@ -351,14 +351,14 @@ public class GroepenIndeler implements GroepenIndelerInterface {
 		        gepland[j] = false;
 		    }
 		    for (Integer sid : trio) {
-		        // -1 omdat speler ID ��n versprongen is tov array nummer
+		        // -1 omdat speler ID een versprongen is tov array nummer
 		        gepland[sid.intValue() - 1] = true;
 		    }
 
 		    Serie serie = null;
 		    int ignoreTgns = 0;
 		    int maxverschil = minverschil + IJCController.c().indelingMaximumVerschil;
-	        maxverschil = Math.min(minverschil + 3, groep.getAantalSpelers());
+	        //maxverschil = Math.min(minverschil + 3, groep.getAantalSpelers());
 			while ((serie == null) && (maxverschil <= groep.getAantalSpelers())) {
 				while ((serie == null) && (ignoreTgns <= 5)) {
 					serie = maakSerie(groep, gepland, aantalSpelers, minverschil, maxverschil, ignoreTgns, i);
@@ -531,13 +531,13 @@ public class GroepenIndeler implements GroepenIndelerInterface {
                     // Speler speelde met wit
                     speler.addTegenstander(wedstrijd.getZwart().getInitialen());
                     speler.setWitvoorkeur(speler.getWitvoorkeur() - 1.1);
-                
+
                 } else if (wedstrijd.getZwart().gelijkAan(speler)) {
                     // Speler speelde met zwart
                     speler.addTegenstander(wedstrijd.getWit().getInitialen());
 
                     speler.setWitvoorkeur(speler.getWitvoorkeur() + 1.1);
-                
+
                 } else {
                     System.out.println("Hmmm, speler niet gevonden....");
                 }

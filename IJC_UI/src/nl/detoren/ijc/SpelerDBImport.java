@@ -197,8 +197,12 @@ public class SpelerDBImport {
 		// importStatusObject("Resultaten\\R2-3\\status20161202_183340-uitslag.json");
 		//importStatusObject("Resultaten\\R2-4\\status20161218_092022-uitslag.json");
 		//importStatusObject("Resultaten\\R2-5\\status20161218_105142-uitslag.json");
-		//spelerDB.cleanupDuplicatePlayers();
-		//spelerDB.cleanUpMultipleRoundsPerPlayer();
+//		importStatusObject("Resultaten\\R2-6\\status20170113_163234-uitslag.json");
+//		importStatusObject("Resultaten\\R2-7\\status20170114_094804-uitslag.json");
+//		importStatusObject("Resultaten\\R2-8\\status20170121_090428-uitslag.json");
+//		importStatusObject("Resultaten\\R3-1\\status20170204_152430-uitslag.json");
+		spelerDB.cleanupDuplicatePlayers();
+		spelerDB.cleanUpMultipleRoundsPerPlayer();
 
 		spelerDB.closeDatabase();
 	}
