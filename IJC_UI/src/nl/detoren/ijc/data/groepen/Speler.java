@@ -16,12 +16,10 @@ package nl.detoren.ijc.data.groepen;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.StringTokenizer;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import nl.detoren.ijc.ui.control.IJCController;
-import nl.detoren.ijc.ui.control.Status;
-
-import java.util.UUID;
 
 /**
  * Dit object bevat de gegevens van één speler
