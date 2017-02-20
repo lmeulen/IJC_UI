@@ -187,6 +187,11 @@ public class IJCController {
 	        	logger.log(Level.INFO, "Status bestand niet ingelezen");
 				return false;
 			}
+			if (status.wedstrijdgroepen.getAantalGroepen() != c.aantalGroepen) {
+	        	logger.log(Level.SEVERE, "Aantal groepen in statusbestand en aantal groepen in configuratie komen niet overeen!");
+	        	logger.log(Level.SEVERE, "Aantal groepen wordt ingesteld op het aantal in statusbestand!");
+	        	c.aantalGroepen = status.wedstrijdgroepen.getAantalGroepen();
+			}
 		}
     	logger.log(Level.INFO, "Statusbestand ingelezen");
 		return true;

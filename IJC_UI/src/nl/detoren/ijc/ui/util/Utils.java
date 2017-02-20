@@ -44,7 +44,7 @@ public class Utils {
     public static void printMatrix(ArrayList<ArrayList<Integer>> grid) {
         for(int r=0; r<grid.size(); r++) {
            for(int c=0; c<grid.get(r).size(); c++)
-               System.out.print(grid.get(r).get(c) + " ");
+               System.out.print(grid.get(r).get(c) + "\t");
            System.out.println();
         }
     }
@@ -52,7 +52,7 @@ public class Utils {
     public static void printMatrix(int grid[][]) {
         for(int r=0; r<grid.length; r++) {
            for(int c=0; c<grid[0].length; c++)
-               System.out.print(grid[r][c] + ";");
+               System.out.print(grid[r][c] + "\t");
            System.out.println();
         }
     }
@@ -82,7 +82,8 @@ public class Utils {
     	for (int i=0;i<A.length;i++) {
     		for (int j=0;j<A[0].length;j++) {
     			if (j==0) {
-    				C[i][j]=(int) (A[i][j]+B[i][j]);
+    				// C[i][j]=(int) (A[i][j]+B[i][j]);
+    				C[i][j]=(int) (A[i][j]);
     			} else {
     				C[i][j]=(int) (mf1*A[i][j]+mf2*B[i][j]);
     			}
