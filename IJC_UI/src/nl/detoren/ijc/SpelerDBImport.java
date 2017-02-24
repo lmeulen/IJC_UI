@@ -184,23 +184,26 @@ public class SpelerDBImport {
 
 	public void doSomething() {
 		spelerDB.openDatabase();
-		// importUitslagText( "Resultaten\\R1-1\\R1-1Uitslag-long.txt");
-		// importUitslagText ("Resultaten\\R1-2\\R1-2Uitslag-long.txt");
-		// importUitslagText ("Resultaten\\R1-3\\R1-3Uitslag-long.txt");
-		// importUitslagText ("Resultaten\\R1-4\\R1-4Uitslag-long.txt");
-		// importUitslagText ("Resultaten\\R1-5\\R1-5Uitslag-long.txt");
-		// importUitslagText ("Resultaten\\R1-6\\R1-6Uitslag-long.txt");
-		// importStatusObject("Resultaten\\R1-7\\status20161121_081945-uitslag.json");
-		// importStatusObject("Resultaten\\R1-8\\status20161105_104956-uitslag.json");
-		// importStatusObject("Resultaten\\R2-1\\status20161112_104307-uitslag.json");
-		// importStatusObject("Resultaten\\R2-2\\status20161120_143533-uitslag.json");
-		// importStatusObject("Resultaten\\R2-3\\status20161202_183340-uitslag.json");
-		//importStatusObject("Resultaten\\R2-4\\status20161218_092022-uitslag.json");
-		//importStatusObject("Resultaten\\R2-5\\status20161218_105142-uitslag.json");
+//		importUitslagText("Resultaten\\R1-1\\R1-1Uitslag-long.txt");
+//		importUitslagText("Resultaten\\R1-2\\R1-2Uitslag-long.txt");
+//		importUitslagText("Resultaten\\R1-3\\R1-3Uitslag-long.txt");
+//		importUitslagText("Resultaten\\R1-4\\R1-4Uitslag-long.txt");
+//		importUitslagText("Resultaten\\R1-5\\R1-5Uitslag-long.txt");
+//		importUitslagText("Resultaten\\R1-6\\R1-6Uitslag-long.txt");
+//		importStatusObject("Resultaten\\R1-7\\status20161104_080315-uitslag.json");
+//		importStatusObject("Resultaten\\R1-8\\status20161105_104956-uitslag.json");
+//		importStatusObject("Resultaten\\R2-1\\status20161112_104307-uitslag.json");
+//		importStatusObject("Resultaten\\R2-2\\status20161125_083843-uitslag.json");
+//		importStatusObject("Resultaten\\R2-3\\status20161202_183340-uitslag.json");
+//		importStatusObject("Resultaten\\R2-4\\status20161218_092022-uitslag.json");
+//		importStatusObject("Resultaten\\R2-5\\status20161218_105142-uitslag.json");
 //		importStatusObject("Resultaten\\R2-6\\status20170113_163234-uitslag.json");
 //		importStatusObject("Resultaten\\R2-7\\status20170114_094804-uitslag.json");
 //		importStatusObject("Resultaten\\R2-8\\status20170121_090428-uitslag.json");
 //		importStatusObject("Resultaten\\R3-1\\status20170204_152430-uitslag.json");
+//		importStatusObject("Resultaten\\R3-2\\status20170211_070734-uitslag.json");
+//		importStatusObject("Resultaten\\R3-3\\status20170217_220412-uitslag.json");
+
 		spelerDB.cleanupDuplicatePlayers();
 		spelerDB.cleanUpMultipleRoundsPerPlayer();
 
@@ -210,7 +213,7 @@ public class SpelerDBImport {
 	public static void main(String[] args) {
 		SpelerDBImport db = new SpelerDBImport();
 		db.doSomething();
-		db.showGraph();
+		//db.showGraph();
 	}
 
 	private void showGraph() {

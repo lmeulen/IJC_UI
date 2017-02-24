@@ -141,7 +141,7 @@ public class BewerkSpelerDialoog extends JDialog {
                 // Naam
                 speler.setNaam(tfNaam.getText());
                 // Initialen
-                if (speler.getInitialen()=="") {
+                if (speler.getInitialen().length() == 0) {
                 	speler.setInitialen();
                 }
                  // OUD: speler.setInitialen(tfInit.getText());

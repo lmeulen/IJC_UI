@@ -266,7 +266,7 @@ public class SpelersScherm extends JFrame {
 				wedstrijdenModel.setSpelers(selectectSpelers);
 				if (selectectSpelers != null && selectectSpelers.size() > 0) {
 					LineGraph g2 = new LineGraph("", "Ronde", "Rating", true);
-					g2.initialize(createXYDataset(selectectSpelers));
+					//g2.initialize(createXYDataset(selectectSpelers));
 					g2.initialize(createCategoryDataset(selectectSpelers));
 					fixedComponentSize(g2, 700,380);
 					logger.log(Level.INFO, "Adding graph");
