@@ -108,7 +108,7 @@ public class SpelersScherm extends JFrame {
 
 	private void initComponents() {
 		logger.log(Level.INFO, "Init components");
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
 		setTitle(IJCController.c().verenigingNaam + " - " + "Spelers");
 
 		hoofdPanel = new JPanel();
@@ -142,7 +142,7 @@ public class SpelersScherm extends JFrame {
 
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent event) {
-				System.exit(0);
+				//System.exit(0);
 			}
 		});
 

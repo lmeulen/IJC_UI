@@ -57,9 +57,11 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import nl.detoren.ijc.SpelerDBImport;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.control.Status;
 import nl.detoren.ijc.ui.model.SpelersModel;
 import nl.detoren.ijc.ui.model.WedstrijdModel;
 import nl.detoren.ijc.ui.model.WedstrijdSpelersModel;
@@ -445,6 +447,16 @@ public class Hoofdscherm extends JFrame {
 			}
 		});
 		spelermenu.add(item);
+
+		item = new JMenuItem("Speler geschiedenis");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				new SpelersScherm().setVisible(true);
+			}
+		});
+		spelermenu.add(item);
+
 		menubar.add(spelermenu);
 
 		JMenu indelingMenu = new JMenu("Indeling");
@@ -1093,12 +1105,17 @@ public class Hoofdscherm extends JFrame {
 	}
 
 	public void actieVolgendeRonde() {
-		controller.volgendeRonde();
-		updateAutomatisch(true);
-		updateRondeLabel();
-		updateZWbalansvoor();
-		updateZWbalansna();
-		updateUpdateStandButton();
+		SpelerDBImport dbi = new SpelerDBImport();
+		Status s = controller.getStatus();
+		if (s.resultaatVerwerkt != null) {
+			dbi.importStatusObjectWithDBSession(s);
+			controller.volgendeRonde();
+			updateAutomatisch(true);
+			updateRondeLabel();
+			updateZWbalansvoor();
+			updateZWbalansna();
+			updateUpdateStandButton();
+		}
 		hoofdPanel.repaint();
 	}
 

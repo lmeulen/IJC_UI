@@ -43,9 +43,24 @@ public class SpelerDBImport {
 
 	public void importStatusObject(String bestandsnaam) {
 		try {
-			spelerDB.startTransaction();
-
 			Status status = leesStatusBestand(bestandsnaam);
+			importStatusObject(status);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void importStatusObjectWithDBSession(Status status) {
+		spelerDB.openDatabase();
+		importStatusObject(status);
+		spelerDB.cleanupDuplicatePlayers();
+		spelerDB.cleanUpMultipleRoundsPerPlayer();
+		spelerDB.closeDatabase();
+	}
+
+	public void importStatusObject(Status status) {
+		try {
+			spelerDB.startTransaction();
 
 			// Bepaal ronde
 			DBRonde ronde = new DBRonde(status.wedstrijden.getSpeeldatum(), 2016, status.wedstrijden.getPeriode(),
@@ -184,25 +199,25 @@ public class SpelerDBImport {
 
 	public void doSomething() {
 		spelerDB.openDatabase();
-//		importUitslagText("Resultaten\\R1-1\\R1-1Uitslag-long.txt");
-//		importUitslagText("Resultaten\\R1-2\\R1-2Uitslag-long.txt");
-//		importUitslagText("Resultaten\\R1-3\\R1-3Uitslag-long.txt");
-//		importUitslagText("Resultaten\\R1-4\\R1-4Uitslag-long.txt");
-//		importUitslagText("Resultaten\\R1-5\\R1-5Uitslag-long.txt");
-//		importUitslagText("Resultaten\\R1-6\\R1-6Uitslag-long.txt");
-//		importStatusObject("Resultaten\\R1-7\\status20161104_080315-uitslag.json");
-//		importStatusObject("Resultaten\\R1-8\\status20161105_104956-uitslag.json");
-//		importStatusObject("Resultaten\\R2-1\\status20161112_104307-uitslag.json");
-//		importStatusObject("Resultaten\\R2-2\\status20161125_083843-uitslag.json");
-//		importStatusObject("Resultaten\\R2-3\\status20161202_183340-uitslag.json");
-//		importStatusObject("Resultaten\\R2-4\\status20161218_092022-uitslag.json");
-//		importStatusObject("Resultaten\\R2-5\\status20161218_105142-uitslag.json");
-//		importStatusObject("Resultaten\\R2-6\\status20170113_163234-uitslag.json");
-//		importStatusObject("Resultaten\\R2-7\\status20170114_094804-uitslag.json");
-//		importStatusObject("Resultaten\\R2-8\\status20170121_090428-uitslag.json");
-//		importStatusObject("Resultaten\\R3-1\\status20170204_152430-uitslag.json");
-//		importStatusObject("Resultaten\\R3-2\\status20170211_070734-uitslag.json");
-//		importStatusObject("Resultaten\\R3-3\\status20170217_220412-uitslag.json");
+		// importUitslagText("Resultaten\\R1-1\\R1-1Uitslag-long.txt");
+		// importUitslagText("Resultaten\\R1-2\\R1-2Uitslag-long.txt");
+		// importUitslagText("Resultaten\\R1-3\\R1-3Uitslag-long.txt");
+		// importUitslagText("Resultaten\\R1-4\\R1-4Uitslag-long.txt");
+		// importUitslagText("Resultaten\\R1-5\\R1-5Uitslag-long.txt");
+		// importUitslagText("Resultaten\\R1-6\\R1-6Uitslag-long.txt");
+		// importStatusObject("Resultaten\\R1-7\\status20161104_080315-uitslag.json");
+		// importStatusObject("Resultaten\\R1-8\\status20161105_104956-uitslag.json");
+		// importStatusObject("Resultaten\\R2-1\\status20161112_104307-uitslag.json");
+		// importStatusObject("Resultaten\\R2-2\\status20161125_083843-uitslag.json");
+		// importStatusObject("Resultaten\\R2-3\\status20161202_183340-uitslag.json");
+		// importStatusObject("Resultaten\\R2-4\\status20161218_092022-uitslag.json");
+		// importStatusObject("Resultaten\\R2-5\\status20161218_105142-uitslag.json");
+		// importStatusObject("Resultaten\\R2-6\\status20170113_163234-uitslag.json");
+		// importStatusObject("Resultaten\\R2-7\\status20170114_094804-uitslag.json");
+		// importStatusObject("Resultaten\\R2-8\\status20170121_090428-uitslag.json");
+		// importStatusObject("Resultaten\\R3-1\\status20170204_152430-uitslag.json");
+		// importStatusObject("Resultaten\\R3-2\\status20170211_070734-uitslag.json");
+		// importStatusObject("Resultaten\\R3-3\\status20170217_220412-uitslag.json");
 
 		spelerDB.cleanupDuplicatePlayers();
 		spelerDB.cleanUpMultipleRoundsPerPlayer();
@@ -213,7 +228,7 @@ public class SpelerDBImport {
 	public static void main(String[] args) {
 		SpelerDBImport db = new SpelerDBImport();
 		db.doSomething();
-		//db.showGraph();
+		// db.showGraph();
 	}
 
 	private void showGraph() {
@@ -224,7 +239,7 @@ public class SpelerDBImport {
 		f.setVisible(true);
 
 		LineGraph g2 = new LineGraph("Rating verloop", "Ronde", "Rating", true);
-		g2.initialize(createCategoryDataset(new String[] { "FW", "Ma", "TT"}));
+		g2.initialize(createCategoryDataset(new String[] { "FW", "Ma", "TT" }));
 		JFrame f2 = new JFrame();
 		f2.add(g2);
 		f2.setVisible(true);
