@@ -79,7 +79,7 @@ public class DBSpelerModel extends AbstractTableModel {
      * @param id
      */
     public void setRonde(DBRonde ronde) {
-        spelers = ronde != null ? database.getSpelers(ronde) : database.getSpelers();
+        spelers = ronde != null ? database.getSpelers(ronde) : database.getSpelers("naam");
     	selectie = new boolean[spelers != null ? spelers.size() : 0];
     }
 

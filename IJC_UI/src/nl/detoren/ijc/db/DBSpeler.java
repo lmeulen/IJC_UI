@@ -75,4 +75,11 @@ public class DBSpeler {
 		return id;
 	}
 
+	public int getLaatsteRonde() {
+		int result = 0;
+		for (DBHistorie h : historie) {
+			result = Math.max(h.getRonde().rondeIdentifier(), result);
+		}
+		return result;
+	}
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class SpelerDatabase extends ObjectDatabase {
 
 	private static SpelerDatabase instance = null;
@@ -44,6 +43,7 @@ public class SpelerDatabase extends ObjectDatabase {
 
 	/**
 	 * Retourneer lijst met alle spelers
+	 *
 	 * @return
 	 */
 	public List<DBSpeler> getSpelers() {
@@ -51,8 +51,8 @@ public class SpelerDatabase extends ObjectDatabase {
 	}
 
 	/**
-	 * Retourneer lijst met alle spelers, gesorteerd op
-	 * gespecificeerd veld
+	 * Retourneer lijst met alle spelers, gesorteerd op gespecificeerd veld
+	 *
 	 * @return
 	 */
 	public List<DBSpeler> getSpelers(String orderField) {
@@ -60,7 +60,9 @@ public class SpelerDatabase extends ObjectDatabase {
 	}
 
 	/**
-	 * Retourneer lijst met spelers in een specifieke groep tijdens de laatste ronde
+	 * Retourneer lijst met spelers in een specifieke groep tijdens de laatste
+	 * ronde
+	 *
 	 * @param groep
 	 * @param ronde
 	 * @return
@@ -70,8 +72,9 @@ public class SpelerDatabase extends ObjectDatabase {
 	}
 
 	/**
-	 * Retourneer lijst met spelers in een specifieke groep tijdens een specifieke
-	 * ronde.
+	 * Retourneer lijst met spelers in een specifieke groep tijdens een
+	 * specifieke ronde.
+	 *
 	 * @param groep
 	 * @param ronde
 	 * @return
@@ -88,8 +91,8 @@ public class SpelerDatabase extends ObjectDatabase {
 
 	/**
 	 * Retourneer lijst die spelen in de betreffende ronde (onafhankelijk van
-	 * wel/niet aanwezig)
-	 * ronde.
+	 * wel/niet aanwezig) ronde.
+	 *
 	 * @param groep
 	 * @param ronde
 	 * @return
@@ -100,7 +103,7 @@ public class SpelerDatabase extends ObjectDatabase {
 			query += "WHERE h.ronde.seizoen = " + ronde.getSeizoen();
 			query += " AND h.ronde.periode = " + ronde.getPeriode();
 			query += " AND h.ronde.ronde = " + ronde.getRonde();
-			query += " ORDER BY h.punten DESC";
+			query += " ORDER BY s.naam";
 			return query(query, DBSpeler.class);
 		} else {
 			return null;
@@ -109,6 +112,7 @@ public class SpelerDatabase extends ObjectDatabase {
 
 	/**
 	 * Geef alle wedstrijden van een speler
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -121,6 +125,7 @@ public class SpelerDatabase extends ObjectDatabase {
 
 	/**
 	 * Geef alle wedstrijden van een speler
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -133,6 +138,7 @@ public class SpelerDatabase extends ObjectDatabase {
 
 	/**
 	 * Geef alle wedstrijden uit een ronde
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -144,6 +150,7 @@ public class SpelerDatabase extends ObjectDatabase {
 
 	/**
 	 * Geef alle wedstrijden van een speler
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -151,8 +158,10 @@ public class SpelerDatabase extends ObjectDatabase {
 		String query = "SELECT w FROM DBWedstrijd w";
 		return query(query, DBWedstrijd.class);
 	}
+
 	/**
 	 * Retourneer de laatste ronde opgeslagen
+	 *
 	 * @return
 	 */
 	public DBRonde getLaatsteRonde() {
@@ -162,6 +171,7 @@ public class SpelerDatabase extends ObjectDatabase {
 
 	/**
 	 * Retourneer een lijst met alle opgeslagen rondes
+	 *
 	 * @return
 	 */
 	public List<DBRonde> getRondes() {
@@ -171,6 +181,7 @@ public class SpelerDatabase extends ObjectDatabase {
 
 	/**
 	 * Retourneer een lijst met alle opgeslagen rondes
+	 *
 	 * @return
 	 */
 	public List<DBRonde> getRondes(boolean asc) {
@@ -197,39 +208,114 @@ public class SpelerDatabase extends ObjectDatabase {
 		}
 	}
 
+	public void cleanupDuplicatePlayers() {
+		cleanupDuplicatePlayersAbbrevName();
+		cleanupDuplicatePlayersEqualKNSB();
+		cleanupDuplicatePlayersName();
+	}
+
 	/**
 	 * If a player exists multiple times in the database, cleanup.
+	 * Players are duplicates if
+	 * - abbreviation is equal
+	 * - name is equal
+	 * - KNSB differ
 	 */
-	public void cleanupDuplicatePlayers() {
+	private void cleanupDuplicatePlayersAbbrevName() {
 		startTransaction();
 		List<DBSpeler> spelers = query("select s from DBSpeler s", DBSpeler.class);
 		for (int i = 0; i < spelers.size(); ++i) {
-			DBSpeler speler = spelers.get(i);
+			DBSpeler s1 = spelers.get(i);
 			for (int j = i + 1; j < spelers.size(); j++) {
-				DBSpeler speler2 = spelers.get(j);
-				if (speler.getAfkorting().equals(speler2.getAfkorting())) {
-					System.out
-							.println(speler.getAfkorting() + " - " + speler.getKnsbnummer() + " - " + speler.getNaam());
-					System.out.println(
-							speler2.getAfkorting() + " - " + speler2.getKnsbnummer() + " - " + speler2.getNaam());
-					if (speler2.getNaam().equals(speler.getNaam())) {
-						if (speler.getKnsbnummer() > 5000000 && speler2.getKnsbnummer() < 20000000) {
-							System.out.println(
-									speler.getAfkorting() + " - " + speler.getKnsbnummer() + " - " + speler.getNaam());
-							moveHistToAnotherPlayer(speler2, speler);
-							store(speler);
-							delete(speler2);
-						} else if (speler2.getKnsbnummer() > 5000000 && speler.getKnsbnummer() < 20000000) {
-							System.out.println(speler2.getAfkorting() + " - " + speler2.getKnsbnummer() + " - "
-									+ speler2.getNaam());
-							moveHistToAnotherPlayer(speler, speler2);
-							store(speler2);
-							delete(speler);
+				DBSpeler s2 = spelers.get(j);
+				if (s1.getAfkorting().equals(s2.getAfkorting())) {
+					System.out.println(s1.getAfkorting() + "-" + s1.getKnsbnummer() + "-" + s1.getNaam());
+					System.out.println(s2.getAfkorting() + "-" + s2.getKnsbnummer() + "-" + s2.getNaam());
+					if (s2.getNaam().equals(s1.getNaam())) {
+						if (s1.getKnsbnummer() > 5000000 && s2.getKnsbnummer() < 20000000) {
+							System.out.println(s1.getAfkorting() + "-" + s1.getKnsbnummer() + "-" + s1.getNaam());
+							moveHistToAnotherPlayer(s2, s1);
+							store(s1);
+							delete(s2);
+						} else if (s2.getKnsbnummer() > 5000000 && s1.getKnsbnummer() < 20000000) {
+							System.out.println(s2.getAfkorting() + "-" + s2.getKnsbnummer() + "-" + s2.getNaam());
+							moveHistToAnotherPlayer(s1, s2);
+							store(s2);
+							delete(s1);
 						} else {
 							System.out.println("No upgrade in KNSB");
 						}
 					} else {
 						System.out.println("Different names!");
+					}
+					System.out.println("\n");
+				}
+			}
+		}
+		endTransaction();
+	}
+
+	/**
+	 * If a player exists multiple times in the database, cleanup.
+	 * Players are duplicates if
+	 * - name is equal
+	 * - KNSB differ
+	 */
+	private void cleanupDuplicatePlayersName() {
+		startTransaction();
+		List<DBSpeler> spelers = query("select s from DBSpeler s", DBSpeler.class);
+		for (int i = 0; i < spelers.size(); ++i) {
+			DBSpeler s1 = spelers.get(i);
+			for (int j = i + 1; j < spelers.size(); j++) {
+				DBSpeler s2 = spelers.get(j);
+				if (s1.getNaam().equals(s2.getNaam())) {
+					System.out.println(s1.getAfkorting() + "-" + s1.getKnsbnummer() + "-" + s1.getNaam());
+					System.out.println(s2.getAfkorting() + "-" + s2.getKnsbnummer() + "-" + s2.getNaam());
+					if (s1.getLaatsteRonde() > s2.getLaatsteRonde()) {
+						System.out.println("MERGING: " + s1.getAfkorting() + "-" + s1.getKnsbnummer() + "-" + s1.getNaam());
+						moveHistToAnotherPlayer(s2, s1);
+						store(s1);
+						delete(s2);
+					} else {
+						System.out.println("MERGING: " + s2.getAfkorting() + "-" + s2.getKnsbnummer() + "-" + s2.getNaam());
+						moveHistToAnotherPlayer(s1, s2);
+						moveHistToAnotherPlayer(s1, s2);
+						store(s2);
+						delete(s1);
+					}
+					System.out.println("\n");
+				}
+			}
+		}
+		endTransaction();
+	}
+
+	/**
+	 * If a player exists multiple times in the database, cleanup.
+	 * Players are duplicates if
+	 * - KNSB is the same
+	 */
+	private void cleanupDuplicatePlayersEqualKNSB() {
+		startTransaction();
+		List<DBSpeler> spelers = query("select s from DBSpeler s", DBSpeler.class);
+		for (int i = 0; i < spelers.size(); ++i) {
+			DBSpeler s1 = spelers.get(i);
+			for (int j = i + 1; j < spelers.size(); j++) {
+				DBSpeler s2 = spelers.get(j);
+				if (s1.getKnsbnummer() == s2.getKnsbnummer()) {
+					System.out.println(s1.getAfkorting() + "-" + s1.getKnsbnummer() + "-" + s1.getNaam());
+					System.out.println(s2.getAfkorting() + "-" + s2.getKnsbnummer() + "-" + s2.getNaam());
+					if (s1.getLaatsteRonde() > s2.getLaatsteRonde()) {
+						System.out.println(s1.getAfkorting() + "-" + s1.getKnsbnummer() + "-" + s1.getNaam());
+						moveHistToAnotherPlayer(s2, s1);
+						store(s1);
+						delete(s2);
+					} else {
+						System.out.println(s2.getAfkorting() + "-" + s2.getKnsbnummer() + "-" + s2.getNaam());
+						moveHistToAnotherPlayer(s1, s2);
+						moveHistToAnotherPlayer(s1, s2);
+						store(s2);
+						delete(s1);
 					}
 					System.out.println("\n");
 				}
@@ -282,23 +368,24 @@ public class SpelerDatabase extends ObjectDatabase {
 	}
 
 	/**
-	 * Combine two players into one. Leading is the 'to' player and at the
-	 * end the 'from' player is delete from the database after copying the history
-	 * of  the 'from' the from player
+	 * Combine two players into one. Leading is the 'to' player and at the end
+	 * the 'from' player is delete from the database after copying the history
+	 * of the 'from' the from player
+	 *
 	 * @param fromID
 	 * @param toID
 	 */
 	public void combinePlayers(long fromID, long toID) {
-		 startTransaction();
-		 DBSpeler from = querySingleResult("select s from DBSpeler s where s.id=" + fromID, DBSpeler.class);
-		 DBSpeler to = querySingleResult("select s from DBSpeler s where s.id=80" + toID, DBSpeler.class);
-		 if (to.getKnsbnummer() < 2000000 && from.getKnsbnummer() > 5000000) {
-			 to.setKnsbnummer(from.getKnsbnummer());
-		 }
-		 moveHistToAnotherPlayer(from, to);
-		 store(to);
-		 delete(from);
-		 endTransaction();
+		startTransaction();
+		DBSpeler from = querySingleResult("select s from DBSpeler s where s.id=" + fromID, DBSpeler.class);
+		DBSpeler to = querySingleResult("select s from DBSpeler s where s.id=80" + toID, DBSpeler.class);
+		if (to.getKnsbnummer() < 2000000 && from.getKnsbnummer() > 5000000) {
+			to.setKnsbnummer(from.getKnsbnummer());
+		}
+		moveHistToAnotherPlayer(from, to);
+		store(to);
+		delete(from);
+		endTransaction();
 	}
 
 	/**

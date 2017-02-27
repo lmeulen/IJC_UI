@@ -5,15 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JFrame;
-
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 
 import com.google.gson.Gson;
 
@@ -25,13 +16,11 @@ import nl.detoren.ijc.db.DBHistorie;
 import nl.detoren.ijc.db.DBRonde;
 import nl.detoren.ijc.db.DBSpeler;
 import nl.detoren.ijc.db.DBWedstrijd;
-import nl.detoren.ijc.db.SpelerDatabase;
 import nl.detoren.ijc.db.Kleur;
+import nl.detoren.ijc.db.SpelerDatabase;
 import nl.detoren.ijc.io.GroepenReader;
 import nl.detoren.ijc.ui.control.IJCController;
 import nl.detoren.ijc.ui.control.Status;
-import nl.detoren.ijc.ui.graph.LineGraph;
-import nl.detoren.ijc.ui.graph.XYGraph;
 
 public class SpelerDBImport {
 
@@ -231,57 +220,57 @@ public class SpelerDBImport {
 		// db.showGraph();
 	}
 
-	private void showGraph() {
-		XYGraph g = new XYGraph("Rating verloop", "Ronde", "Rating", true);
-		g.initialize(createXYDataset(new String[] { "FW", "Ma", "TT", "RM", "GT" }));
-		JFrame f = new JFrame();
-		f.add(g);
-		f.setVisible(true);
+//	private void showGraph() {
+//		XYGraph g = new XYGraph("Rating verloop", "Ronde", "Rating", true);
+//		g.initialize(createXYDataset(new String[] { "FW", "Ma", "TT", "RM", "GT" }));
+//		JFrame f = new JFrame();
+//		f.add(g);
+//		f.setVisible(true);
+//
+//		LineGraph g2 = new LineGraph("Rating verloop", "Ronde", "Rating", true);
+//		g2.initialize(createCategoryDataset(new String[] { "FW", "Ma", "TT" }));
+//		JFrame f2 = new JFrame();
+//		f2.add(g2);
+//		f2.setVisible(true);
+//	}
 
-		LineGraph g2 = new LineGraph("Rating verloop", "Ronde", "Rating", true);
-		g2.initialize(createCategoryDataset(new String[] { "FW", "Ma", "TT" }));
-		JFrame f2 = new JFrame();
-		f2.add(g2);
-		f2.setVisible(true);
-	}
-
-	@SuppressWarnings("rawtypes")
-	private XYDataset createXYDataset(String[] afkortingen) {
-		spelerDB.openDatabase();
-		spelerDB.startTransaction();
-		XYSeriesCollection dataset = new XYSeriesCollection();
-		for (String s : afkortingen) {
-			List result = spelerDB
-					.query("select (ronde.periode*10+ronde.ronde), h.rating from DBHistorie h where speler.afkorting = \""
-							+ s + "\"");
-			XYSeries serie = new XYSeries(s);
-			for (int i = 0; i < result.size(); ++i) {
-				Object o[] = (Object[]) result.get(i);
-				serie.add(((Integer) o[0]).intValue(), ((Integer) o[1]).intValue());
-			}
-			dataset.addSeries(serie);
-		}
-		spelerDB.closeDatabase();
-		return dataset;
-	}
-
-	@SuppressWarnings("rawtypes")
-	private CategoryDataset createCategoryDataset(String[] afkortingen) {
-		spelerDB.openDatabase();
-		spelerDB.startTransaction();
-		DefaultCategoryDataset cat = new DefaultCategoryDataset();
-		for (String s : afkortingen) {
-			List result = spelerDB
-					.query("select (ronde.periode*10+ronde.ronde), h.rating from DBHistorie h where speler.afkorting = \""
-							+ s + "\"");
-			for (int i = 0; i < result.size(); ++i) {
-				Object o[] = (Object[]) result.get(i);
-				Double val = new Double(((Integer) o[1]).intValue());
-				cat.addValue((Number) val, s, ((Integer) o[0]).intValue());
-			}
-		}
-		spelerDB.closeDatabase();
-		return cat;
-	}
+//	@SuppressWarnings("rawtypes")
+//	private XYDataset createXYDataset(String[] afkortingen) {
+//		spelerDB.openDatabase();
+//		spelerDB.startTransaction();
+//		XYSeriesCollection dataset = new XYSeriesCollection();
+//		for (String s : afkortingen) {
+//			List result = spelerDB
+//					.query("select (ronde.periode*10+ronde.ronde), h.rating from DBHistorie h where speler.afkorting = \""
+//							+ s + "\"");
+//			XYSeries serie = new XYSeries(s);
+//			for (int i = 0; i < result.size(); ++i) {
+//				Object o[] = (Object[]) result.get(i);
+//				serie.add(((Integer) o[0]).intValue(), ((Integer) o[1]).intValue());
+//			}
+//			dataset.addSeries(serie);
+//		}
+//		spelerDB.closeDatabase();
+//		return dataset;
+//	}
+//
+//	@SuppressWarnings("rawtypes")
+//	private CategoryDataset createCategoryDataset(String[] afkortingen) {
+//		spelerDB.openDatabase();
+//		spelerDB.startTransaction();
+//		DefaultCategoryDataset cat = new DefaultCategoryDataset();
+//		for (String s : afkortingen) {
+//			List result = spelerDB
+//					.query("select (ronde.periode*10+ronde.ronde), h.rating from DBHistorie h where speler.afkorting = \""
+//							+ s + "\"");
+//			for (int i = 0; i < result.size(); ++i) {
+//				Object o[] = (Object[]) result.get(i);
+//				Double val = new Double(((Integer) o[1]).intValue());
+//				cat.addValue((Number) val, s, ((Integer) o[0]).intValue());
+//			}
+//		}
+//		spelerDB.closeDatabase();
+//		return cat;
+//	}
 
 }

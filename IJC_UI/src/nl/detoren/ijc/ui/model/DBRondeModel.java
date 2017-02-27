@@ -38,6 +38,7 @@ public class DBRondeModel extends AbstractTableModel {
 
     private SpelerDatabase database;
     private List<DBRonde> rondes;
+    private int selected = -1;		// -1 is non selected
 
     private String[] columnNames = {"Ronde"};
 
@@ -100,17 +101,29 @@ public class DBRondeModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        return false; //col == 0;
+        return false;
+        //return false; //col == 0;
     }
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        //IJCController.getInstance().setSpelerAanwezigheid(controller.getGroepByID(groepID), row, ((Boolean) value).booleanValue());
         fireTableCellUpdated(row, col);
         component.repaint();
     }
 
     public Object getToolTip(int row, int col) {
         return "";
+    }
+
+    public void setSelectedRonde(int row) {
+    	selected = (row == selected) ? -1 : row;
+    }
+
+    public boolean isSelectedRonde(int row) {
+    	return (row == selected);
+    }
+
+    public DBRonde getSelectedRond() {
+    	return (selected >= 0) ? rondes.get(selected) : null;
     }
 }

@@ -42,10 +42,8 @@ import javax.swing.table.TableColumn;
 
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 
+import nl.detoren.ijc.db.DBRonde;
 import nl.detoren.ijc.db.DBSpeler;
 import nl.detoren.ijc.db.SpelerDatabase;
 import nl.detoren.ijc.ui.control.IJCController;
@@ -235,10 +233,37 @@ public class SpelersScherm extends JFrame {
 				if (!isRowSelected(row)) {
 					c.setBackground(row % 2 == 0 ? Color.WHITE : Color.LIGHT_GRAY);
 				}
+				if (rondeModel.isSelectedRonde(row)) {
+					c.setForeground(Color.BLUE);
+				} else {
+					c.setForeground(Color.BLACK);
+				}
 				return c;
 			}
 		};
 
+		rondesTabel.addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		        int row = rondesTabel.rowAtPoint(evt.getPoint());
+		        int col = rondesTabel.columnAtPoint(evt.getPoint());
+		        if (row >= 0 && col >= 0) {
+		            System.out.println("Clicked on row " + row + ", col " + col + " of rondes");
+		            rondeModel.setSelectedRonde(row);
+		            DBRonde selRonde = rondeModel.getSelectedRond();
+	            	spelersModel.setRonde(selRonde);
+	            	spelersModel.fireTableChanged(null);
+	            	initSizes();
+		            if (selRonde != null) {
+		            	System.out.println("Selected ronde : " + selRonde);
+		            } else {
+		            	System.out.println("Selected ronde : -");
+		            }
+		        }
+		        hoofdPanel.revalidate();
+		        hoofdPanel.repaint();
+		    }
+		});
 		spelersModel = new DBSpelerModel(rondesPane);
 		spelersTabel = new JTable(spelersModel) {
 			private static final long serialVersionUID = -1L;
@@ -326,25 +351,25 @@ public class SpelersScherm extends JFrame {
 		hoofdPanel.repaint();
 	}
 
-	@SuppressWarnings("rawtypes")
-	private XYDataset createXYDataset(List<DBSpeler> spelers) {
-		XYSeriesCollection dataset = new XYSeriesCollection();
-		for (DBSpeler speler : spelers) {
-			List result = db.query("select (ronde.periode*10+ronde.ronde), h.rating "
-					+ "from DBHistorie h where speler.id = " + speler.getId());
-			// Remark bij L.P.Dam 8-2-2017 - Voorstel :
-			// List result = db.query("select (ronde.periode*10+ronde.ronde), h.rating "
-			//		+ "from DBHistorie h where speler.uid = " + speler.getUid());
-			//
-			XYSeries serie = new XYSeries(speler.getAfkorting());
-			for (int i = 0; i < result.size(); ++i) {
-				Object o[] = (Object[]) result.get(i);
-				serie.add(((Integer) o[0]).intValue(), ((Integer) o[1]).intValue());
-			}
-			dataset.addSeries(serie);
-		}
-		return dataset;
-	}
+//	@SuppressWarnings("rawtypes")
+//	private XYDataset createXYDataset(List<DBSpeler> spelers) {
+//		XYSeriesCollection dataset = new XYSeriesCollection();
+//		for (DBSpeler speler : spelers) {
+//			List result = db.query("select (ronde.periode*10+ronde.ronde), h.rating "
+//					+ "from DBHistorie h where speler.id = " + speler.getId());
+//			// Remark bij L.P.Dam 8-2-2017 - Voorstel :
+//			// List result = db.query("select (ronde.periode*10+ronde.ronde), h.rating "
+//			//		+ "from DBHistorie h where speler.uid = " + speler.getUid());
+//			//
+//			XYSeries serie = new XYSeries(speler.getAfkorting());
+//			for (int i = 0; i < result.size(); ++i) {
+//				Object o[] = (Object[]) result.get(i);
+//				serie.add(((Integer) o[0]).intValue(), ((Integer) o[1]).intValue());
+//			}
+//			dataset.addSeries(serie);
+//		}
+//		return dataset;
+//	}
 
 	@SuppressWarnings("rawtypes")
 	private CategoryDataset createCategoryDataset(List<DBSpeler> spelers) {
