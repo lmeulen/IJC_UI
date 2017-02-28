@@ -516,7 +516,7 @@ public class IJCController {
     	logger.log(Level.INFO, "Creeer bestanden met wedstrijden");
     	new OutputExcel().export(status.wedstrijden);
     	new OutputSpeelschema().export(status.wedstrijden);
-        voorspelUitslagen();
+        //voorspelUitslagen();
     }
 
     public ArrayList<Speler> getExterneSpelers() {
