@@ -11,7 +11,7 @@ public class SpelerDatabase extends ObjectDatabase {
 	private final static Logger logger = Logger.getLogger(SpelerDatabase.class.getName());
 
 	private SpelerDatabase() {
-		super("$objectdb/db/spelers.odb");
+		super("db/spelers.odb");
 	}
 
 	public static SpelerDatabase getInstance() {
