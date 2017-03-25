@@ -38,18 +38,6 @@ public class OutputStanden implements GroepenExportInterface {
 			String bestandsnaam = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde() + "Stand";
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
-			// Short variant
-			if (IJCController.c().exportTextLong) {
-				String dirName = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde();
-				new File(dirName).mkdirs();
-
-				FileWriter writer = new FileWriter(dirName + File.separator + bestandsnaam + ".txt");
-				writer.write(uitslag.toPrintableString(false));
-				writer.write(ls + "Stand aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam + ls);
-				writer.close();
-				IJCController.getInstance().setLaatsteExport(dirName + File.separator + bestandsnaam + ".txt");
-			}
-
 			// Long variant
 			if (IJCController.c().exportTextLong) {
 				String dirName = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde();
@@ -60,6 +48,19 @@ public class OutputStanden implements GroepenExportInterface {
 				writer.close();
 				IJCController.getInstance().setLaatsteExport(dirName + File.separator + bestandsnaam + "-long.txt");
 			}
+
+			// Short variant
+			if (IJCController.c().exportTextShort) {
+				String dirName = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde();
+				new File(dirName).mkdirs();
+
+				FileWriter writer = new FileWriter(dirName + File.separator + bestandsnaam + ".txt");
+				writer.write(uitslag.toPrintableString(false));
+				writer.write(ls + "Stand aangemaakt met " + IJCController.c().appTitle + " voor " + IJCController.c().verenigingNaam + ls);
+				writer.close();
+				IJCController.getInstance().setLaatsteExport(dirName + File.separator + bestandsnaam + ".txt");
+			}
+			
 			// GSON variant
 			Gson gson = new Gson();
 			String dirName = "R" + uitslag.getPeriode() + "-" + uitslag.getRonde();
