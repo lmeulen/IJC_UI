@@ -10,6 +10,7 @@
  * See: http://www.gnu.org/licenses/gpl-3.0.html
  *
  * Problemen in deze code:
+ * - Complexe wijze voor formatteren getallen, overgaan op String.format(...)
  */
 package nl.detoren.ijc.io;
 
@@ -33,6 +34,7 @@ import nl.detoren.ijc.ui.control.IJCController;
 public class OutputOSBO implements WedstrijdenExportInterface {
 
 	private final static Logger logger = Logger.getLogger(OutputOSBO.class.getName());
+    private static String ls = System.lineSeparator();
 
 	DecimalFormat int3p;
 
@@ -49,7 +51,7 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 	 */
 	public boolean export(Wedstrijden wedstrijden) {
 		try {
-			String bestandsnaam = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde() + "OSBO.txt";
+			String bestandsnaam = "OSBO " + IJCController.c().verenigingNaam + " P" + wedstrijden.getPeriode() + "R" + wedstrijden.getRonde() + ".txt";
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
 			OSBOResultaat resultaat = maakOSBOData(wedstrijden);
@@ -74,17 +76,17 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 
 	private String getHeader(int periode, int ronde, int regels) {
 		String result = "";
-		result += "012 OSBO " + IJCController.c().competitieNaam + ", ronde " + ronde + ", periode " + periode + "\n";
-		result += "022 " + IJCController.c().competitieLocatie + "\n";
-		result += "032 NED\n" + "033 OSBO\n" + "034 \n";
+		result += "012 OSBO " + IJCController.c().competitieNaam + ", ronde " + ronde + ", periode " + periode + ls;
+		result += "022 " + IJCController.c().competitieLocatie + ls;
+		result += "032 NED" + ls + "033 OSBO" + ls + "034 " + ls;
 		String datum = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-		result += "042 " + datum + "\n" + "052 " + datum + "\n" + "062 " + regels + "\n";
-		result += "102 " + IJCController.c().contactPersoonNaam + " " + IJCController.c().contactPersoonEmail + "\n";
-		result += "122 15 tot 60 min pppp\n" + "\n";
+		result += "042 " + datum + ls + "052 " + datum + ls + "062 " + regels + ls;
+		result += "102 " + IJCController.c().contactPersoonNaam + " " + IJCController.c().contactPersoonEmail + ls;
+		result += "122 15 tot 60 min pppp" + ls + ls;
 		result += "132                                                                                        ";
 		String datum2 = new SimpleDateFormat("yy.MM.dd").format(Calendar.getInstance().getTime());
-		result += datum2 + "  " + datum2 + "\n\n\n";
-		result += "DDD-SSSS sTTT NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN RRRR FFF IIIIIIIIIII yyyy/mm/dd PPPP RRRR  1111 1 1  2222 2 2  3333 3 3  4444 4 4  5555 5 5  6666 6 6  7777 7 7  8888 8 8  9999 9 9\n";
+		result += datum2 + "  " + datum2 + ls + ls + ls;
+		result += "DDD-SSSS sTTT NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN RRRR FFF IIIIIIIIIII yyyy/mm/dd PPPP RRRR  1111 1 1  2222 2 2  3333 3 3  4444 4 4  5555 5 5  6666 6 6  7777 7 7  8888 8 8  9999 9 9" + ls;
 		return result;
 	}
 
@@ -94,13 +96,17 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 			Speler wit = w.getWit();
 			Speler zwart = w.getZwart();
 			if (wit.isKNSBLid() && zwart.isKNSBLid()) {
+				// Bepaal spelers
 				int witID = resultaat.getSpelerIDfromKNSB(wit.getKNSBnummer());
 				witID = (witID > 0) ? witID : resultaat.addSpeler(new OSBOSpeler(wit.getKNSBnummer(), wit.getNaam()));
 				int zwartID = resultaat.getSpelerIDfromKNSB(zwart.getKNSBnummer());
-				zwartID = (zwartID > 0) ? zwartID
-						: resultaat.addSpeler(new OSBOSpeler(zwart.getKNSBnummer(), zwart.getNaam()));
+				zwartID = (zwartID > 0) ? zwartID : resultaat.addSpeler(new OSBOSpeler(zwart.getKNSBnummer(), zwart.getNaam()));
+				// Bepaal ronde
+				int ronde = Math.max(resultaat.getSpeler(witID).getLaatsteRonde(), resultaat.getSpeler(zwartID).getLaatsteRonde());
+				ronde++;
 				// witwedstrijd
 				OSBOWedstrijd wedstrijdWit = new OSBOWedstrijd();
+				wedstrijdWit.ronde = ronde;
 				wedstrijdWit.tegenstander = zwartID;
 				wedstrijdWit.kleur = "w";
 				wedstrijdWit.dblResultaat = (w.getUitslag() == 1) ? 1.0 : ((w.getUitslag() == 2) ? 0.0 : 0.5);
@@ -108,6 +114,7 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 				resultaat.getSpeler(witID).addWedstrijd(wedstrijdWit);
 				// zwart wedstrijd
 				OSBOWedstrijd wedstrijdZwart = new OSBOWedstrijd();
+				wedstrijdZwart.ronde = ronde;
 				wedstrijdZwart.tegenstander = witID;
 				wedstrijdZwart.kleur = "z";
 				wedstrijdZwart.dblResultaat = (w.getUitslag() == 1) ? 0.0 : ((w.getUitslag() == 2) ? 1.0 : 0.5);
@@ -134,12 +141,16 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 		result += "NED     " + speler.KNSB + "             ";
 		result += String.format("%3.1f", speler.getPunten()) + "  ";
 		result += int3p.format(speler.nr).replaceAll("\\G0", " ");
-		for (OSBOWedstrijd w : speler.wedstrijden) {
-			if (w != null)
+		for (int i = 1; i <= 10; i++) {
+			OSBOWedstrijd w = speler.getRonde(i);
+			if (w != null) {
 				result += "   " + int3p.format(w.tegenstander).replaceAll("\\G0", " ") + " " + w.kleur + " "
 						+ w.strResultaat;
+			} else {
+				result += "          ";
+			}
 		}
-		return result + "\n";
+		return result.trim() + ls;
 	}
 
 	class OSBOResultaat {
@@ -176,7 +187,7 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 		public int nr;
 		public int KNSB;
 		public String naam;
-		public OSBOWedstrijd[] wedstrijden = new OSBOWedstrijd[10];
+		public ArrayList<OSBOWedstrijd> wedstrijden = new ArrayList<>();
 
 		public OSBOSpeler(int knsb, String naam) {
 			KNSB = knsb;
@@ -184,29 +195,38 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 		}
 
 		public void addWedstrijd(OSBOWedstrijd w) {
-			for (int i = 0; i < 10; i++) {
-				if (wedstrijden[i] == null) {
-					wedstrijden[i] = w;
-					return;
-				}
-			}
+			wedstrijden.add(w);
 		}
 
 		public double getPunten() {
 			double punten = 0;
-			for (int i = 0; i < 10; i++) {
-				if (wedstrijden[i] != null) {
-					punten += wedstrijden[i].dblResultaat;
-				}
-			}
+			for (OSBOWedstrijd w : wedstrijden)
+				punten += w.dblResultaat;
 			return punten;
+		}
+
+		public int getLaatsteRonde() {
+			int result = 0;
+			for (OSBOWedstrijd w : wedstrijden) {
+				result = (w.ronde > result) ? w.ronde : result;
+			}
+			return result;
+		}
+
+		public OSBOWedstrijd getRonde(int ronde) {
+			for (OSBOWedstrijd w : wedstrijden) {
+				if (w.ronde == ronde)
+					return w;
+			}
+			return null;
 		}
 	}
 
 	class OSBOWedstrijd {
+		public int ronde;
 		public int tegenstander;
 		public String kleur;
 		public String strResultaat; // '0'=verlies, '1'=winst, '='=gelijk
-		public double dblResultaat; // 0 = veriies, 1 = winst, 0.5 = gelijk
+		public double dblResultaat; // 0 = verlies, 1 = winst, 0.5 = gelijk
 	}
 }
