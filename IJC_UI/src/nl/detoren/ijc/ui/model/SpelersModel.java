@@ -150,6 +150,7 @@ public class SpelersModel extends AbstractTableModel {
             tt += tgn + " ";
         }
         tt += "</TD></TR>";
+        tt += "<TR><TD>Historie </TD><TD>" + speler.getSpeelgeschiedenis() + "</TD></TR>";
         tt += "</TABLE></HTML>";
         return tt;
     }

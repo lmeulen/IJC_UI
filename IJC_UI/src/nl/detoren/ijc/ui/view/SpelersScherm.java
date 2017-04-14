@@ -375,16 +375,15 @@ public class SpelersScherm extends JFrame {
 	private CategoryDataset createCategoryDataset(List<DBSpeler> spelers) {
 		DefaultCategoryDataset cat = new DefaultCategoryDataset();
 		for (DBSpeler speler : spelers) {
-			List result = db.query("select (ronde.periode*10+ronde.ronde), h.rating "
-					+ "from DBHistorie h where speler.id = " + speler.getId());
-			// Remark bij L.P.Dam 8-2-2017 - Voorstel :
-			// List result = db.query("select (ronde.periode*10+ronde.ronde), h.rating "
-			//		+ "from DBHistorie h where speler.uid = " + speler.getUid());
-			//
+			List result = db.query("select ronde.periode, ronde.ronde, h.rating "
+					+ "from DBHistorie h where speler.id = " + speler.getId() +
+					" ORDER BY ronde.periode ASC, ronde.ronde ASC");
 			for (int i = 0; i < result.size(); ++i) {
 				Object o[] = (Object[]) result.get(i);
-				Double val = new Double(((Integer) o[1]).intValue());
-				cat.addValue((Number) val, speler.getAfkorting(), ((Integer) o[0]).intValue());
+				Double val = new Double(((Integer) o[2]).intValue());
+				String label = o[0].toString() + "." + o[1].toString();
+//				cat.addValue((Number) val, speler.getAfkorting(), ((Integer) o[0]).intValue());
+				cat.addValue((Number) val, speler.getAfkorting(), label);
 			}
 		}
 		return cat;
