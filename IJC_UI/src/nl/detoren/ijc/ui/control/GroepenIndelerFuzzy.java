@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import nl.detoren.ijc.Configuratie;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
@@ -518,6 +519,9 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		 * Een speler van de eigen groep weegt 0 Een speler van de hogere groep
 		 * weegt 80
 		 *
+		 * Voorwaarde 5: Als alternatief voorwaarde 2 kan deze voorwaarde dienen.
+		 * Geen speler die veel meer/minder punten IJC punten heeft
+		 * 
 		 * De vierkante matrices met dimensie (aantal spelers,aantal spelers)
 		 * worden bij elkaar opgesteld. Dit genereert een matrix met integers.
 		 * Deze wordt hierna geoptimaliseerd door de diagonaal (is al nul) en de
@@ -531,11 +535,13 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		int matrix2[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix3[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix4[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
+		int matrix5[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		double mf1 = IJCController.c().fuzzyWegingAndereTegenstander;		// Niet tegen dezelfde tegenstander
 		double mf2 = IJCController.c().fuzzyWegingAfstandRanglijst;			// Verschil in positie op de ranglijst
 		double mf3 = IJCController.c().fuzzyWegingZwartWitVerdeling;		// Zwart/wit verdeling
 		double mf4 = IJCController.c().fuzzyWegingDoorschuiverEigenGroep;	// Doorschuivers voorkeur voor eigen groep
+		double mf5 = IJCController.c().fuzzyWegingAfstandRanglijstpunten;	// Doorschuivers voorkeur voor eigen groep
 		int i, j, weging = 0;
 		int tegenstanders[] = new int[4];
 		// matrix1 : Niet tegen dezelfde tegenstander
@@ -868,10 +874,61 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		}
 		Utils.printMatrix(matrix4);
 		//
-
+		// matrix5 : Geen speler die een veel hoger of lager aantal rankingpunten heeft.
+		System.out.print("Initializing Matrix5\n");
+		i = 1;
+		for (Speler s1 : wedstrijdgroep.getSpelers()) {
+			matrix5[i-1][0] = s1.getId();
+			j = 1;
+			for (Speler s2: wedstrijdgroep.getSpelers()){
+				weging = 0;
+				if (i == j) {
+					weging = 0;
+				} else {
+					//System.out.print(String.format("Speler %s met %s punten en Speler %s met %s punten schelen %s punten.\r\n", s1.getNaam(), s1.getPunten(), s2.getNaam(), s2.getPunten(), Math.max(0,Math.abs(s1.getPunten()-s2.getPunten()))));
+					switch (Math.max(0,Math.abs(s1.getPunten()-s2.getPunten()))) {
+					case 0:
+						weging = 0;
+						break;
+					case 1:
+						weging = 5;
+						break;
+					case 2:
+						weging = 15;
+						break;
+					case 3:
+						weging = 25;
+						break;
+					case 4:
+						weging = 40;
+						break;
+					case 5:
+						weging = 70;
+						break;
+					case 6:
+						weging = 90;
+						break;
+					default:
+						weging =100;
+						break;
+					}
+				}
+				matrix5[i - 1][j] = weging;
+				//System.out.print(String.format("matrix5[%d-1][%d] = %d%n",i,j,weging));
+				j++;
+			}
+			i++;
+		}
+		Utils.printMatrix(matrix5);
 		matrix = Utils.add2DArrays(mf1, matrix1, mf2, matrix2);
+		if (IJCController.c().fuzzyRanglijstpunten) {
+			matrix = Utils.add2DArrays(mf1, matrix1, mf5, matrix5);
+		} else {
+			matrix = Utils.add2DArrays(mf1, matrix1, mf2, matrix2);
+		}
 		matrix = Utils.add2DArrays(1, matrix, mf3, matrix3);
 		matrix = Utils.add2DArrays(1, matrix, mf4, matrix4);
+		//matrix = Utils.add2DArrays(1, matrix, mf5, matrix5);
 		System.out.print("Output Matrix\n");
 		Utils.printMatrix(matrix);
 		return matrix;

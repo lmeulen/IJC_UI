@@ -290,6 +290,12 @@ public class Configuratie {
 	public boolean fuzzyOneven = false;
 
 	/**
+	 * Fuzzy ranglijstpunten wordt gebruikt indien waarde 'true'.
+	 * Gebruik in fuzzyroutine puntenranglijst ipv ranglijst.
+	 */
+	public boolean fuzzyRanglijstpunten = false;
+
+	/**
 	 * Wegingsfactor voor fuzzy algoritme. Waarde tussen 0.0 en 1.0
 	 * Deze parameter bepaald hoe zwaar het meeweegt dat er tegen een
 	 * nieuwe tegenstander wordt gespeeld
@@ -302,6 +308,13 @@ public class Configuratie {
 	 * tegenstander wordt gespeeld die vlakbij op de ranglijst staat
 	 */
 	public double fuzzyWegingAfstandRanglijst = 0.98;
+
+	/**
+	 * Wegingsfactor voor fuzzy algoritme. Waarde tussen 0.0 en 1.0
+	 * Deze parameter bepaald hoe zwaar het meeweegt dat er tegen een
+	 * tegenstander wordt gespeeld die met meer/minder punten op de ranglijst staat.
+	 */
+	public double fuzzyWegingAfstandRanglijstpunten = 0.98;
 
 	/**
 	 * Wegingsfactor voor fuzzy algoritme. Waarde tussen 0.0 en 1.0

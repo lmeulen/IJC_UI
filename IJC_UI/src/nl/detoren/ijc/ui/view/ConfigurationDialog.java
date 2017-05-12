@@ -78,8 +78,10 @@ public class ConfigurationDialog extends JDialog {
 	private JTextField tfStatusfile;
 	private JCheckBox cbFuzzyIndeling;
 	private JCheckBox cbFuzzyTrio;
+	private JCheckBox cbFuzzyPunten;
 	private JTextField tfFuzzyAndereTgn;
 	private JTextField tfFuzzyRanglijst;
+	private JTextField tfFuzzyRanglijstpunten;
 	private JTextField tfFuzzyZwartWit;
 	private JTextField tfFuzzyDoorschuiver;
 
@@ -238,7 +240,7 @@ public class ConfigurationDialog extends JDialog {
 
 	public JPanel createPanelIndeling() {
 		JPanel panel = new JPanel(false);
-		panel.setLayout(new ExtendedGridLayout(20, 2));
+		panel.setLayout(new ExtendedGridLayout(22, 2));
 
 		// private String grAantalDoorschuivers = "if (y >= 4) { if (y < 8) {
 		panel.add(new JLabel("Aantal doorschuivers"));
@@ -289,6 +291,9 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Fuzzy oneven (experimenteel)"));
 		cbFuzzyTrio = new JCheckBox("", config.fuzzyOneven);
 		panel.add(cbFuzzyTrio);
+		panel.add(new JLabel("Fuzzy Ranglijst punten ipv Ranglijst (experimenteel)"));
+		cbFuzzyPunten = new JCheckBox("", config.fuzzyRanglijstpunten);
+		panel.add(cbFuzzyPunten);
 		panel.add(new JLabel(" "));
 		panel.add(new JLabel(" "));
 		// public double fuzzyWegingAndereTegenstander = 1.0;
@@ -299,6 +304,10 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Weging Afstand op ranglijst"));
 		tfFuzzyRanglijst = new JTextField((new Double(config.fuzzyWegingAfstandRanglijst)).toString());
 		panel.add(tfFuzzyRanglijst);
+		// public double fuzzyWegingAfstandRanglijstpunten = 1.0;
+		panel.add(new JLabel("Weging Verschil op ranglijst in punten"));
+		tfFuzzyRanglijstpunten = new JTextField((new Double(config.fuzzyWegingAfstandRanglijstpunten)).toString());
+		panel.add(tfFuzzyRanglijstpunten);
 		// public double fuzzyWegingZwartWitVerdeling = 1.0;
 		panel.add(new JLabel("Weging Zwart/Wit verdeling"));
 		tfFuzzyZwartWit = new JTextField((new Double(config.fuzzyWegingZwartWitVerdeling)).toString());
@@ -427,8 +436,10 @@ public class ConfigurationDialog extends JDialog {
 		updateTextConfig(config, "configuratieBestand", tfConfigfile.getText(), 5);
 		updateTextConfig(config, "statusBestand", tfStatusfile.getText(), 5);
 		config.fuzzyOneven = cbFuzzyTrio.isSelected();
+		config.fuzzyRanglijstpunten = cbFuzzyPunten.isSelected();
 		updateDoubleConfig(config, "fuzzyWegingAndereTegenstander", tfFuzzyAndereTgn.getText(), 0.0, 1.0);
 		updateDoubleConfig(config, "fuzzyWegingAfstandRanglijst", tfFuzzyRanglijst.getText(), 0.0, 1.0);
+		updateDoubleConfig(config, "fuzzyWegingAfstandRanglijstpunten", tfFuzzyRanglijstpunten.getText(), 0.0, 1.0);
 		updateDoubleConfig(config, "fuzzyWegingZwartWitVerdeling", tfFuzzyZwartWit.getText(), 0.0, 1.0);
 		updateDoubleConfig(config, "fuzzyWegingDoorschuiverEigenGroep", tfFuzzyDoorschuiver.getText(), 0.0, 1.0);
 
