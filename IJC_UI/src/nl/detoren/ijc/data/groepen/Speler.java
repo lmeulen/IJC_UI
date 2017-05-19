@@ -517,6 +517,7 @@ public class Speler implements Cloneable {
      * @return
      */
     public int gespeeldTegen(Speler speler2) {
+    	if (speler2 == null) return 99;
         String ini = speler2.getInitialen();
         // ff checken dat het niet de speler zelf is ;-)
         if (initialen.equals(ini)) return 0;

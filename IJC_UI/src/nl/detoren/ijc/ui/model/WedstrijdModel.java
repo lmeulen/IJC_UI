@@ -173,6 +173,8 @@ public class WedstrijdModel extends AbstractTableModel {
             	wit = controller.getSpelerOpNaam(wit.getNaam());
             	Speler zwart = wedstrijd.getZwart();
             	zwart = controller.getSpelerOpNaam(zwart.getNaam());
+            	if ((wit == null) || (zwart == null))
+            			return 99;
             	return Math.min(wit.gespeeldTegen(zwart), zwart.gespeeldTegen(wit));
             }
         }
