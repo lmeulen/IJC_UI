@@ -918,8 +918,27 @@ public class Hoofdscherm extends JFrame {
 				// Alternatief font bij dubbele wedstrijden
 				if (model.isDubbeleWedstrijd(row)) {
 					c.setForeground(Color.RED);
-				} else if (model.isEerderGespeeld(row) < 99) {
-					c.setForeground(Color.BLUE);
+				} else 
+					if (model.isEerderGespeeld(row) < 99) {
+					//c.setForeground(Color.BLUE);
+					Color indigo = new Color(75,0,130);
+					Color purple = new Color(128,0,128);
+					Color violetred = new Color(199,21,133);
+					Color deeppink = new Color(255,20,147);
+					switch (model.isEerderGespeeld(row)) {
+					case 1:
+						c.setForeground(indigo);
+						break;
+					case 2:
+						c.setForeground(purple);
+						break;
+					case 3:
+						c.setForeground(violetred);
+						break;
+					case 4:
+						c.setForeground(deeppink);
+						break;
+					}
 				} else {
 					c.setForeground(Color.BLACK);
 				}
