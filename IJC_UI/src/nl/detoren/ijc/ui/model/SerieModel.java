@@ -117,13 +117,13 @@ public class SerieModel extends AbstractTableModel {
 		case 0:
 			return new Integer(ws.getWit().getId());
 		case 1:
-			return ws.getWit().getNaam();
+			return ws.getWit().getNaam().substring(0, Math.min(14, ws.getWit().getNaam().length())) + " (" + ws.getWit().getRating() + ")";
 		case 2:
 			return "-";
 		case 3:
 			return new Integer(ws.getZwart().getId());
 		case 4:
-			return ws.getZwart().getNaam();
+			return ws.getZwart().getNaam().substring(0, Math.min(14, ws.getZwart().getNaam().length())) + " (" + ws.getZwart().getRating() + ")";
 		default:
 			return null;
 		}

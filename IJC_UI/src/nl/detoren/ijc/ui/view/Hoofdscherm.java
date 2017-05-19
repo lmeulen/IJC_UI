@@ -603,19 +603,19 @@ public class Hoofdscherm extends JFrame {
 			fixedComponentSize(leftScrollPane[i], 320, 500);
 			fixedComponentSize(centerLeftScrollPane[i], 320, 500);
 			fixedComponentSize(centerRightScrollPane[i], 320, 500);
-			fixedComponentSize(aanwezigheidsTabel[i], 320, 475);
-			fixedComponentSize(wedstrijdspelersTabel[i], 320, 475);
+			fixedComponentSize(aanwezigheidsTabel[i], 320, 675);
+			fixedComponentSize(wedstrijdspelersTabel[i], 320, 675);
 			fixedComponentSize(wedstrijdenTabel[i], 320, 475);
 			// Fix the size of the displayed tables
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(0), 40);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(1), 25);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(2), 140);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(3), 25);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(4), 43);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(5), 45);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(0), 38);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(1), 22);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(2), 135);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(3), 22);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(4), 40);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(5), 42);
 
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(0), 17);
-			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(1), 138);
+			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(1), 125);
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(2), 33);
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(3), 20);
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(4), 20);
@@ -918,6 +918,8 @@ public class Hoofdscherm extends JFrame {
 				// Alternatief font bij dubbele wedstrijden
 				if (model.isDubbeleWedstrijd(row)) {
 					c.setForeground(Color.RED);
+				} else if (model.isEerderGespeeld(row) < 99) {
+					c.setForeground(Color.BLUE);
 				} else {
 					c.setForeground(Color.BLACK);
 				}
