@@ -918,6 +918,8 @@ public class Hoofdscherm extends JFrame {
 				// Alternatief font bij dubbele wedstrijden
 				if (model.isDubbeleWedstrijd(row)) {
 					c.setForeground(Color.RED);
+				} else if (model.isEerderGespeeld(row) < 99) {
+					c.setForeground(Color.BLUE);
 				} else {
 					c.setForeground(Color.BLACK);
 				}

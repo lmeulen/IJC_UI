@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 import nl.detoren.ijc.ui.control.IJCController;
 
 /**
- * Dit object bevat de gegevens van één speler
+ * Dit object bevat de gegevens van ï¿½ï¿½n speler
  *
  * @author Leo van der Meulen
  */
@@ -508,6 +508,24 @@ public class Speler implements Cloneable {
             }
         }
         return false;
+    }
+
+    /**
+     * Retourneert aantal wedstrijden terug dat tegen een tegenstander is gespeeld
+     * Retourneert 99 als niet gevonden
+     * @param speler2
+     * @return
+     */
+    public int gespeeldTegen(Speler speler2) {
+        String ini = speler2.getInitialen();
+        // ff checken dat het niet de speler zelf is ;-)
+        if (initialen.equals(ini)) return 0;
+        for (int i = 0; i < tegenstanders.length; ++i) {
+            if (tegenstanders[i].length() >= 2 && tegenstanders[i].substring(0, 2).equals(ini)) {
+                return i;
+            }
+        }
+        return 99;
     }
 
     public void addTegenstander(String tgn) {

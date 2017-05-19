@@ -8,7 +8,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
  * - ...
  */
@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.table.AbstractTableModel;
 
+import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
@@ -31,7 +32,7 @@ import nl.detoren.ijc.ui.control.IJCController;
 public class WedstrijdModel extends AbstractTableModel {
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private IJCController controller = null;
@@ -157,9 +158,24 @@ public class WedstrijdModel extends AbstractTableModel {
             		if ((i != row) && (wedstrijdnummer == wedstrijd2.getWedstrijdnummer())) {
             			return true;
             		}
-            	} 
+            	}
             }
         }
         return false;
+    }
+
+    public int isEerderGespeeld(int row) {
+        ArrayList<Wedstrijd> wedstrijden = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getWedstrijden();
+		if (row < wedstrijden.size()) {
+            Wedstrijd wedstrijd = wedstrijden.get(row);
+            if (wedstrijd != null) {
+            	Speler wit = wedstrijd.getWit();
+            	wit = controller.getSpelerOpNaam(wit.getNaam());
+            	Speler zwart = wedstrijd.getZwart();
+            	zwart = controller.getSpelerOpNaam(zwart.getNaam());
+            	return Math.min(wit.gespeeldTegen(zwart), zwart.gespeeldTegen(wit));
+            }
+        }
+        return 99;
     }
 }
