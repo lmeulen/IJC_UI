@@ -126,11 +126,12 @@ public class WedstrijdschemaDialoog extends JDialog {
         leftScrollPane.setViewportView(spelersTabel);
         Utils.fixedComponentSize(leftScrollPane, 340, 500);
         Utils.fixedColumSize(spelersTabel.getColumnModel().getColumn(0), 20);
-        Utils.fixedColumSize(spelersTabel.getColumnModel().getColumn(1), 160);
+        Utils.fixedColumSize(spelersTabel.getColumnModel().getColumn(1), 140);
         Utils.fixedColumSize(spelersTabel.getColumnModel().getColumn(2), 40);
         Utils.fixedColumSize(spelersTabel.getColumnModel().getColumn(3), 40);
         Utils.fixedColumSize(spelersTabel.getColumnModel().getColumn(4), 40);
         Utils.fixedColumSize(spelersTabel.getColumnModel().getColumn(5), 40);
+        Utils.fixedColumSize(spelersTabel.getColumnModel().getColumn(6), 20);
 
         panel.add(leftScrollPane, BorderLayout.LINE_START);
 

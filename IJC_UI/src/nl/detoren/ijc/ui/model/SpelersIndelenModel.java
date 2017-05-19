@@ -8,16 +8,19 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * See: http://www.gnu.org/licenses/gpl-3.0.html
- *  
+ *
  * Problemen in deze code:
- * - ... 
+ * - ...
  * - ...
  */
 package nl.detoren.ijc.ui.model;
 
 import javax.swing.JComponent;
 import javax.swing.table.AbstractTableModel;
+
 import nl.detoren.ijc.data.groepen.Speler;
+import nl.detoren.ijc.data.wedstrijden.Groepswedstrijden;
+import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.ui.control.IJCController;
 
 /**
@@ -27,14 +30,14 @@ import nl.detoren.ijc.ui.control.IJCController;
 public class SpelersIndelenModel extends AbstractTableModel {
 
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private int groepID;
     private IJCController controller = null;
     private JComponent component;
 
-    private String[] columnNames = {" ", "Naam", "T1", "T2", "T3", "T4"};
+    private String[] columnNames = {" ", "Naam", "T1", "T2", "T3", "T4", "#"};
 
     public SpelersIndelenModel() {
         this(0, null);
@@ -59,6 +62,7 @@ public class SpelersIndelenModel extends AbstractTableModel {
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case 0:
+            case 6:
                 return Integer.class;
             default:
                 return String.class;
@@ -100,6 +104,15 @@ public class SpelersIndelenModel extends AbstractTableModel {
                 return speler.getTegenstanders()[2];
             case 5:
                 return speler.getTegenstanders()[3];
+            case 6:
+            	Groepswedstrijden groep = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID);
+            	int aantal = 0;
+            	for (Wedstrijd w :groep.getWedstrijden()) {
+            		if (w.getWit().equals(speler) || w.getZwart().equals(speler))
+            			aantal++;
+            	}
+
+            	return aantal;
             default:
                 return "";
         }
