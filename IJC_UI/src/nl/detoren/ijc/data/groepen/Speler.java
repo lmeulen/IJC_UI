@@ -394,6 +394,17 @@ public class Speler implements Cloneable {
     	return result;
     }
 
+    public String toPrintableString(boolean lang, boolean noids) {
+    	String result = "";
+    	if (noids) {
+    		result += "   " + toPrintableStringShortt();
+    	} else {    	
+    		result += toPrintableStringShort();
+    	}
+    	if (lang) result += printExtensie();
+    	return result;
+    }
+    
     public String toPrintableStringShort() {
         //16. Iva  Binnendijk                (Iv)* w1 ( 296)   RM Ja SW **    17
         String result;
@@ -402,9 +413,15 @@ public class Speler implements Cloneable {
         if (result.length() == 1) {
             result = "0" + result;
         }
+        result +=  ". " + toPrintableStringShortt();
+        return result;
+    }
+    
+    public String toPrintableStringShortt() {
+        String result;
         // Naam
-        result += ". " + naam.trim();
-        while (result.length() < 35) {
+        result = naam.trim();
+        while (result.length() < 31) {
             result += " ";
         }
         // Initialen

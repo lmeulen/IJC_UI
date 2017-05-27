@@ -80,16 +80,16 @@ public class OutputIntekenlijst implements GroepenExportInterface {
 						if (ndoor > 1) {
 						for (int j = 0; j < ndoor; j++) {
 							Speler s = lager.getSpelerByID(j + 1);
-							run.setText(s.toPrintableString(false) + "\n");
+							run.setText(s.toPrintableString(false, true) + "\n");
 							run.addBreak();
 						}
 						run.setText(IJCController.c().exportDoorschuiversStop + "\n" + "\n");
 						} else {
-							// Bij één doorschuiver, alleen doorschuiVen als kampioen
+							// Bij ï¿½ï¿½n doorschuiver, alleen doorschuiVen als kampioen
 							Speler s1 = lager.getSpelerByID(1);
 							Speler s2 = lager.getSpelerByID(2);
 							if ((s2 != null) && ((s1.getPunten() - s2.getPunten()) > 4)) {
-								run.setText(s1.toPrintableString(false) + "\n");
+								run.setText(s1.toPrintableString(false, true) + "\n");
 								run.addBreak();
 							}
 
