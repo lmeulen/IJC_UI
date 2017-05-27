@@ -1,0 +1,1 @@
+java -jar IJC_UI.jar > IJC_UI.log 2>&1 

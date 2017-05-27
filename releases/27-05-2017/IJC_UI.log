@@ -1,0 +1,790 @@
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.IJC_Wedstrijden main
+INFO: Opstarten controller
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.IJCController leesStatusBestand
+INFO: Lees status
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.IJCController leesStatus
+INFO: Lees status uit bestand status.json
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.IJCController leesConfiguratie
+INFO: Lees configuratie uit bestand configuratie.json
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.IJCController leesStatusBestand
+INFO: Status bestand niet ingelezen
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.IJCController leesGroepen
+INFO: Lees groepen in TXT formaat uit uitslag.txt
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.io.GroepenReader leesGroepen
+INFO: Lezen groepen in TXT formaat uit : uitslag.txt
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.IJCController leesGroepen
+WARNING: Geens statusbestand gelezen
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.IJCController resetAanwezigheidspunt
+INFO: Eerste ronde van een periode; reset aanwezigheidspunt
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.IJCController maakGroepsindeling
+INFO: Maak groepsindeling
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Maken groepsindeling voor alle groepen
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Groepsindeling voor periode 1, ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Pionnengroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Paardengroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Lopergroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Torengroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Damegroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Koningsgroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Keizergroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Hernummeren van spelers
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.IJCController maakWedstrijden
+INFO: Maak wedstrijden voor alle groepen
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Pionnengroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Pionnengroep periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Pionnengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Pionnengroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Pionnengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Pionnengroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Pionnengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Pionnengroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Pionnengroep voor deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Pionnengroep na deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Paardengroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Paardengroep periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Paardengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Paardengroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Paardengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Paardengroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Paardengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Paardengroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Paardengroep voor deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Paardengroep na deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Lopergroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Lopergroep periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Lopergroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Lopergroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Lopergroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Lopergroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Lopergroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Lopergroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Lopergroep voor deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Lopergroep na deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Torengroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Torengroep periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Torengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Torengroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Torengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Torengroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Torengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Torengroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Torengroep voor deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Torengroep na deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Damegroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Damegroep periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Damegroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Damegroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Damegroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Damegroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Damegroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Damegroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Damegroep voor deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Damegroep na deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Koningsgroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Koningsgroep periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Koningsgroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Koningsgroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Koningsgroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Koningsgroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Koningsgroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Koningsgroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Koningsgroep voor deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Koningsgroep na deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Keizergroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Keizergroep periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Keizergroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Keizergroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Keizergroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Keizergroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Keizergroep voor deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Keizergroep na deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+
+Wedstrijden Periode 1 Ronde 1
+-----------
+  Pionnengroep
+    Totale afstand : 0
+  Paardengroep
+    Totale afstand : 0
+  Lopergroep
+    Totale afstand : 0
+  Torengroep
+    Totale afstand : 0
+  Damegroep
+    Totale afstand : 0
+  Koningsgroep
+    Totale afstand : 0
+  Keizergroep
+    Totale afstand : 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.IJCController maakWedstrijden
+INFO: Maak wedstrijden voor alle groepen
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Pionnengroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Pionnengroep periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Pionnengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Pionnengroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Pionnengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Pionnengroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Pionnengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Pionnengroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Pionnengroep voor deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Pionnengroep na deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Paardengroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Paardengroep periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Paardengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Paardengroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Paardengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Paardengroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Paardengroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Paardengroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Paardengroep voor deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Paardengroep na deze ronde is 0.0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Lopergroep
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Lopergroep periode 1 ronde 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Lopergroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Lopergroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Lopergroep met grootte 0
+mei 27, 2017 6:18:25 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Lopergroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Lopergroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Lopergroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Lopergroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Lopergroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Torengroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Torengroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Torengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Torengroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Torengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Torengroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Torengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Torengroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Torengroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Torengroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Damegroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Damegroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Damegroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Damegroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Damegroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Damegroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Damegroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Damegroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Damegroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Damegroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Koningsgroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Koningsgroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Koningsgroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Koningsgroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Koningsgroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Koningsgroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Koningsgroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Koningsgroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Koningsgroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Koningsgroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Keizergroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Keizergroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Keizergroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Keizergroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Keizergroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Keizergroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Keizergroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Keizergroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+
+Wedstrijden Periode 1 Ronde 1
+-----------
+  Pionnengroep
+    Totale afstand : 0
+  Paardengroep
+    Totale afstand : 0
+  Lopergroep
+    Totale afstand : 0
+  Torengroep
+    Totale afstand : 0
+  Damegroep
+    Totale afstand : 0
+  Koningsgroep
+    Totale afstand : 0
+  Keizergroep
+    Totale afstand : 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.IJCController maakGroepsindeling
+INFO: Maak groepsindeling
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Maken groepsindeling voor alle groepen
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Groepsindeling voor periode 1, ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Pionnengroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Paardengroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Lopergroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Torengroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Damegroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Koningsgroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Indeling voor groep Keizergroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakGroepsindeling
+INFO: Hernummeren van spelers
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.IJCController maakWedstrijden
+INFO: Maak wedstrijden voor alle groepen
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Pionnengroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Pionnengroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Pionnengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Pionnengroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Pionnengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Pionnengroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Pionnengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Pionnengroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Pionnengroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Pionnengroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Paardengroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Paardengroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Paardengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Paardengroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Paardengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Paardengroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Paardengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Paardengroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Paardengroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Paardengroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Lopergroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Lopergroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Lopergroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Lopergroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Lopergroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Lopergroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Lopergroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Lopergroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Lopergroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Lopergroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Torengroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Torengroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Torengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Torengroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Torengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Torengroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Torengroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Torengroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Torengroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Torengroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Damegroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Damegroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Damegroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Damegroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Damegroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Damegroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Damegroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Damegroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Damegroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Damegroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Koningsgroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Koningsgroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Koningsgroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Koningsgroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Koningsgroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Koningsgroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 3
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Koningsgroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Koningsgroep in periode 1, ronde 1, serie 3-> minimaal verschil = 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Koningsgroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Koningsgroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Maken wedstrijden voor groep Keizergroep
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Bepalen wedstrijden voor groep Keizergroep periode 1 ronde 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalAantalSeries
+INFO: Vaststellen aantal te spelen series
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: Aantal speelrondes 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Keizergroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Keizergroep in periode 1, ronde 1, serie 1-> minimaal verschil = 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Periode 1 ronde 1 serie 2
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: groep Keizergroep met grootte 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler bepaalMinimaalVerschil
+INFO: Keizergroep in periode 1, ronde 1, serie 2-> minimaal verschil = 1
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Keizergroep voor deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdenVoorGroep
+INFO: ZW balans voor groep Keizergroep na deze ronde is 0.0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.control.GroepenIndeler maakWedstrijdschema
+INFO: Aantal wedstrijden 0
+
+Wedstrijden Periode 1 Ronde 1
+-----------
+  Pionnengroep
+    Totale afstand : 0
+  Paardengroep
+    Totale afstand : 0
+  Lopergroep
+    Totale afstand : 0
+  Torengroep
+    Totale afstand : 0
+  Damegroep
+    Totale afstand : 0
+  Koningsgroep
+    Totale afstand : 0
+  Keizergroep
+    Totale afstand : 0
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.IJC_Wedstrijden main
+INFO: Opstarten user interface
+mei 27, 2017 6:18:26 AM nl.detoren.ijc.ui.view.Hoofdscherm initSizes
+INFO: Maak alle componenten van het juiste formaat
+mei 27, 2017 6:18:33 AM nl.detoren.ijc.ui.view.ConfigurationDialog <init>
+INFO: Bewerk configuratie
+closing...
+mei 27, 2017 6:31:24 AM nl.detoren.ijc.ui.control.IJCController saveState
+INFO: Sla status op in bestand status.json
+mei 27, 2017 6:31:24 AM nl.detoren.ijc.ui.control.IJCController saveState
+INFO: Sla configuratie op in bestand configuratie.json
