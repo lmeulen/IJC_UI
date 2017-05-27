@@ -59,8 +59,8 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	public  Groepswedstrijden maakWedstrijdenVoorGroep(int periode, int ronde, Groep wedstrijdgroep) {
 		//
 		int doorschuivers = IJCController.c().bepaalAantalDoorschuivers(periode, ronde);		// Aantal doorschuivers
-		vijf1=null;
-		vijf2=null;
+		//vijf1=null;
+		//vijf2=null;
 		oneven1.clear();
 		oneven2.clear();
 		// ZW is absoluut aantal in onbalans zwart/wit

@@ -14,6 +14,9 @@
  */
 package nl.detoren.ijc.ui.model;
 
+import java.awt.Color;
+import java.util.Arrays;
+
 import javax.swing.JComponent;
 import javax.swing.table.AbstractTableModel;
 
@@ -33,6 +36,14 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
 	private int groepID;
     private IJCController controller = null;
     private JComponent component;
+	private static final Color indigo = new Color(75,0,130);
+	private static final String indigohtml = "<font color=rgb(75,0,130)>";
+	private static final Color purple = new Color(128,0,128);
+	private static final String purplehtml = "<font color=rgb(128,0,128)>";
+	private static final Color violetred = new Color(199,21,133);
+	private static final String violetredhtml = "<font color=rgb(199,21,133)>";
+	private static final Color deeppink = new Color(255,20,147);
+	private static final String deeppinkhtml = "<font color=rgb(255,20,147)>";
 
     private String[] columnNames = {"#", "Naam", "R", "P", " ", "Tegenst."};
 
@@ -111,7 +122,7 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
             case 4:
                 return speler.getInitialen();
             case 5:
-            	return speler.getTegenstandersString();
+            	return "<html>" + getTegenstanderhtml(speler) + "</html>";
             default:
                 return "";
         }
@@ -141,12 +152,40 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
             tt += "<TR><TD>Rating</TD><TD>" + speler.getRating() + "</TD></TR>";
             tt += "<TR><TD>Initialen</TD><TD>" + speler.getInitialen() + " - " + speler.getAfkorting3() + "</TD></TR>";
             tt += "<TR><TD>Witvoorkeur</TD><TD>" + speler.getWitvoorkeur() + "</TD></TR>";
-            tt += "<TR><TD>Tegenstanders</TD><TD>" + speler.getTegenstandersString() + "</TD></TR>";
+            tt += "<TR><TD>Tegenstanders</TD><TD>";
+            tt += getTegenstanderhtml(speler);
+            tt += "</TD></TR>";
             tt += "</TABLE></HTML>";
             return tt;
         } else {
             return "";
         }
+    }
+
+    public String getTegenstanderhtml(Speler speler) {
+    	String[] tegenstanders = speler.getTegenstandersString().split("(?<=\\G.{3})");
+    	String htmlstring = "";
+    	for (String tegenstander : tegenstanders){
+    		String tegen = tegenstander.substring(0,2);
+    		int rr = speler.gespeeldTegen(controller.getSpelerOpInitialen(tegen));
+    		switch(rr){
+    		case 0:
+    			htmlstring+=indigohtml + tegenstander + "</font>";
+    			break;
+    		case 1:
+    			htmlstring+=purplehtml + tegenstander + "</font>";
+    			break;
+    		case 2:
+    			htmlstring+=violetredhtml + tegenstander + "</font>";
+    			break;
+    		case 3:
+    			htmlstring+=deeppinkhtml + tegenstander + "</font>";
+    			break;
+    		default:
+    			htmlstring+=tegenstander;
+    		}
+    	}
+    	return htmlstring;
     }
 
     public boolean isDoorgeschoven(int row) {

@@ -180,4 +180,27 @@ public class WedstrijdModel extends AbstractTableModel {
         }
         return 99;
     }
+    
+    public Object getToolTip(int row, int col) {
+        if (row < controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getWedstrijden().size()) {
+            Wedstrijd ws = controller.getWedstrijden().getGroepswedstrijdenNiveau(groepID).getWedstrijden().get(row);
+            Speler wit = ws.getWit();
+            Speler zwart = ws.getZwart();
+            int rondes = this.isEerderGespeeld(row);
+            String rt = "";
+            if (rondes==99) {
+            	rt = "langer dan 4 ";
+            } else {
+            	rt = "" + rondes;
+            }
+            String tt = "<HTML><TABLE><TR><TD BORDER=1 COLSPAN=2 ALIGN=CENTER>";
+            tt += wit.toString();
+            tt += " heeft " + rt + " ronde(s) geleden";
+            tt += " tegen " + zwart.toString() + " gespeeld.</TD></TR>";
+            tt += "</TABLE></HTML>";
+            return tt;
+        } else {
+            return "";
+        }
+    }
 }
