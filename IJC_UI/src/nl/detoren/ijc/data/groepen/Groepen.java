@@ -122,10 +122,11 @@ public class Groepen {
 						}
 						result += IJCController.c().exportDoorschuiversStop + ls + ls;
 					} else {
-						// Bij één doorschuiver, alleen doorschuiVen als kampioen
+						// Bij Ã©Ã©n doorschuiver, alleen doorschuiven als kampioen
 						Speler s1 = lager.getSpelerByID(1);
 						Speler s2 = lager.getSpelerByID(2);
 						if ((s2 != null) && ((s1.getPunten() - s2.getPunten()) > 4)) {
+							result += IJCController.c().exportDoorschuiversStart + ls;
 							result += s1.toPrintableString(lang) + ls;
 						}
 					}
@@ -196,6 +197,6 @@ public class Groepen {
     		}
     	}
 		return lijst;
-    	
+
      }
 }

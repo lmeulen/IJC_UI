@@ -72,20 +72,22 @@ public class OutputIntekenlijst implements GroepenExportInterface {
 				}
 
 				if (IJCController.c().exportDoorschuivers) {
-					int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(groepen.getPeriode(), groepen.getRonde());
+					int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(groepen.getPeriode(),
+							groepen.getRonde());
 					if (i - 1 >= 0) {
 						run.setText(IJCController.c().exportDoorschuiversStart + "\n");
 						run.addBreak();
 						Groep lager = groepen.getGroepById(i - 1);
 						if (ndoor > 1) {
-						for (int j = 0; j < ndoor; j++) {
-							Speler s = lager.getSpelerByID(j + 1);
-							run.setText(s.toPrintableString(false, true) + "\n");
-							run.addBreak();
-						}
-						run.setText(IJCController.c().exportDoorschuiversStop + "\n" + "\n");
+							for (int j = 0; j < ndoor; j++) {
+								Speler s = lager.getSpelerByID(j + 1);
+								run.setText(s.toPrintableString(false, true) + "\n");
+								run.addBreak();
+							}
+							run.setText(IJCController.c().exportDoorschuiversStop + "\n" + "\n");
 						} else {
-							// Bij ��n doorschuiver, alleen doorschuiVen als kampioen
+							// Bij één doorschuiver, alleen doorschuiven als
+							// kampioen
 							Speler s1 = lager.getSpelerByID(1);
 							Speler s2 = lager.getSpelerByID(2);
 							if ((s2 != null) && ((s1.getPunten() - s2.getPunten()) > 4)) {
