@@ -174,7 +174,7 @@ public class WedstrijdschemaDialoog extends JDialog {
 		wisButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				SerieModel model = (SerieModel) serieTabel[0].getModel();
 				model.wisSerie(0);
 				model.forceRepaint();
 			}
@@ -190,7 +190,7 @@ public class WedstrijdschemaDialoog extends JDialog {
 		wisButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				SerieModel model = (SerieModel) serieTabel[1].getModel();
 				model.wisSerie(1);
 				model.forceRepaint();
 			}
@@ -210,7 +210,7 @@ public class WedstrijdschemaDialoog extends JDialog {
 		wisButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				SerieModel model = (SerieModel) serieTabel[2].getModel();
 				model.wisSerie(2);
 				model.forceRepaint();
 			}
@@ -226,7 +226,7 @@ public class WedstrijdschemaDialoog extends JDialog {
 		wisButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SerieModel model = (SerieModel) serieTabel[groepID].getModel();
+				SerieModel model = (SerieModel) serieTabel[3].getModel();
 				model.wisSerie(3);
 				model.forceRepaint();
 			}

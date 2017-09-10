@@ -66,6 +66,7 @@ public class WedstrijdModel extends AbstractTableModel {
     @Override
     public int getRowCount() {
         Wedstrijden ws = controller.getWedstrijden();
+        if (ws == null) return 0;
         Groepswedstrijden gws = ws.getGroepswedstrijdenNiveau(groepID);
         if (gws != null) {
         ArrayList<Wedstrijd> w = gws.getWedstrijden();

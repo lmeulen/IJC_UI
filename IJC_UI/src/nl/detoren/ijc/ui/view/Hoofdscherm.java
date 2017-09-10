@@ -289,9 +289,11 @@ public class Hoofdscherm extends JFrame {
 	 * Geef tevens de groepen een * in hun tabnaam die alle uitslagen ingevoerd hebben.
 	 */
 	public void updateUpdateStandButton() {
-		updatestandButton.setBackground(controller.getWedstrijden().isUitslagBekend()?light_green:hoofdPanel.getBackground());
+		if (controller.getWedstrijden() != null)
+		updatestandButton.setBackground((controller.getWedstrijden() != null) && (controller.getWedstrijden().isUitslagBekend())?light_green:hoofdPanel.getBackground());
 		if (tabs != null) {
 			for (int i = 0; i < tabs.getTabCount(); i++) {
+				if (IJCController.getI().getWedstrijden()!= null) {
 				if (!(IJCController.getI().getWedstrijden().getGroepswedstrijdenNiveau(i) == null)) {
 					if (IJCController.getI().getWedstrijden().getGroepswedstrijdenNiveau(i).isUitslagBekend()) {
 						tabs.setTitleAt(i, Groep.geefNaam(i) + "*");
@@ -300,6 +302,7 @@ public class Hoofdscherm extends JFrame {
 					}
 				} else {
 					tabs.setTitleAt(i, Groep.geefNaam(i) + "*");
+				}
 				}
 			}
 		}
