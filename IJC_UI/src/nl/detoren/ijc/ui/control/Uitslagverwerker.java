@@ -271,8 +271,11 @@ public class Uitslagverwerker {
 		for (Groepswedstrijden gws : wedstrijden.getGroepswedstrijden()) {
 			for (Wedstrijd wedstrijd : gws.getWedstrijden()) {
 
-				Speler wit = groepen.getSpelerByKNSB(wedstrijd.getWit().getKNSBnummer());
-				Speler zwart = groepen.getSpelerByKNSB(wedstrijd.getZwart().getKNSBnummer());
+				//Speler wit = groepen.getSpelerByKNSB(wedstrijd.getWit().getKNSBnummer());
+				//Speler zwart = groepen.getSpelerByKNSB(wedstrijd.getZwart().getKNSBnummer());
+
+				Speler wit = groepen.getSpelerByUid(wedstrijd.getWit().getUid());
+				Speler zwart = groepen.getSpelerByUid(wedstrijd.getZwart().getUid());
 
 				int ratingWit = wit.getRating();
 				int ratingZwart = zwart.getRating();
