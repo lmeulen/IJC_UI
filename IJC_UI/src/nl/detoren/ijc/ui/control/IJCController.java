@@ -47,6 +47,7 @@ import nl.detoren.ijc.io.OutputSpeelschema;
 import nl.detoren.ijc.io.OutputStanden;
 import nl.detoren.ijc.io.OutputUitslagen;
 import nl.detoren.ijc.neural.Voorspeller;
+import nl.detoren.ijc.ui.view.FoutMelding;
 
 /**
  * Main controller class voor afhandeling van de groepen en wedstrijden

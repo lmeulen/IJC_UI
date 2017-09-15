@@ -26,6 +26,7 @@ import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.view.FoutMelding;
 
 /**
  * Sla het wedstrijdschema op in Excel
@@ -81,6 +82,7 @@ public class OutputSpeelschema implements WedstrijdenExportInterface {
 			return true;
 	} catch (Exception e) {
 		logger.log(Level.WARNING, "Export failed");
+		FoutMelding.melding("Fout bij opslaan wedstrijdenbestand: " + e.getMessage());
 		return false;
 	}
 }
