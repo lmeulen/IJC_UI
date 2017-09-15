@@ -270,12 +270,12 @@ public class Uitslagverwerker {
 	private void updateRating(Groepen groepen, Wedstrijden wedstrijden) {
 		for (Groepswedstrijden gws : wedstrijden.getGroepswedstrijden()) {
 			for (Wedstrijd wedstrijd : gws.getWedstrijden()) {
-				
-				logger.log(Level.INFO, "Vind speler (W) bij KNSBnummer :" + wedstrijd.getWit().getKNSBnummer());
-				logger.log(Level.INFO, "Vind speler (Z) bij KNSBnummer :" + wedstrijd.getZwart().getKNSBnummer());
-				
-				Speler wit = groepen.getSpelerByKNSB(wedstrijd.getWit().getKNSBnummer());
-				Speler zwart = groepen.getSpelerByKNSB(wedstrijd.getZwart().getKNSBnummer());
+
+				//Speler wit = groepen.getSpelerByKNSB(wedstrijd.getWit().getKNSBnummer());
+				//Speler zwart = groepen.getSpelerByKNSB(wedstrijd.getZwart().getKNSBnummer());
+
+				Speler wit = groepen.getSpelerByUid(wedstrijd.getWit().getUid());
+				Speler zwart = groepen.getSpelerByUid(wedstrijd.getZwart().getUid());
 
 				int ratingWit = wit.getRating();
 				int ratingZwart = zwart.getRating();

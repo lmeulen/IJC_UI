@@ -17,6 +17,7 @@
 package nl.detoren.ijc.data.groepen;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import nl.detoren.ijc.ui.control.IJCController;
 
@@ -164,6 +165,20 @@ public class Groepen {
     	for (Groep g: groepen) {
     		for (Speler s: g.getSpelers()) {
     			if (s.getKNSBnummer() == knsb) return s;
+    		}
+    	}
+    	return null;
+    }
+
+    /**
+     * Zoek speler in alle groepen met het
+     * opgegeven UID
+     *
+     */
+    public Speler getSpelerByUid(UUID id) {
+    	for (Groep g: groepen) {
+    		for (Speler s: g.getSpelers()) {
+    			if (s.getUid().equals(id)) return s;
     		}
     	}
     	return null;
