@@ -24,6 +24,10 @@ import java.math.BigDecimal;
  *
  */
 public class Configuratie {
+	
+	public Configuratie() {
+		
+	}
 
 	/**
 	 * Aantal periodes in een seizoen
@@ -74,7 +78,7 @@ public class Configuratie {
 	 * doorschuivers = Eval.xy(periode, ronde,
 	 * Configuratie.grAantalDoorschuivers);
 	 */
-	public String grAantalDoorschuivers = "if (y >= 4) { if (y < 8) { return 4 } else {  return 1 } } else { return 0 }";
+	public String grAantalDoorschuivers = "if (z >= 4) { if (z < 8) { if (x < 6) { return 4 } else { return 2 } } else { return 1 } } else { return 0 }";
 
 	/**
 	 * Retourneer aantal doorschuivers
@@ -83,8 +87,9 @@ public class Configuratie {
 	 * @param ronde
 	 * @return aantal doorschuivers
 	 */
-	public int bepaalAantalDoorschuivers(int periode, int ronde) {
-		return (Integer) groovy.util.Eval.xy(periode, ronde, grAantalDoorschuivers);
+	public int bepaalAantalDoorschuivers(int groep, int periode, int ronde) {
+		int res = (Integer) groovy.util.Eval.xyz(groep, periode, ronde, grAantalDoorschuivers);
+		return res;
 	}
 
 	/**

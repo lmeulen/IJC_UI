@@ -57,7 +57,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	@Override
 	public  Groepswedstrijden maakWedstrijdenVoorGroep(int periode, int ronde, Groep wedstrijdgroep) {
 		//
-		int doorschuivers = IJCController.c().bepaalAantalDoorschuivers(periode, ronde);		// Aantal doorschuivers
+		int doorschuivers = IJCController.c().bepaalAantalDoorschuivers(wedstrijdgroep.getNiveau(), periode, ronde);		// Aantal doorschuivers
 		//vijf1=null;
 		//vijf2=null;
 		oneven1.clear();
@@ -79,7 +79,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			groep.sorteerRating();
 		}
 		logger.log(Level.INFO, "Bepalen wedstrijden voor groep " + wedstrijdgroep.getNaam() + " periode " + periode
-				+ " ronde " + ronde);
+				+ " ronde " + ronde + " id " + wedstrijdgroep.getNiveau() + " doorschuivers " + doorschuivers);
 		// Maak wedstrijden
 		Groepswedstrijden gws = new Groepswedstrijden();
 		gws.setNiveau(groep.getNiveau());

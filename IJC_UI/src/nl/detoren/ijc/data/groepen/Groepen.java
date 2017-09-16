@@ -119,7 +119,9 @@ public class Groepen {
 						result += IJCController.c().exportDoorschuiversStart + ls;
 						for (int j = 0; j < ndoor; j++) {
 							Speler s = lager.getSpelerByID(j + 1);
-							result += s.toPrintableString(lang) + ls;
+							if (s!= null) {
+								result += s.toPrintableString(lang) + ls;
+							}
 						}
 						result += IJCController.c().exportDoorschuiversStop + ls + ls;
 					} else {

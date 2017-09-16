@@ -64,7 +64,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
             wedstrijdGroepen.addGroep(wedstrijdGroep);
         }
         // indien van toepassing, schuif maximaal 4 spelers door
-        if (bepaalDoorschuiven(periode, ronde)) {
+        if (bepaalDoorschuiven(0, periode, ronde)) {
         	logger.log(Level.INFO, "Er wordt doorgeschoven, schuif door");
             doorschuiven(wedstrijdGroepen, aanwezigheidsGroepen);
 
@@ -129,7 +129,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      * @param aanwezigheidsGroepen
      */
     protected void doorschuiven(Groepen wedstrijdGroepen, Groepen aanwezigheidsGroepen) {
-        int aantal = bepaalAantalDoorschuiven(aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
+        int aantal = bepaalAantalDoorschuiven(0, aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
     	logger.log(Level.INFO, "Aantal door te schuiven spelers "  + aantal);
         // Doorloop hoogste groep tot ��n na laagste groep. In de laagste groep
         // kunnen geen spelers inschuiven
@@ -137,12 +137,12 @@ public class GroepenIndeler implements GroepenIndelerInterface {
         ArrayList<Groep> groepen = wedstrijdGroepen.getGroepen();
 //        for (int i = 0; i < groepen.size() - 1; ++i) {
         for (int i = 0; i < wedstrijdGroepen.getAantalGroepen() - 1; ++i) {
-            aantal = bepaalAantalDoorschuiven(aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
-        	logger.log(Level.INFO, "Doorschuiven van groep "  + groepen.get(i+1).getNaam() + " naar " + groepen.get(i).getNaam());
+            aantal = bepaalAantalDoorschuiven(i, aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
+        	logger.log(Level.INFO, "Doorschuiven van groep "  + groepen.get(i+1).getNaam() + " naar " + groepen.get(i).getNaam() + " n=" + aantal);
             ArrayList<Speler> naarGroep = groepen.get(i).getSpelers();
             if (naarGroep == null) naarGroep = new ArrayList<>();
             ArrayList<Speler> vanGroep = groepen.get(i + 1).getSpelers();
-            // ALs laatste speler niet aanwezig, dan ��n minder doorschuiven
+            // Als laatste speler niet aanwezig, dan ��n minder doorschuiven
             Speler laatste = groepen.get(i + 1).getSpelerByID(aantal);
             if (laatste == null) aantal--;
 
@@ -186,12 +186,12 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      * @param ronde Huidige ronde
      * @return true als er met doorschuiven wordt gespeeld
      */
-    protected boolean bepaalDoorschuiven(int periode, int ronde) {
-    	return (bepaalAantalDoorschuiven(periode, ronde) > 0);
+    protected boolean bepaalDoorschuiven(int groep, int periode, int ronde) {
+    	return (bepaalAantalDoorschuiven(groep, periode, ronde) > 0);
     }
 
-    protected int bepaalAantalDoorschuiven(int periode, int ronde) {
-    	return IJCController.c().bepaalAantalDoorschuivers(periode, ronde);
+    protected int bepaalAantalDoorschuiven(int groep, int periode, int ronde) {
+    	return IJCController.c().bepaalAantalDoorschuivers(groep, periode, ronde);
     }
 
     /**
