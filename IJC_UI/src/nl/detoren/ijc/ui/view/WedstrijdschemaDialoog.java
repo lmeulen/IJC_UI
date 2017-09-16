@@ -59,10 +59,6 @@ import nl.detoren.ijc.ui.util.Utils;
 public class WedstrijdschemaDialoog extends JDialog {
 
 	private static final long serialVersionUID = -294319141048482367L;
-	private static final Color indigo = new Color(75,0,130);
-	private static final Color purple = new Color(128,0,128);
-	private static final Color violetred = new Color(199,21,133);
-	private static final Color deeppink = new Color(255,20,147);
 	private final static Logger logger = Logger.getLogger(GroepenReader.class.getName());
 
 	private  int groep;

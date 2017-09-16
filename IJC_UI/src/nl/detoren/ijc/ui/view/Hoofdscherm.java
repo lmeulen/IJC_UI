@@ -91,13 +91,9 @@ public class Hoofdscherm extends JFrame {
 	private static final Color light_red = new Color(255, 200, 200);
 	private static final Font courierFont = new Font("Courier New", Font.PLAIN, 11);
 	private static final Color indigo = new Color(75,0,130);
-	private static final String indigohtml = "<font color=rgb(75,0,130)>";
 	private static final Color purple = new Color(128,0,128);
-	private static final String purplehtml = "<font color=rgb(128,0,128)>";
 	private static final Color violetred = new Color(199,21,133);
-	private static final String violetredhtml = "<font color=rgb(199,21,133)>";
 	private static final Color deeppink = new Color(255,20,147);
-	private static final String deeppinkhtml = "<font color=rgb(255,20,147)>";
 
 	private static final long serialVersionUID = -2154845989579570030L;
 	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());

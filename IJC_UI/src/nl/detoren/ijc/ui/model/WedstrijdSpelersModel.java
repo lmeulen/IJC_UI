@@ -14,9 +14,6 @@
  */
 package nl.detoren.ijc.ui.model;
 
-import java.awt.Color;
-import java.util.Arrays;
-
 import javax.swing.JComponent;
 import javax.swing.table.AbstractTableModel;
 
@@ -36,13 +33,9 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
 	private int groepID;
     private IJCController controller = null;
     private JComponent component;
-	private static final Color indigo = new Color(75,0,130);
 	private static final String indigohtml = "<font color=rgb(75,0,130)>";
-	private static final Color purple = new Color(128,0,128);
 	private static final String purplehtml = "<font color=rgb(128,0,128)>";
-	private static final Color violetred = new Color(199,21,133);
 	private static final String violetredhtml = "<font color=rgb(199,21,133)>";
-	private static final Color deeppink = new Color(255,20,147);
 	private static final String deeppinkhtml = "<font color=rgb(255,20,147)>";
 
     private String[] columnNames = {"#", "Naam", "R", "P", " ", "Tegenst."};
