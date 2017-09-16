@@ -50,6 +50,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
@@ -611,9 +612,9 @@ public class Hoofdscherm extends JFrame {
 		fixedComponentSize(tabs, 1020, 560);
 		for (int i = 0; i < aantal; ++i) {
 			fixedComponentSize(panels[i], 1020, 500);
-			fixedComponentSize(leftScrollPane[i], 320, 500);
-			fixedComponentSize(centerLeftScrollPane[i], 320, 500);
-			fixedComponentSize(centerRightScrollPane[i], 320, 500);
+			fixedComponentSize(leftScrollPane[i], 320, 485);
+			fixedComponentSize(centerLeftScrollPane[i], 320, 485);
+			fixedComponentSize(centerRightScrollPane[i], 330, 485);
 			fixedComponentSize(aanwezigheidsTabel[i], 320, 675);
 			fixedComponentSize(wedstrijdspelersTabel[i], 320, 675);
 			fixedComponentSize(wedstrijdenTabel[i], 320, 475);
@@ -632,7 +633,7 @@ public class Hoofdscherm extends JFrame {
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(4), 20);
 			fixedColumSize(wedstrijdspelersTabel[i].getColumnModel().getColumn(5), 90);
 
-			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(0), 35);
+			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(0), 25);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(1), 120);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(2), 10);
 			fixedColumSize(wedstrijdenTabel[i].getColumnModel().getColumn(3), 120);
@@ -656,9 +657,12 @@ public class Hoofdscherm extends JFrame {
 
 	protected void fillGroupPanel(JPanel panel, final int index) {
 		leftScrollPane[index] = new javax.swing.JScrollPane();
+		leftScrollPane[index].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		centerLeftScrollPane[index] = new javax.swing.JScrollPane();
+		centerLeftScrollPane[index].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jTFZWbalansvoor[index] = new JTextField();
 		centerRightScrollPane[index] = new javax.swing.JScrollPane();
+		centerRightScrollPane[index].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		aanwezigheidsTabel[index] = new JTable(new SpelersModel(index, panel)) {
 			private static final long serialVersionUID = -8293073016982337108L;
