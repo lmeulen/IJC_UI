@@ -101,19 +101,6 @@ public class WedstrijdschemaDialoog extends JDialog {
                 if (!isRowSelected(row)) {
                     c.setBackground(row % 2 == 0 ? Color.WHITE : Color.LIGHT_GRAY);
                 }
-
-                if (column == 4) {
-                	c.setForeground(deeppink);
-                }
-                if (column == 5) {
-                	c.setForeground(violetred);
-                }
-                if (column == 6) {
-                	c.setForeground(purple);
-                }
-                if (column == 7) {
-                	c.setForeground(indigo);
-                }
                 return c;
             }
         };
