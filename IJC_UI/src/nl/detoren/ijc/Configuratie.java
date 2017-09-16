@@ -78,7 +78,7 @@ public class Configuratie {
 	 * doorschuivers = Eval.xy(periode, ronde,
 	 * Configuratie.grAantalDoorschuivers);
 	 */
-	public String grAantalDoorschuivers = "if (z >= 4) { if (z < 8) { if (x < 6) { return 4 } else { return 2 } } else { return 1 } } else { return 0 }";
+	public String grAantalDoorschuivers = "if (z >= 4) { if (z < 8) { if (x == 0) { return 2 } else { return 4 } } else { return 1 } } else { return 0 }";
 
 	/**
 	 * Retourneer aantal doorschuivers
