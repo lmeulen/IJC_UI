@@ -72,8 +72,7 @@ public class OutputIntekenlijst implements GroepenExportInterface {
 				}
 
 				if (IJCController.c().exportDoorschuivers) {
-					int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(groepen.getPeriode(),
-							groepen.getRonde());
+					int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(groep.getNiveau(), groepen.getPeriode(), groepen.getRonde());
 					if (i - 1 >= 0) {
 						run.setText(IJCController.c().exportDoorschuiversStart + "\n");
 						run.addBreak();

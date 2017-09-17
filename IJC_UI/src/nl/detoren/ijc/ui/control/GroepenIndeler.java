@@ -137,7 +137,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
         ArrayList<Groep> groepen = wedstrijdGroepen.getGroepen();
 //        for (int i = 0; i < groepen.size() - 1; ++i) {
         for (int i = 0; i < wedstrijdGroepen.getAantalGroepen() - 1; ++i) {
-            aantal = bepaalAantalDoorschuiven(i, aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
+            aantal = bepaalAantalDoorschuiven(groepen.get(i).getNiveau(), aanwezigheidsGroepen.getPeriode(), aanwezigheidsGroepen.getRonde());
         	logger.log(Level.INFO, "Doorschuiven van groep "  + groepen.get(i+1).getNaam() + " naar " + groepen.get(i).getNaam() + " n=" + aantal);
             ArrayList<Speler> naarGroep = groepen.get(i).getSpelers();
             if (naarGroep == null) naarGroep = new ArrayList<>();

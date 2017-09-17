@@ -99,7 +99,7 @@ public class Configuratie {
 	 * @param r Huidige ronde
 	 * @return aantal doorschuivers
 	 */
-	public int bepaalAantalDoorschuiversVolgendeRonde(int p, int r) {
+	public int bepaalAantalDoorschuiversVolgendeRonde(int groep, int p, int r) {
 		int ronde = r;
 		int periode = p;
 		ronde += 1;
@@ -109,7 +109,7 @@ public class Configuratie {
         	if (periode > perioden) periode = 1;
         }
 
-		return (Integer) groovy.util.Eval.xy(periode, ronde, grAantalDoorschuivers);
+		return (Integer) groovy.util.Eval.xyz(groep, periode, ronde, grAantalDoorschuivers);
 	}
 
 	/**

@@ -112,7 +112,7 @@ public class Groepen {
             result += groep.toPrintableString(lang) + ls;
 
 			if (IJCController.c().exportDoorschuivers) {
-				int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(periode, ronde);
+				int ndoor = IJCController.c().bepaalAantalDoorschuiversVolgendeRonde(groep.getNiveau(), periode, ronde);
 				if (i + 1 < groepen.size()) {
 					Groep lager = groepen.get(i + 1);
 					if (ndoor > 1) {
