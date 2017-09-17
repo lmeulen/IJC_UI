@@ -51,7 +51,11 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 	 */
 	public boolean export(Wedstrijden wedstrijden) {
 		try {
-			String bestandsnaam = "OSBO " + IJCController.c().verenigingNaam + " P" + wedstrijden.getPeriode() + "R" + wedstrijden.getRonde() + ".txt";
+			String vereniging = IJCController.c().verenigingNaam;
+			if (vereniging.startsWith("SV " )) {
+				vereniging = vereniging.substring(3);
+			}
+			String bestandsnaam = "OSBO " + vereniging + " P" + wedstrijden.getPeriode() + "R" + wedstrijden.getRonde() + ".txt";
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
 
 			OSBOResultaat resultaat = maakOSBOData(wedstrijden);
