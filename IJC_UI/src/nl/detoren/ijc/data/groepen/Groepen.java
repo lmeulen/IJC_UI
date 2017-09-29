@@ -120,7 +120,7 @@ public class Groepen {
 						for (int j = 0; j < ndoor; j++) {
 							Speler s = lager.getSpelerByID(j + 1);
 							if (s!= null) {
-								result += s.toPrintableString(lang) + ls;
+								result += s.toPrintableString(lang, true) + ls;
 							}
 						}
 						result += IJCController.c().exportDoorschuiversStop + ls + ls;
@@ -130,7 +130,7 @@ public class Groepen {
 						Speler s2 = lager.getSpelerByID(2);
 						if ((s2 != null) && ((s1.getPunten() - s2.getPunten()) > 4)) {
 							result += IJCController.c().exportDoorschuiversStart + ls;
-							result += s1.toPrintableString(lang) + ls;
+							result += s1.toPrintableString(lang,true) + ls;
 						}
 					}
 				}
