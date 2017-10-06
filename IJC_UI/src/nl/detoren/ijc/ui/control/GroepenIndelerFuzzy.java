@@ -57,7 +57,9 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	@Override
 	public  Groepswedstrijden maakWedstrijdenVoorGroep(int periode, int ronde, Groep wedstrijdgroep) {
 		//
-		int doorschuivers = IJCController.c().bepaalAantalDoorschuivers(wedstrijdgroep.getNiveau(), periode, ronde);		// Aantal doorschuivers
+		ArrayList<Speler> spelersuitanderegroep = wedstrijdgroep.getSpelersMetAnderNiveau();
+		//int doorschuivers = IJCController.c().bepaalAantalDoorschuivers(wedstrijdgroep.getNiveau(), periode, ronde);		// Aantal doorschuivers
+		int doorschuivers = spelersuitanderegroep.size(); // Aantal doorschuivers
 		//vijf1=null;
 		//vijf2=null;
 		oneven1.clear();
@@ -123,17 +125,17 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 						}
 
 					}
-					fuzzymatrix = MaakFuzzyMatrix(reducedgroep, i, speelrondes, doorschuivers);
+					fuzzymatrix = MaakFuzzyMatrix(reducedgroep, i, speelrondes, spelersuitanderegroep);
 					//
 					System.out.print("Reduced Matrix\n");
 					Utils.printMatrix(fuzzymatrix);
 				} else {
-					fuzzymatrix = MaakFuzzyMatrix(groep, i, speelrondes, doorschuivers);
+					fuzzymatrix = MaakFuzzyMatrix(groep, i, speelrondes, spelersuitanderegroep);
 					//System.out.print("Matrix\n");
 					//Utils.printMatrix(fuzzymatrix);
 				}
 			} else {
-				fuzzymatrix = MaakFuzzyMatrix(groep, i, speelrondes, doorschuivers);
+				fuzzymatrix = MaakFuzzyMatrix(groep, i, speelrondes, spelersuitanderegroep);
 				//System.out.print("Matrix\n");
 				//Utils.printMatrix(fuzzymatrix);
 			}
@@ -469,7 +471,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	return s;
 }
 
-	private int[][] MaakFuzzyMatrix(Groep wedstrijdgroep, int serie, int speelrondes, int doorschuivers) {
+	private int[][] MaakFuzzyMatrix(Groep wedstrijdgroep, int serie, int speelrondes, ArrayList<Speler> spelersuitanderegroep) {
 		/**
 		 * FuzzyMatrix wordt gebruik voor het snel vaststellen van beste match
 		 * als tegenstander door middel van Fuzzy Logic. Hiertoe worden per
@@ -530,6 +532,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		 * Het is nog mogelijk de verhoudingen in zwaarte van de voorwaarden aan
 		 * te passen met de volgende parameters. mf1 mf2 mf3 mf4
 		 */
+		int doorschuivers = spelersuitanderegroep.size();
 		int matrix1[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix2[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
 		int matrix3[][] = new int[wedstrijdgroep.getAantalSpelers()][wedstrijdgroep.getAantalSpelers()+1];
@@ -818,48 +821,48 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 				} else {
 					switch (serie) {
 					case 0:
-						if (wedstrijdgroep.getSpelersMetAnderNiveau().contains(s1)
-								&& wedstrijdgroep.getSpelersMetAnderNiveau()
+						if (spelersuitanderegroep.contains(s1)
+								&& spelersuitanderegroep
 										.contains(s2)) {
 							matrix4[i - 1][j] = 100;
 						} else {
-							if (wedstrijdgroep.getSpelersMetAnderNiveau().contains(s1)
-									&& !(wedstrijdgroep.getSpelersMetAnderNiveau()
+							if (spelersuitanderegroep.contains(s1)
+									&& !(spelersuitanderegroep
 											.contains(s2))) {
 								matrix4[i - 1][j] = 0;
 							}
 						}
-						if (!wedstrijdgroep.getSpelersMetAnderNiveau().contains(s2)
-								&& wedstrijdgroep.getSpelersMetAnderNiveau()
+						if (!spelersuitanderegroep.contains(s2)
+								&& spelersuitanderegroep
 										.contains(s2)) {
 							matrix4[i - 1][j] = 0;
 						} else {
-							if (!wedstrijdgroep.getSpelersMetAnderNiveau().contains(s1)
-									&& !wedstrijdgroep.getSpelersMetAnderNiveau()
+							if (!spelersuitanderegroep.contains(s1)
+									&& !spelersuitanderegroep
 											.contains(s2)) {
 								matrix4[i - 1][j] = 10;
 							}
 						}
 						break;
 					case 1:
-						if (wedstrijdgroep.getSpelersMetAnderNiveau().contains(s1)
-								&& wedstrijdgroep.getSpelersMetAnderNiveau()
+						if (spelersuitanderegroep.contains(s1)
+								&& spelersuitanderegroep
 										.contains(s2)) {
 							matrix4[i - 1][j] = 0;
 						} else {
-							if (wedstrijdgroep.getSpelersMetAnderNiveau().contains(s1)
-									&& !wedstrijdgroep.getSpelersMetAnderNiveau()
+							if (spelersuitanderegroep.contains(s1)
+									&& !spelersuitanderegroep
 											.contains(s2)) {
 								matrix4[i - 1][j] = 80;
 							}
 						}
-						if (!wedstrijdgroep.getSpelersMetAnderNiveau().contains(s1)
-								&& wedstrijdgroep.getSpelersMetAnderNiveau()
+						if (!spelersuitanderegroep.contains(s1)
+								&& spelersuitanderegroep
 										.contains(s2)) {
 							matrix4[i - 1][j] = 80;
 						} else {
-							if (!wedstrijdgroep.getSpelersMetAnderNiveau().contains(s1)
-									&& !wedstrijdgroep.getSpelersMetAnderNiveau()
+							if (!spelersuitanderegroep.contains(s1)
+									&& !spelersuitanderegroep
 											.contains(s2)) {
 								matrix4[i - 1][j] = 0;
 							}
