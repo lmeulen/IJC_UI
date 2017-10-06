@@ -144,7 +144,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
             ArrayList<Speler> vanGroep = groepen.get(i + 1).getSpelers();
             // Als laatste speler niet aanwezig, dan ��n minder doorschuiven
             Speler laatste = groepen.get(i + 1).getSpelerByID(aantal);
-            if (laatste == null) aantal--;
+            if (aantal > 2 && laatste == null) aantal--;
 
             for (int j = 1; j <= aantal; ++j) {
                 Speler s = groepen.get(i + 1).getSpelerByID(j);
