@@ -107,7 +107,7 @@ public class GroepenIndeler implements GroepenIndelerInterface {
         for (Speler speler : origineleWedstrijdGroep.getSpelers()) {
         	if (speler.getGroep() != origineleWedstrijdGroep.getNiveau()) {
             	logger.log(Level.INFO, "Toevoegen aan wedstrijdgroep van doorgeschoven speler : " + speler.getNaam());
-        		nieuweWedstrijdGroep.addSpeler(speler);
+        		nieuweWedstrijdGroep.addSpelerHoudNiveau(speler);
         	}
         }
     	logger.log(Level.INFO, "Aantal spelers in wedstrijdgroep: " + nieuweWedstrijdGroep.getAantalSpelers());
