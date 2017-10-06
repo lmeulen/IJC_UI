@@ -52,7 +52,10 @@ public class SpelerDBImport {
 			spelerDB.startTransaction();
 
 			// Bepaal ronde
-			DBRonde ronde = new DBRonde(status.wedstrijden.getSpeeldatum(), 2016, status.wedstrijden.getPeriode(),
+			int jaar = status.wedstrijden.getSpeeldatum().getYear();
+			int month = status.wedstrijden.getSpeeldatum().getMonth();
+			if (month<8) jaar--;
+			DBRonde ronde = new DBRonde(status.wedstrijden.getSpeeldatum(), jaar, status.wedstrijden.getPeriode(),
 					status.wedstrijden.getRonde());
 			// check of ronde al bestaat
 			if (spelerDB.rondeExists(ronde)) {
@@ -120,7 +123,7 @@ public class SpelerDBImport {
 	 *
 	 * @param bestand
 	 */
-	public void importUitslagText(String bestand) {
+	public void importUitslagText(String bestand, int jaar) {
 		Groepen groepen = new GroepenReader().leesGroepen(bestand);
 		spelerDB.startTransaction();
 		// Bepaal ronde
@@ -135,7 +138,7 @@ public class SpelerDBImport {
 			}
 		}
 
-		DBRonde ronde = new DBRonde(null, 2016, p, r);
+		DBRonde ronde = new DBRonde(null, jaar, p, r);
 		// check of ronde al bestaat
 		if (spelerDB.rondeExists(ronde)) {
 			System.out.println("Ronde reeds ingelezen");
