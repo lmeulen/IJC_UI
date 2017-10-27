@@ -291,7 +291,7 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Fuzzy oneven (experimenteel)"));
 		cbFuzzyTrio = new JCheckBox("", config.fuzzyOneven);
 		panel.add(cbFuzzyTrio);
-		panel.add(new JLabel("Fuzzy Ranglijst punten ipv Ranglijst (experimenteel)"));
+		panel.add(new JLabel("Fuzzy Ranglijst punten ipv Ranglijst voor niet doorschuif ronden! (experimenteel)"));
 		cbFuzzyPunten = new JCheckBox("", config.fuzzyRanglijstpunten);
 		panel.add(cbFuzzyPunten);
 		panel.add(new JLabel(" "));
