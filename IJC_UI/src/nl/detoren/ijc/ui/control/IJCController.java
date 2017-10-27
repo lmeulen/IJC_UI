@@ -292,6 +292,7 @@ public class IJCController {
         synchronized (this) {
         	logger.log(Level.INFO, "Maak wedstrijden voor groep " + groepID);
         	status.wedstrijden = getIndeler().updateWedstrijdschema(status.wedstrijden, status.wedstrijdgroepen, groepID);
+        	status.wedstrijden.setSpeeldatum(Calendar.getInstance().getTime());
             printWedstrijden(groepID);
         }
     }
