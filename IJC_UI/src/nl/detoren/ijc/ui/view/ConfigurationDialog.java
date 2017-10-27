@@ -288,10 +288,10 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel(" "));
 		panel.add(new JLabel("Fuzzy indeling:"));
 		panel.add(new JLabel(" "));
-		panel.add(new JLabel("Fuzzy oneven (experimenteel)"));
+		panel.add(new JLabel("Trio alternatief (experimenteel)"));
 		cbFuzzyTrio = new JCheckBox("", config.fuzzyOneven);
 		panel.add(cbFuzzyTrio);
-		panel.add(new JLabel("Fuzzy Ranglijst punten ipv Ranglijst voor niet doorschuif ronden! (experimenteel)"));
+		panel.add(new JLabel("Ranglijstpunten voor niet doorschuif ronden!"));
 		cbFuzzyPunten = new JCheckBox("", config.fuzzyRanglijstpunten);
 		panel.add(cbFuzzyPunten);
 		panel.add(new JLabel(" "));
