@@ -36,6 +36,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 
 	private final static Logger logger = Logger.getLogger(GroepenIndelerFuzzy.class.getName());
 
+	private boolean _doorschuiven;
 	private int fuzzymatrix[][];
 
 	int[] vijf1 = {0,0,0,0};
@@ -58,7 +59,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 	public  Groepswedstrijden maakWedstrijdenVoorGroep(int periode, int ronde, Groep wedstrijdgroep) {
 		//
 		ArrayList<Speler> spelersuitanderegroep = wedstrijdgroep.getSpelersMetAnderNiveau();
-		//int doorschuivers = IJCController.c().bepaalAantalDoorschuivers(wedstrijdgroep.getNiveau(), periode, ronde);		// Aantal doorschuivers
+		_doorschuiven = IJCController.c().bepaalAantalDoorschuivers(wedstrijdgroep.getNiveau(), periode, ronde) > 0;		// Wel/Niet doorschuiven
 		int doorschuivers = spelersuitanderegroep.size(); // Aantal doorschuivers
 		//vijf1=null;
 		//vijf2=null;
@@ -923,7 +924,7 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 		}
 		Utils.printMatrix(matrix5);
 		matrix = Utils.add2DArrays(mf1, matrix1, mf2, matrix2);
-		if (IJCController.c().fuzzyRanglijstpunten) {
+		if (IJCController.c().fuzzyRanglijstpunten && !_doorschuiven) {
 			matrix = Utils.add2DArrays(mf1, matrix1, mf5, matrix5);
 		} else {
 			matrix = Utils.add2DArrays(mf1, matrix1, mf2, matrix2);

@@ -297,6 +297,7 @@ public class Configuratie {
 	/**
 	 * Fuzzy ranglijstpunten wordt gebruikt indien waarde 'true'.
 	 * Gebruik in fuzzyroutine puntenranglijst ipv ranglijst.
+	 * Dit geldt alleen voor ronde waarin géén doorschuiven is.
 	 */
 	public boolean fuzzyRanglijstpunten = false;
 
