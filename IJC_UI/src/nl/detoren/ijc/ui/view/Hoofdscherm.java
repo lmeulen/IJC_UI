@@ -465,6 +465,16 @@ public class Hoofdscherm extends JFrame {
 		});
 		spelermenu.add(item);
 
+		spelermenu.addSeparator();
+		item = new JMenuItem("Wis Zwart/Wit voorkeur");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				controller.wisZwartWitVoorkeur();
+			}
+		});
+		spelermenu.add(item);
+
 		menubar.add(spelermenu);
 
 		JMenu indelingMenu = new JMenu("Indeling");
