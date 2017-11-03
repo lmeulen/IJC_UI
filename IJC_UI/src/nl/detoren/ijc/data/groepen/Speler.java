@@ -276,7 +276,7 @@ public class Speler implements Cloneable {
 	 * @return true, als KNSB lid
 	 */
 	public boolean isKNSBLid() {
-		return KNSBnummer > 2000000;
+		return KNSBnummer > 6000000;
 	}
 
 	@Override
