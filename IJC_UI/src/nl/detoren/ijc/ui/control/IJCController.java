@@ -801,4 +801,14 @@ public class IJCController {
 			e.printStackTrace();
 		}
 	}
+
+	public void wisZwartWitVoorkeur() {
+		for (Groep groep : status.groepen.getGroepen()) {
+			for (Speler speler : groep.getSpelers()) {
+				speler.setWitvoorkeur(0);
+			}
+		}
+		// TODO Auto-generated method stub
+		
+	}
 }
