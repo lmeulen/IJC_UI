@@ -29,6 +29,7 @@ public class Wedstrijd {
 	 * Toto style 1 = wit wint, 2 = zwart wint, 3 = remise
 	 */
 	int uitslag;
+	boolean nietReglementair = true;
 
 	public static int WIT_WINT = 1;
 	public static int ZWART_WINT = 2;
@@ -48,6 +49,7 @@ public class Wedstrijd {
 			this.zwart = s2;
 		}
 		this.uitslag = uitslag;
+		this.nietReglementair = true;
 	}
 
 	public int getId() {
@@ -103,18 +105,36 @@ public class Wedstrijd {
 	public void setUitslag(int Uitslag) {
 		this.uitslag = Uitslag;
 	}
+	
+	public boolean isNietReglementair() {
+		return nietReglementair;
+	}
+
+	public void setNietReglementair(boolean reglementair) {
+		this.nietReglementair = reglementair;
+	}
 
 	/**
 	 * Geef uitslag niet in Toto stijl maar voor snelle invoer in 0/1/2
 	 * 0 = 0-1 => 2 (Toto)
 	 * 1 = 1-0 => 1 (Toto)
 	 * 2 = remise => 3 (Toto)
+	 * 
+	 * 7 = 0-1 => 2 (reglementair)
+	 * 8 = 1-0 => 1 (reglementair)
+	 * 9 = remise => 3 (reglementair)
+	 * 
 	 * Deze variant is handig bij invoeren van veel resultaten doordat
 	 * het eerste getal van de uitslag ingevuld kan worden (met 2 voor half).
 	 *
 	 * @param uitslag
 	 */
 	public void setUitslag012(int uitslag) {
+		nietReglementair = true;
+		if (uitslag > 6 ) {
+			uitslag -= 7;
+			nietReglementair = false;
+		}
 		this.uitslag = (uitslag == 0 ? 2 : (uitslag == 1 ? 1 : (uitslag == 2 ? 3 : 0)));
 	}
 
@@ -134,6 +154,7 @@ public class Wedstrijd {
 		default:
 			result += "";
 		}
+		if (!nietReglementair) result += "R";
 		return result;
 	}
 

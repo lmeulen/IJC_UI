@@ -79,7 +79,7 @@ class ResultaatDialoog extends JDialog {
                 @Override
                 public void keyTyped(KeyEvent e) {
                     JTextField jtf = (JTextField) e.getComponent();
-                    if (e.getKeyChar() >= '0' && e.getKeyChar() <= '2') {
+                    if (e.getKeyChar() >= '0' && e.getKeyChar() <= '9') {
                         jtf.setText("");
                         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
                         manager.focusNextComponent();

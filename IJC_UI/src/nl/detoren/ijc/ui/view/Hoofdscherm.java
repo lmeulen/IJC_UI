@@ -1115,7 +1115,7 @@ public class Hoofdscherm extends JFrame {
 		hoofdPanel.repaint();
 		updateAutomatisch(false);
 		ResultaatDialoog rd = new ResultaatDialoog(new JFrame(),
-				"Wedstrijdresultaten: 1=wit wint, 0=zwart wint, 2=remise", tabs.getSelectedIndex());
+				"Wedstrijdresultaten: 1=wit wint, 0=zwart wint, 2=remise (7/8/9 reglementaire uitslag)", tabs.getSelectedIndex());
 		rd.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {

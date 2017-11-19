@@ -47,7 +47,8 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 
 	/**
 	 * Sla de nieuwe stand op in een R?-?OSBO.txt bestand en in een json versie
-	 * van resultaatVerwerkt
+	 * van resultaatVerwerkt.
+	 * Sla alleen reglementaire uitslagen op
 	 */
 	public boolean export(Wedstrijden wedstrijden) {
 		try {
@@ -99,7 +100,7 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 		for (Wedstrijd w : uitslag.getAlleWedstrijden()) {
 			Speler wit = w.getWit();
 			Speler zwart = w.getZwart();
-			if (wit.isKNSBLid() && zwart.isKNSBLid()) {
+			if (wit.isKNSBLid() && zwart.isKNSBLid() && w.isNietReglementair()) {
 				// Bepaal spelers
 				int witID = resultaat.getSpelerIDfromKNSB(wit.getKNSBnummer());
 				witID = (witID > 0) ? witID : resultaat.addSpeler(new OSBOSpeler(wit.getKNSBnummer(), wit.getNaam()));

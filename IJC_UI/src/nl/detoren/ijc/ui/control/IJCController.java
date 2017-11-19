@@ -808,7 +808,17 @@ public class IJCController {
 				speler.setWitvoorkeur(0);
 			}
 		}
-		// TODO Auto-generated method stub
-		
+	}
+
+	public ArrayList<Speler> getNietKNSBLeden() {
+		ArrayList<Speler> lijst = new ArrayList<>(); 
+		for (Groep groep : status.groepen.getGroepen()) {
+			for (Speler speler : groep.getSpelers()) {
+				if (!speler.isKNSBLid()) {
+					lijst.add(speler);
+				}
+			}
+		}
+		return lijst;
 	}
 }

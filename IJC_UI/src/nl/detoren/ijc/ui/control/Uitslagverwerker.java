@@ -263,6 +263,7 @@ public class Uitslagverwerker {
 	/**
 	 * UPdate rating van alle spelers. Itereer hiervoor door alle wedstrijden en
 	 * pas per wedstrijd de rating van iedere speler aan.
+	 * Pas rating alleen aan als de uitslag reglementair is.
 	 *
 	 * @param groepen
 	 * @param wedstrijden
@@ -270,30 +271,31 @@ public class Uitslagverwerker {
 	private void updateRating(Groepen groepen, Wedstrijden wedstrijden) {
 		for (Groepswedstrijden gws : wedstrijden.getGroepswedstrijden()) {
 			for (Wedstrijd wedstrijd : gws.getWedstrijden()) {
-
-				//Speler wit = groepen.getSpelerByKNSB(wedstrijd.getWit().getKNSBnummer());
-				//Speler zwart = groepen.getSpelerByKNSB(wedstrijd.getZwart().getKNSBnummer());
-
-				Speler wit = groepen.getSpelerByUid(wedstrijd.getWit().getUid());
-				Speler zwart = groepen.getSpelerByUid(wedstrijd.getZwart().getUid());
-
-				int ratingWit = wit.getRating();
-				int ratingZwart = zwart.getRating();
-
-				// w.getUitslag 1=wit wint 2=zwart wint 3=remise
-				int uitslagWit = wedstrijd.getUitslag(); // uitslag vanuit
-															// perspectief wit
-				int uitslagZwart = (wedstrijd.getUitslag() == 1) ? 2 : ((wedstrijd.getUitslag() == 2) ? 1 : 3);
-
-				int nieuwWit = nieuweRatingOSBO(ratingWit, ratingZwart, uitslagWit);
-				int nieuwZwart = nieuweRatingOSBO(ratingZwart, ratingWit, uitslagZwart);
-
-				wit.setRating(Math.max(nieuwWit, 100));
-				zwart.setRating(Math.max(nieuwZwart, 100));
-
-				logger.log(Level.INFO, wedstrijd.toString());
-				logger.log(Level.INFO, "Wit: " + wit.getNaam() + " van " + ratingWit + " naar " + nieuwWit);
-				logger.log(Level.INFO, "Zwart: " + zwart.getNaam() + " van " + ratingZwart + " naar " + nieuwZwart);
+				if (wedstrijd.isNietReglementair()) {
+					Speler wit = groepen.getSpelerByUid(wedstrijd.getWit().getUid());
+					Speler zwart = groepen.getSpelerByUid(wedstrijd.getZwart().getUid());
+	
+					int ratingWit = wit.getRating();
+					int ratingZwart = zwart.getRating();
+	
+					// w.getUitslag 1=wit wint 2=zwart wint 3=remise
+					int uitslagWit = wedstrijd.getUitslag(); // uitslag vanuit
+																// perspectief wit
+					int uitslagZwart = (wedstrijd.getUitslag() == 1) ? 2 : ((wedstrijd.getUitslag() == 2) ? 1 : 3);
+	
+					int nieuwWit = nieuweRatingOSBO(ratingWit, ratingZwart, uitslagWit);
+					int nieuwZwart = nieuweRatingOSBO(ratingZwart, ratingWit, uitslagZwart);
+	
+					wit.setRating(Math.max(nieuwWit, 100));
+					zwart.setRating(Math.max(nieuwZwart, 100));
+	
+					logger.log(Level.INFO, wedstrijd.toString());
+					logger.log(Level.INFO, "Wit: " + wit.getNaam() + " van " + ratingWit + " naar " + nieuwWit);
+					logger.log(Level.INFO, "Zwart: " + zwart.getNaam() + " van " + ratingZwart + " naar " + nieuwZwart);
+				} else {
+					logger.log(Level.INFO, wedstrijd.toString());
+					logger.log(Level.INFO, "Niet reglementair, geen aanpassing rating");
+				}
 			}
 		}
 	}

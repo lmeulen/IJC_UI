@@ -32,6 +32,7 @@ public class OutputKNSB implements WedstrijdenExportInterface {
 	/**
 	 * Sla de nieuwe stand op in een R?-?KNSB.csv bestand en in een json versie
 	 * van resultaatVerwerkt
+	 * Sla alleen reglementaire wedstrijden op
 	 */
 	public boolean export(Wedstrijden wedstrijden) {
 		try {
@@ -59,7 +60,7 @@ public class OutputKNSB implements WedstrijdenExportInterface {
 	}
 
 	/**
-	 * Zet één wedstrijd om naar KNSB file formaat
+	 * Zet ï¿½ï¿½n wedstrijd om naar KNSB file formaat
 	 *
 	 * @param w
 	 *            Wedstrijd
@@ -67,7 +68,7 @@ public class OutputKNSB implements WedstrijdenExportInterface {
 	 */
 	private String verwerkWedstrijd(Wedstrijd w, int volgnummer) {
 		String result = "";
-		if (w.getWit().isKNSBLid() && w.getZwart().isKNSBLid()) {
+		if (w.getWit().isKNSBLid() && w.getZwart().isKNSBLid() && w.isNietReglementair()) {
 			// 900;1;2016-10-10;8000000;8000001;1;Piet Puk;Jan Janssen;
 			result += "900;" + volgnummer + ";";
 			result += new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
