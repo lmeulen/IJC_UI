@@ -1149,18 +1149,24 @@ public class Hoofdscherm extends JFrame {
 	}
 
 	public void actieVolgendeRonde() {
-		SpelerDBImport dbi = new SpelerDBImport();
-		Status s = controller.getStatus();
-		if (s.resultaatVerwerkt != null) {
-			dbi.importStatusObjectWithDBSession(s);
-			controller.volgendeRonde();
-			updateAutomatisch(true);
-			updateRondeLabel();
-			updateZWbalansvoor();
-			updateZWbalansna();
-			updateUpdateStandButton();
+		try {
+			SpelerDBImport dbi = new SpelerDBImport();
+			Status s = controller.getStatus();
+			if (s.resultaatVerwerkt != null) {
+				dbi.importStatusObjectWithDBSession(s);
+				controller.volgendeRonde();
+				updateAutomatisch(true);
+				updateRondeLabel();
+				updateZWbalansvoor();
+				updateZWbalansna();
+				updateUpdateStandButton();
+			}
+			hoofdPanel.repaint();
 		}
-		hoofdPanel.repaint();
+		 catch (Exception ex) 
+		 {
+             System.out.println("Exception: " + ex.toString());
+         }
 	}
 
 	public void actieInstellingen() {

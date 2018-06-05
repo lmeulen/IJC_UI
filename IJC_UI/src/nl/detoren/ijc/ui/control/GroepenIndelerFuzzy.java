@@ -76,11 +76,16 @@ public class GroepenIndelerFuzzy extends GroepenIndeler implements GroepenIndele
 			groep.addSpeler(new Speler(s));
 		}
 
-		if ((groep.getNiveau() == (IJCController.c().aantalGroepen-1)) && (ronde < 7) && (ronde > 1)) {
-			// Sorteer keizergroep op rating voor indeling indien ronde =
-			// 2,3,4,5 of 6
+//		if ((groep.getNiveau() == (IJCController.c().aantalGroepen-1)) && (ronde < 7) && (ronde > 1)) {
+//			// Sorteer keizergroep op rating voor indeling indien ronde =
+//			// 2,3,4,5 of 6
+//			groep.sorteerRating();
+//		}
+		// Groovy
+		if (IJCController.c().sorteerOpRating(groep.getNiveau(), periode, ronde)) {
+			// Sorteer keizergroep op rating voor indeling indien ronde = 2,3,4,5 of 6
 			groep.sorteerRating();
-		}
+		}		
 		logger.log(Level.INFO, "Bepalen wedstrijden voor groep " + wedstrijdgroep.getNaam() + " periode " + periode
 				+ " ronde " + ronde + " id " + wedstrijdgroep.getNiveau() + " doorschuivers " + doorschuivers);
 		// Maak wedstrijden

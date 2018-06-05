@@ -205,13 +205,13 @@ public class WedstrijdModel extends AbstractTableModel {
             int rondes = this.isEerderGespeeld(row);
             String rt = "";
             if (rondes==99) {
-            	rt = "langer dan 4 ";
+            	rt = "meer dan 4 ";
             } else {
-            	rt = "" + rondes;
+            	rt = "" + (4-rondes);
             }
             String tt = "<HTML><TABLE><TR><TD BORDER=1 COLSPAN=2 ALIGN=CENTER>";
             tt += wit.toString();
-            tt += " heeft " + rt + " ronde(s) geleden";
+            tt += " heeft " + rt + " wedstrijd(en) geleden";
             tt += " tegen " + zwart.toString() + " gespeeld.</TD></TR>";
             tt += "</TABLE></HTML>";
             return tt;
