@@ -570,8 +570,18 @@ public class Hoofdscherm extends JFrame {
 				hoofdPanel.repaint();
 			}
 		});
-
 		overigmenu.add(item);
+
+		item = new JMenuItem("Reset KEI punten");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.resetKEIPunten();
+				hoofdPanel.repaint();
+			}
+		});
+		overigmenu.add(item);
+
 		menubar.add(overigmenu);
 
 		this.setJMenuBar(menubar);

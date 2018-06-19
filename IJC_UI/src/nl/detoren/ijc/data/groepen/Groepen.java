@@ -206,6 +206,12 @@ public class Groepen {
     	}
     }
 
+    public void resetKEIPunten() {
+    	for (Groep g : groepen) {
+    		g.resetKEIPunten();
+    	}
+    }
+
     public ArrayList<Speler>getAllSpelers() {
     	ArrayList<Speler> lijst=new ArrayList<>();
      	for (Groep g: groepen) {
