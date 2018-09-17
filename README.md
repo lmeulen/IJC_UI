@@ -1,2 +1,4 @@
 # IJC_UI
-Schaakindeling voor jeugdcompetitie voor Schaakvereniging De Toren
+Schaakindeling progamma voor interne jeugd competitie
+Ontwikkeld door Leo van de Meulen en Lars Dam
+
