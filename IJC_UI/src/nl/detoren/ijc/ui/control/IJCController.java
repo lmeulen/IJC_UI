@@ -725,6 +725,13 @@ public class IJCController {
 	}
 
 	/**
+	 * Reset de KEI punten in alle aanwezigheidsgroepen
+	 */
+	public void resetKEIPunten() {
+		status.groepen.resetKEIPunten();
+	}
+
+	/**
 	 * Schuif speler door
 	 * @param groepID Groep ID van huidige groep
 	 * @param spelerID speler ID

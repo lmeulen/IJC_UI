@@ -355,4 +355,15 @@ public class Groep {
 			s.setAfwezigheidspunt(false);
 		}
 	}
+
+	/**
+     * Reset de KEI punten en afwezigheidspunten van alle spelers in deze groep
+     */
+	public void resetKEIPunten() {
+		int punten = IJCController.c().startPunten[niveau];
+		for (Speler s : spelers) {
+			s.setKeikansen(0);
+			s.setKeipunten(0);
+		}
+	}
 }
