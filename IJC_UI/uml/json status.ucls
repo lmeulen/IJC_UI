@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.11" icons="false" always-add-relationships="false" generalizations="true" 
+<class-diagram version="1.1.10" icons="false" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="nl.detoren.ijc.ui.control.IJCController.Status" project="IJC_UI" 
-    file="/IJC_UI/src/nl/detoren/ijc/ui/control/IJCController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="99" y="227"/>    
-    <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="nl.detoren.ijc.data.groepen.Groepen" project="IJC_UI" 
+  <class id="1" language="java" name="nl.detoren.ijc.data.groepen.Groepen" project="IJC_UI" 
     file="/IJC_UI/src/nl/detoren/ijc/data/groepen/Groepen.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="368" y="227"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
@@ -19,7 +10,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="nl.detoren.ijc.data.groepen.Groep" project="IJC_UI" 
+  <class id="2" language="java" name="nl.detoren.ijc.data.groepen.Groep" project="IJC_UI" 
     file="/IJC_UI/src/nl/detoren/ijc/data/groepen/Groep.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="563" y="226"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
@@ -28,7 +19,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="nl.detoren.ijc.data.groepen.Speler" project="IJC_UI" 
+  <class id="3" language="java" name="nl.detoren.ijc.data.groepen.Speler" project="IJC_UI" 
     file="/IJC_UI/src/nl/detoren/ijc/data/groepen/Speler.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="566" y="447"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
@@ -37,7 +28,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="nl.detoren.ijc.data.wedstrijden.Wedstrijden" project="IJC_UI" 
+  <class id="4" language="java" name="nl.detoren.ijc.data.wedstrijden.Wedstrijden" project="IJC_UI" 
     file="/IJC_UI/src/nl/detoren/ijc/data/wedstrijden/Wedstrijden.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="367" y="99"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
@@ -46,7 +37,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="nl.detoren.ijc.data.wedstrijden.Groepswedstrijden" project="IJC_UI" 
+  <class id="5" language="java" name="nl.detoren.ijc.data.wedstrijden.Groepswedstrijden" project="IJC_UI" 
     file="/IJC_UI/src/nl/detoren/ijc/data/wedstrijden/Groepswedstrijden.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="569" y="98"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
@@ -55,7 +46,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="nl.detoren.ijc.data.wedstrijden.Serie" project="IJC_UI" 
+  <class id="6" language="java" name="nl.detoren.ijc.data.wedstrijden.Serie" project="IJC_UI" 
     file="/IJC_UI/src/nl/detoren/ijc/data/wedstrijden/Serie.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="766" y="98"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
@@ -64,7 +55,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="nl.detoren.ijc.data.wedstrijden.Wedstrijd" project="IJC_UI" 
+  <class id="7" language="java" name="nl.detoren.ijc.data.wedstrijden.Wedstrijd" project="IJC_UI" 
     file="/IJC_UI/src/nl/detoren/ijc/data/wedstrijden/Wedstrijd.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="767" y="228"/>    
     <display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 
@@ -73,136 +64,100 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <association id="9">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="10" name="spelers"/>      
-      <multiplicity id="11" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="12">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="13" name="wedstrijden">        
-        <position height="18" width="65" x="160" y="158"/>      
-      </attribute>      
-      <multiplicity id="14" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="15">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="16" name="resultaatVerwerkt">        
-        <position height="18" width="95" x="219" y="254"/>      
-      </attribute>      
-      <multiplicity id="17" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="18">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="19" name="series">        
-        <position height="18" width="38" x="633" y="76"/>      
-      </attribute>      
-      <multiplicity id="20" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="21">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="22" name="zwart">        
-        <position height="18" width="39" x="723" y="272"/>      
-      </attribute>      
-      <multiplicity id="23" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="24">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="25" name="wedstrijden">        
-        <position height="18" width="65" x="748" y="140"/>      
-      </attribute>      
-      <multiplicity id="26" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="27">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="28" name="groepen">        
-        <position height="18" width="48" x="245" y="184"/>      
-      </attribute>      
-      <multiplicity id="29" minimum="0" maximum="1">        
-        <position height="16" width="23" x="300" y="200"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="30">    
+  <association id="8">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="31" name="groepen"/>      
-      <multiplicity id="32" minimum="0" maximum="2147483647"/>    
+      <attribute id="9" name="spelers">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="10" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="33">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="34" name="externGespeeld">        
-        <position height="18" width="85" x="118" y="275"/>      
-      </attribute>      
-      <multiplicity id="35" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="36">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="37" name="wit">        
+  <association id="11">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="12" name="wit">        
         <position height="18" width="25" x="686" y="254"/>      
       </attribute>      
-      <multiplicity id="38" minimum="0" maximum="1">        
+      <multiplicity id="13" minimum="0" maximum="1">        
         <position height="16" width="23" x="639" y="317"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="39">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="40" name="wedstrijdgroepen">        
-        <position height="18" width="93" x="190" y="225"/>      
-      </attribute>      
-      <multiplicity id="41" minimum="0" maximum="1">        
-        <position height="16" width="23" x="292" y="215"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="42">    
+  <association id="14">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="43" name="groepswedstrijden">        
-        <position height="18" width="99" x="408" y="80"/>      
+      <attribute id="15" name="series">        
+        <position height="18" width="38" x="633" y="76"/>      
       </attribute>      
-      <multiplicity id="44" minimum="0" maximum="2147483647"/>    
+      <multiplicity id="16" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="45">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="46" name="triowedstrijden">        
+  <association id="17">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="18" name="zwart">        
+        <position height="18" width="39" x="723" y="272"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="20">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="21" name="groepswedstrijden">        
+        <position height="18" width="99" x="408" y="80"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="23">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="24" name="triowedstrijden">        
         <position height="18" width="80" x="584" y="150"/>      
       </attribute>      
-      <multiplicity id="47" minimum="0" maximum="2147483647"/>    
+      <multiplicity id="25" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="26">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="27" name="wedstrijden">        
+        <position height="18" width="65" x="748" y="140"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="29">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="30" name="groepen">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="31" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="false" initial-value="false" signature="false" 

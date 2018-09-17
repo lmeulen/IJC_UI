@@ -677,7 +677,7 @@ public class Hoofdscherm extends JFrame {
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
 				// Tooltip
-				if (c instanceof JComponent) {
+				if (c instanceof JComponent && (column >0)) {
 					JComponent jc = (JComponent) c;
 					SpelersModel model = (SpelersModel) getModel();
 					jc.setToolTipText(model.getToolTip(row, column).toString());
@@ -1115,7 +1115,7 @@ public class Hoofdscherm extends JFrame {
 		hoofdPanel.repaint();
 		updateAutomatisch(false);
 		ResultaatDialoog rd = new ResultaatDialoog(new JFrame(),
-				"Wedstrijdresultaten: 1=wit wint, 0=zwart wint, 2=remise", tabs.getSelectedIndex());
+				"Wedstrijdresultaten: 1=wit wint, 0=zwart wint, 2=remise (7/8/9 reglementaire uitslag)", tabs.getSelectedIndex());
 		rd.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {

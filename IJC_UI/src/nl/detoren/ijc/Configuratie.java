@@ -260,17 +260,17 @@ public class Configuratie {
 	/**
 	 * Naam Vereniging
 	 */
-	public String verenigingNaam = "SV De Toren";
+	public String verenigingNaam = "<Schaakverenigingsnaam>";
 	
 	/**
 	 * Naam competitie
 	 */
-	public String competitieNaam = "IJC de Toren Arnhem";
+	public String competitieNaam = "<Competitienaam>";
 	
 	/**
 	 * Locatie
 	 */
-	public String competitieLocatie = "Arnhem";
+	public String competitieLocatie = "<Locatie>";
 	
 	/**
 	 * Contactpersoon - Naam
@@ -280,26 +280,26 @@ public class Configuratie {
 	/**
 	 * Contactpersoon - Email
 	 */
-	public String contactPersoonEmail = "ijc@schaakverenigingdetoren.nl";
+	public String contactPersoonEmail = "ijc@<vereniging>.nl";
 
 	/**
 	 * Fuzzy indeling wordt gebruikt indien waarde 'true'.
 	 * Anders old skool algoritme, aangestuurd door configuratie
 	 */
-	public boolean fuzzyIndeling = false;
+	public boolean fuzzyIndeling = true;
 
 	/**
 	 * Fuzzy oneven wordt gebruikt indien waarde 'true'.
 	 * Anders wordt bij oneven spelers een ouderwetse trio gespeeld.
 	 */
-	public boolean fuzzyOneven = false;
+	public boolean fuzzyOneven = true;
 
 	/**
 	 * Fuzzy ranglijstpunten wordt gebruikt indien waarde 'true'.
 	 * Gebruik in fuzzyroutine puntenranglijst ipv ranglijst.
 	 * Dit geldt alleen voor ronde waarin géén doorschuiven is.
 	 */
-	public boolean fuzzyRanglijstpunten = false;
+	public boolean fuzzyRanglijstpunten = true;
 
 	/**
 	 * Wegingsfactor voor fuzzy algoritme. Waarde tussen 0.0 en 1.0
@@ -329,12 +329,12 @@ public class Configuratie {
 	 * hoe meer geprobeerd wordt de totale voorkeur van de groep neutraal
 	 * te krijgen
 	 */
-	public double fuzzyWegingZwartWitVerdeling = 0.97;
+	public double fuzzyWegingZwartWitVerdeling = 0.93;
 
 	/**
 	 * Wegingsfactor voor fuzzy algoritme. Waarde tussen 0.0 en 1.0
 	 * Deze parameter bepaald hoe zwaar het meeweegt dat er tegen een
 	 * tegenstander wordt gespeeld die uit een hogere groep komt
 	 */
-	public double fuzzyWegingDoorschuiverEigenGroep = 0.1;
+	public double fuzzyWegingDoorschuiverEigenGroep = 0.98;
 }

@@ -104,17 +104,32 @@ public class WedstrijdModel extends AbstractTableModel {
             case 3:
                 return ws.getZwart().getNaam();
             default:
-                switch (ws.getUitslag()) {
+            	if (ws.isNietReglementair()) {
+	                switch (ws.getUitslag()) {
+	                    case 0:
+	                        return "0-0";
+	                    case 1:
+	                        return "1-0";
+	                    case 2:
+	                        return "0-1";
+	                    case 3:
+	                        return "\u00BD-\u00BD";
+	                    default:
+	                        return "0-0";
+	                }
+                } else {
+	                switch (ws.getUitslag()) {
                     case 0:
-                        return "0-0";
+                        return "0-0R";
                     case 1:
-                        return "1-0";
+                        return "1-0R";
                     case 2:
-                        return "0-1";
+                        return "0-1R";
                     case 3:
-                        return "\u00BD-\u00BD";
+                        return "\u00BD-\u00BDR";
                     default:
                         return "0-0";
+	                }
                 }
         }
     }
