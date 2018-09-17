@@ -231,7 +231,9 @@ public class GroepenIndeler implements GroepenIndelerInterface {
      */
     protected int bepaalAantalSeries(int groep, int periode, int ronde) {
     	logger.log(Level.INFO, "Vaststellen aantal te spelen series");
-    	return IJCController.c().bepaalAantalSeries(groep, periode, ronde);
+    	int aantalSeries = IJCController.c().bepaalAantalSeries(groep, periode, ronde);
+    	logger.log(Level.INFO, "Vastgesteld aan series : " + aantalSeries);    	
+    	return aantalSeries;
     }
 
     /* (non-Javadoc)
