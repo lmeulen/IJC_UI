@@ -98,7 +98,7 @@ public class Hoofdscherm extends JFrame {
 	private static final long serialVersionUID = -2154845989579570030L;
 	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());
 
-
+	private String appVersion = "1.2.0";
 	private JPanel hoofdPanel;
 	private JTabbedPane tabs;
 	private JPanel[] panels;
@@ -135,7 +135,7 @@ public class Hoofdscherm extends JFrame {
 		controller = IJCController.getInstance();
 		aantal = Groep.getAantalGroepen();
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle(IJCController.c().verenigingNaam + " - " + IJCController.c().appTitle);
+		setTitle(IJCController.c().verenigingNaam + " - " + IJCController.c().appTitle + " - versie " + this.appVersion);
 
 		hoofdPanel = new javax.swing.JPanel();
 		addButtons();

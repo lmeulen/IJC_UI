@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Leo van der Meulen
+ * Copyright (C) 2016-2018 Leo van der Meulen & Lars Dam
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation version 3.0
@@ -22,7 +22,7 @@ import nl.detoren.ijc.ui.control.IJCController;
 
 /**
  *
- * @author Leo van der Meulen
+ * @author Leo van der Meulen, Lars Dam
  */
 public class WedstrijdSpelersModel extends AbstractTableModel {
 
@@ -37,6 +37,7 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
 	private static final String purplehtml = "<font color=rgb(128,0,128)>";
 	private static final String violetredhtml = "<font color=rgb(199,21,133)>";
 	private static final String deeppinkhtml = "<font color=rgb(255,20,147)>";
+	private static final String warninghtml = "<font color=rgb(255,0,0)>";
 
     private String[] columnNames = {"#", "Naam", "R", "P", " ", "Tegenst."};
 
@@ -107,7 +108,11 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
             case 1:
             	// Voeg voor een doorgeschoven speler een * toe aan de naam
             	boolean doorgeschoven = controller.getGroepByID(groepID).getNiveau() != speler.getGroep();
-                return speler.getNaam() + (doorgeschoven ? "*" : "");
+            	if (((row == 0) || row == controller.getWedstrijdGroepByID(groepID).getAantalSpelers()-1) && (this.getRowCount() & 1) == 1 ) {
+            		return "<html>" + warninghtml + speler.getNaam() + (doorgeschoven ? "*" : "") + "</font></html>";
+            	} else {
+            		return speler.getNaam() + (doorgeschoven ? "*" : "");
+            	}
             case 2:
             	return new Integer(speler.getRating());
             case 3:
