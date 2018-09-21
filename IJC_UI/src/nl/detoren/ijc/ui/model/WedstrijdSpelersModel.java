@@ -99,7 +99,8 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
         return columnNames.length;
     }
 
-    @Override
+    @SuppressWarnings("static-access")
+	@Override
     public Object getValueAt(int row, int col) {
         Speler speler = controller.getWedstrijdGroepByID(groepID).getSpelers().get(row);
         switch (col) {
@@ -108,7 +109,8 @@ public class WedstrijdSpelersModel extends AbstractTableModel {
             case 1:
             	// Voeg voor een doorgeschoven speler een * toe aan de naam
             	boolean doorgeschoven = controller.getGroepByID(groepID).getNiveau() != speler.getGroep();
-            	if (((row == 0) || row == controller.getWedstrijdGroepByID(groepID).getAantalSpelers()-1) && (this.getRowCount() & 1) == 1 ) {
+            	int aantalRondes = controller.c().bepaalAantalSeries(groepID, controller.getGroepen().getPeriode(), controller.getGroepen().getRonde());
+            	if (((row == 0) || row == controller.getWedstrijdGroepByID(groepID).getAantalSpelers()-1) && ((this.getRowCount() & 1) == 1) && (aantalRondes & 1) == 1) {
             		return "<html>" + warninghtml + speler.getNaam() + (doorgeschoven ? "*" : "") + "</font></html>";
             	} else {
             		return speler.getNaam() + (doorgeschoven ? "*" : "");
