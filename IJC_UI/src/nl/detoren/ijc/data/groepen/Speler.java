@@ -14,12 +14,15 @@
 package nl.detoren.ijc.data.groepen;
 
 import java.text.DecimalFormat;
+import java.util.logging.Logger;
 import java.text.Normalizer;
 import java.util.StringTokenizer;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.view.Hoofdscherm;
 
 /**
  * Dit object bevat de gegevens van ��n speler
@@ -43,6 +46,8 @@ public class Speler implements Cloneable {
     private int keipunten;
     private int keikansen;
     private String speelgeschiedenis;
+
+	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());
 
     private static final DecimalFormat decimalFormat = new DecimalFormat("#");
 
@@ -139,8 +144,12 @@ public class Speler implements Cloneable {
         String first = splitted[0];
         String last = splitted[splitted.length-1];
         String init = "" + first.charAt(0) + last.charAt(0);
+        int poging = 1;
+		logger.log(Level.INFO, "Trying initials: " + init);
         while (checkInit(init)) {
-        	init=toggleCase(init);
+        	poging++;
+        	init=toggleCase(init, poging);
+    		logger.log(Level.INFO, "Trying initials: " + init);
         }
         initialen = init;
     }
@@ -155,26 +164,24 @@ public class Speler implements Cloneable {
 		return exists;
     }
 
-    private String toggleCase(String init) {
-			if (init.charAt(0) == init.toUpperCase().charAt(0)) {
-				if (init.charAt(1) == init.toUpperCase().charAt(1)) {
-					init = "" + init.toLowerCase().charAt(0) + init.toUpperCase().charAt(1);
-				} else {
-					init = "" + init.toLowerCase().charAt(0) + init.toLowerCase().charAt(1);
-				}
-			} else {
-				if (init.charAt(1) == init.toUpperCase().charAt(1)) {
-					int charValue = init.toUpperCase().charAt(0);
-					if (charValue == 90) {
-						init = "" + init.toUpperCase().charAt(0) + String.valueOf( (char) (65));
-					} else {
-						init = "" + init.toUpperCase().charAt(0) + String.valueOf( (char) (charValue + 1));
-					}
-
-				} else {
-					init = "" + init.toUpperCase().charAt(0) + init.toLowerCase().charAt(1);
-				}
-			}
+    private String toggleCase(String init, int poging) {
+    	int modus = poging % 4;
+		char init1 = (char) init.charAt(0) ;
+		char init2 = (char) (init.charAt(1) + (int) ((poging-1)/4));
+		switch (modus) {
+    	case 1:
+			init = "" + String.valueOf( Character.toUpperCase(init1)) + String.valueOf(Character.toUpperCase(init2));
+    		break;    		
+    	case 2:
+			init = "" + String.valueOf( Character.toLowerCase(init1)) + String.valueOf(Character.toUpperCase(init2));
+    		break;
+    	case 3:
+			init = "" + String.valueOf( Character.toLowerCase(init1)) + String.valueOf(Character.toLowerCase(init2));
+    		break;
+    	case 4:
+			init = "" + String.valueOf( Character.toUpperCase(init1)) + String.valueOf(Character.toLowerCase(init2));
+    		break;
+    	}
     	return init;
     }
 
