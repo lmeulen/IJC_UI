@@ -637,8 +637,8 @@ public class Hoofdscherm extends JFrame {
 			// Fix the size of the displayed tables
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(0), 38);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(1), 22);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(2), 135);
-			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(3), 22);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(2), 130);
+			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(3), 27);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(4), 40);
 			fixedColumSize(aanwezigheidsTabel[i].getColumnModel().getColumn(5), 42);
 
