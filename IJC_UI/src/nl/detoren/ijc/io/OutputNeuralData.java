@@ -10,6 +10,7 @@ import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.neural.NeuralHelper;
+import nl.detoren.ijc.ui.util.Utils;
 
 /**
  * Exports data for the neural prediction network. Only data part is exported
@@ -57,7 +58,9 @@ public class OutputNeuralData implements WedstrijdenExportInterface {
 			FileWriter writer = new FileWriter(dirName + File.separator + bestandsnaam);
 			writer.write(result);
 			writer.close();
-		} catch (Exception e) {
+		} catch (Exception ex) {
+            logger.log(Level.INFO, "Exception: " +  ex.getMessage());
+            Utils.stacktrace(ex);
 			return false;
 		}
 		return true;

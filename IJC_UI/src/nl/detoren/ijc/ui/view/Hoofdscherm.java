@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Leo van der Meulen
+ * Copyright (C) 2016-2018 Lars Dam, Leo van der Meulen
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation version 3.0
@@ -83,6 +83,7 @@ import nl.detoren.ijc.ui.util.Utils;
  * 						JTable rightScrollPane[i]
  *
  * @author Leo van der Meulen
+ * @author Lars Dam
  */
 public class Hoofdscherm extends JFrame {
 
@@ -98,7 +99,7 @@ public class Hoofdscherm extends JFrame {
 	private static final long serialVersionUID = -2154845989579570030L;
 	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());
 
-	private String appVersion = "1.2.0.2";
+	private String appVersion = "1.2.0.4";
 	private JPanel hoofdPanel;
 	private JTabbedPane tabs;
 	private JPanel[] panels;
@@ -1175,7 +1176,9 @@ public class Hoofdscherm extends JFrame {
 		}
 		 catch (Exception ex) 
 		 {
-             System.out.println("Exception: " + ex.toString());
+             logger.log(Level.INFO, "Exception: " +  ex.getMessage());
+             Utils.stacktrace(ex);
+
          }
 	}
 

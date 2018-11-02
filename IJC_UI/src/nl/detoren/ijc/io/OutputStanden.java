@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 
 import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.util.Utils;
 
 public class OutputStanden implements GroepenExportInterface {
 
@@ -69,8 +70,9 @@ public class OutputStanden implements GroepenExportInterface {
 			writer.write(gson.toJson(IJCController.getI().getStatus()));
 			writer.close();
 			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+            logger.log(Level.INFO, "Exception: " +  ex.getMessage());
+            Utils.stacktrace(ex);
 			return false;
 		}
 

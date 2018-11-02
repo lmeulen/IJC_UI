@@ -30,6 +30,7 @@ import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.util.Utils;
 
 public class OutputOSBO implements WedstrijdenExportInterface {
 
@@ -73,8 +74,10 @@ public class OutputOSBO implements WedstrijdenExportInterface {
 			}
 			writer.close();
 			return true;
-		} catch (IOException e) {
-			logger.log(Level.WARNING, "Export mislukt : " + e.getMessage());
+		} catch (IOException ex) {
+			logger.log(Level.WARNING, "Export mislukt : " + ex.getMessage());
+            Utils.stacktrace(ex);
+
 			return false;
 		}
 	}

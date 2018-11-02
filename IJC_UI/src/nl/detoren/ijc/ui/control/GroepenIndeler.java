@@ -280,6 +280,12 @@ public class GroepenIndeler implements GroepenIndelerInterface {
         		wedstrijdenNieuw.addGroepswedstrijden(gw);
         	}
         }
+        //Check of Groepwedstrijd nog niet bestond. Dan alsnog aanmaken
+        if (wedstrijden.getGroepswedstrijdenNiveau(groepID) == null) {
+    		Groep wsGroep = wedstrijdgroepen.getGroepById(groepID);
+    		Groepswedstrijden nieuw = maakWedstrijdenVoorGroep(periode, ronde, wsGroep);
+    		wedstrijdenNieuw.addGroepswedstrijden(nieuw);        	
+        }
         return wedstrijdenNieuw;
     }
 

@@ -20,6 +20,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
 
 /**
@@ -173,4 +175,18 @@ public class Utils {
     	return C;
     }
 
+    public static void stacktrace(Exception ex) {
+        StringBuilder sb = new StringBuilder(ex.toString());
+        for (StackTraceElement ste : ex.getStackTrace()) {
+            sb.append("\n\tat ");
+            sb.append(ste);
+        }
+        String trace = sb.toString();
+        
+        // Now, trace contains the stack trace
+        // (However, you can only use it inside the catch block)
+        JOptionPane.showMessageDialog(new JFrame(), trace);
+
+    }
+    
 }

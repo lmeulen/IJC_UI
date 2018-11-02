@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import com.google.gson.Gson;
 
@@ -21,6 +22,7 @@ import nl.detoren.ijc.db.SpelerDatabase;
 import nl.detoren.ijc.io.GroepenReader;
 import nl.detoren.ijc.ui.control.IJCController;
 import nl.detoren.ijc.ui.control.Status;
+import nl.detoren.ijc.ui.util.Utils;
 
 public class SpelerDBImport {
 
@@ -34,8 +36,10 @@ public class SpelerDBImport {
 		try {
 			Status status = leesStatusBestand(bestandsnaam);
 			importStatusObject(status);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+            Utils.stacktrace(ex);
+
 		}
 	}
 
@@ -111,9 +115,11 @@ public class SpelerDBImport {
 			System.out.println("Aantal wedstrijden : " + wedstrijden.size());
 			spelerDB.store(ronde);
 			spelerDB.endTransaction();
-		} catch (Exception e) {
+		} catch (Exception ex) {
 			// Could not read status
-			e.printStackTrace();
+			ex.printStackTrace();
+            Utils.stacktrace(ex);
+
 		}
 	}
 

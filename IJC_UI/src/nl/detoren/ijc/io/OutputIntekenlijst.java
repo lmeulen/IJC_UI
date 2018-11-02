@@ -32,6 +32,7 @@ import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.util.Utils;
 
 public class OutputIntekenlijst implements GroepenExportInterface {
 
@@ -115,8 +116,9 @@ public class OutputIntekenlijst implements GroepenExportInterface {
 			// And open it in the system editor
 			//Desktop.getDesktop().open(new File(outputFile));
 			return true;
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "Export mislukt :" + e.getMessage());
+		} catch (Exception ex) {
+			logger.log(Level.WARNING, "Export mislukt :" + ex.getMessage());
+            Utils.stacktrace(ex);
 			return false;
 		}
 	}

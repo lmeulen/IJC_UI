@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.util.Utils;
 
 /**
  * Importeer spelers uit een CSV bestand. De volgende items staan in dit bestand:
@@ -76,7 +77,11 @@ public class ImportSpelers {
             }
             in.close();
             return list.toArray(new String[0]);
-        } catch (IOException e) {
+        } catch (IOException ex) {
+			logger.log(Level.INFO, "Lees bestand mislukt " +  ex.getMessage());
+        	//System.out.println("Exception: " + ex.toString());
+            Utils.stacktrace(ex);
+
         }
         return null;
     }

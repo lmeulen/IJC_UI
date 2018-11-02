@@ -12,6 +12,7 @@ import nl.detoren.ijc.data.wedstrijden.Serie;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijd;
 import nl.detoren.ijc.data.wedstrijden.Wedstrijden;
 import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.util.Utils;
 
 public class OutputUitslagen implements WedstrijdenExportInterface{
 
@@ -44,7 +45,10 @@ public class OutputUitslagen implements WedstrijdenExportInterface{
 			writer.write(ls + "Aangemaakt met " + IJCController.c().appTitle + " voor "
 					+ IJCController.c().verenigingNaam + ls);
 			writer.close();
-		} catch (Exception e) {
+		} catch (Exception ex) {
+            logger.log(Level.INFO, "Exception: " +  ex.getMessage());
+            Utils.stacktrace(ex);
+
 			return false;
 		}
 		return true;

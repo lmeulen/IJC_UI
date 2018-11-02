@@ -27,6 +27,7 @@ import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
+import nl.detoren.ijc.ui.util.Utils;
 
 /**
  * Leest alle gegevens van de spelers uit een invoerbestand
@@ -68,8 +69,9 @@ public class GroepenReader {
 	        
 			logger.log(Level.INFO, "Volgende periode " +  groepen.getPeriode() + " en ronde " + groepen.getRonde());
 	        return groepen;
-		} catch (IOException e) {
-			logger.log(Level.INFO, "Lezen groepen in JSON formaat mislukt " +  e.getMessage());
+		} catch (IOException ex) {
+			logger.log(Level.INFO, "Lezen groepen in JSON formaat mislukt " +  ex.getMessage());
+            Utils.stacktrace(ex);
 		}
 		return null;
     }
@@ -119,7 +121,9 @@ public class GroepenReader {
             }
             in.close();
             return list.toArray(new String[0]);
-        } catch (IOException e) {
+        } catch (IOException ex) {
+			logger.log(Level.INFO, "Lezen bestand mislukt " +  ex.getMessage());
+            Utils.stacktrace(ex);
         }
         return null;
     }
@@ -144,7 +148,7 @@ public class GroepenReader {
             index++;
         }
         // Lees spelers (begint 3 regels na het vinden van de groepsnaam)
-        // Index is hier één groter dan de index waar he token is gevonden
+        // Index is hier ï¿½ï¿½n groter dan de index waar he token is gevonden
         index += 2;
 		logger.log(Level.INFO, "Spelers groep beginnen op regel " + index);
         // Zolang er een punt in de regel staat, is er nog een speler gevonden
