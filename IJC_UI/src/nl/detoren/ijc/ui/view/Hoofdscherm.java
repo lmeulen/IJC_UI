@@ -99,7 +99,7 @@ public class Hoofdscherm extends JFrame {
 	private static final long serialVersionUID = -2154845989579570030L;
 	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());
 
-	private String appVersion = "1.2.0.4";
+	private String appVersion = "1.2.0.5";
 	private JPanel hoofdPanel;
 	private JTabbedPane tabs;
 	private JPanel[] panels;
