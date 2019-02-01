@@ -153,7 +153,7 @@ public class WedstrijdschemaDialoog extends JDialog {
         topPanel = new JPanel();
         topPanel.add(new JLabel("Serie 1"));
 
-        JButton wisButton = new JButton("Wis");
+        JButton wisButton = new JButton("Wis alles");
 		wisButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -169,7 +169,7 @@ public class WedstrijdschemaDialoog extends JDialog {
 
         topPanel = new JPanel();
         topPanel.add(new JLabel("Serie 2"));
-        wisButton = new JButton("Wis");
+        wisButton = new JButton("Wis alles");
 		wisButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -189,7 +189,7 @@ public class WedstrijdschemaDialoog extends JDialog {
 
         topPanel = new JPanel();
         topPanel.add(new JLabel("Serie 3"));
-        wisButton = new JButton("Wis");
+        wisButton = new JButton("Wis alles");
 		wisButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -205,7 +205,7 @@ public class WedstrijdschemaDialoog extends JDialog {
 
         topPanel = new JPanel();
         topPanel.add(new JLabel("Triowedstrijden"));
-        wisButton = new JButton("Wis");
+        wisButton = new JButton("Wis alles");
 		wisButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

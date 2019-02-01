@@ -118,7 +118,7 @@ public class OutputIntekenlijst implements GroepenExportInterface {
 			return true;
 		} catch (Exception ex) {
 			logger.log(Level.WARNING, "Export mislukt :" + ex.getMessage());
-            Utils.stacktrace(ex);
+            //Utils.stacktrace(ex);
 			return false;
 		}
 	}
