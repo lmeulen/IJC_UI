@@ -117,7 +117,7 @@ public class OutputIntekenlijst implements GroepenExportInterface {
 			//Desktop.getDesktop().open(new File(outputFile));
 			return true;
 		} catch (Exception ex) {
-			logger.log(Level.WARNING, "Export mislukt :" + ex.getMessage());
+			logger.log(Level.WARNING, "Intekenlijst mislukt :" + ex.getMessage());
             //Utils.stacktrace(ex);
 			return false;
 		}

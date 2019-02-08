@@ -55,6 +55,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -99,7 +100,7 @@ public class Hoofdscherm extends JFrame {
 	private static final long serialVersionUID = -2154845989579570030L;
 	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());
 
-	private String appVersion = "1.2.0.5";
+	private String appVersion = "1.2.0.6";
 	private JPanel hoofdPanel;
 	private JTabbedPane tabs;
 	private JPanel[] panels;
@@ -681,9 +682,35 @@ public class Hoofdscherm extends JFrame {
 		centerRightScrollPane[index] = new javax.swing.JScrollPane();
 		centerRightScrollPane[index].setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
+		String[] columnToolTips = {
+			    "De-/Selecter alle spelers",
+			    null,
+			    null,
+			    null,
+			    "Sorteer",
+			    "Sorteer"
+		};
+		
 		aanwezigheidsTabel[index] = new JTable(new SpelersModel(index, panel)) {
 			private static final long serialVersionUID = -8293073016982337108L;
 
+			@Override
+		    //Implement table header tool tips.
+		    protected JTableHeader createDefaultTableHeader() {
+		        return new JTableHeader(columnModel) {
+		            
+		        	private static final long serialVersionUID = -8293073016255337108L;
+		        	public String getToolTipText(MouseEvent e) {
+		                String tip = null;
+		                java.awt.Point p = e.getPoint();
+		                int index = columnModel.getColumnIndexAtX(p.x);
+		                int realIndex = 
+		                        columnModel.getColumn(index).getModelIndex();
+		                return columnToolTips[realIndex];
+		            }
+		        };
+			}	
+		
 			@Override
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
