@@ -3,6 +3,8 @@ package nl.detoren.ijc.io;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,21 +29,11 @@ public class OutputUitslagen implements WedstrijdenExportInterface{
 			ronde = wedstrijden.getRonde();
 			String bestandsnaam = "R" + periode + "-" + ronde + "Uitslag.txt";
 			logger.log(Level.INFO, "Sla uitslag op in bestand " + bestandsnaam);
-			String result = "";
-			result += "Wedstrijden Periode " + periode + " Ronde " + ronde;
-			if (wedstrijden.getSpeeldatum() != null) {
-				result += ", datum " + (new SimpleDateFormat("dd-MM-yyyy")).format(wedstrijden.getSpeeldatum());
-				result += ls + "-----------------------------------------------" + ls + ls;
-			} else {
-				result += ls + "-----------------------------" + ls + ls;
-			}
-			for (Groepswedstrijden gw : wedstrijden.getGroepswedstrijden()) {
-				result += printGroepsWedstrijden(gw) + ls;
-			}
-			String dirName = "R" + wedstrijden.getPeriode() + "-" + wedstrijden.getRonde();
+
+			String dirName = "R" + periode + "-" + ronde;
 			new File(dirName).mkdirs();
 			FileWriter writer = new FileWriter( dirName + File.separator + bestandsnaam);
-			writer.write(result);
+			writer.write(outputExport(wedstrijden.getGroepswedstrijden(), wedstrijden.getSpeeldatum(), periode, ronde));
 			writer.write(ls + "Aangemaakt met " + IJCController.c().appTitle + " voor "
 					+ IJCController.c().verenigingNaam + ls);
 			writer.close();
@@ -54,6 +46,26 @@ public class OutputUitslagen implements WedstrijdenExportInterface{
 		return true;
 	}
 
+	/**
+	 * Output voor export
+	 * @param periode, ronde
+	 */
+	public String outputExport(ArrayList<Groepswedstrijden> gws, Date datum, int periode, int ronde) {
+		String result = "";
+		result += "Wedstrijden Periode " + periode + " Ronde " + ronde;
+		if (datum != null) {
+			result += ", datum " + (new SimpleDateFormat("dd-MM-yyyy")).format(datum);
+			result += ls + "-----------------------------------------------" + ls + ls;
+		} else {
+			result += ls + "-----------------------------" + ls + ls;
+		}
+		for (Groepswedstrijden gw : gws) {
+			result += printGroepsWedstrijden(gw) + ls;
+		}
+		return result;
+	}
+	
+	
 	/**
 	 * Print wedstrijden voor gespecificeerde Groepswedstrijden
 	 * @param gw

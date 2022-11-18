@@ -15,15 +15,28 @@ package nl.detoren.ijc.ui.control;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import javax.security.auth.DestroyFailedException;
 
 import com.google.gson.Gson;
 
@@ -47,6 +60,7 @@ import nl.detoren.ijc.io.OutputSpeelschema;
 import nl.detoren.ijc.io.OutputStanden;
 import nl.detoren.ijc.io.OutputUitslagen;
 import nl.detoren.ijc.neural.Voorspeller;
+import nl.detoren.ijc.ui.util.Utils;
 
 /**
  * Main controller class voor afhandeling van de groepen en wedstrijden
@@ -61,10 +75,34 @@ public class IJCController {
 
     private Status status;
     private Configuratie c;
+	private KeyStore ks = null;
+	private char[] keyStorePassword = "m2fhwuiyegnfwgofijeghuiwhpfijeuovy4iojhkl43ngkls".toCharArray();
+	private String ksfilename = "keystore.ks";
 
     private String laatsteExport;
 
-    protected IJCController() {
+    protected IJCController() throws GeneralSecurityException, CertificateException, IOException {
+    	try {
+    		ks = KeyStore.getInstance(KeyStore.getDefaultType());
+    	}
+    	catch (KeyStoreException kse) {
+			// TODO Auto-generated catch block
+			kse.printStackTrace();
+    	}
+    	try (InputStream data = new FileInputStream(ksfilename)) {
+    		this.ks.load(data, keyStorePassword);
+    	}
+    	catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				ks.load(null);
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+    	}
+
     	status = new Status();
     	status.groepen = null;
     	status.wedstrijden = null;
@@ -75,7 +113,14 @@ public class IJCController {
 
     public static IJCController getInstance() {
         if (instance == null) {
+        	try {
             instance = new IJCController();
+        	}
+        	catch (GeneralSecurityException | IOException e)
+        	{
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+        	}
         }
         return instance;
     }
@@ -86,6 +131,44 @@ public class IJCController {
      */
     public static IJCController getI() {
     	return getInstance();
+    }
+    
+    /** 
+     * setPassword in KeyStore
+     */
+    public void setPassword(String alias, byte[] password, char[] master) throws GeneralSecurityException, DestroyFailedException {
+    	SecretKey wrapper = new SecretKeySpec(password, "DSA");
+    	KeyStore.SecretKeyEntry entry = new KeyStore.SecretKeyEntry(wrapper);
+    	KeyStore.PasswordProtection pp = new KeyStore.PasswordProtection(master);
+    	try {
+    		this.ks.setEntry(alias, entry, pp);
+    	}
+    	catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();		    		
+    	}
+    	finally {
+    		pp.destroy();
+    	}
+    }
+
+    /** 
+     * getPassword from KeyStore
+     */
+    public byte[] getPassword(String alias, char[] master) throws GeneralSecurityException, DestroyFailedException {
+    	KeyStore.PasswordProtection pp = new KeyStore.PasswordProtection(master);
+    	try {
+    		KeyStore.SecretKeyEntry e = (KeyStore.SecretKeyEntry) this.ks.getEntry(alias, pp);
+    		try {
+    			return e.getSecretKey().getEncoded();
+    		}
+    		catch (NullPointerException npe) {
+    			return new byte[0];
+    		}
+    	}
+    	finally {
+    		pp.destroy();
+    	}
     }
 
     /**
@@ -434,7 +517,25 @@ public class IJCController {
 	 * @param postfix post fix of filename, before extension. Only used in combination with unique = true
 	 */
     public void saveState(boolean unique, String postfix) {
-		try {
+    	// First save keystore
+    	try (FileOutputStream keyStoreOutputStream = new FileOutputStream(ksfilename)) {
+    		this.ks.store(keyStoreOutputStream, this.keyStorePassword);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (KeyStoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CertificateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	// Second save status
+    	try {
 			String bestandsnaam = c.statusBestand + ".json";
 			logger.log(Level.INFO, "Sla status op in bestand " + bestandsnaam);
 			Gson gson = new Gson();
@@ -473,10 +574,22 @@ public class IJCController {
 	}
 
 	public boolean leesStatus(String bestandsnaam) {
+		Gson gson = new Gson();
+		// Only use setDateFormat when status is broken and Datetime cannot be determined.
+		// Normally not needed.
+		//Gson gson = new GsonBuilder().setDateFormat("MMM d, yyyy HH:mm:ss a").create();
+		//
+		BufferedReader br;
 		try {
-	    	logger.log(Level.INFO, "Lees status uit bestand " + bestandsnaam);
-			Gson gson = new Gson();
-			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
+	    	logger.log(Level.INFO, "Lees status uit bestand (inclusief path)" + bestandsnaam);
+			br = new BufferedReader(new FileReader(bestandsnaam));
+		} catch (Exception e) {
+			// Could not read status
+			// e.printStackTrace();
+			logger.log(Level.WARNING, "Exception in BufferedReader for leesStatus in " + bestandsnaam +  ". Error: " + e.getLocalizedMessage());
+			return false;
+		}
+		try {
 			Status nieuw = gson.fromJson(br, Status.class);
 			status = nieuw;	// assure exception is thrown when things go wrong
 			// Check for wrong KNSBnumbers; this is vital!!!
@@ -488,6 +601,8 @@ public class IJCController {
 			return true;
 		} catch (Exception e) {
 			// Could not read status
+			// e.printStackTrace();
+			logger.log(Level.WARNING, "Exception in parsing content of leesStatus " + bestandsnaam +  ". Error: " + e.getLocalizedMessage());
 			return false;
 		}
 	}
@@ -731,6 +846,43 @@ public class IJCController {
 		status.groepen.resetKEIPunten();
 	}
 
+	/**
+	 * Exporteer naar external API
+	 */
+	public void exporteerNaarExternalAPI() {
+		logger.log(Level.INFO, "Exporteer naar external API gekozen");
+		logger.log(Level.INFO, "Er zijn " + c.externalAPIs.size() + " in de actieve configuratie opgenomen.");
+		logger.log(Level.INFO, "Huidige periode : " + this.getGroepen().getPeriode());
+		logger.log(Level.INFO, "Huidige rondde : " + this.getGroepen().getRonde());
+		int vorigeperiode = Utils.vorigePeriode(c.perioden, c.rondes, this.getGroepen().getPeriode(), this.getGroepen().getRonde());
+		int vorigeronde = Utils.vorigeRonde(c.perioden, c.rondes, this.getGroepen().getPeriode(), this.getGroepen().getRonde());
+		logger.log(Level.INFO, "Vorige periode : " + vorigeperiode);
+		logger.log(Level.INFO, "Vorige rondde : " + vorigeronde);
+		try {
+			c.externalAPIs.export(c.plone52URL, c.plone52Path, c.plone52UserName, new String(this.getPassword("Plone52Password", c.salt)), vorigeperiode, vorigeronde);
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DestroyFailedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Verwijder gebruiker van API
+	 */
+	public void externalAPIDeleteUsers() {
+		try {
+			c.externalAPIs.verwijderGebruikers(c.plone52URL, c.plone52UserName, new String(this.getPassword("Plone52Password", c.salt)));
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DestroyFailedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * Schuif speler door
 	 * @param groepID Groep ID van huidige groep

@@ -18,7 +18,14 @@ package nl.detoren.ijc.ui.util;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -175,6 +182,20 @@ public class Utils {
     	return C;
     }
 
+    public static boolean internet_connectivity(){
+    	try {
+    		InetAddress adr = InetAddress.getByName("www.google.com");
+    		if(adr.isReachable(3000)){
+    			return true;
+    		} else {
+    			return false;
+    		}
+    	}
+    	catch (Exception e) {    	
+    		return false;
+    	}
+    }
+    
     public static void stacktrace(Exception ex) {
         StringBuilder sb = new StringBuilder(ex.toString());
         for (StackTraceElement ste : ex.getStackTrace()) {
@@ -189,4 +210,52 @@ public class Utils {
 
     }
     
+    /**
+     * Lees een bestand in en retourneer dit als Strings.
+     * @param bestandsnaam
+     * @return array of strings met bestandsinhoud
+     */
+    public static String[] leesBestand(String bestandsnaam) {
+        List<String> list = new ArrayList<>();
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(bestandsnaam));
+            String str;
+            while ((str = in.readLine()) != null) {
+                list.add(str);
+            }
+            in.close();
+            return list.toArray(new String[0]);
+        } catch (IOException ex) {
+			//logger.log(Level.INFO, "Lees bestand mislukt " +  ex.getMessage());
+        	System.out.println("Exception: " + ex.toString());
+            Utils.stacktrace(ex);
+        }
+        return null;
+    }
+
+    public static int vorigePeriode(int perioden, int rondes, int periode, int ronde) {
+ 	   int vperiode = periode;
+	   if (ronde <=1) {
+		   vperiode--;		   
+	   }
+	   if (vperiode < 1)
+	   {
+		   vperiode = perioden;
+	   }
+	   return vperiode;
+ 	   
+    }
+
+   public static int vorigeRonde(int perioden, int rondes, int periode, int ronde) {
+	   int vronde = ronde;
+	   if (vronde <=1) {
+		   vronde = rondes;
+	   } else {
+		   vronde--;
+	   }
+	   return vronde;
+	   
+   }
+
+   
 }

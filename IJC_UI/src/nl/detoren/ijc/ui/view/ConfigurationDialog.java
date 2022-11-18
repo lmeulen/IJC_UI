@@ -18,15 +18,20 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.security.auth.DestroyFailedException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
@@ -42,7 +47,8 @@ public class ConfigurationDialog extends JDialog {
 	private static final long serialVersionUID = -4220297943910687398L;
 
 	private Configuratie config;
-
+	private IJCController controller;
+	
 	private final static Logger logger = Logger.getLogger(ConfigurationDialog.class.getName());
 
 	private JTextField tfAppnaam;
@@ -65,7 +71,7 @@ public class ConfigurationDialog extends JDialog {
 	private JCheckBox cbSpeciaalRonde1;
 	private JTextField tfMaxVerschil;
 	private JCheckBox cbExportShort;
-	private JCheckBox cbSaveLongformat;
+;	private JCheckBox cbSaveLongformat;
 	private JCheckBox cbSaveDoorschuivers;
 	private JTextField tfHeaderDoor;
 	private JTextField tfFooterDoor;
@@ -76,6 +82,10 @@ public class ConfigurationDialog extends JDialog {
 	private JCheckBox cbSaveAdditionals;
 	private JTextField tfConfigfile;
 	private JTextField tfStatusfile;
+	private JTextField tfPlone52URL;
+	private JTextField tfPlone52Path;
+	private JTextField tfPlone52UserName;
+	private JTextField tfPlone52Password;
 	private JCheckBox cbFuzzyIndeling;
 	private JCheckBox cbFuzzyTrio;
 	private JCheckBox cbFuzzyPunten;
@@ -84,10 +94,13 @@ public class ConfigurationDialog extends JDialog {
 	private JTextField tfFuzzyRanglijstpunten;
 	private JTextField tfFuzzyZwartWit;
 	private JTextField tfFuzzyDoorschuiver;
+	
+	private boolean passwordchanged;
 
 	public ConfigurationDialog(Frame frame, String title) {
 		super(frame, title);
 		logger.log(Level.INFO, "Bewerk configuratie");
+		controller = IJCController.getInstance();
 		config = IJCController.c();
 		setModalExclusionType(Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -326,7 +339,7 @@ public class ConfigurationDialog extends JDialog {
 
 	public JPanel createPanelExport() {
 		JPanel panel = new JPanel(false);
-		panel.setLayout(new ExtendedGridLayout(20, 2));
+		panel.setLayout(new ExtendedGridLayout(22, 2));
 
 		// public boolean exportTextShort = true;
 		panel.add(new JLabel("Exporteer uitslag kort formaat"));
@@ -354,12 +367,46 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Export KEI lijst"));
 		cbSaveKEI = new JCheckBox("", config.exportKEIlijst);
 		panel.add(cbSaveKEI);
-		// public boolean exportIntekenlijst = true;
-		panel.add(new JLabel("Export Intekenlijsten"));
-		cbSaveInteken = new JCheckBox("", config.exportIntekenlijst);
-		panel.add(cbSaveInteken);
-		panel.add(new JLabel(" "));
-		panel.add(new JLabel(" "));
+		//panel.add(new JLabel(" "));
+		//panel.add(new JLabel(" "));
+		//panel.add(new JLabel(" "));
+		// public String plone52 URL;
+		panel.add(new JLabel("Plone 52 - URL"));
+		tfPlone52URL = new JTextField(config.plone52URL);
+		panel.add(tfPlone52URL);
+		//
+		panel.add(new JLabel("Plone 52 - Path"));
+		tfPlone52Path = new JTextField(config.plone52Path);
+		panel.add(tfPlone52Path);
+		//
+		panel.add(new JLabel("Plone 52 - username"));
+		tfPlone52UserName = new JTextField(config.plone52UserName);
+		panel.add(tfPlone52UserName);
+		//
+		panel.add(new JLabel("Plone 52 - password"));
+		String pwd = "";
+		try {
+			byte b[] = controller.getPassword("Plone52Password", config.salt);
+			pwd = new String(b);
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DestroyFailedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		tfPlone52Password = new JPasswordField(pwd);
+
+		/*
+		 * tfPlone52Password.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent event) {
+		 * storeValues(); setVisible(false); dispose(); } });
+		 */
+		
+		panel.add(tfPlone52Password);
+  		//panel.add(new JLabel(" "));
+		
 		// public boolean exportKNSBRating = true;
 		panel.add(new JLabel("Export KNSB rating bestand"));
 		cbSaveKNSB = new JCheckBox("", config.exportKNSBRating);
@@ -368,8 +415,12 @@ public class ConfigurationDialog extends JDialog {
 		panel.add(new JLabel("Export OSBO rating bestand"));
 		cbSaveOSBO = new JCheckBox("", config.exportOSBORating);
 		panel.add(cbSaveOSBO);
-		panel.add(new JLabel(" "));
-		panel.add(new JLabel(" "));
+		// public boolean exportIntekenLijst = true;
+		panel.add(new JLabel("Export Intekenlijst bestand"));
+		cbSaveInteken = new JCheckBox("", config.exportIntekenlijst);
+		panel.add(cbSaveInteken);
+		//panel.add(new JLabel(" "));
+		//panel.add(new JLabel(" "));
 		// public boolean saveAdditionalStates = true;
 		panel.add(new JLabel("Sla additionale statusbestanden op"));
 		cbSaveAdditionals = new JCheckBox("", config.saveAdditionalStates);
@@ -429,7 +480,19 @@ public class ConfigurationDialog extends JDialog {
 		updateTextConfig(config, "exportDoorschuiversStart", tfHeaderDoor.getText(), 10);
 		updateTextConfig(config, "exportDoorschuiversStop", tfFooterDoor.getText(), 10);
 		config.exportKEIlijst = cbSaveKEI.isSelected();
-		config.exportIntekenlijst = cbSaveInteken.isSelected();
+		updateTextConfig(config, "plone52URL", tfPlone52URL.getText(), 5);
+		updateTextConfig(config, "plone52Path", tfPlone52Path.getText(), 5);
+		updateTextConfig(config, "plone52UserName", tfPlone52UserName.getText(), 5);
+		if (passwordchanged) {
+			try {
+				controller.setPassword("Plone52Password", tfPlone52Password.getText().getBytes(StandardCharsets.UTF_8), config.salt);
+			}
+			catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();			
+			}
+		}
+	 	config.exportIntekenlijst = cbSaveInteken.isSelected();
 		config.exportKNSBRating = cbSaveKNSB.isSelected();
 		config.exportOSBORating = cbSaveOSBO.isSelected();
 		config.saveAdditionalStates = cbSaveAdditionals.isSelected();

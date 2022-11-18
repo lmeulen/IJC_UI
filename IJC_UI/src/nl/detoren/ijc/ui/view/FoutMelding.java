@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  * de applicatie verder kan.
  * Gebruik:
  *         FoutMelding.melding("Melding");
- * @author sv
+ * @author Lars.Dam
  *
  */
 public class FoutMelding {

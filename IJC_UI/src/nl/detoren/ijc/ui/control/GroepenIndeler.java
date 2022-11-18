@@ -568,7 +568,13 @@ public class GroepenIndeler implements GroepenIndelerInterface {
             trio.add(groep.getSpelers().get(2).getId());
             return trio;
         }
-        int spelerID = IJCController.c().getBeginpuntTrio(groep.getSpelers().size());
+        int spelerID = 0;
+        try {
+            spelerID = IJCController.c().getBeginpuntTrio(groep.getSpelers().size());
+        }
+        catch (Exception e) {
+        	logger.log(Level.WARNING, "Problem with spelersID. No int.");
+        }
         int minDelta = 1;
         int plusDelta = 1;
         int ignore = 0;

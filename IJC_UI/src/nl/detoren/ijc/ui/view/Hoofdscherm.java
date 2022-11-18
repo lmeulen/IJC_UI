@@ -27,6 +27,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -100,7 +102,7 @@ public class Hoofdscherm extends JFrame {
 	private static final long serialVersionUID = -2154845989579570030L;
 	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());
 
-	private String appVersion = "1.2.0.6";
+	private String appVersion = "1.3.0.2";
 	private JPanel hoofdPanel;
 	private JTabbedPane tabs;
 	private JPanel[] panels;
@@ -134,11 +136,13 @@ public class Hoofdscherm extends JFrame {
 	}
 
 	private void initComponents() {
+
 		controller = IJCController.getInstance();
 		aantal = Groep.getAantalGroepen();
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle(IJCController.c().verenigingNaam + " - " + IJCController.c().appTitle + " - versie " + this.appVersion);
-
+		logger.log(Level.INFO, "Java version: " + System.getProperty("java.runtime.version"));
+		logger.log(Level.INFO, IJCController.c().verenigingNaam + " - " + IJCController.c().appTitle + " - versie " + this.appVersion);
 		hoofdPanel = new javax.swing.JPanel();
 		addButtons();
 		addMenubar();
@@ -579,6 +583,26 @@ public class Hoofdscherm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				controller.resetKEIPunten();
+				hoofdPanel.repaint();
+			}
+		});
+		overigmenu.add(item);
+
+		item = new JMenuItem("Exporteer actieve API's");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.exporteerNaarExternalAPI();
+				hoofdPanel.repaint();
+			}
+		});
+		overigmenu.add(item);
+
+		item = new JMenuItem("!!! Admin - Delete users API");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				controller.externalAPIDeleteUsers();
 				hoofdPanel.repaint();
 			}
 		});

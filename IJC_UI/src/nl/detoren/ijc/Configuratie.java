@@ -14,6 +14,9 @@
 package nl.detoren.ijc;
 
 import java.math.BigDecimal;
+import java.security.KeyStore;
+
+import nl.detoren.ijc.data.external.api.APIs;
 
 /**
  * Configuratie van het indelingsprogramma. Doel is dat hier geen code in staat
@@ -23,12 +26,18 @@ import java.math.BigDecimal;
  * @author Leo.vanderMeulen
  *
  */
+
 public class Configuratie {
 	
 	public Configuratie() {
 		
 	}
+	/**
+	 * Salt
+	 */
+	public char[] salt = "dpwo98dpomwfviuoigjwjor8owunjsbgiojr;thm,ted".toCharArray();
 
+	
 	/**
 	 * Aantal periodes in een seizoen
 	 */
@@ -235,9 +244,9 @@ public class Configuratie {
 	 * @param groepsgrootte
 	 * @return index voor beginpunt trio
 	 */
-	public int getBeginpuntTrio(int groepsgrootte) {
-		BigDecimal bd = (BigDecimal) groovy.util.Eval.x(groepsgrootte, grBeginTrio);
-		return bd.intValue();
+	public int getBeginpuntTrio(int groepsgrootte) throws Exception {
+			BigDecimal bd = (BigDecimal) groovy.util.Eval.x(groepsgrootte, grBeginTrio);
+			return bd.intValue();
 	}
 
 	/**
@@ -337,4 +346,31 @@ public class Configuratie {
 	 * tegenstander wordt gespeeld die uit een hogere groep komt
 	 */
 	public double fuzzyWegingDoorschuiverEigenGroep = 0.98;
+
+	/**
+	 * plone52URL is the URL for a Plone 5.2 RESTAPI connection
+	 */
+	public String plone52URL = "";
+
+	/**
+	 * plone52Path is the Path in to place new content for a Plone 5.2 RESTAPI connection
+	 */
+	public String plone52Path = "";
+
+	/**
+	 * plone52UserName is the username for a Plone 5.2 RESTAPI connection
+	 */
+	public String plone52UserName = "";
+
+	/**
+	 * plone52Password is the password for a Plone 5.2 RESTAPI connection
+	 */
+	//public String plone52Password = "";
+	
+	/**
+	 * externalAPIs is an array of type API
+	 * used for pushing information to external sites/systems trough an API
+	 */
+
+	public APIs externalAPIs = new APIs();
 }
