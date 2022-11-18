@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Leo van der Meulen
+ * Copyright (C) 2016 - 2022 Leo van der Meulen / Lars Dam
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation version 3.0
@@ -27,7 +27,6 @@ import javax.security.auth.DestroyFailedException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -94,8 +93,6 @@ public class ConfigurationDialog extends JDialog {
 	private JTextField tfFuzzyRanglijstpunten;
 	private JTextField tfFuzzyZwartWit;
 	private JTextField tfFuzzyDoorschuiver;
-	
-	private boolean passwordchanged;
 
 	public ConfigurationDialog(Frame frame, String title) {
 		super(frame, title);
@@ -483,7 +480,6 @@ public class ConfigurationDialog extends JDialog {
 		updateTextConfig(config, "plone52URL", tfPlone52URL.getText(), 5);
 		updateTextConfig(config, "plone52Path", tfPlone52Path.getText(), 5);
 		updateTextConfig(config, "plone52UserName", tfPlone52UserName.getText(), 5);
-		if (passwordchanged) {
 			try {
 				controller.setPassword("Plone52Password", tfPlone52Password.getText().getBytes(StandardCharsets.UTF_8), config.salt);
 			}
@@ -491,7 +487,6 @@ public class ConfigurationDialog extends JDialog {
 				// TODO Auto-generated catch block
 				e.printStackTrace();			
 			}
-		}
 	 	config.exportIntekenlijst = cbSaveInteken.isSelected();
 		config.exportKNSBRating = cbSaveKNSB.isSelected();
 		config.exportOSBORating = cbSaveOSBO.isSelected();

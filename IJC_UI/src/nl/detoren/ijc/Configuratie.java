@@ -14,8 +14,6 @@
 package nl.detoren.ijc;
 
 import java.math.BigDecimal;
-import java.security.KeyStore;
-
 import nl.detoren.ijc.data.external.api.APIs;
 
 /**

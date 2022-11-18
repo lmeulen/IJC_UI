@@ -32,7 +32,6 @@ import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.data.groepen.Speler;
 import nl.detoren.ijc.ui.control.IJCController;
-import nl.detoren.ijc.ui.util.Utils;
 
 public class OutputIntekenlijst implements GroepenExportInterface {
 

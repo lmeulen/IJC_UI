@@ -1,16 +1,26 @@
-package nl.detoren.ijc.data.external.api;
+/**
+ * Copyright (C) 2016 - 2022 Leo van der Meulen / Lars Dam
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation version 3.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * See: http://www.gnu.org/licenses/gpl-3.0.html
+ *  
+ * Problemen in deze code:
+ */
+ package nl.detoren.ijc.data.external.api;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;

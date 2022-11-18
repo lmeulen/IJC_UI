@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Leo van der Meulen
+ * Copyright (C) 2016-2022 Leo van der Meulen / Lars Dam
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation version 3.0

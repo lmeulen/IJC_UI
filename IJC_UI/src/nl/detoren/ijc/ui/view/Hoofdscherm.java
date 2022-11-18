@@ -27,8 +27,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,7 +100,7 @@ public class Hoofdscherm extends JFrame {
 	private static final long serialVersionUID = -2154845989579570030L;
 	private final static Logger logger = Logger.getLogger(Hoofdscherm.class.getName());
 
-	private String appVersion = "1.3.0.2";
+	private String appVersion = "1.3.0.3";
 	private JPanel hoofdPanel;
 	private JTabbedPane tabs;
 	private JPanel[] panels;
