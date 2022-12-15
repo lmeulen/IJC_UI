@@ -19,18 +19,30 @@ public class API {
 
 	int	ID;
 	String type;
+	String name;
 	Double versionMin;
 	Double versionMax;
 	boolean debugLog;
 	boolean active;
 
 	// Constructor
-	public API(int cId, String cType, double cVersionMin, double cVersionMax) {
+	public API(int cId, String cType, String cName, double cVersionMin, double cVersionMax) {
 		// TODO Auto-generated constructor stub
 		ID =cId;
 		type=cType;
+		name=cName;
 		versionMin = cVersionMin;
 		versionMax = cVersionMax;		
+	}
+
+	@Override
+	public String toString() {
+	    return getAPIName();
+	}
+
+	// getter for type
+	public int getId() {
+		return ID;
 	}
 
 	// getter for type
@@ -58,4 +70,12 @@ public class API {
 		return active;
 	}
 
+	public String getAPIName() {
+		//return this.type + " " + versionMin + "-" + versionMax;
+		return name;
+	}
+
+	public void setAPIName(String name) {
+		this.name = name;
+	}
 }

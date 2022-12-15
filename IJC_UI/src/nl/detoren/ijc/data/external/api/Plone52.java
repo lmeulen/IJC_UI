@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 - 2022 Leo van der Meulen / Lars Dam
+ * Copyright (C) 2016 - 2022 Lars Dam
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation version 3.0
@@ -24,14 +24,20 @@ import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import nl.detoren.ijc.io.GroepenReader;
 import nl.detoren.ijc.ui.util.Utils;
 
 public class Plone52 {
 	
+	private final static Logger logger = Logger.getLogger(GroepenReader.class.getName());
+
 	// method for retrieve homepage (Example, not actively used)
 	public static String getrequest(String url) {
 		String httpsbody = "";
@@ -55,7 +61,7 @@ public class Plone52 {
 	}
 
 	// method for logon and retrieving Token
-	public static Token login (String url, String username, String password) throws Exception {
+	public static Token login (String url, String username, String password, String loginpath) throws Exception {
 		Token token = null;
 		Gson gson = new Gson();
 		String httpsbody = "";
@@ -64,13 +70,14 @@ public class Plone52 {
 		jsonOb1.put("password", password);
 		HttpClient httpClient = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder()
-				  .uri(URI.create("https://" + url + "/@login"))
+				  .uri(URI.create("https://" + url + "/" + loginpath))
 				  .header("Accept", "application/json")
 				  .header("Content-Type", "application/json")
 				  .POST(HttpRequest.BodyPublishers.ofString(jsonOb1.toString()))
 				  .build();
 		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 		httpsbody += response.body();
+		logger.log(Level.INFO, "httpsbody is '" + httpsbody + "'");
 		token = gson.fromJson(httpsbody, Token.class);
 		return token;
 	}
@@ -84,7 +91,7 @@ public class Plone52 {
      * @param ronde - ronde for page to be created
      * @return String - OK or HTTP Status Code
      */
-	public static String createpage(Token token, String url, String path, int periode, int ronde) throws URISyntaxException {
+	public static String createpage(Token token, String url, String path, String template, int periode, int ronde) throws URISyntaxException {
 
 		Gson gson = new Gson();
 		String httpsbody = "";
@@ -119,14 +126,15 @@ public class Plone52 {
 		jsonOb1.put("description", "Clubavond met uitslagen en stand");
 		JSONObject jsonOb2 = new JSONObject(); 
 		jsonOb2.put("content-type","text/html");
-		jsonOb2.put("data","<h3>Les</h3>\n<p>" + txtles + "</p>\n<h3>IJC Uitslagen</h3>\n<pre>" + txtUitslagparagraaf + 
-				"</pre>\n<h3>IJC Stand</h3>\n<pre>" + txtStandparagraaf + "</pre>\n");
+		String data = template.replaceAll("\\b%Uitslag%\\b", txtUitslagparagraaf);
+		data = data.replaceAll("\\b%Stand%\\b", txtStandparagraaf);
+		jsonOb2.put("data",data);
 		jsonOb2.put("encoding","utf-8");
 		jsonOb1.put("text", jsonOb2);		
 		//
 		System.out.println("JSON : " + jsonOb1.toString(2));
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("https://" + url + path))
+				.uri(URI.create("https://" + url + "/" + path))
 				.header("Accept", "application/json")
 				.header("Content-Type", "application/json")
 				.header("Authorization", "Bearer " + token.getToken())
@@ -150,7 +158,7 @@ public class Plone52 {
 		System.out.println("Document created with title : " + id.toString());
 		httpsbody = "";
 		request = HttpRequest.newBuilder()
-				.uri(URI.create("https://" + url + path + "/" + id.toString() + "/@workflow/publish"))
+				.uri(URI.create("https://" + url + "/" + path + "/" + id.toString() + "/@workflow/publish"))
 				.header("Accept", "application/json")
 				.header("Content-Type", "application/json")
 				.header("Authorization", "Bearer " + token.getToken())

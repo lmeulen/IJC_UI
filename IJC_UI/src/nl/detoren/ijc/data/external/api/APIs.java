@@ -34,19 +34,40 @@ public class APIs {
     
     public APIs() {
         apis = new ArrayList<API>();
-        API plone52 = new API(1,"Plone", 5.2,6.0);
+        API plone52 = new API(1,"Plone", "Plone 5.2.x", 5.2,6.0);
         apis.add(plone52);
         }
+
+    public ArrayList<API> getAPIs() {
+    	return apis;
+    }
     
-    public void export(String url, String path, String username, String password, int periode, int ronde) {
+    public API getAPI(int id) {
+    	for (API api : apis) {
+    		if (api.ID == id) return api;
+    	}
+    	return null;
+    }
+
+    public String getAPIName(int id) {
+    	for (API api : apis) {
+    		if (api.ID == id) {
+    			if (api.getAPIName() == null) api.setAPIName("Plone 5.2.x");
+    			return api.getAPIName();
+    		}
+    	}
+    	return null;
+    }
+
+    public void export(String url, String path, String username, String password, String loginpath, String template, int periode, int ronde) {
      	for (API api: apis) {
-    		this.export(api, url, path, username, password, periode, ronde);
+    		this.export(api, url, path, username, password, loginpath, template, periode, ronde);
     	}
     }
 
-    public void verwijderGebruikers(String url, String username, String password) {
+    public void verwijderGebruikers(String url, String username, String password, String loginpath) {
      	for (API api: apis) {
-    		this.verwijderGebruikers(api, url, username, password);
+    		this.verwijderGebruikers(api, url, username, password, loginpath);
     	}
     }
     
@@ -55,7 +76,7 @@ public class APIs {
     }   
 
     
-    public void verwijderGebruikers(API api, String url, String username, String password) {
+    public void verwijderGebruikers(API api, String url, String username, String password, String loginpath) {
 		String userList = "";
 		Token plone52Token = null;
 		int statusCode = 0;
@@ -65,7 +86,7 @@ public class APIs {
 				if (api.versionMin == 5.2) {
 					if (Utils.internet_connectivity()) {
 						try {
-							plone52Token = Plone52.login(url, username, password);
+							plone52Token = Plone52.login(url, username, password, loginpath);
 						}
 						catch (Exception e) {
 							logger.log(Level.INFO, "Could not login for external api : " + api.getType() + api.getVersionMin());
@@ -140,7 +161,7 @@ public class APIs {
 		}
     }    
     
-    public void export(API api, String url, String path, String username, String password, int periode, int ronde) {
+    public void export(API api, String url, String pagepath, String username, String password, String loginpath, String template, int periode, int ronde) {
 		String response = "";
 		Token plone52Token = null;
 		switch(api.type) {
@@ -148,16 +169,17 @@ public class APIs {
 			if (api.versionMin == 5.2) {
 				if (Utils.internet_connectivity()) {
 					try {
-						plone52Token = Plone52.login(url, username, password);
+						plone52Token = Plone52.login(url, username, password, loginpath);
 					}
 					catch (Exception e) {
 				    	logger.log(Level.INFO, "Could not login for external api : " + api.getType() + api.getVersionMin());
+						e.printStackTrace();
 				    	return;
 				    }
 					logger.log(Level.INFO, "Login for external api : " + api.getType() + api.getVersionMin() + " succesful. Token retrieved!");
 					logger.log(Level.INFO, "Token :" + plone52Token.getToken());
 					try {
-						response = Plone52.createpage(plone52Token, url, path, periode, ronde);
+						response = Plone52.createpage(plone52Token, url, pagepath, template, periode, ronde);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

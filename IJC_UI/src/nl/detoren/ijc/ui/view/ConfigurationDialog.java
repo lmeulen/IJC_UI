@@ -14,27 +14,42 @@
 package nl.detoren.ijc.ui.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.security.auth.DestroyFailedException;
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import nl.detoren.ijc.Configuratie;
+import nl.detoren.ijc.data.external.api.API;
+import nl.detoren.ijc.data.external.api.APIConfig;
 import nl.detoren.ijc.ui.control.IJCController;
 import nl.detoren.ijc.ui.util.Utils;
 
@@ -93,7 +108,9 @@ public class ConfigurationDialog extends JDialog {
 	private JTextField tfFuzzyRanglijstpunten;
 	private JTextField tfFuzzyZwartWit;
 	private JTextField tfFuzzyDoorschuiver;
-
+	private JComboBox cbAPI;
+	private String newAPItext = "Nieuwe ExportAPI";
+	
 	public ConfigurationDialog(Frame frame, String title) {
 		super(frame, title);
 		logger.log(Level.INFO, "Bewerk configuratie");
@@ -117,6 +134,7 @@ public class ConfigurationDialog extends JDialog {
 		tabs.addTab("Groepen", createPanelGroepen());
 		tabs.addTab("Indeling", createPanelIndeling());
 		tabs.addTab("Export", createPanelExport());
+		tabs.addTab("ExportAPI", createPanelExportAPIs());
 		Utils.fixedComponentSize(tabs, 600, 400);
 
 		JPanel buttonPanel = new JPanel();
@@ -334,10 +352,219 @@ public class ConfigurationDialog extends JDialog {
 		return panel;
 	}
 
-	public JPanel createPanelExport() {
+	public JPanel createPanelExportAPI(boolean newconfig, APIConfig apiconfig) {
+		JPanel panel = new JPanel(false);
+		panel.setLayout(new ExtendedGridLayout(22, 2));
+		panel.setName(apiconfig.getId().toString());
+		//panel.setLayout(new GridLayout(18, 2));
+		if (newconfig) {
+			panel.add(new JLabel(newAPItext));
+		} else {
+			panel.add(new JLabel("ExportAPI " + config.externalAPIs.getAPIName(apiconfig.getAPIId())));		
+		}
+		panel.add(new JLabel(""));
+		// Combobox for selecting API
+		ArrayList<API> alAPIs = config.externalAPIs.getAPIs();
+		cbAPI = new JComboBox(alAPIs.toArray());
+		cbAPI.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+					String txt;
+					int id;
+					if (event.getSource () == cbAPI) {
+						txt=((API) cbAPI.getSelectedItem()).getAPIName();
+						id=((API) cbAPI.getSelectedItem()).getId();
+						logger.log(Level.INFO, "SelectedItemName : " + txt);
+						logger.log(Level.INFO, "SelectedItemId : " + id);
+					}
+			}
+		});
+		if (newconfig) {
+			panel.add(cbAPI);
+		} else {
+			panel.add(new JLabel(""));
+
+		}
+		// TextField for username
+		panel.add(new JLabel("Username"));
+		JTextField tfUserName = new JTextField(apiconfig.getUserName(), 30);
+		tfUserName.setCaretPosition(0);
+		tfUserName.setToolTipText("Loginnaam voor de API");
+		panel.add(tfUserName);
+		// Change password button
+		JButton btChangePassword = new JButton("Wachtwoord instellen");
+		btChangePassword.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {				
+				JDialog passwordDialoog = new PasswordDialoog(new JFrame(), "Wachtwoord veranderen");
+//				passwordDialoog.setLayout(new ExtendedGridLayout(10, 2));
+				((PasswordDialoog) passwordDialoog).setAPIConfig(apiconfig);
+				passwordDialoog.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosed(WindowEvent e) {
+						System.out.println("closing...");
+						panel.repaint();
+					}
+
+				});
+				passwordDialoog.setVisible(true);
+			}
+		});
+		panel.add(btChangePassword);
+		// TextField for url
+		panel.add(new JLabel("URL"));
+		JTextField tfURL = new JTextField(apiconfig.getURL(), 30);
+		tfURL.setCaretPosition(0);
+		tfURL.setToolTipText("URL naar de API. B.v.: www.svdestelling.nl");
+		panel.add(tfURL);
+		// TextField for login path
+		panel.add(new JLabel("Login Path"));
+		JTextField tfLoginPath = new JTextField(apiconfig.getLoginPath(), 30);
+		tfLoginPath.setCaretPosition(0);
+		tfLoginPath.setToolTipText("Login path voor de API. B.v.: @login");
+		panel.add(tfLoginPath);
+		// TextField for page path
+		panel.add(new JLabel("Page Path"));
+		JTextField tfPagePath = new JTextField(apiconfig.getPagePath(), 30);
+		tfPagePath.setCaretPosition(0);
+		tfPagePath.setToolTipText("Page path voor de API. B.v.: jeugd/ijc");
+		panel.add(tfPagePath);
+		// TextField for active
+		JCheckBox cbActive = new JCheckBox(" Actief", apiconfig.getActive());
+		cbActive.setToolTipText("Geactiveerd of niet.");
+		panel.add(cbActive);
+		panel.add(new JLabel(""));
+		// TextArea for template
+		panel.add(new JLabel("Template"));
+		JTextArea taTemplate = new JTextArea(apiconfig.getTemplate());
+		//taTemplate.setCaretPosition(0);
+		taTemplate.setPreferredSize(new Dimension(300,100));
+		taTemplate.setToolTipText("Template voor pagina. Gebruik %Uitslag% voor de uitslag en %Stand voor de stand.");
+		panel.add(taTemplate);
+		JScrollPane scroll = new JScrollPane (taTemplate, 
+				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		panel.add(scroll);
+		// Save entry button
+		JButton btSave = new JButton("Opslaan");
+		btSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				apiconfig.setAPIId(((API) cbAPI.getSelectedItem()).getId());
+				logger.log(Level.INFO, "SelectedItemId : " + apiconfig.getAPIId());
+				apiconfig.setUserName(tfUserName.getText());
+				apiconfig.setURL(tfURL.getText());
+				apiconfig.setLoginPath(tfLoginPath.getText());
+				apiconfig.setPagePath(tfPagePath.getText());
+				apiconfig.setActive(cbActive.isSelected());
+				apiconfig.setTemplate(taTemplate.getText());
+				if (cbActive.isSelected()) {
+					logger.log(Level.INFO, "Checkbox selected");
+				} else {
+					logger.log(Level.INFO, "Checkbox not selected");
+				}
+				if (newconfig) {
+					config.externalAPIConfigs.apiconfigs.add(apiconfig);
+					try {
+						controller.setPassword(apiconfig.getId().toString(), "".getBytes(StandardCharsets.UTF_8), config.salt);
+					}
+					catch (Exception e) {
+						// TODO Auto-generated catch block
+						logger.log(Level.WARNING, "Wachtwoord instellen mislukt.");
+						e.printStackTrace();			
+					}
+
+					try {
+						JPanel jPanel = (JPanel) ((Component) event.getSource()).getParent();
+						JTabbedPane tPane = (JTabbedPane) jPanel.getParent();
+						tPane.setTitleAt(tPane.getSelectedIndex(), config.externalAPIs.getAPIName(apiconfig.getAPIId()));
+				        Component[] comps = jPanel.getComponents();
+				        for (Component comp : comps) {
+				            if(comp instanceof JButton){
+				            	if (((JButton) comp).getText() == "Verwijder") {
+				            		comp.setVisible(true);
+				            	}
+				            }
+				            if(comp instanceof JLabel){
+				            	if (((JLabel) comp).getText() == newAPItext) {
+				            		((JLabel) comp).setText("ExportAPI " + config.externalAPIs.getAPIName(apiconfig.getAPIId()));
+				            	}
+				            }
+				            if(comp instanceof JComboBox){
+				            	((JComboBox<?>) comp).setVisible(false);
+				            }
+
+				        }	 
+						tPane.addTab("+", createPanelExportAPI(true, new APIConfig()));
+					}
+					catch (Exception e) {
+						
+					}
+				}
+			}
+		});
+		panel.add(btSave);
+			// Delete entry button
+			JButton btDelete = new JButton("Verwijder");
+			btDelete.addActionListener(new ActionListener() {
+			@Override
+				public void actionPerformed(ActionEvent event) {
+					if (removeconfig(event)) {
+						removeTab(event);
+					}
+					//dispose();
+				}
+			});
+			if (newconfig) {
+				btDelete.setVisible(false);
+			}
+			panel.add(btDelete);
+		return panel;		
+	}
+	
+	public boolean removeconfig(ActionEvent e) {
+		try {
+			// Remove the selected tab pane if it's not the Smack info pane
+			Object source = e.getSource();
+			JTabbedPane tabbedPane = (JTabbedPane) ((Component) source).getParent().getParent();
+			int tab = tabbedPane.getSelectedIndex();
+			config.externalAPIConfigs.apiconfigs.remove(tab);
+		}
+		catch (Exception ex){
+			return false;
+		}
+		return true;
+	}
+
+	public void removeTab(ActionEvent e) {
+	    // Remove the selected tab pane if it's not the Smack info pane
+		Object source = e.getSource();
+		JTabbedPane tabbedPane = (JTabbedPane) ((Component) source).getParent().getParent();
+		int tab = tabbedPane.getSelectedIndex();
+		tabbedPane.remove(tab);
+	}
+	
+	public JPanel createPanelExportAPIs() {
 		JPanel panel = new JPanel(false);
 		panel.setLayout(new ExtendedGridLayout(22, 2));
 
+		JTabbedPane tabs = new JTabbedPane();
+		tabs.setTabPlacement(JTabbedPane.TOP);
+		for (APIConfig apiconfig : config.externalAPIConfigs.apiconfigs){
+			tabs.addTab(config.externalAPIs.getAPIName(apiconfig.getAPIId()), createPanelExportAPI(false, apiconfig));			
+		}
+		tabs.addTab("+", createPanelExportAPI(true, new APIConfig()));
+		//Utils.fixedComponentSize(tabs, 600, 400);
+		panel.add(tabs, BorderLayout.CENTER);
+		return panel;		
+	}
+
+	public JPanel createPanelExport() {
+			JPanel panel = new JPanel(false);
+			panel.setLayout(new ExtendedGridLayout(22, 2));
+
+			JTabbedPane tabs = new JTabbedPane();
+			tabs.setTabPlacement(JTabbedPane.TOP);
+		
 		// public boolean exportTextShort = true;
 		panel.add(new JLabel("Exporteer uitslag kort formaat"));
 		cbExportShort = new JCheckBox("", config.exportTextShort);
@@ -368,31 +595,31 @@ public class ConfigurationDialog extends JDialog {
 		//panel.add(new JLabel(" "));
 		//panel.add(new JLabel(" "));
 		// public String plone52 URL;
-		panel.add(new JLabel("Plone 52 - URL"));
-		tfPlone52URL = new JTextField(config.plone52URL);
-		panel.add(tfPlone52URL);
+		//panel.add(new JLabel("Plone 52 - URL"));
+		//tfPlone52URL = new JTextField(config.plone52URL);
+		//panel.add(tfPlone52URL);
 		//
-		panel.add(new JLabel("Plone 52 - Path"));
-		tfPlone52Path = new JTextField(config.plone52Path);
-		panel.add(tfPlone52Path);
+		//panel.add(new JLabel("Plone 52 - Path"));
+		//tfPlone52Path = new JTextField(config.plone52Path);
+		//panel.add(tfPlone52Path);
 		//
-		panel.add(new JLabel("Plone 52 - username"));
-		tfPlone52UserName = new JTextField(config.plone52UserName);
-		panel.add(tfPlone52UserName);
+		//panel.add(new JLabel("Plone 52 - username"));
+		//tfPlone52UserName = new JTextField(config.plone52UserName);
+		//panel.add(tfPlone52UserName);
 		//
-		panel.add(new JLabel("Plone 52 - password"));
-		String pwd = "";
-		try {
-			byte b[] = controller.getPassword("Plone52Password", config.salt);
-			pwd = new String(b);
-		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DestroyFailedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		tfPlone52Password = new JPasswordField(pwd);
+		//panel.add(new JLabel("Plone 52 - password"));
+		//String pwd = "";
+		//try {
+		//	byte b[] = controller.getPassword("Plone52Password", config.salt);
+		//	pwd = new String(b);
+		//} catch (GeneralSecurityException e) {
+		//	// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//} catch (DestroyFailedException e) {
+		//	// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
+		//tfPlone52Password = new JPasswordField(pwd);
 
 		/*
 		 * tfPlone52Password.addActionListener(new ActionListener() {
@@ -401,7 +628,7 @@ public class ConfigurationDialog extends JDialog {
 		 * storeValues(); setVisible(false); dispose(); } });
 		 */
 		
-		panel.add(tfPlone52Password);
+		//panel.add(tfPlone52Password);
   		//panel.add(new JLabel(" "));
 		
 		// public boolean exportKNSBRating = true;
@@ -477,16 +704,16 @@ public class ConfigurationDialog extends JDialog {
 		updateTextConfig(config, "exportDoorschuiversStart", tfHeaderDoor.getText(), 10);
 		updateTextConfig(config, "exportDoorschuiversStop", tfFooterDoor.getText(), 10);
 		config.exportKEIlijst = cbSaveKEI.isSelected();
-		updateTextConfig(config, "plone52URL", tfPlone52URL.getText(), 5);
-		updateTextConfig(config, "plone52Path", tfPlone52Path.getText(), 5);
-		updateTextConfig(config, "plone52UserName", tfPlone52UserName.getText(), 5);
-			try {
-				controller.setPassword("Plone52Password", tfPlone52Password.getText().getBytes(StandardCharsets.UTF_8), config.salt);
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();			
-			}
+		//updateTextConfig(config, "plone52URL", tfPlone52URL.getText(), 5);
+		//updateTextConfig(config, "plone52Path", tfPlone52Path.getText(), 5);
+		//updateTextConfig(config, "plone52UserName", tfPlone52UserName.getText(), 5);
+		//	try {
+		//		controller.setPassword("Plone52Password", tfPlone52Password.getText().getBytes(StandardCharsets.UTF_8), config.salt);
+		//	}
+		//	catch (Exception e) {
+		//		// TODO Auto-generated catch block
+		//		e.printStackTrace();			
+		//	}
 	 	config.exportIntekenlijst = cbSaveInteken.isSelected();
 		config.exportKNSBRating = cbSaveKNSB.isSelected();
 		config.exportOSBORating = cbSaveOSBO.isSelected();

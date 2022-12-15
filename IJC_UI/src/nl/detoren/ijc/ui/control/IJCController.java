@@ -29,6 +29,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +41,7 @@ import javax.security.auth.DestroyFailedException;
 import com.google.gson.Gson;
 
 import nl.detoren.ijc.Configuratie;
+import nl.detoren.ijc.data.external.api.APIConfig;
 import nl.detoren.ijc.data.groepen.Groep;
 import nl.detoren.ijc.data.groepen.Groepen;
 import nl.detoren.ijc.data.groepen.Speler;
@@ -133,24 +135,49 @@ public class IJCController {
     }
     
     /** 
+     * getSalt 
+     * @return 
+     */
+    public char[] getSalt() {
+    	return c.salt;
+    }
+    
+    /** 
      * setPassword in KeyStore
      */
-    public void setPassword(String alias, byte[] password, char[] master) throws GeneralSecurityException, DestroyFailedException {
+    public boolean setPassword(String alias, byte[] password, char[] master) throws GeneralSecurityException, DestroyFailedException {
     	SecretKey wrapper = new SecretKeySpec(password, "DSA");
     	KeyStore.SecretKeyEntry entry = new KeyStore.SecretKeyEntry(wrapper);
     	KeyStore.PasswordProtection pp = new KeyStore.PasswordProtection(master);
     	try {
     		this.ks.setEntry(alias, entry, pp);
+    		pp.destroy();
+    		return true;
     	}
     	catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();		    		
+			e.printStackTrace();
+    		pp.destroy();
+			return false;
     	}
     	finally {
-    		pp.destroy();
     	}
     }
 
+    /** 
+     * checkPassword in KeyStore
+     */
+    public boolean checkPassword(String alias, char[] master, char[] passwd) throws GeneralSecurityException, DestroyFailedException {
+    	if (Arrays.equals(this.getPassword(alias, master), new String(passwd).getBytes())) {
+			logger.log(Level.INFO, "oldPassword is OK");
+    		return true;
+    	} else {
+			logger.log(Level.INFO, "oldPassword is Wrong");
+    		return false;
+    	}
+    }
+
+    	
     /** 
      * getPassword from KeyStore
      */
@@ -279,6 +306,7 @@ public class IJCController {
 			}
 		}
     	logger.log(Level.INFO, "Statusbestand ingelezen");
+    	logger.log(Level.INFO, "aantal entries APIConfig = " + c.externalAPIConfigs.apiconfigs.size());
 		return true;
 	}
 
@@ -621,7 +649,11 @@ public class IJCController {
 			Gson gson = new Gson();
 			BufferedReader br = new BufferedReader(new FileReader(bestandsnaam));
 			c = gson.fromJson(br, Configuratie.class);
-			if (c == null) c = new Configuratie();
+			if (c == null) {
+				c = new Configuratie();
+			} else {
+				c.Update();
+			}
 		} catch (IOException e) {
 			// Could not read status
 		}
@@ -857,14 +889,18 @@ public class IJCController {
 		int vorigeronde = Utils.vorigeRonde(c.perioden, c.rondes, this.getGroepen().getPeriode(), this.getGroepen().getRonde());
 		logger.log(Level.INFO, "Vorige periode : " + vorigeperiode);
 		logger.log(Level.INFO, "Vorige rondde : " + vorigeronde);
-		try {
-			c.externalAPIs.export(c.plone52URL, c.plone52Path, c.plone52UserName, new String(this.getPassword("Plone52Password", c.salt)), vorigeperiode, vorigeronde);
-		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DestroyFailedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (APIConfig config : c.externalAPIConfigs.apiconfigs){
+			try {
+					c.externalAPIs.export(config.getURL(), config.getPagePath(), config.getUserName(), new String(this.getPassword(config.getId().toString(),  c.salt)), config.getLoginPath(), config.getTemplate(),vorigeperiode, vorigeronde);
+					// oud
+					// c.externalAPIs.export(c.plone52URL, c.plone52Path, c.plone52UserName, new String(this.getPassword("Plone52Password", c.salt)), vorigeperiode, vorigeronde); 
+			} catch (GeneralSecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DestroyFailedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -873,13 +909,16 @@ public class IJCController {
 	 */
 	public void externalAPIDeleteUsers() {
 		try {
-			c.externalAPIs.verwijderGebruikers(c.plone52URL, c.plone52UserName, new String(this.getPassword("Plone52Password", c.salt)));
-		} catch (GeneralSecurityException e) {
+			//c.externalAPIs.verwijderGebruikers(c.plone52URL, c.plone52UserName, new String(this.getPassword("Plone52Password", c.salt)));
+		//} catch (GeneralSecurityException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DestroyFailedException e) {
+			//e.printStackTrace();
+		//} catch (DestroyFailedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//	e.printStackTrace();
+		}
+		finally {
+			
 		}
 	}
 	/**

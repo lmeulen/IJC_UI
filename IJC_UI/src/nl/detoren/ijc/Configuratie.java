@@ -15,6 +15,8 @@ package nl.detoren.ijc;
 
 import java.math.BigDecimal;
 import nl.detoren.ijc.data.external.api.APIs;
+import nl.detoren.ijc.data.external.api.APIConfig;
+import nl.detoren.ijc.data.external.api.APIConfigs;
 
 /**
  * Configuratie van het indelingsprogramma. Doel is dat hier geen code in staat
@@ -30,6 +32,7 @@ public class Configuratie {
 	public Configuratie() {
 		
 	}
+	
 	/**
 	 * Salt
 	 */
@@ -348,17 +351,17 @@ public class Configuratie {
 	/**
 	 * plone52URL is the URL for a Plone 5.2 RESTAPI connection
 	 */
-	public String plone52URL = "";
+	//public String plone52URL = "";
 
 	/**
 	 * plone52Path is the Path in to place new content for a Plone 5.2 RESTAPI connection
 	 */
-	public String plone52Path = "";
+	//public String plone52Path = "";
 
 	/**
 	 * plone52UserName is the username for a Plone 5.2 RESTAPI connection
 	 */
-	public String plone52UserName = "";
+	//public String plone52UserName = "";
 
 	/**
 	 * plone52Password is the password for a Plone 5.2 RESTAPI connection
@@ -370,5 +373,11 @@ public class Configuratie {
 	 * used for pushing information to external sites/systems trough an API
 	 */
 
-	public APIs externalAPIs = new APIs();
+	public APIs externalAPIs;
+	
+	public APIConfigs externalAPIConfigs = new APIConfigs();
+	
+	public void Update() {
+		 externalAPIs = new APIs();
+	}
 }
