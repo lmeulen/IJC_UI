@@ -126,8 +126,10 @@ public class Plone52 {
 		jsonOb1.put("description", "Clubavond met uitslagen en stand");
 		JSONObject jsonOb2 = new JSONObject(); 
 		jsonOb2.put("content-type","text/html");
-		String data = template.replaceAll("\\b%Uitslag%\\b", txtUitslagparagraaf);
-		data = data.replaceAll("\\b%Stand%\\b", txtStandparagraaf);
+		//String data = template.replaceAll("\\b%Uitslag%\\b", txtUitslagparagraaf);
+		//data = data.replaceAll("\\b%Stand%\\b", txtStandparagraaf);
+		String data = template.replace("%Uitslag%", txtUitslagparagraaf);
+		data = data.replace("%Stand%", txtStandparagraaf);
 		jsonOb2.put("data",data);
 		jsonOb2.put("encoding","utf-8");
 		jsonOb1.put("text", jsonOb2);		
