@@ -21,9 +21,13 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.attribute.FileTime;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,21 +102,27 @@ public class Plone52 {
 		int httpsresponse = 0;
 		//String token = "";
 		HttpClient httpClient = HttpClient.newHttpClient();
-    
-		// Charset charSet = Charset.forName("UTF-8");
-		// String s = URLEncoder.encode(new SimpleDateFormat("dd MMMM yyyy").format(Calendar.getInstance().getTime()), charSet);
-		String s = new SimpleDateFormat("dd MMMM yyyy").format(Calendar.getInstance().getTime());
-		// temporary
-		String documentTitle = "Clubavond " + s;
-		String txtles = "Het was weer een leuke les met hoge opkomst.\nTrainer Lodewijk had weer een mooie les voorbereid.\n";
 		String bestandsnaam = "R" + periode + "-" + ronde + "Uitslag.txt";
 		String dirName = "R" + periode + "-" + ronde;
-
 		String txtUitslag[] = Utils.leesBestand(dirName + File.separator + bestandsnaam);
 		String txtUitslagparagraaf = "";
 		for (String r : txtUitslag) {
 			txtUitslagparagraaf += r + "\r\n";
 		}
+		//
+		String s;
+		try {
+			TimeZone zone = TimeZone.getDefault();
+			FileTime ft = Utils.getCreationDateBestand(dirName + File.separator + bestandsnaam);
+			ZonedDateTime zdt = ft.toInstant().atZone(zone.toZoneId());
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+			s = zdt.format(dtf);
+		} catch (IOException e1) {
+			s = new SimpleDateFormat("dd MMMM yyyy").format(Calendar.getInstance().getTime());
+		}
+		// temporary
+		String documentTitle = "Clubavond " + s;
+		String txtles = "Het was weer een leuke les met hoge opkomst.\nTrainer Lodewijk had weer een mooie les voorbereid.\n";
 
 		bestandsnaam = "R" + periode + "-" + ronde + "Stand.txt";
 		String txtStand[] = Utils.leesBestand(dirName + File.separator + bestandsnaam);

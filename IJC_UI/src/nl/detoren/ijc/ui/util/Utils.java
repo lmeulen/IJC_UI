@@ -19,10 +19,16 @@ package nl.detoren.ijc.ui.util;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -207,6 +213,19 @@ public class Utils {
         JOptionPane.showMessageDialog(new JFrame(), trace);
 
     }
+
+    /**
+     * Lees een bestand in en retourneer dit als Strings.
+     * @param bestandsnaam
+     * @return array of strings met bestandsinhoud
+     * @throws IOException 
+     */
+    public static FileTime getCreationDateBestand(String bestandsnaam) throws IOException {
+    File bestand = new File(bestandsnaam);
+    Path pad = bestand.toPath();
+    BasicFileAttributes bestandAttributes = Files.readAttributes(pad, BasicFileAttributes.class);
+    	return bestandAttributes.creationTime();
+    }    
     
     /**
      * Lees een bestand in en retourneer dit als Strings.
