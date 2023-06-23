@@ -39,6 +39,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.security.auth.DestroyFailedException;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import nl.detoren.ijc.Configuratie;
 import nl.detoren.ijc.data.external.api.APIConfig;
@@ -597,7 +598,10 @@ public class IJCController {
 	}
 
 	public boolean leesStatus() {
-		return leesStatus(c.statusBestand + ".json");
+		boolean leesstatus;
+		leesstatus = leesStatus(c.statusBestand + ".json");
+    	logger.log(Level.INFO, "Inlezen statusbestand mislukt. Nieuw status bestand aanmaken!");		
+		return leesstatus;
 	}
 
 	public boolean leesStatus(String bestandsnaam) {
@@ -608,32 +612,70 @@ public class IJCController {
 		//
 		BufferedReader br;
 		try {
-	    	logger.log(Level.INFO, "Lees status uit bestand (inclusief path)" + bestandsnaam);
+	    	logger.log(Level.INFO, "Lees status uit bestand (inclusief path) " + bestandsnaam);
 			br = new BufferedReader(new FileReader(bestandsnaam));
 		} catch (Exception e) {
 			// Could not read status
 			// e.printStackTrace();
-			logger.log(Level.WARNING, "Exception in BufferedReader for leesStatus in " + bestandsnaam +  ". Error: " + e.getLocalizedMessage());
+			logger.log(Level.WARNING, "Exception in BufferedReader for leesStatus in " + bestandsnaam +  ". Error: " + e.getMessage());
 			return false;
 		}
 		try {
 			Status nieuw = gson.fromJson(br, Status.class);
 			status = nieuw;	// assure exception is thrown when things go wrong
 			// Check for wrong KNSBnumbers; this is vital!!!
+			logger.log(Level.INFO, "Checking for wrong KNSBnumbers");
 			for (Groep g: status.groepen.getGroepen()) {
+				logger.log(Level.INFO, "Checking groep " + g.getNaam());
 				for (Speler s: g.getSpelers()) {
+					logger.log(Level.INFO, "Checking speler " + s.getNaam());
 					s.setKNSBnummer(s.getKNSBnummer());
 				}
 			}
 			return true;
 		} catch (Exception e) {
 			// Could not read status
-			// e.printStackTrace();
-			logger.log(Level.WARNING, "Exception in parsing content of leesStatus " + bestandsnaam +  ". Error: " + e.getLocalizedMessage());
-			return false;
+			e.printStackTrace();
+			logger.log(Level.WARNING, "Exception in parsing content of leesStatus " + bestandsnaam +  ". Error: " + e.getMessage());
+			return leesStatus(bestandsnaam, "");
 		}
 	}
 
+	public boolean leesStatus(String bestandsnaam, String datetimeformat) {
+		if (datetimeformat=="") {
+			datetimeformat = "MMM d, yyyy, HH:mm:ss a";
+		}
+		Gson gson = new GsonBuilder().setDateFormat(datetimeformat).create();
+		BufferedReader br;
+		try {
+	    	logger.log(Level.INFO, "Lees status uit bestand (inclusief path) " + bestandsnaam);
+			br = new BufferedReader(new FileReader(bestandsnaam));
+		} catch (Exception e) {
+			// Could not read status
+			// e.printStackTrace();
+			logger.log(Level.WARNING, "Exception in BufferedReader for leesStatus in " + bestandsnaam +  ". Error: " + e.getMessage());
+			return false;
+		}
+		try {
+			Status nieuw = gson.fromJson(br, Status.class);
+			status = nieuw;	// assure exception is thrown when things go wrong
+			// Check for wrong KNSBnumbers; this is vital!!!
+			logger.log(Level.INFO, "Checking for wrong KNSBnumbers");
+			for (Groep g: status.groepen.getGroepen()) {
+				logger.log(Level.INFO, "Checking groep " + g.getNaam());
+				for (Speler s: g.getSpelers()) {
+					logger.log(Level.INFO, "Checking speler " + s.getNaam());
+					s.setKNSBnummer(s.getKNSBnummer());
+				}
+			}
+			return true;
+		} catch (Exception e) {
+			// Could not read status
+			e.printStackTrace();
+			logger.log(Level.WARNING, "Exception in parsing content of leesStatus " + bestandsnaam +  ". Error: " + e.getMessage());
+			return false;
+		}
+	}
 
 	public void leesBestand(String bestandsnaam) {
 		if (!leesStatus(bestandsnaam))

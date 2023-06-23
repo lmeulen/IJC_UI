@@ -20,15 +20,18 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/Lars Dam/Documents/Repos/IJC_UI/IJC_UI/lib/jersey-client.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lars Dam/Documents/Repos/IJC_UI/IJC_UI/lib/jersey-common.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lars Dam/Documents/Repos/IJC_UI/IJC_UI/lib/jersey-container-servlet.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lars Dam/Documents/Repos/IJC_UI/IJC_UI/lib/jersey-container-servlet-core.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lars Dam/Documents/Repos/IJC_UI/IJC_UI/lib/jersey-hk2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lars Dam/Documents/Repos/IJC_UI/IJC_UI/lib/jersey-media-jaxb.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lars Dam/Documents/Repos/IJC_UI/IJC_UI/lib/jersey-media-json-binding.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lars Dam/Documents/Repos/IJC_UI/IJC_UI/lib/jersey-media-sse.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lars Dam/Documents/Repos/IJC_UI/IJC_UI/lib/jersey-server.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Lars Dam/Documents/Repos/IJC_UI/IJC_UI/lib/json-20220924.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-client.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-common.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-container-servlet.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-container-servlet-core.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-hk2.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-media-jaxb.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-media-json-binding.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-media-sse.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-server.jar"/>
+	<classpathentry kind="lib" path="lib/jna-5.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/jna-platform-5.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/json-20220924.jar"/>
+	<classpathentry kind="lib" path="lib/reactive-streams-1.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
